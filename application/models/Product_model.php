@@ -20,4 +20,31 @@ class Product_model extends CI_Model
 	   return $this->db->get()->result_array();
 		
 	}
+	public function save_product($data){
+		
+		$this->db->insert('product_tab',$data);
+		   $insert_id = $this->db->insert_id();
+		return $insert_id;
+	}
+	public function save_features($data){
+		$this->db->insert_batch('features_tab',$data);
+		return $this->db->affected_rows()?1:0;
+		
+	}
+	public function get_product_list(){
+			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+			product_tab.actual_price,product_tab.discount_price,product_tab.status,product_tab.net_price,
+			product_tab.created_at,
+			category_tab.cat_name,subcat_tab.subcat_name');
+	  $this->db->from('product_tab');
+	  $this->db->join('category_tab','category_tab.cat_id=product_tab.cat_id');
+	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
+	  $this->db->where('product_tab.status',1);
+	  $this->db->or_where('product_tab.status',2);
+	  $this->db->order_by('product_tab.updated_at');
+	 return $this->db->get()->result();
+		
+		
+		
+	}
 	}
