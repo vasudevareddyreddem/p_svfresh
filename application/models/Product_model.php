@@ -34,7 +34,7 @@ class Product_model extends CI_Model
 	public function get_product_list(){
 			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
 			product_tab.actual_price,product_tab.discount_price,product_tab.status,product_tab.net_price,
-			product_tab.created_at,
+			product_tab.created_at,product_tab.quantity,
 			category_tab.cat_name,subcat_tab.subcat_name');
 	  $this->db->from('product_tab');
 	  $this->db->join('category_tab','category_tab.cat_id=product_tab.cat_id');
@@ -47,4 +47,27 @@ class Product_model extends CI_Model
 		
 		
 	}
+	public function edit_product($pid){
+			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+			product_tab.actual_price,product_tab.discount_price,product_tab.status,product_tab.net_price,
+			product_tab.created_at,product_tab.quantity,product_tab.cat_id,product_tab.subcat_id
+			');
+	  $this->db->from('product_tab');
+	  $this->db->where('product_tab.product_id',$pid);
+	 $this->db->group_start();
+	  $this->db->where('product_tab.status',1);
+	  $this->db->or_where('product_tab.status',2);
+	   $this->db->group_end();
+	  
+	 return $this->db->get()->row();
+		
+		
+}
+public function get_features($pid){
+	$this->db->select('feature_id,feature_name,feature_value');
+	  $this->db->from('features_tab');
+	  $this->db->where('features_tab.product_id',$pid);
+	 return $this->db->get()->result();
+}
+
 	}

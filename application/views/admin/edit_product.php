@@ -19,46 +19,127 @@
                                         <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label>Category Name</label>
-                                                <select class="form-control" name="c_name" id="c_name">
+                                                <select class="form-control" name="c_name" id="c_name" onchange="get_category(this.value)">
                                                     <option disabled>Select</option>
-                                                    <option value="1" selected>Category 1</option>
-                                                    <option value="2">Category 2</option>
-                                                    <option value="3">Category 3</option>
-                                                    <option value="4">Category 4</option>
-                                                    <option value="5">Category 5</option>
+													<?php if($status==1){
+														 foreach($cat_list as $cat):?>
+                                                    <option value="<?php echo base64_encode($cat->cat_id);?>"  
+													<?php if($cat->cat_id==$product->cat_id){
+														echo "selected";} ?>><?php echo $cat->cat_name;?></option>
+													<?php endforeach;}?>
+                                                    
                                                 </select>
                                             </div>
+											
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
                                                 <select class="form-control" name="sc_name" id="sc_name">
-                                                    <option disabled>Select</option>
-                                                    <option value="1" selected>Sub-Category 1</option>
-                                                    <option value="2">Sub-Category 2</option>
-                                                    <option value="3">Sub-Category 3</option>
-                                                    <option value="4">Sub-Category 4</option>
-                                                    <option value="5">Sub-Category 5</option>
+                                                  <?php foreach($sub_cats as $scat):?> 
+                                                <option value="<?php echo $scat['subcat_id'];?>" 
+												<?php if($scat['subcat_id']==$product->subcat_id)
+												{echo 'selected';}?>><?php echo $scat['subcat_name']; ?></option>
+                                                   <?php endforeach;?>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Product Name</label>
-                                                <input id="p_name" type="text" class="form-control" name="p_name" value="Heritage Milk">
+                                                <input id="p_name" type="text" class="form-control" name="p_name" value="<?php  echo $product->product_name ;?>">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Quantity</label>
-                                                <input id="quantity" type="text" class="form-control" name="quantity" value="250">
+                                                <input id="quantity" type="text" class="form-control" name="quantity" value="<?php echo $product->quantity;?>">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label>Actual Price</label>
-                                                <input id="a_price" type="text" class="form-control" name="a_price" value="50.00">
+                                                <input id="a_price" type="text" class="form-control" name="a_price" value="<?php echo $product->actual_price;?>">
                                             </div>
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-4
                                                 <label>Discount Price</label>
-                                                <input id="d_price" type="text" class="form-control" name="d_price" value="10.00">
+                                                <input id="d_price" type="text" class="form-control" name="d_price" value="<?php echo  $product->discount_price;?>">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label>Net price</label>
-                                                <input id="n_price" type="text" class="form-control" name="n_price" value="40.00">
+                                                <input id="n_price" type="text" class="form-control" name="n_price" value="<?php echo $product->net_price;?>">
                                             </div>
+											<div class="form-group col-md-4">
+                                                <label>Product Image</label>
+                                                <input id="n_price" type="file" class="form-control" name="p_image">
+                                            </div>
+					<?php if(fstatus==0){ ?>					
+				 <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="myTable" class=" table order-list">
+                                            <thead>
+                                                <tr>
+                                                    <th> Feature Name</th>
+                                                    <th>Feature value</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="fname[]" placeholder="FirstName" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="fvalue[]" placeholder="LastName" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <a class="deleteRow"></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Row</button>
+                                    </div>
+                                </div>
+                            </div>
+					<?php }?>
+										
+								
+				 <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+									<?php if($fstatus==1){
+										     foreach($fet_data as $fet): ?>
+                                        <table id="myTable" class=" table order-list">
+                                            <thead>
+                                                <tr>
+                                                    <th> Feature Name</th>
+                                                    <th>Feature value</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+													<input type="hidden" value="<?php echo $fet->feature_id;?>"
+													name='fet_id'>
+                                                        <input type="text" name="fname[]" placeholder="FirstName" class="form-control" value="
+														<?php echo $fet->feature_name;?>" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="fvalue[]" placeholder="LastName" class="form-control"
+														value="<?php echo $fet->feature_value;?>"/>
+                                                    </td>
+                                                    <td>
+                                                        <a class="deleteRow"></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+									<?php endforeach; }?>
+                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Row</button>
+                                    </div>
+                                </div>
+                            </div>
+					
+                                   
+                                        
+                  
+					
+                                   
                                         </div>
                                         <button type="submit" class="btn btn-primary">
                                             Save Changes
@@ -134,5 +215,67 @@ $(document).ready(function() {
         })
      
 });
+
+</script>
+<script>
+ function get_category(value){
+	 $('#sc_name').empty();
+	
+	 $.ajax({
+                    type: "GET",    
+                    url: '<?php echo base_url('product/get_sub_category/'); ?>'+value,    
+                    data: '',    
+                    dataType: "json",   
+                    
+                    success: function (result) {
+						console.log(result.status);
+						
+						if(result.status==1){
+						$.each(result.subcat_list, function(i, subcat) {
+							temp='<option value="'+subcat.subcat_id+'">'+subcat.subcat_name+'</option>';
+							alert(temp);
+							$('#sc_name').append(temp);
+							
+							
+						});
+						}
+						
+       
+                                           }
+                    ,
+                    error: function() { 
+                    	//alert('error from server side');
+
+                    } 
+                });
+ }
+</script>
+<script>
+    $(document).ready(function () {
+    var counter = 0;
+
+    $("#addrow").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="text" class="form-control" placeholder="FirstName" name="fname' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" placeholder="LastName" name="lname' + counter + '"/></td>';
+
+        cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+    });
+
+
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
+});
+
 
 </script>

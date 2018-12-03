@@ -43,7 +43,7 @@
                                             <td><?php echo $product->discount_price;?></td>
                                             <td><?php echo $product->net_price;?></td>
                                             <td><?php echo $product->created_at;?></td>
-											<td><?php if($cat->status==1){?>
+											<td><?php if($product->status==1){?>
 										        <div class="badge badge-success"><a href="<?php 
 												echo base_url('product/inactive_product/').base64_encode($product->product_id);?>">Active</a></div>
 											<?php }else{?>
@@ -52,10 +52,10 @@
 											<?php }?></td>
                                             <td>
                                                 <a href="<?php 
-												echo base_url('product/edit_product').base64_encode($product->product_id);
+												echo base_url('product/edit_product/').base64_encode($product->product_id);
 												?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
                                                 <a href="<?php 
-												echo base_url('product/delete_product').base64_encode($product->product_id);
+												echo base_url('product/delete_product/').base64_encode($product->product_id);
 												?>"class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
                                             </td>
                                         </tr>

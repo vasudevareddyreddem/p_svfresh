@@ -72,7 +72,7 @@ $this->load->model('Product_model');
 				$subcat_id=$this->input->post('sc_name');
 				$product_name=$this->input->post('p_name');
 				$act_price=$this->input->post('a_price');
-				$this->input->post('quantity');
+				$qun=$this->input->post('quantity');
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
 				
@@ -118,6 +118,7 @@ $this->load->model('Product_model');
 				'discount_price'=>$dis_price,
 				'discount_percentage'=>$dis_percentage,
 				'net_price'=>$net_price,
+				'quantity'=>$qun,
 				 'created_by'=>$adminid
 				);
 				$product_id=$this->Product_model->save_product($data);
@@ -134,7 +135,7 @@ $this->load->model('Product_model');
 				
 				 if($status==1){
 				   $this->session->set_flashdata('success','product addded  successfully'); 
-					      redirect('product/products_list');
+					      redirect('product/product_list');
 					
 					
 				}
@@ -166,5 +167,44 @@ $this->load->model('Product_model');
 			
 		}
 	
+	}
+	public function edit_product(){
+		if($this->session->userdata('svadmin_det')){
+			$pid=base64_decode($this->uri->segment(3));
+			$data['cat_list']=$this->Category_model->get_category_names();
+			
+			if(count($data['cat_list'])>0){
+					$data['status']=1;
+					
+					
+				}
+				else{
+					$data['status']=0;
+					
+				}
+			
+			$data['product']=$this->Product_model->edit_product($pid);
+			if(!$data['product']){
+				   $this->session->set_flashdata('error','this product deleted by another session'); 
+			         redirect('product/product_list');
+				
+			}
+		
+			$data['fet_data']=$this->Product_model->get_features($pid);
+			if(count($data['fet_data'])>0){
+				$data['fstatus']=1;
+			}
+			else{
+				$data['fstatus']=0;
+			}
+			  $cat_id=$data['product']->cat_id;
+			   $data['sub_cats']=$this->Product_model->get_sub_category_names($cat_id);
+		     $this->load->view('admin/edit_product',$data);
+		    $this->load->view('admin/footer');
+			
+		
+		}	
+		else{redirect('login');}
+		
 	}
 }
