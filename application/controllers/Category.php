@@ -244,7 +244,7 @@ $this->load->model('Category_model')	;
 			   $cname=$this->input->post('cat_name');
 			   
 			  $status=$this->Category_model->category_edit_name_check($cid,$cname);
-			  echo $this->db->last_query();exit;
+			 
 			  if($status==1){
 				   $this->session->set_flashdata('error','category name already existed');
 		 
