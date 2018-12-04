@@ -132,6 +132,49 @@ class Category_model extends CI_Model
 	{
 		return $this->db->get_where('category_tab',array('status' => '1'))->result();
 	}
+	public function get_subcategory_list(){
+			$this->db->select('subcat_tab.subcat_id,subcat_tab.subcat_name,subcat_tab.subcat_img,
+			subcat_tab.status,subcat_tab.created_at,category_tab.cat_name,
+			count(product_tab.product_name) countproduct');
+	  $this->db->from('subcat_tab');
+	  $this->db->join('category_tab','category_tab.cat_id=subcat_tab.cat_id');
+	  $this->db->join('product_tab','product_tab.subcat_id=subcat_tab.subcat_id');
+	   $this->db->where('subcat_tab.status',1);
+	   $this->db->or_where('subcat_tab.status',2);
+	   $this->db->group_by('subcat_tab.subcat_id,subcat_tab.subcat_name,subcat_tab.subcat_img,
+			subcat_tab.status,subcat_tab.updated_at,category_tab.cat_name');
+	   $this->db->order_by('subcat_tab.updated_at');
+	   return $this->db->get()->result();
+		
+	}
+	public function inactive_subcategory($id){
+		$this->db->set('status',2);
+		$this->db->where('subcat_id',$id);
+		$this->db->update('subcat_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	public function active_subcategory($id){
+		$this->db->set('status',1);
+		$this->db->where('subcat_id',$id);
+		$this->db->update('subcat_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	public function get_subcategory($scid){
+		$this->db->select('*');
+	    $this->db->from('subcat_tab');
+		$this->db->group_start();
+		$this->db->where('subcat_id',$scid);
+		$this->db->group_end();
+		$this->db->group_start();
+	   $this->db->where('status',1);
+	   $this->db->or_where('status',2);
+	   $this->db->group_end();
+	   
+	   $result=$this->db->get()->row();
+	   return  $result;
+		
+		
+	}
 
 
 	}

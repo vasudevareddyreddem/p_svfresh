@@ -26,48 +26,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+									<?php if($status==1){
+										$count=1;
+										foreach($subcat_list as $subcat):?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Milk</td>
-                                            <td>Sub-Category 1</td>
-                                            <td>250</td>
-                                            <td>2017-01-09</td>
+                                            <td><?php echo $count;?></td>
+                                            <td><?php echo $subcat->cat_name;?></td>
+                                            <td><?php echo $subcat->subcat_name;?></td>
+                                            <td><?php echo $subcat->countproduct;?></td>
+                                            <td><?php echo $subcat->created_at;?></td>
                                             <td>
-                                                <div class="badge badge-success">Active</div>
+											<?php if($subcat->status==1){?>
+										        <div class="badge badge-success"><a href="<?php 
+												echo base_url('category/inactive_subcategory/').base64_encode($subcat->subcat_id);?>">Active</a></div>
+											<?php }else{?>
+											<div class="badge badge-danger"><a href="<?php 
+												echo base_url('category/active_subcategory/').base64_encode($subcat->subcat_id);?>">InActive</a></div>
+											<?php }?>
                                             </td>
                                             <td>
-                                                <a href="edit_sub_category.php" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
+                                                <a href="<?php echo base_url('category/edit_subcategory/').base64_encode($subcat->subcat_id); ?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
                                                 <a class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Vegetables</td>
-                                            <td>Sub-Category 1</td>
-                                            <td>250</td>
-                                            <td>2017-01-09</td>
-                                            <td>
-                                                <div class="badge badge-success">Active</div>
-                                            </td>
-                                            <td>
-                                                <a href="edit_sub_category.php" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Water Can</td>
-                                            <td>Sub-Category 1</td>
-                                            <td>250</td>
-                                            <td>2017-01-11</td>
-                                            <td>
-                                                <div class="badge badge-danger">Not Active</div>
-                                            </td>
-                                            <td>
-                                                <a href="edit_sub_category.php" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
-                                            </td>
-                                        </tr>
+									<?php $count++; endforeach;}?>
+                                        
+                                      
                                     </tbody>
                                 </table>
                             </div>

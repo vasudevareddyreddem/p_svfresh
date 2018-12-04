@@ -49,7 +49,16 @@ $this->load->model('Category_model')	;
 		}
 			public function sub_category_list(){
 		if($this->session->userdata('svadmin_det')){
-			$this->load->view('admin/sub_categories_list');
+			$data['subcat_list']=$this->Category_model->get_subcategory_list();
+			if(count($data['subcat_list'])>0){
+				$data['status']=1;
+				
+			}else{
+				$data['status']=0;
+				
+			}
+			
+			$this->load->view('admin/sub_categories_list',$data);
 		    $this->load->view('admin/footer');
 			
 			
@@ -400,6 +409,58 @@ $this->load->model('Category_model')	;
 					      redirect($_SERVER['HTTP_REFERER']);
 				}
 			
+		}
+		else{redirect('login');}
+		
+	}
+	public function inactive_subcategory(){
+		if($this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Category_model->inactive_subcategory($id);
+			if($status==1){
+				$this->session->set_flashdata('success','subcategory inactivated');
+			  redirect('category/sub_category_list');
+			}
+			else{
+				$this->session->set_flashdata('error','subcategory not inactivated');
+			  redirect('category/sub_category_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
+	public function active_subcategory(){
+		if($this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Category_model->active_subcategory($id);
+			if($status==1){
+				$this->session->set_flashdata('success','subcategory activated');
+			  redirect('category/sub_category_list');
+			}
+			else{
+				$this->session->set_flashdata('error','subcategory not activated');
+			  redirect('category/sub_category_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
+	public function edit_subcategory(){
+		if($this->session->userdata('svadmin_det')){
+		
+		$scid=base64_decode($this->uri->segment(3));
+		$status=$this->Category_model->get_subcategory($scid);
+	    $data['cat_list']=$this->Category_model->category_list();
+		if($status){
+			$data['subcat']=$status;
+				$this->load->view('admin/edit_sub_category',$data);
+			$this->load->view('admin/footer');
+			
+		}
+		else{
+				$this->session->set_flashdata('error','subcategory deleted by another session');
+			  redirect('category/sub_category_list');
+		}
 		}
 		else{redirect('login');}
 		

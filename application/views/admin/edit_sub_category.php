@@ -15,29 +15,33 @@
                         <div class="card-body">
                             <div class="row mx-auto">
                                 <div class="col-md-3">
-                                    <a href="sub_categories_list.php" class="btn btn-sm btn-info">Back</a>
+                                    <a href="<?php echo base_url('category/sub_category_list');?>" class="btn btn-sm btn-info">Back</a>
                                 </div>
                                 <div class="col-md-6">
-                                    <form method="" id="edit_sub_category" action="">
+                                    <form method="post" id="edit_sub_category" 
+									action="<?php echo base_url('category/save_edit_subcategory') ?>" enctype="multipart/form-data">
+									    <div class="form-group">
+                                            <label>Category</label>
+                                            <select class="form-control" name="c_name">
+                                                <option disabled>Select</option>
+												<?php foreach($cat_list as $cat):?>
+                                                <option 
+												value="<?php echo $cat->cat_id;?>"  <?php if($cat->cat_id==$subcat->cat_id){
+													echo 'selected';
+												}?>><?php echo $cat->cat_name?></option>
+                                                <?php endforeach; ?>
+                                            </select> 
+                                        </div>
                                         <div class="form-group">
                                             <label>Sub-Category Name</label>
-                                            <input id="name" type="text" class="form-control" name="name" value="Milk">
+											<input type="hidden" value="<?php echo $subcat->subcat_id ?>" name="scid" ?>
+                                            <input id="name" type="text" class="form-control" name="name" value="<?php echo $subcat->subcat_name;?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Sub-Category Image</label>
                                             <input id="image" type="file" class="form-control" name="image">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Category</label>
-                                            <select class="form-control" name="c_name">
-                                                <option disabled>Select</option>
-                                                <option value="1" selected>Category 1</option>
-                                                <option value="2">Category 2</option>
-                                                <option value="3">Category 3</option>
-                                                <option value="4">Category 4</option>
-                                                <option value="5">Category 5</option>
-                                            </select>
-                                        </div>
+                                    
                                         <button type="submit" class="btn btn-primary">
                                             Save Changes
                                         </button>
@@ -71,9 +75,7 @@ $(document).ready(function() {
             },
             image: {
                 validators: {
-					notEmpty: {
-						message: 'Image is required'
-					},
+					
 					regexp: {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
@@ -83,7 +85,7 @@ $(document).ready(function() {
             c_name: {
                 validators: {
 					notEmpty: {
-						message: 'Image is required'
+						message: 'category name is required'
 					}
 				}
             }
