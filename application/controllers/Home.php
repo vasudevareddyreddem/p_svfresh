@@ -8,12 +8,14 @@ class Home extends CI_controller
     parent::__construct();
     $this->load->library('form_validation');
     $this->load->model('Auth_Model');
+    $this->load->model('Category_model');
   }
 
   public function index()
   {
     if($this->session->userdata('logged_in') == TRUE){
       $data['pageTitle'] = 'Welcome to svfresh';
+      $data['categories'] = $this->Category_model->get_all_category();
       $this->load->view('home/index',$data);
     }else{
       redirect('home/login');
