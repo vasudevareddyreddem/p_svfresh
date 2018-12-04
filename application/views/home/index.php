@@ -38,15 +38,22 @@
 <section class="bg-success py-3">
   <div class="container ">
       <div class="row ">
-    		<a href="">
-    			<div class="col-xs-6 col-md-3 ">
-    				<div class="category-bg" style="margin:0 auto;" >
-    					<img class="img-resonsive" src="<?php echo base_url('assets/images/milk-cat-icon.png'); ?>" alt="Milk"/>
-    				</div>
-    				<div class="text-center font-cat">Milk</div>
-    			</div>
-    		</a>
-    		<a href="">
+        <?php if(count($categories) > 0){ ?>
+          <?php foreach ($categories as $c) { ?>
+            <a href="">
+              <div class="col-xs-6 col-md-3 ">
+                <div class="category-bg" style="margin:0 auto;">
+                  <?php echo base_url('assets/upload/category_pics/'.$c->cat_img); ?>
+                  <?php echo $c->cat_img; if(!empty($c->cat_img) && file_exists('assets/upload/category_pics/'.$c->cat_img)){  ?>
+                  <img class="img-resonsive" src="<?php echo base_url('assets/upload/category_pics/'.$c->cat_img); ?>" alt="Milk"/>
+                  <?php } ?>
+                </div>
+              <div class="text-center font-cat"><?php if($c->cat_name){ echo $c->cat_name;} ?></div>
+              </div>
+            </a>
+          <?php } ?>
+        <?php } ?>
+    		<!--a href="">
     		  <div class="col-xs-6 col-md-3 ">
     			<div class="category-bg" style="margin:0 auto;" >
     				<img class="img-resonsive" src="<?php echo base_url('assets/images/grocery-cat-icon.png'); ?>" alt="Grocery"/>
@@ -69,7 +76,7 @@
     			</div>
     			<div class="text-center font-cat">Water can</div>
             </div>
-    		</a>
+    		</a-->
       </div>
   </div>
 </section>
