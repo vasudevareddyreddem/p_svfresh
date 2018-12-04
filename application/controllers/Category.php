@@ -63,7 +63,7 @@ $this->load->model('Category_model')	;
 	    //$this->form_validation->set_rules('cat_image', 'category image ', 'required');
 		//$this->form_validation->set_rules('cat_himage1', 'category header image', 'required');
 	    //$this->form_validation->set_rules('cat_himage2', 'category header image  ', 'required');
-		$this->form_validation->set_rules('cat_s_content', 'scorolling content  ', 'required');
+		//$this->form_validation->set_rules('cat_s_content', 'scorolling content  ', 'required');
 		 if ($this->form_validation->run() == FALSE)
                 {
           $this->session->set_flashdata('error',validation_errors());
@@ -354,15 +354,21 @@ $this->load->model('Category_model')	;
 	}
 	public function save_sub_category(){
 		if($this->session->userdata('svadmin_det')){
-			$config['upload_path']          = './assets/uploads/category_pics';
+			$categ=base64_decode($this->input->post('c_name'));
+			$cstatus=$this->Category_model->subcategory_name_check($this->input->post('name'),$categ);
+			if($cstatus==1){
+				  $this->session->set_flashdata('error','subcategory name already exited');
+				  redirect('category/add_sub_category');
+				  
+			}
+			$config['upload_path']          = './assets/uploads/sub_category_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
                 // $config['max_size']             = 100;
                 // $config['max_width']            = 1024;
                 // $config['max_height']           = 768;
 
                 $this->load->library('upload', $config);
-				
-				
+			
 			
 				  if ( ! $this->upload->do_upload('image'))
                 {
