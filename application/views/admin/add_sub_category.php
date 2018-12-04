@@ -82,7 +82,7 @@ $(document).ready(function() {
             c_name: {
                 validators: {
 					notEmpty: {
-						message: 'Image is required'
+						message: 'category is required'
 					}
 				}
             }

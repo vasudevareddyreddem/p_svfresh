@@ -12,8 +12,11 @@ class Category_model extends CI_Model
      $this->db->select('1');
 	  $this->db->from('category_tab');
 	  $this->db->where('cat_name',$name);
-	   $this->db->where('cat_name',$name);
-	   $this->db->where('status',1);
+	  $this->db->group_start();
+	  $this->db->where('status',1);
+	  $this->db->or_where('status',2);
+	  $this->db->group_end();
+
 
 	  return $this->db->get()->result()?1:0;
 
@@ -87,6 +90,22 @@ class Category_model extends CI_Model
 			else{
 				return 0;
 			}
+	 }
+	 public function subcategory_name_check($name,$id){
+		 $this->db->select('1');
+	  $this->db->from('subcat_tab');
+	  $this->db->group_start();
+	  $this->db->where('subcat_name',$name);
+	  $this->db->where('cat_id',$id);
+	   $this->db->group_end();
+	    $this->db->group_start();
+	  $this->db->where('status',1);
+	  $this->db->or_where('status',2);
+	   $this->db->group_end();
+
+
+	  return $this->db->get()->result()?1:0;
+		 
 	 }
 	 public function edit_category($cid,$data){
 		 $this->db->where('cat_id',$cid);
