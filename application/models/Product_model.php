@@ -66,6 +66,7 @@ class Product_model extends CI_Model
 public function save_edit_product($data,$pid){
 	$this->db->where('product_id',$pid);
 	$this->db->update('product_tab',$data);
+
 	return $this->db->affected_rows()?1:0;
 	
 }
@@ -75,9 +76,9 @@ public function get_features($pid){
 	  $this->db->where('features_tab.product_id',$pid);
 	 return $this->db->get()->result();
 }
-public function save_edit_features($up_features,$pid){
-	 $this->db->where('product_id',$pid);
-	$this->db->update_batch('features_tab',$up_features);
+public function save_edit_features($up_features,$fid){
+	 $this->db->where('feature_id',$fid);
+	$this->db->update('features_tab',$up_features);
 	
 }
 

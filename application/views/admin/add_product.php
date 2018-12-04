@@ -240,8 +240,8 @@ $(document).ready(function() {
         var newRow = $("<tr>");
         var cols = "";
 
-        cols += '<td><input type="text" class="form-control" placeholder="FirstName" name="fname' + counter + '"/></td>';
-        cols += '<td><input type="text" class="form-control" placeholder="LastName" name="lname' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" placeholder="FirstName" name="fname[]' +'"/></td>';
+        cols += '<td><input type="text" class="form-control" placeholder="LastName" name="fvalue[]'+'"/></td>';
 
         cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
         newRow.append(cols);

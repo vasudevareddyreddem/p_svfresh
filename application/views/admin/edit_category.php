@@ -41,6 +41,14 @@
 											<?php }else{?><span> No Image</span><?php }?>
 											<input id="image" type="file" class="form-control" name="cat_image">
                                         </div>
+										<div class="form-group">
+                                            <label>Category  Small Image</label>
+											<?php if(!$cat->cat_small_img==''){?>
+                                        <img alt="image" 
+											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_small_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
+											<?php }else{?><span> No Image</span><?php }?>
+											<input id="image" type="file" class="form-control" name="cat_s_image">
+                                        </div>
 										 <div class="form-group">
                                             <label>Category Left Header Image</label>
 											<?php if(!$cat->cat_lh_img==''){?>
@@ -92,9 +100,7 @@ $(document).ready(function() {
             },
             cat_image: {
                 validators: {
-					notEmpty: {
-						message: 'Image is required'
-					},
+					
 					regexp: {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
@@ -103,9 +109,7 @@ $(document).ready(function() {
             },
 cat_himage1: {
                 validators: {
-					notEmpty: {
-						message: 'Image is required'
-					},
+					
 					regexp: {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
@@ -114,9 +118,7 @@ cat_himage1: {
             },
 			cat_himage2: {
                 validators: {
-					notEmpty: {
-						message: 'Image is required'
-					},
+					
 					regexp: {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'

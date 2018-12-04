@@ -16,9 +16,9 @@
                             <div class="row">
                                 <div class="card-body">
                                     <form id="edit_product" method="post" action="<?php 
-									 echo base_url('product/save_edit_product');?>">
+									 echo base_url('product/save_edit_product');?>" enctype="multipart/form-data">
                                         <div class="row">
-										<input type="hidden" value="<?php  echo base64_decode($product->product_id);?>" name="pid">
+										<input type="hidden" value="<?php  echo base64_encode($product->product_id);?>" name="pid">
                                             <div class="form-group col-md-6">
                                                 <label>Category Name</label>
                                                 <select class="form-control" name="c_name" id="c_name" onchange="get_category(this.value)">

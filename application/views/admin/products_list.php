@@ -35,9 +35,10 @@
 										foreach($product_list as $product):?>
                                         <tr>
                                             <td><?php echo $count; ?></td>
-                                            <td><?php echo $product->product_name;?></td>
+                                            
                                             <td><?php echo $product->cat_name;?></td>
                                             <td><?php echo $product->subcat_name;?></td>
+											<td><?php echo $product->product_name;?></td>
                                             <td><?php echo $product->quantity;?></td>
                                             <td><?php echo $product->actual_price;?></td>
                                             <td><?php echo $product->discount_price;?></td>

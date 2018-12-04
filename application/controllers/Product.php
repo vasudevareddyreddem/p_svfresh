@@ -79,7 +79,7 @@ $this->load->model('Product_model');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
 				
-				
+				print_r($f_names);exit;
 				
 				
 				 $config['upload_path']          = './assets/uploads/category_pics';
@@ -125,6 +125,7 @@ $this->load->model('Product_model');
 				  );
 					
 				}
+				
 				$status=$this->Product_model->save_features($features);
 				
 				 if($status==1){
@@ -223,25 +224,25 @@ $this->load->model('Product_model');
 				
 				 $config['upload_path']          = './assets/uploads/category_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
-                // $config['max_size']             = 100;
-                // $config['max_width']            = 1024;
-                // $config['max_height']           = 768;
+             
 
                 $this->load->library('upload', $config);
-				
-			
+				$img_status=0;
+			  if($_FILES['p_image']['name']!=''){
 				  if ( ! $this->upload->do_upload('p_image'))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 
                           $this->session->set_flashdata('error','product image not uploaded'); 
-					      redirect('product/add_product');
+					      redirect($_SERVER['HTTP_REFERER']);
                 }
 				else{
 					$upload_data = $this->upload->data(); 
                     $product_img =   $upload_data['file_name'];
+					$img_status=1;
 				}
-				
+			  }
+				if($img_status==1){
 				$data=array(
 				'product_name'=>$product_name,
 				'product_img'=>$product_img,
@@ -254,24 +255,41 @@ $this->load->model('Product_model');
 				'quantity'=>$qun,
 				 'created_by'=>$adminid
 				);
+				}
+				else{
+					$data=array(
+				'product_name'=>$product_name,
+				'cat_id'=>$cat_id,
+				'subcat_id'=>$subcat_id,
+				'actual_price'=>$act_price,
+				'discount_price'=>$dis_price,
+				'discount_percentage'=>$dis_percentage,
+				'net_price'=>$net_price,
+				'quantity'=>$qun,
+				 'created_by'=>$adminid
+				);
+					
+				}
 				$status=$this->Product_model->save_edit_product($data,$pid);
 				 
-				
+				//echo $this->db->last_query(); exit;
 				
 				 $features=$this->Product_model->get_features($pid);
 				$fids = array_column($features, 'feature_id');
-			//print_r($group_names);exit;
 			
-		
+			
+		$in_features[]=array();
 				foreach($fids as $key=>$value){
 					if(in_array($value,$fids)){
-						$up_features[]=array(
-				  'feature_name'=>$value,
+						$up_features=array(
+						
+				  'feature_name'=>$f_names[$key],
 				  'feature_value'=>$f_values[$key],
 				  'product_id'=>$product_id,
 				  'created_by'=>$adminid
 				  );
 				 //$key1=array_search($value, $names);
+				 $this->Product_model->save_edit_features($up_features,$value);
 				  unset($fids[$key]);
 				
 			
@@ -286,8 +304,9 @@ $this->load->model('Product_model');
 				    unset($fids[$key]);
 			}
 				}
-				$up_status=$this->Product_model->save_edit_features($up_features,$pid);
+				if(!empty($in_features)){
 				$ins_status=$this->Product_model->save_features($in_features);
+				}
 				 if($status==1){
 				   $this->session->set_flashdata('success','product addded  successfully'); 
 					      redirect('product/product_list');
