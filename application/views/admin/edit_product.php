@@ -15,8 +15,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="card-body">
-                                    <form id="edit_product" method="post" action="">
+                                    <form id="edit_product" method="post" action="<?php 
+									 echo base_url('product/save_edit_product');?>">
                                         <div class="row">
+										<input type="hidden" value="<?php  echo base64_decode($product->product_id);?>" name="pid">
                                             <div class="form-group col-md-6">
                                                 <label>Category Name</label>
                                                 <select class="form-control" name="c_name" id="c_name" onchange="get_category(this.value)">
@@ -53,9 +55,14 @@
                                                 <label>Actual Price</label>
                                                 <input id="a_price" type="text" class="form-control" name="a_price" value="<?php echo $product->actual_price;?>">
                                             </div>
-                                            <div class="form-group col-md-4
+                                            <div class="form-group col-md-4">
                                                 <label>Discount Price</label>
                                                 <input id="d_price" type="text" class="form-control" name="d_price" value="<?php echo  $product->discount_price;?>">
+                                            </div>
+											<div class="form-group col-md-4">
+                                                <label>Discount percentage</label>
+												
+                                                <input id="dp_price" type="text" class="form-control" name="dp_price" value="<?php echo  $product->discount_percentage;?>">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label>Net price</label>
@@ -65,7 +72,7 @@
                                                 <label>Product Image</label>
                                                 <input id="n_price" type="file" class="form-control" name="p_image">
                                             </div>
-					<?php if(fstatus==0){ ?>					
+					<?php if($fstatus==0){ ?>					
 				 <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -80,6 +87,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
+													<input type="hidden" value="" name="fid[]" >
                                                         <input type="text" name="fname[]" placeholder="FirstName" class="form-control" />
                                                     </td>
                                                     <td>
@@ -114,10 +122,9 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-													<input type="hidden" value="<?php echo $fet->feature_id;?>"
-													name='fet_id'>
-                                                        <input type="text" name="fname[]" placeholder="FirstName" class="form-control" value="
-														<?php echo $fet->feature_name;?>" />
+													<input type="hidden" value="<?php echo base64_encode($fet->feature_id);?>"
+													name='fid[]'>
+                                                        <input type="text" name="fname[]" placeholder="FirstName" class="form-control" value="<?php echo $fet->feature_name;?>" />
                                                     </td>
                                                     <td>
                                                         <input type="text" name="fvalue[]" placeholder="LastName" class="form-control"
@@ -186,7 +193,10 @@ $(document).ready(function() {
             quantity: {
                 validators: {
 					notEmpty: {
-						message: 'Gender is required'
+						message: 'Quantity is required'
+					},
+					numeric:{
+						message:'Enter integer or decimal value'
 					}
 				}
             },
@@ -194,6 +204,9 @@ $(document).ready(function() {
                 validators: {
 					notEmpty: {
 						message: 'Actual Price is required'
+					},
+					numeric:{
+						message:'enter integer or decimal value'
 					}
 				}
             },
@@ -201,6 +214,9 @@ $(document).ready(function() {
                 validators: {
 					notEmpty: {
 						message: 'Discount Price is required'
+					},
+					numeric:{
+						message:'enter integer or decimal value'
 					}
 				}
             },
@@ -208,6 +224,9 @@ $(document).ready(function() {
                 validators: {
 					notEmpty: {
 						message: 'Net Price is required'
+					},
+					numeric:{
+						message:'enter integer or decimal value'
 					}
 				}
             }
@@ -277,5 +296,37 @@ $(document).ready(function() {
 
 });
 
+
+</script>
+<script>
+$('#d_price').on('keyup',function(){
+	act_val=$('#a_price').val();
+	
+	if(act_val.length > 0){
+	dis_price=$('#d_price').val();
+	
+	dis_perc=(dis_price/act_val)*100;
+	$('#dp_price').val(dis_perc);
+	net_price=act_val-dis_price;
+	$('#n_price').val(net_price);
+	
+
+	}
+	
+}); 
+$('#dp_price').on('keyup',function(){
+	act_val=$('#a_price').val();
+	
+	if(act_val.length > 0){
+	percentage=$('#dp_price').val();
+	
+	price=(percentage/100)*act_val;
+	$('#d_price').val(price);
+	net_price=act_val-price;
+	$('#n_price').val(net_price);
+
+	}
+	
+}); 
 
 </script>

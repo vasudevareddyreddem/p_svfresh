@@ -73,21 +73,15 @@ $this->load->model('Product_model');
 				$product_name=$this->input->post('p_name');
 				$act_price=$this->input->post('a_price');
 				$qun=$this->input->post('quantity');
+				$dis_price=$this->input->post('d_price');
+				$dis_percentage=$this->input->post('dp_price');
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
+				$net_price=$act_price-$dis_price;
 				
 				
-				if(isset($_POST['d_price'])){
-					$dis_price=$this->input->post('d_price');
-					$dis_percentage=($dis_price/(float)$act_price)*100;
-					$net_price=$act_price-$dis_price;
-				}
-				else{
-					$dis_percentage=$this->input->post('dp_price');
-					$dis_price=$dis_percentage*$act_price/(float)100;
-					$net_price=$act_price-$dis_price;
-				}
-				$dis_price=$this->input->post('d_price');
+				
+				
 				 $config['upload_path']          = './assets/uploads/category_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
                 // $config['max_size']             = 100;
@@ -207,4 +201,107 @@ $this->load->model('Product_model');
 		else{redirect('login');}
 		
 	}
+	public function save_edit_product(){
+			if( $this->session->userdata('svadmin_det')){
+				$admin=$this->session->userdata('svadmin_det');
+				$adminid=$admin['admin_id'];
+				$pid=base64_decode($this->input->post('pid'));
+				$cat_id=base64_decode($this->input->post('c_name'));
+				$subcat_id=$this->input->post('sc_name');
+				$product_name=$this->input->post('p_name');
+				$act_price=$this->input->post('a_price');
+				$qun=$this->input->post('quantity');
+				$dis_price=$this->input->post('d_price');
+				$dis_percentage=$this->input->post('dp_price');
+				$fids=$this->input->post('fid');
+				$f_names=$this->input->post('fname');
+				$f_values=$this->input->post('fvalue');
+				$net_price=$act_price-$dis_price;
+				
+				
+				
+				
+				 $config['upload_path']          = './assets/uploads/category_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
+                // $config['max_size']             = 100;
+                // $config['max_width']            = 1024;
+                // $config['max_height']           = 768;
+
+                $this->load->library('upload', $config);
+				
+			
+				  if ( ! $this->upload->do_upload('p_image'))
+                {
+                        //$error = array('error' => $this->upload->display_errors());
+
+                          $this->session->set_flashdata('error','product image not uploaded'); 
+					      redirect('product/add_product');
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $product_img =   $upload_data['file_name'];
+				}
+				
+				$data=array(
+				'product_name'=>$product_name,
+				'product_img'=>$product_img,
+				'cat_id'=>$cat_id,
+				'subcat_id'=>$subcat_id,
+				'actual_price'=>$act_price,
+				'discount_price'=>$dis_price,
+				'discount_percentage'=>$dis_percentage,
+				'net_price'=>$net_price,
+				'quantity'=>$qun,
+				 'created_by'=>$adminid
+				);
+				$status=$this->Product_model->save_edit_product($data,$pid);
+				 
+				
+				
+				 $features=$this->Product_model->get_features($pid);
+				$fids = array_column($features, 'feature_id');
+			//print_r($group_names);exit;
+			
+		
+				foreach($fids as $key=>$value){
+					if(in_array($value,$fids)){
+						$up_features[]=array(
+				  'feature_name'=>$value,
+				  'feature_value'=>$f_values[$key],
+				  'product_id'=>$product_id,
+				  'created_by'=>$adminid
+				  );
+				 //$key1=array_search($value, $names);
+				  unset($fids[$key]);
+				
+			
+			}
+			else{
+				  $in_features[]=array(
+				  'feature_name'=>$value,
+				  'feature_value'=>$f_values[$key],
+				  'product_id'=>$product_id,
+				  'created_by'=>$adminid
+				  );
+				    unset($fids[$key]);
+			}
+				}
+				$up_status=$this->Product_model->save_edit_features($up_features,$pid);
+				$ins_status=$this->Product_model->save_features($in_features);
+				 if($status==1){
+				   $this->session->set_flashdata('success','product addded  successfully'); 
+					      redirect('product/product_list');
+					
+					
+				}
+				 else{
+					 $this->session->set_flashdata('error','product not added'); 
+					       redirect('product/add_product');
+				 }
+				
+				
+			}
+			else{redirect('login');}
+			
+		}
 }

@@ -108,5 +108,6 @@ class Category_model extends CI_Model
 		$this->db->insert('subcat_tab',$data);
 		return $this->db->affected_rows()?1:0;
 	}
+	
 	 
 	}

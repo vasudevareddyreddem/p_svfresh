@@ -55,11 +55,11 @@
 											<div class="form-group col-md-4">
                                                 <label>Discount percentage</label>
 												<input type="checkbox" id='cid'name="" value=""> check this box for percentage<br>
-                                                <input id="dp_price" type="text" class="form-control" name="dp_price" disabled>
+                                                <input id="dp_price" type="text" class="form-control" name="dp_price" >
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label>Net price</label>
-                                                <input id="n_price" type="text" class="form-control" name="n_price">
+                                                <input id="n_price" type="text" class="form-control" name="n_price" readonly>
                                             </div>
 											<div class="form-group col-md-4">
                                                 <label>Product Image</label>
@@ -143,7 +143,7 @@ $(document).ready(function() {
             quantity: {
                 validators: {
 					notEmpty: {
-						message: 'Gender is required'
+						message: 'quantity is required'
 					},
 					numeric:{
 						message:'enter integer or decimal value'
@@ -218,19 +218,19 @@ $(document).ready(function() {
  }
 
 // chech box 
- $('#cid').click(function(){
+ // $('#cid').click(function(){
 		
-		if (this.checked) {
-        $('#d_price').attr('disabled', 'disabled');
-		$('#dp_price').removeAttr('disabled');
+		// if (this.checked) {
+        // $('#d_price').attr('disabled', 'disabled');
+		// $('#dp_price').removeAttr('disabled');
 		
-    } else {
-        $('#dp_price').attr('disabled', 'disabled');
-		$('#d_price').removeAttr('disabled');
-    }
+    // } else {
+        // $('#dp_price').attr('disabled', 'disabled');
+		// $('#d_price').removeAttr('disabled');
+    // }
 		
 		
-	}); 
+	// }); 
 </script>
 <script>
     $(document).ready(function () {
@@ -261,6 +261,35 @@ $(document).ready(function() {
 
 
 </script>
+<script>
+$('#d_price').on('keyup',function(){
+	act_val=$('#a_price').val();
+	
+	if(act_val.length > 0){
+	dis_price=$('#d_price').val();
+	
+	dis_perc=(dis_price/act_val)*100;
+	$('#dp_price').val(dis_perc);
+	net_price=act_val-dis_price;
+	$('#n_price').val(net_price);
+	
 
+	}
+	
+}); 
+$('#dp_price').on('keyup',function(){
+	act_val=$('#a_price').val();
+	
+	if(act_val.length > 0){
+	percentage=$('#dp_price').val();
+	
+	price=(percentage/100)*act_val;
+	$('#d_price').val(price);
+	net_price=act_val-price;
+	$('#n_price').val(net_price);
 
+	}
+	
+}); 
 
+</script>
