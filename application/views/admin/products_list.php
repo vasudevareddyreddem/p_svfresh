@@ -25,55 +25,42 @@
                                             <th>Discount Price</th>
                                             <th>Net Price</th>
                                             <th>Created At</th>
+											<th>status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+									<?php if($status==1){
+										$count=1;
+										foreach($product_list as $product):?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Milk</td>
-                                            <td>Sub-Category 1</td>
-                                            <td>Heritage Milk</td>
-                                            <td>250</td>
-                                            <td>52.00</td>
-                                            <td>13.01</td>
-                                            <td>38.99</td>
-                                            <td>2017-01-09</td>
+                                            <td><?php echo $count; ?></td>
+                                            <td><?php echo $product->product_name;?></td>
+                                            <td><?php echo $product->cat_name;?></td>
+                                            <td><?php echo $product->subcat_name;?></td>
+                                            <td><?php echo $product->quantity;?></td>
+                                            <td><?php echo $product->actual_price;?></td>
+                                            <td><?php echo $product->discount_price;?></td>
+                                            <td><?php echo $product->net_price;?></td>
+                                            <td><?php echo $product->created_at;?></td>
+											<td><?php if($cat->status==1){?>
+										        <div class="badge badge-success"><a href="<?php 
+												echo base_url('product/inactive_product/').base64_encode($product->product_id);?>">Active</a></div>
+											<?php }else{?>
+											<div class="badge badge-danger"><a href="<?php 
+										echo base_url('product/active_product/').base64_encode($product->product_id);?>">InActive</a></div>
+											<?php }?></td>
                                             <td>
-                                                <a href="edit_product.php" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
+                                                <a href="<?php 
+												echo base_url('product/edit_product').base64_encode($product->product_id);
+												?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
+                                                <a href="<?php 
+												echo base_url('product/delete_product').base64_encode($product->product_id);
+												?>"class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Vegetables & Grocery</td>
-                                            <td>Sub-Category 1</td>
-                                            <td>Heritage Milk</td>
-                                            <td>250</td>
-                                            <td>52.00</td>
-                                            <td>13.01</td>
-                                            <td>38.99</td>
-                                            <td>2017-01-09</td>
-                                            <td>
-                                                <a href="edit_product.php" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Water Can</td>
-                                            <td>Sub-Category 1</td>
-                                            <td>Heritage Milk</td>
-                                            <td>250</td>
-                                            <td>52.00</td>
-                                            <td>13.01</td>
-                                            <td>38.99</td>
-                                            <td>2017-01-11</td>
-                                            <td>
-                                                <a href="edit_product.php" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
-                                                <a class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
-                                            </td>
-                                        </tr>
+									<?php endforeach;}?>
+                                  
                                     </tbody>
                                 </table>
                             </div>

@@ -15,12 +15,12 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="card-body">
-                                    <form id="add_product" method="post" action="">
+                                    <form id="add_product" method="post" action="<?php echo base_url('product/save_product');?>"  enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label>Category Name</label>
-                                                <select class="form-control" name="c_name" id="c_name">
-                                                    <option disabled selected>Select</option>
+                                                <select class="form-control" onchange="get_category(this.value)" name="c_name" id="c_name">
+                                                    <option value=''>Select</option>
 													<?php  if($status==1){
 														foreach($cat_list as $cat){ ?>
                                                     <option value="<?php echo base64_encode($cat->cat_id) ;?>">
@@ -33,12 +33,7 @@
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
                                                 <select class="form-control" name="sc_name" id="sc_name">
-                                                    <option disabled selected>Select</option>
-                                                    <option value="1">Sub-Category 1</option>
-                                                    <option value="2">Sub-Category 2</option>
-                                                    <option value="3">Sub-Category 3</option>
-                                                    <option value="4">Sub-Category 4</option>
-                                                    <option value="5">Sub-Category 5</option>
+                                                 
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -57,10 +52,50 @@
                                                 <label>Discount Price</label>
                                                 <input id="d_price" type="text" class="form-control" name="d_price">
                                             </div>
+											<div class="form-group col-md-4">
+                                                <label>Discount percentage</label>
+												<input type="checkbox" id='cid'name="" value=""> check this box for percentage<br>
+                                                <input id="dp_price" type="text" class="form-control" name="dp_price" disabled>
+                                            </div>
                                             <div class="form-group col-md-4">
                                                 <label>Net price</label>
                                                 <input id="n_price" type="text" class="form-control" name="n_price">
                                             </div>
+											<div class="form-group col-md-4">
+                                                <label>Product Image</label>
+                                                <input id="n_price" type="file" class="form-control" name="p_image">
+                                            </div>
+															  <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="myTable" class=" table order-list">
+                                            <thead>
+                                                <tr>
+                                                    <th> Feature Name</th>
+                                                    <th>Feature value</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="fname[]" placeholder="FirstName" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="fvalue[]" placeholder="LastName" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <a class="deleteRow"></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Row</button>
+                                    </div>
+                                </div>
+                            </div>
+                                   
+											
                                         </div>
                                         <button type="submit" class="btn btn-primary">
                                             Add
@@ -81,6 +116,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#add_product').bootstrapValidator({
+		
         
         fields: {
              c_name: {
@@ -108,6 +144,9 @@ $(document).ready(function() {
                 validators: {
 					notEmpty: {
 						message: 'Gender is required'
+					},
+					numeric:{
+						message:'enter integer or decimal value'
 					}
 				}
             },
@@ -115,6 +154,9 @@ $(document).ready(function() {
                 validators: {
 					notEmpty: {
 						message: 'Actual Price is required'
+					},
+					numeric:{
+						message:'enter integer or decimal value'
 					}
 				}
             },
@@ -122,7 +164,11 @@ $(document).ready(function() {
                 validators: {
 					notEmpty: {
 						message: 'Discount Price is required'
+					},
+					numeric:{
+						message:'enter integer or decimal value'
 					}
+				
 				}
             },
             n_price: {
@@ -139,22 +185,27 @@ $(document).ready(function() {
 
 </script>
 <script>
-$('#add_product').on('change',function(){
-	alert('odk');
-    cat=$('#add_product').val();
-    $.ajax({
-                    type: "POST",    
-                    url: "<?php echo base_url('product/get_sub_category/'); ?>"+cat,    
+ function get_category(value){
+	 $('#sc_name').empty();
+	
+	 $.ajax({
+                    type: "GET",    
+                    url: '<?php echo base_url('product/get_sub_category/'); ?>'+value,    
                     data: '',    
                     dataType: "json",   
                     
                     success: function (result) {
+						console.log(result.status);
 						
+						if(result.status==1){
 						$.each(result.subcat_list, function(i, subcat) {
-							//temp='<option value="'+
+							temp='<option value="'+subcat.subcat_id+'">'+subcat.subcat_name+'</option>';
+							alert(temp);
+							$('#sc_name').append(temp);
 							
 							
 						});
+						}
 						
        
                                            }
@@ -164,7 +215,52 @@ $('#add_product').on('change',function(){
 
                     } 
                 });
+ }
+
+// chech box 
+ $('#cid').click(function(){
+		
+		if (this.checked) {
+        $('#d_price').attr('disabled', 'disabled');
+		$('#dp_price').removeAttr('disabled');
+		
+    } else {
+        $('#dp_price').attr('disabled', 'disabled');
+		$('#d_price').removeAttr('disabled');
+    }
+		
+		
+	}); 
+</script>
+<script>
+    $(document).ready(function () {
+    var counter = 0;
+
+    $("#addrow").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="text" class="form-control" placeholder="FirstName" name="fname' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" placeholder="LastName" name="lname' + counter + '"/></td>';
+
+        cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+    });
+
+
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
 });
 
+
 </script>
+
+
 
