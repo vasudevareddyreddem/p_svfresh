@@ -81,5 +81,16 @@ public function save_edit_features($up_features,$fid){
 	$this->db->update('features_tab',$up_features);
 	
 }
-
+public function delete_features($value){
+	$this->db->set('status',0);
+	$this->db->where('feature_id',$value);
+	$this->db->update('features_tab');
+	
+}
+public function get_features_array($pid){
+	$this->db->select('feature_id,feature_name,feature_value');
+	  $this->db->from('features_tab');
+	  $this->db->where('features_tab.product_id',$pid);
+	 return $this->db->get()->result_array();
+}
 	}

@@ -33,7 +33,7 @@
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
                                                 <select class="form-control" name="sc_name" id="sc_name">
-                                                 
+                                                 <option value=''>Select</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -171,13 +171,7 @@ $(document).ready(function() {
 				
 				}
             },
-            n_price: {
-                validators: {
-					notEmpty: {
-						message: 'Net Price is required'
-					}
-				}
-            }
+           
             }
         })
      
@@ -200,7 +194,7 @@ $(document).ready(function() {
 						if(result.status==1){
 						$.each(result.subcat_list, function(i, subcat) {
 							temp='<option value="'+subcat.subcat_id+'">'+subcat.subcat_name+'</option>';
-							alert(temp);
+							
 							$('#sc_name').append(temp);
 							
 							

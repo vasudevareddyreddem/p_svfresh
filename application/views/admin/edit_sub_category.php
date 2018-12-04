@@ -26,7 +26,7 @@
                                                 <option disabled>Select</option>
 												<?php foreach($cat_list as $cat):?>
                                                 <option 
-												value="<?php echo $cat->cat_id;?>"  <?php if($cat->cat_id==$subcat->cat_id){
+												value="<?php echo base64_encode($cat->cat_id);?>"  <?php if($cat->cat_id==$subcat->cat_id){
 													echo 'selected';
 												}?>><?php echo $cat->cat_name?></option>
                                                 <?php endforeach; ?>
@@ -34,7 +34,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Sub-Category Name</label>
-											<input type="hidden" value="<?php echo $subcat->subcat_id ?>" name="scid" ?>
+											<input type="hidden" value="<?php echo base64_encode($subcat->subcat_id); ?>" name="scid" ?>
                                             <input id="name" type="text" class="form-control" name="name" value="<?php echo $subcat->subcat_name;?>">
                                         </div>
                                         <div class="form-group">

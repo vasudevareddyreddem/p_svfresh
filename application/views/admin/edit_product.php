@@ -103,14 +103,13 @@
                                     </div>
                                 </div>
                             </div>
-					<?php }?>
+					<?php }else{?>
 										
-								
+					
 				 <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-									<?php if($fstatus==1){
-										     foreach($fet_data as $fet): ?>
+									
                                         <table id="myTable" class=" table order-list">
                                             <thead>
                                                 <tr>
@@ -121,6 +120,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
+												
+										  <?php   foreach($fet_data as $fet): ?>
                                                     <td>
 													<input type="hidden" value="<?php echo base64_encode($fet->feature_id);?>"
 													name='fid[]'>
@@ -130,17 +131,20 @@
                                                         <input type="text" name="fvalue[]" placeholder="LastName" class="form-control"
 														value="<?php echo $fet->feature_value;?>"/>
                                                     </td>
+													<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>
                                                     <td>
                                                         <a class="deleteRow"></a>
                                                     </td>
                                                 </tr>
+												<?php endforeach; ?>
                                             </tbody>
                                         </table>
-									<?php endforeach; }?>
+									
                                         <button type="button" class="btn btn-md btn-info" id="addrow">Add Row</button>
                                     </div>
                                 </div>
                             </div>
+					<?php }?>
 					
                                    
                                         
@@ -222,9 +226,7 @@ $(document).ready(function() {
             },
             n_price: {
                 validators: {
-					notEmpty: {
-						message: 'Net Price is required'
-					},
+					
 					numeric:{
 						message:'enter integer or decimal value'
 					}
@@ -252,7 +254,7 @@ $(document).ready(function() {
 						if(result.status==1){
 						$.each(result.subcat_list, function(i, subcat) {
 							temp='<option value="'+subcat.subcat_id+'">'+subcat.subcat_name+'</option>';
-							alert(temp);
+							
 							$('#sc_name').append(temp);
 							
 							
@@ -277,8 +279,8 @@ $(document).ready(function() {
         var newRow = $("<tr>");
         var cols = "";
 
-        cols += '<td><input type="text" class="form-control" placeholder="FirstName" name="fname' + counter + '"/></td>';
-        cols += '<td><input type="text" class="form-control" placeholder="LastName" name="lname' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" placeholder="FirstName" name="fname[]'+'"/></td>';
+        cols += '<td><input type="text" class="form-control" placeholder="LastName" name="fvalue[]'+'"/></td>';
 
         cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
         newRow.append(cols);

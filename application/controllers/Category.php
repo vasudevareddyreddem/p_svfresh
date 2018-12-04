@@ -372,9 +372,7 @@ $this->load->model('Category_model')	;
 			}
 			$config['upload_path']          = './assets/uploads/sub_category_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
-                // $config['max_size']             = 100;
-                // $config['max_width']            = 1024;
-                // $config['max_height']           = 768;
+                
 
                 $this->load->library('upload', $config);
 			
@@ -389,11 +387,11 @@ $this->load->model('Category_model')	;
                 }
 				else{
 					$upload_data = $this->upload->data(); 
-                    $cat_img =   $upload_data['file_name'];
+                    $subcat_img =   $upload_data['file_name'];
 				}
 				$data=array(
 				'subcat_name'=>$this->input->post('name'),
-				'subcat_img'=>$this->input->post('image'),
+				'subcat_img'=>$subcat_img,
 				'cat_id'=>base64_decode($this->input->post('c_name'))
 				);
 				$status=$this->Category_model->save_sub_category($data);
@@ -404,7 +402,7 @@ $this->load->model('Category_model')	;
 					
 					
 				}else{
-					$this->session->set_flashdata('success','sub category added successfully'); 
+					$this->session->set_flashdata('error','sub category not added'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -465,6 +463,76 @@ $this->load->model('Category_model')	;
 		else{redirect('login');}
 		
 	}
-	
+	public function save_edit_subcategory(){
+		if($this->session->userdata('svadmin_det')){
+			$scid=base64_decode($this->input->post('scid'));
+		    $categ=base64_decode($this->input->post('c_name'));
+			$cstatus=$this->Category_model->subcategory_editname_check($this->input->post('name'),$categ,$scid);
+			if($cstatus==1){
+				  $this->session->set_flashdata('error','subcategory name already exited');
+				  redirect('category/add_sub_category');
+				  
+			}
+			$config['upload_path']          = './assets/uploads/sub_category_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
+
+                $this->load->library('upload', $config);
+			$img_status=0;
+			if($_FILES['image']['name']!=''){
+				  if ( ! $this->upload->do_upload('image'))
+                {
+                        //$error = array('error' => $this->upload->display_errors());
+						
+                          $this->session->set_flashdata('error','sub category image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $subcat_img =   $upload_data['file_name'];
+					$img_status=1;
+				}
+			}
+				$data=array(
+				'subcat_name'=>$this->input->post('name'),
+				'cat_id'=>base64_decode($this->input->post('c_name'))
+				);
+				if($img_status==1){
+					$data['subcat_img']=$subcat_img;
+				}
+				$status=$this->Category_model->save_editsub_category($data,$scid);
+				
+				if($status==1){
+					 $this->session->set_flashdata('success','sub category updated successfully'); 
+						 
+					      redirect('category/sub_category_list');
+					
+					
+				}else{
+					$this->session->set_flashdata('error','sub category not updated'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+				}
+		}
+			else{redirect('login');}
+		
+		
+	}
+	public function delete_subcategory(){
+		if($this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Category_model->delete_subcategory($id);
+			if($status==1){
+				$this->session->set_flashdata('success','subcategory deleted');
+			  redirect('category/sub_category_list');
+			}
+			else{
+				$this->session->set_flashdata('error','subcategory not deleted');
+			  redirect('category/sub_category_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
 	
 }
