@@ -93,4 +93,57 @@ public function get_features_array($pid){
 	  $this->db->where('features_tab.product_id',$pid);
 	 return $this->db->get()->result_array();
 }
+public function check_unique_product($pid,$cat_id,$subcat_id)
+{
+    $this->db->select('1');
+	  $this->db->from('product_tab');
+	  $this->db->group_start();
+	  $this->db->where('subcat_id',$subcat_id);
+	  $this->db->where('cat_id',$cat_id);
+	   $this->db->group_end();
+	    $this->db->group_start();
+	  $this->db->where('status',1);
+	  $this->db->or_where('status',2);
+	   $this->db->group_end();
+
+
+	  return $this->db->get()->result()?1:0;
+}
+public function check_unique_edit_product($pid,$pname,$cat_id,$subcat_id){
+	$this->db->select('*');
+	    $this->db->from('product_tab');
+		$this->db->group_start();
+		$this->db->where('product_id !=',$pid);
+		$this->db->where('cat_id ',$cat_id);
+		$this->db->where('subcat_id ',$subcat_id);
+		$this->db->group_end();
+		$this->db->group_start();
+	   $this->db->where('status',1);
+	   $this->db->or_where('status',2);
+	   $this->db->group_end();
+	   
+
+	   $result= $this->db->get()->result_array();
+
+			$product_names = array_column($result, 'product_name');
+			//echo $catname;exit;
+			//echo in_array($catname,$cat_names);exit;
+			if(in_array($pname,$product_names)){
+
+			return 1;
+			}
+			else{
+				return 0;
+			}
+		
 	}
+	public function delete_product($id){
+		$this->db->set('status',0);
+		$this->db->where('product_id',$id);
+		$this->db->update('product_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	
+		
+	}
+	

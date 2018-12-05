@@ -54,7 +54,7 @@
                                             </div>
 											<div class="form-group col-md-4">
                                                 <label>Discount percentage</label>
-												<input type="checkbox" id='cid'name="" value=""> check this box for percentage<br>
+												
                                                 <input id="dp_price" type="text" class="form-control" name="dp_price" >
                                             </div>
                                             <div class="form-group col-md-4">
@@ -171,6 +171,19 @@ $(document).ready(function() {
 				
 				}
             },
+			p_image: {
+                validators: {
+					notEmpty: {
+						message: 'Image is required'
+					},
+					regexp: {
+					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
+					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
+					}
+				
+				}
+            },
+			
            
             }
         })

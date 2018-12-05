@@ -78,6 +78,12 @@ $this->load->model('Product_model');
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
+				$status=$this->Product_model->check_unique_product($product_name,$cat_id,$subcat_id);
+				if($status==1){
+					$this->session->set_flashdata('error','product name  already existed'); 
+					       redirect('product/add_product');
+					
+				}
 				
 				//print_r($f_names);exit;
 				
@@ -223,7 +229,13 @@ $this->load->model('Product_model');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
 				
-				
+				$status=$this->Product_model->check_unique_edit_product($pid,$product_name,$cat_id,$subcat_id);
+			//echo	$this->db->last_query(); exit;
+				if($status==1){
+					$this->session->set_flashdata('error','product name  already existed'); 
+					       redirect($_SERVER['HTTP_REFERER']);
+					
+				}
 				
 				
 				
@@ -342,5 +354,20 @@ $this->load->model('Product_model');
 			}
 			else{redirect('login');}
 			
+		}
+		public function delete_product(){
+			if($this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Product_model->delete_product($id);
+			if($status==1){
+				$this->session->set_flashdata('success',' product deleted');
+			  redirect('product/product_list');
+			}
+			else{
+				$this->session->set_flashdata('error','product not deleted');
+			  redirect('product/product_list');
+			}
+		}
+		else{redirect('login');}
 		}
 }
