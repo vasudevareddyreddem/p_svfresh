@@ -138,7 +138,7 @@ class Category_model extends CI_Model
 			count(product_tab.product_name) countproduct');
 	  $this->db->from('subcat_tab');
 	  $this->db->join('category_tab','category_tab.cat_id=subcat_tab.cat_id');
-	  $this->db->join('product_tab','product_tab.subcat_id=subcat_tab.subcat_id');
+	  $this->db->join('product_tab','product_tab.subcat_id=subcat_tab.subcat_id','left');
 	   $this->db->where('subcat_tab.status',1);
 	   $this->db->or_where('subcat_tab.status',2);
 	   $this->db->group_by('subcat_tab.subcat_id,subcat_tab.subcat_name,subcat_tab.subcat_img,
@@ -199,6 +199,42 @@ class Category_model extends CI_Model
 		$this->db->where('subcat_id',$id);
 		return $this->db->get()->row();
 	}
+	public function subcategory_editname_check($scname,$cid,$scid){
+		$this->db->select('*');
+	    $this->db->from('subcat_tab');
+		$this->db->group_start();
+		$this->db->where('subcat_id !=',$scid);
+		$this->db->where('cat_id ',$cid);
+		$this->db->group_start();
+	   $this->db->where('status',1);
+	   $this->db->or_where('status',2);
+	   $this->db->group_end();
+	   $this->db->group_end();
 
+	   $subnames= $this->db->get()->result_array();
+
+			$scat_names = array_column($subnames, 'subcat_name');
+			//echo $catname;exit;
+			//echo in_array($catname,$cat_names);exit;
+			if(in_array($scname,$scat_names)){
+
+			return 1;
+			}
+			else{
+				return 0;
+			}
+	}
+	public function save_editsub_category($data,$scid){
+		$this->db->where('subcat_id',$scid);
+		$this->db->update('subcat_tab',$data);
+		return $this->db->affected_rows()?1:0;
+		
+	}
+	public function delete_subcategory($id){
+		$this->db->set('status',0);
+		$this->db->where('subcat_id',$id);
+		$this->db->update('subcat_tab');
+		return $this->db->affected_rows()?1:0;
+	}
 
 	}

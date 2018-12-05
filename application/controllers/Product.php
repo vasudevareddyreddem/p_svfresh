@@ -78,8 +78,14 @@ $this->load->model('Product_model');
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
+				$status=$this->Product_model->check_unique_product($product_name,$cat_id,$subcat_id);
+				if($status==1){
+					$this->session->set_flashdata('error','product name  already existed'); 
+					       redirect('product/add_product');
+					
+				}
 				
-				print_r($f_names);exit;
+				//print_r($f_names);exit;
 				
 				
 				 $config['upload_path']          = './assets/uploads/category_pics';
@@ -117,18 +123,22 @@ $this->load->model('Product_model');
 				);
 				$product_id=$this->Product_model->save_product($data);
 				foreach($f_names as $key=>$value){
+					if(!$f_values[$key]=='' && !$value='')
+					{
 				  $features[]=array(
 				  'feature_name'=>$value,
 				  'feature_value'=>$f_values[$key],
 				  'product_id'=>$product_id,
 				  'created_by'=>$adminid
 				  );
-					
+					}
 				}
-				
+				if(!empty($features)){
 				$status=$this->Product_model->save_features($features);
-				
-				 if($status==1){
+				}
+				 $this->session->set_flashdata('success','product addded  successfully'); 
+					      redirect('product/product_list');
+				/* if($status==1){
 				   $this->session->set_flashdata('success','product addded  successfully'); 
 					      redirect('product/product_list');
 					
@@ -137,7 +147,7 @@ $this->load->model('Product_model');
 				 else{
 					 $this->session->set_flashdata('error','features not added'); 
 					       redirect('product/add_product');
-				 }
+				 }*/
 				
 				
 			}
@@ -219,6 +229,13 @@ $this->load->model('Product_model');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
 				
+				$status=$this->Product_model->check_unique_edit_product($pid,$product_name,$cat_id,$subcat_id);
+			//echo	$this->db->last_query(); exit;
+				if($status==1){
+					$this->session->set_flashdata('error','product name  already existed'); 
+					       redirect($_SERVER['HTTP_REFERER']);
+					
+				}
 				
 				
 				
@@ -272,11 +289,12 @@ $this->load->model('Product_model');
 				}
 				$status=$this->Product_model->save_edit_product($data,$pid);
 				 
-				//echo $this->db->last_query(); exit;
-				
-				 $features=$this->Product_model->get_features($pid);
-				$fids = array_column($features, 'feature_id');
 			
+				
+				 $features=$this->Product_model->get_features_array($pid);
+				 
+				$fids=array_column($features, 'feature_id');
+				
 			
 		$in_features[]=array();
 				foreach($fids as $key=>$value){
@@ -285,12 +303,20 @@ $this->load->model('Product_model');
 						
 				  'feature_name'=>$f_names[$key],
 				  'feature_value'=>$f_values[$key],
-				  'product_id'=>$product_id,
+				  'product_id'=>$pid,
 				  'created_by'=>$adminid
 				  );
 				 //$key1=array_search($value, $names);
-				 $this->Product_model->save_edit_features($up_features,$value);
+				 //
+				 if(isset($f_names[$key])&& isset($f_values[$key]) ){
+					 $this->Product_model->save_edit_features($up_features,$value);
+				
+                 }
+				 else{
+					 $this->Product_model->delete_features($value);
+				 }
 				  unset($fids[$key]);
+				
 				
 			
 			}
@@ -298,7 +324,7 @@ $this->load->model('Product_model');
 				  $in_features[]=array(
 				  'feature_name'=>$value,
 				  'feature_value'=>$f_values[$key],
-				  'product_id'=>$product_id,
+				  'product_id'=>$pid,
 				  'created_by'=>$adminid
 				  );
 				    unset($fids[$key]);
@@ -307,20 +333,41 @@ $this->load->model('Product_model');
 				if(!empty($in_features)){
 				$ins_status=$this->Product_model->save_features($in_features);
 				}
+				//loop the remaing feature elemnts
+				
+				// foreach($fids as $key=>$value){
+					// $this->Product_model->delete_features($value);
+					
+				// }
 				 if($status==1){
-				   $this->session->set_flashdata('success','product addded  successfully'); 
+				   $this->session->set_flashdata('success','product updated  successfully'); 
 					      redirect('product/product_list');
 					
 					
 				}
 				 else{
-					 $this->session->set_flashdata('error','product not added'); 
-					       redirect('product/add_product');
+					 $this->session->set_flashdata('error','product updated'); 
+					       redirect($_SERVER['HTTP_REFERER']);
 				 }
 				
 				
 			}
 			else{redirect('login');}
 			
+		}
+		public function delete_product(){
+			if($this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Product_model->delete_product($id);
+			if($status==1){
+				$this->session->set_flashdata('success',' product deleted');
+			  redirect('product/product_list');
+			}
+			else{
+				$this->session->set_flashdata('error','product not deleted');
+			  redirect('product/product_list');
+			}
+		}
+		else{redirect('login');}
 		}
 }

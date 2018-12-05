@@ -33,7 +33,7 @@
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
                                                 <select class="form-control" name="sc_name" id="sc_name">
-                                                 
+                                                 <option value=''>Select</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -54,7 +54,7 @@
                                             </div>
 											<div class="form-group col-md-4">
                                                 <label>Discount percentage</label>
-												<input type="checkbox" id='cid'name="" value=""> check this box for percentage<br>
+												
                                                 <input id="dp_price" type="text" class="form-control" name="dp_price" >
                                             </div>
                                             <div class="form-group col-md-4">
@@ -171,13 +171,20 @@ $(document).ready(function() {
 				
 				}
             },
-            n_price: {
+			p_image: {
                 validators: {
 					notEmpty: {
-						message: 'Net Price is required'
+						message: 'Image is required'
+					},
+					regexp: {
+					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
+					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
 					}
+				
 				}
-            }
+            },
+			
+           
             }
         })
      
@@ -200,7 +207,7 @@ $(document).ready(function() {
 						if(result.status==1){
 						$.each(result.subcat_list, function(i, subcat) {
 							temp='<option value="'+subcat.subcat_id+'">'+subcat.subcat_name+'</option>';
-							alert(temp);
+							
 							$('#sc_name').append(temp);
 							
 							
