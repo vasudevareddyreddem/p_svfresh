@@ -85,7 +85,7 @@ public function delete_features($value){
 	$this->db->set('status',0);
 	$this->db->where('feature_id',$value);
 	$this->db->update('features_tab');
-	
+
 }
 public function get_features_array($pid){
 	$this->db->select('feature_id,feature_name,feature_value');
@@ -121,9 +121,8 @@ public function check_unique_edit_product($pid,$pname,$cat_id,$subcat_id){
 	   $this->db->where('status',1);
 	   $this->db->or_where('status',2);
 	   $this->db->group_end();
-	   
 
-<<<<<<< HEAD
+
 //getting all product with active status--Rana
 public function get_all_product()
 {
@@ -144,29 +143,3 @@ public function get_product_by_id($id='')
 }
 
 	}
-=======
-	   $result= $this->db->get()->result_array();
-
-			$product_names = array_column($result, 'product_name');
-			//echo $catname;exit;
-			//echo in_array($catname,$cat_names);exit;
-			if(in_array($pname,$product_names)){
-
-			return 1;
-			}
-			else{
-				return 0;
-			}
-		
-	}
-	public function delete_product($id){
-		$this->db->set('status',0);
-		$this->db->where('product_id',$id);
-		$this->db->update('product_tab');
-		return $this->db->affected_rows()?1:0;
-	}
-	
-		
-	}
-	
->>>>>>> 7b000014dde7308325b3ea944aad17e52c85ad66
