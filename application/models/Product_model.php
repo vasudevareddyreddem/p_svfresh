@@ -1,9 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Product_model extends CI_Model 
+class Product_model extends CI_Model
 
 {
-	function __construct() 
+	function __construct()
 	{
 		parent::__construct();
 		$this->load->database("default");
@@ -18,10 +18,10 @@ class Product_model extends CI_Model
 	    $this->db->group_end();
 	   $this->db->order_by('updated_at');
 	   return $this->db->get()->result_array();
-		
+
 	}
 	public function save_product($data){
-		
+
 		$this->db->insert('product_tab',$data);
 		   $insert_id = $this->db->insert_id();
 		return $insert_id;
@@ -29,7 +29,7 @@ class Product_model extends CI_Model
 	public function save_features($data){
 		$this->db->insert_batch('features_tab',$data);
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 	public function get_product_list(){
 			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
@@ -43,9 +43,9 @@ class Product_model extends CI_Model
 	  $this->db->or_where('product_tab.status',2);
 	  $this->db->order_by('product_tab.updated_at');
 	 return $this->db->get()->result();
-		
-		
-		
+
+
+
 	}
 	public function edit_product($pid){
 			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
@@ -58,17 +58,17 @@ class Product_model extends CI_Model
 	  $this->db->where('product_tab.status',1);
 	  $this->db->or_where('product_tab.status',2);
 	   $this->db->group_end();
-	  
+
 	 return $this->db->get()->row();
-		
-		
+
+
 }
 public function save_edit_product($data,$pid){
 	$this->db->where('product_id',$pid);
 	$this->db->update('product_tab',$data);
 
 	return $this->db->affected_rows()?1:0;
-	
+
 }
 public function get_features($pid){
 	$this->db->select('feature_id,feature_name,feature_value');
@@ -79,7 +79,26 @@ public function get_features($pid){
 public function save_edit_features($up_features,$fid){
 	 $this->db->where('feature_id',$fid);
 	$this->db->update('features_tab',$up_features);
-	
+
+}
+
+//getting all product with active status--Rana
+public function get_all_product()
+{
+	return $this->db->get_where('product_tab',array('status' => '1'))->result();
+}
+
+public function get_products_by_sub_category($id='')
+{
+	$this->db->select('*');
+	$this->db->from('product_tab');
+	$this->db->where('subcat_id',$id);
+	return $this->db->get()->result();
+}
+
+public function get_product_by_id($id='')
+{
+	return $this->db->get_where('product_tab',array('product_id' => $id))->row();
 }
 
 	}

@@ -9,6 +9,7 @@ class Register extends CI_controller
   {
     parent::__construct();
     $this->load->model('Auth_Model');
+    $this->load->model('Category_model');
     $this->load->library('form_validation');
   }
 
@@ -22,6 +23,7 @@ class Register extends CI_controller
       $this->form_validation->set_rules('password', 'Password', 'required|matches[password]');
       if ($this->form_validation->run() == FALSE){
         $data['pageTitle'] = 'Register';
+        $data['categories'] = $this->Category_model->get_all_category();
         $this->load->view('home/register',$data);
       }else{
         //posting formdata and inserting into database
@@ -48,6 +50,7 @@ class Register extends CI_controller
     }else{
       //loading view
       $data['pageTitle'] = 'Register';
+      $data['categories'] = $this->Category_model->get_all_category();
       $this->load->view('home/register',$data);
     }
   }

@@ -149,13 +149,19 @@
                                 <a class="navbar-brand" href="#">MENU</a>
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
+                              <?php //if($this->session->userdata('logged_in') == TRUE){ ?>
                                 <ul class="nav navbar-nav">
                                     <li class="active"><a href="<?php echo base_url('home'); ?>">Home</a></li>
-                  									<li class=""><a href="category.php">Fruits & Vegetables </a></li>
-                  									<li class=""><a href="#">Grocery </a></li>
+                                    <?php if(count($categories) > 0){ ?>
+                                      <?php foreach ($categories as $c) { ?>
+                                        <li class=""><a href="<?php echo base_url('category/'.$c->cat_id); ?>"><?php echo $c->cat_name; ?></a></li>
+                                      <?php  } ?>
+                                    <?php } ?>
+                  									<!-- <li class=""><a href="#">Grocery </a></li>
                   									<li class=""><a href="milk-category.php">Milk </a></li>
-                  									<li class=""><a href="#">Water can </a></li>
+                  									<li class=""><a href="#">Water can </a></li> -->
                                 </ul>
+                              <?php //} ?>
                             </div><!--/.nav-collapse -->
                         </div>
                     </nav>
