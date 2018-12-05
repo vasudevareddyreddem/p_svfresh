@@ -45,15 +45,15 @@
                     <div class="product-container">
                       <div class="left-block">
                         <a href="<?php echo base_url('product/'.$p->product_id); ?>">
-                          <img class="img-responsive" alt="product" src="<?php echo base_url('assets/data/fruits-img1.png'); ?>" />
+                          <img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/'.$p->product_img); ?>" />
                         </a>
                         <div class="quick-view">
                           <a title="Add to my wishlist" class="heart" href="#"></a>
                           <a title="Add to compare" class="compare" href="#"></a>
                         </div>
-                        <div class="add-to-cart">
+                        <!-- <div class="add-to-cart">
                           <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="right-block">
                         <h5 class="product-name"><a href="#"><?php echo $p->product_name;  ?></a></h5>
