@@ -105,7 +105,7 @@ class Category_model extends CI_Model
 
 
 	  return $this->db->get()->result()?1:0;
-		 
+
 	 }
 	 public function edit_category($cid,$data){
 		 $this->db->where('cat_id',$cid);
@@ -145,7 +145,7 @@ class Category_model extends CI_Model
 			subcat_tab.status,subcat_tab.updated_at,category_tab.cat_name');
 	   $this->db->order_by('subcat_tab.updated_at');
 	   return $this->db->get()->result();
-		
+
 	}
 	public function inactive_subcategory($id){
 		$this->db->set('status',2);
@@ -169,11 +169,35 @@ class Category_model extends CI_Model
 	   $this->db->where('status',1);
 	   $this->db->or_where('status',2);
 	   $this->db->group_end();
-	   
+
 	   $result=$this->db->get()->row();
 	   return  $result;
-		
-		
+
+
+	}
+	//getting sub categories for database based on category id -- Rana
+	public function get_sub_category($id='')
+	{
+		$this->db->select('subcat_id,subcat_name');
+		$this->db->from('subcat_tab');
+		$this->db->where('cat_id',$id);
+		return $this->db->get()->result();
+	}
+	//getting categories name for database based on category id -- Rana
+	public function get_category_name_by_id($id='')
+	{
+		$this->db->select('cat_name');
+		$this->db->from('category_tab');
+		$this->db->where('cat_id',$id);
+		return $this->db->get()->row();
+	}
+	//getting sub categories name for database based on sub category id -- Rana
+	public function get_sub_category_name_by_id($id='')
+	{
+		$this->db->select('subcat_name');
+		$this->db->from('subcat_tab');
+		$this->db->where('subcat_id',$id);
+		return $this->db->get()->row();
 	}
 	public function subcategory_editname_check($scname,$cid,$scid){
 		$this->db->select('*');

@@ -43,9 +43,8 @@
             <a href="">
               <div class="col-xs-6 col-md-3 ">
                 <div class="category-bg" style="margin:0 auto;">
-                  <?php echo base_url('assets/upload/category_pics/'.$c->cat_img); ?>
-                  <?php echo $c->cat_img; if(!empty($c->cat_img) && file_exists('assets/upload/category_pics/'.$c->cat_img)){  ?>
-                  <img class="img-resonsive" src="<?php echo base_url('assets/upload/category_pics/'.$c->cat_img); ?>" alt="Milk"/>
+                  <?php if(!empty($c->cat_img) && file_exists('assets/uploads/category_pics/'.$c->cat_img)){  ?>
+                  <img class="img-resonsive" src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_img); ?>" alt="<?php echo $c->cat_img; ?>"/>
                   <?php } ?>
                 </div>
               <div class="text-center font-cat"><?php if($c->cat_name){ echo $c->cat_name;} ?></div>
@@ -53,30 +52,6 @@
             </a>
           <?php } ?>
         <?php } ?>
-    		<!--a href="">
-    		  <div class="col-xs-6 col-md-3 ">
-    			<div class="category-bg" style="margin:0 auto;" >
-    				<img class="img-resonsive" src="<?php echo base_url('assets/images/grocery-cat-icon.png'); ?>" alt="Grocery"/>
-    			</div>
-    			<div class="text-center font-cat">Grocery</div>
-          </div>
-    		</a>
-    		<a href="">
-    		 <div class="col-xs-6 col-md-3 ">
-    			<div class="category-bg" style="margin:0 auto;" >
-    				<img class="img-resonsive" src="assets/images/fruits-cat-icon.png" alt="Grocery"/>
-    			</div>
-    			<div class="text-center font-cat">Fruits & Vegetables </div>
-          </div>
-    		</a>
-    		<a href="">
-          <div class="col-xs-6 col-md-3 ">
-    			<div class="category-bg" style="margin:0 auto;" >
-    				<img class="img-resonsive" src="assets/images/water-cat-icon.png" alt="Grocery"/>
-    			</div>
-    			<div class="text-center font-cat">Water can</div>
-            </div>
-    		</a-->
       </div>
   </div>
 </section>
@@ -97,7 +72,7 @@
               <div class="bg-white show-brand">
                 <div class="container">
 
-                  <div class="navbar-brand"><a href="#"><?php if(!empty($c->cat_small_img) && file_exists('assets/upload/category_pics/'.$c->cat_small_img)){ ?><img alt="fashion" src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_small_img ); ?>" /><?php } ?> <?php if($c->cat_name){ echo $c->cat_name;} ?></a></div>
+                  <div class="navbar-brand"><a href="#"><?php if(!empty($c->cat_small_img) && file_exists('assets/uploads/category_pics/'.$c->cat_small_img)){ ?><img alt="fashion" src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_small_img ); ?>" /><?php } ?> <?php if($c->cat_name){ echo $c->cat_name;} ?></a></div>
 
 
                   <div class=" col-md-9" >
@@ -137,34 +112,39 @@
                       <!-- tab product -->
                       <div class="tab-panel active" id="tab-6">
                         <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
-                          <li>
-                            <div class="left-block">
-                              <a href="#"><img class="img-responsive" alt="product" src="assets/data/milkbrand1.png" /></a>
-                              <div class="quick-view">
-                                <a title="Add to my wishlist" class="heart" href="#"></a>
-                                <a title="Add to compare" class="compare" href="#"></a>
+                          <?php if(count($products) > 0){ ?>
+                            <?php foreach ($products as $p) { if($p->cat_id == $c->cat_id){ ?>
 
-                              </div>
-                              <div class="add-to-cart">
-                                <a title="Add to Cart" href="#">Add to Cart</a>
-                              </div>
-                            </div>
-                            <div class="right-block">
-                              <h5 class="product-name"><a href="#">Heritage Milk</a></h5>
-                              <div class="content_price">
-                                <span class="price product-price">₹ 38,95</span>
-                                <span class="price old-price"> ₹ 52,00</span>
-                              </div>
-                              <div class="product-star">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
+                              <li>
+                                <div class="left-block">
+                                  <a href="#"><img class="img-responsive" alt="product" src="assets/data/milkbrand1.png" /></a>
+                                  <div class="quick-view">
+                                    <a title="Add to my wishlist" class="heart" href="#"></a>
+                                    <a title="Add to compare" class="compare" href="#"></a>
+
+                                  </div>
+                                  <div class="add-to-cart">
+                                    <a title="Add to Cart" href="#">Add to Cart</a>
+                                  </div>
+                                </div>
+                                <div class="right-block">
+                                  <h5 class="product-name"><a href="#"><?php echo $p->product_name; ?></a></h5>
+                                  <div class="content_price">
+                                    <span class="price product-price">₹ <?php echo $p->net_price; ?></span>
+                                    <span class="price old-price"> ₹ <?php echo $p->actual_price; ?></span>
+                                  </div>
+                                  <div class="product-star">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                  </div>
+                                </div>
+                              </li>
+                          <?php  } }?>
+                        <?php } ?>
+                          <!-- <li>
                             <div class="left-block">
 
                               <a href="#"><img class="img-responsive" alt="product" src="assets/data/milkbrand2.png" /></a>
@@ -300,7 +280,7 @@
                                 <i class="fa fa-star-half-o"></i>
                               </div>
                             </div>
-                          </li>
+                          </li> -->
                         </ul>
                       </div>
                       <!-- tab product -->

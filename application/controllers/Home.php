@@ -9,6 +9,7 @@ class Home extends CI_controller
     $this->load->library('form_validation');
     $this->load->model('Auth_Model');
     $this->load->model('Category_model');
+    $this->load->model('Product_model');
   }
 
   public function index()
@@ -16,6 +17,7 @@ class Home extends CI_controller
     if($this->session->userdata('logged_in') == TRUE){
       $data['pageTitle'] = 'Welcome to svfresh';
       $data['categories'] = $this->Category_model->get_all_category();
+      $data['products'] = $this->Product_model->get_all_product();
       $this->load->view('home/index',$data);
     }else{
       redirect('home/login');
@@ -30,6 +32,7 @@ class Home extends CI_controller
       $this->form_validation->set_rules('password', 'Password', 'required');
       if ($this->form_validation->run() == FALSE){
         $data['pageTitle'] = 'Login';
+        $data['categories'] = $this->Category_model->get_all_category();
         $this->load->view('home/login',$data);
       }else{
         //checking user data
@@ -52,6 +55,7 @@ class Home extends CI_controller
     }else{
       //displaying login view page
       $data['pageTitle'] = 'Login';
+      $data['categories'] = $this->Category_model->get_all_category();
       $this->load->view('home/login',$data);
     }
   }
