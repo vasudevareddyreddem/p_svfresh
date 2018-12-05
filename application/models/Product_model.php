@@ -122,7 +122,7 @@ public function check_unique_edit_product($pid,$pname,$cat_id,$subcat_id){
 	   $this->db->or_where('status',2);
 	   $this->db->group_end();
 
-
+}
 //getting all product with active status--Rana
 public function get_all_product()
 {
