@@ -181,6 +181,7 @@ class Category_model extends CI_Model
 		$this->db->select('subcat_id,subcat_name');
 		$this->db->from('subcat_tab');
 		$this->db->where('cat_id',$id);
+		$this->db->where('status','1');
 		return $this->db->get()->result();
 	}
 	//getting categories name for database based on category id -- Rana
@@ -189,6 +190,7 @@ class Category_model extends CI_Model
 		$this->db->select('cat_name');
 		$this->db->from('category_tab');
 		$this->db->where('cat_id',$id);
+		$this->db->where('status','1');
 		return $this->db->get()->row();
 	}
 	//getting sub categories name for database based on sub category id -- Rana
@@ -197,6 +199,7 @@ class Category_model extends CI_Model
 		$this->db->select('subcat_name');
 		$this->db->from('subcat_tab');
 		$this->db->where('subcat_id',$id);
+		$this->db->where('status','1');
 		return $this->db->get()->row();
 	}
 	public function subcategory_editname_check($scname,$cid,$scid){
@@ -228,7 +231,7 @@ class Category_model extends CI_Model
 		$this->db->where('subcat_id',$scid);
 		$this->db->update('subcat_tab',$data);
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 	public function delete_subcategory($id){
 		$this->db->set('status',0);

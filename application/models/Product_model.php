@@ -130,18 +130,19 @@ public function get_all_product()
 {
 	return $this->db->get_where('product_tab',array('status' => '1'))->result();
 }
-
+//getting products with sub category id--Rana
 public function get_products_by_sub_category($id='')
 {
 	$this->db->select('*');
 	$this->db->from('product_tab');
 	$this->db->where('subcat_id',$id);
+	$this->db->where('status','1');
 	return $this->db->get()->result();
 }
-
+//getting products with product id--Rana
 public function get_product_by_id($id='')
 {
-	return $this->db->get_where('product_tab',array('product_id' => $id))->row();
+	return $this->db->get_where('product_tab',array('product_id' => $id,'status' => '1'))->row();
 }
 public function delete_product($id){
 	$this->db->set('status',0);

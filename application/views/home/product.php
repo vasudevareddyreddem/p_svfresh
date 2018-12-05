@@ -143,9 +143,10 @@
               <!-- product-imge-->
               <div class="product-image">
                 <div class="product-full">
-                  <img id="product-zoom" src='assets/data/fruits-img1.png' data-zoom-image="assets/data/fruits-img1.png"/>
+                  <img id="product-zoom" src='<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>' data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>"/>
                 </div>
-                <div class="product-img-thumb" id="gallery_01">
+                <!-- product thumbnail images -->
+                <!-- <div class="product-img-thumb" id="gallery_01">
                   <ul class="owl-carousel" data-items="3" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
                     <li>
                       <a href="#" data-image="assets/data/grocery-img1.png" data-zoom-image="assets/data/grocery-img1.png">
@@ -178,7 +179,8 @@
                       </a>
                     </li>
                   </ul>
-                </div>
+                </div> -->
+                <!-- product thumbnail images -->
               </div>
               <!-- product-imge-->
             </div>
@@ -213,7 +215,7 @@
               </div>
             <?php } ?>
               <div class="form-option">
-                <p class="form-option-title">Available Options:</p>
+                <!-- <p class="form-option-title">Available Options:</p>
                 <div class="attributes">
                   <div class="attribute-label">Color:</div>
                   <div class="attribute-list">
@@ -226,7 +228,7 @@
                       <li style="background:#ff0000;"><a href="#">red</a></li>
                     </ul>
                   </div>
-                </div>
+                </div> -->
                 <div class="attributes">
                   <div class="attribute-label">Qty:</div>
 
@@ -237,7 +239,7 @@
                   </form>
 
                 </div>
-                <div class="attributes">
+                <!-- <div class="attributes">
                   <div class="attribute-label">Size:</div>
                   <div class="attribute-list">
                     <select>
@@ -245,14 +247,16 @@
                       <option value="2">XL</option>
                       <option value="3">XXL</option>
                     </select>
-
                   </div>
-
-                </div>
+                </div> -->
               </div>
               <div class="form-action">
                 <div class="button-group">
-                  <a class="btn-add-cart" href="#">Add to cart</a>
+                  <form method="post" action="<?php echo base_url('cart'); ?>">
+                    <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>"/>
+                    <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
+                    <button class="btn-add-cart" type="submit">Add to cart</button>
+                  </form>
                 </div>
                 <div class="button-group">
                   <a class="wishlist" href="#"><i class="fa fa-heart-o"></i>
@@ -284,11 +288,16 @@
                 </ul>
                 <div class="tab-container">
                   <div id="product-detail" class="tab-panel active">
-                    <p>Morbi mollis tellus ac sapien. Nunc nec neque. Praesent nec nisl a purus blandit viverra. Nunc nec neque. Pellentesque auctor neque nec urna.</p>
+                    <?php if($product->description){ ?>
+                      <p><?php echo $product->description; ?></p>
+                    <?php } else { ?>
+                      <p><h6>No product description</h6></p>
+                    <?php } ?>
+                    <!-- <p>Morbi mollis tellus ac sapien. Nunc nec neque. Praesent nec nisl a purus blandit viverra. Nunc nec neque. Pellentesque auctor neque nec urna.</p>
 
                     <p>Curabitur suscipit suscipit tellus. Cras id dui. Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel, lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Maecenas vestibulum mollis diam.</p>
 
-                    <p>Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in dolor. Sed lectus. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Nam at tortor in tellus interdum sagittis. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est.</p>
+                    <p>Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in dolor. Sed lectus. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Nam at tortor in tellus interdum sagittis. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est.</p> -->
                   </div>
                   <div id="information" class="tab-panel">
                     <table class="table table-bordered">
@@ -372,7 +381,7 @@
               <div class="page-product-box">
                 <h3 class="heading">Related Products</h3>
                 <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
-                  <li>
+                  <!-- <li>
                     <div class="product-container">
                       <div class="left-block">
                         <a href="#">
@@ -464,7 +473,7 @@
                         </div>
                       </div>
                     </div>
-                  </li>
+                  </li> -->
                   <li>
                     <div class="product-container">
                       <div class="left-block">
@@ -476,9 +485,9 @@
                           <a title="Add to compare" class="compare" href="#"></a>
 
                         </div>
-                        <div class="add-to-cart">
+                        <!-- <div class="add-to-cart">
                           <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="right-block">
                         <h5 class="product-name"><a href="#">Green Grams</a></h5>
@@ -514,9 +523,9 @@
                           <a title="Add to compare" class="compare" href="#"></a>
 
                         </div>
-                        <div class="add-to-cart">
+                        <!-- <div class="add-to-cart">
                           <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="right-block">
                         <h5 class="product-name"><a href="#">Red Dal</a></h5>
@@ -534,7 +543,7 @@
                       </div>
                     </div>
                   </li>
-                  <li>
+                  <!-- <li>
                     <div class="product-container">
                       <div class="left-block">
                         <a href="#">
@@ -626,7 +635,7 @@
                         </div>
                       </div>
                     </div>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
               <!-- ./box product -->

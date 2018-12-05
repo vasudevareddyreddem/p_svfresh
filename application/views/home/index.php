@@ -113,19 +113,19 @@
                       <div class="tab-panel active" id="tab-6">
                         <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
                           <?php if(count($products) > 0){ ?>
-                            <?php foreach ($products as $p) { if($p->cat_id == $c->cat_id){ ?>
+                            <?php foreach ($products as $p) { if($p->cat_id == $c->cat_id){ echo $p->cat_id.''.$c->cat_id; ?>
 
                               <li>
                                 <div class="left-block">
-                                  <a href="#"><img class="img-responsive" alt="product" src="assets/data/milkbrand1.png" /></a>
+                                  <a href="<?php echo base_url('product/'.$p->product_id); ?>"><img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/'.$p->product_img); ?>" /></a>
                                   <div class="quick-view">
                                     <a title="Add to my wishlist" class="heart" href="#"></a>
                                     <a title="Add to compare" class="compare" href="#"></a>
 
                                   </div>
-                                  <div class="add-to-cart">
+                                  <!-- <div class="add-to-cart">
                                     <a title="Add to Cart" href="#">Add to Cart</a>
-                                  </div>
+                                  </div> -->
                                 </div>
                                 <div class="right-block">
                                   <h5 class="product-name"><a href="#"><?php echo $p->product_name; ?></a></h5>
@@ -143,7 +143,7 @@
                                 </div>
                               </li>
                           <?php  } }?>
-                        <?php } ?>
+                          <?php } ?>
                           <!-- <li>
                             <div class="left-block">
 
