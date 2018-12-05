@@ -91,7 +91,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-													<input type="hidden" value="" name="fid[]" >
+													
                                                         <input type="text" name="fname[]" placeholder="FirstName" class="form-control" />
                                                     </td>
                                                     <td>
@@ -123,13 +123,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-												
-										  <?php   foreach($fet_data as $fet): ?>
-                                                    <td>
-													<input type="hidden" value="<?php echo base64_encode($fet->feature_id);?>"
+											 <?php   foreach($fet_data as $fet): ?>
+                                                
+										<input type="hidden" value="<?php echo $fet->feature_id;?>"
 													name='fid[]'>
-                                                        <input type="text" name="fname[]" placeholder="FirstName" class="form-control" value="<?php echo $fet->feature_name;?>" />
+												<tr>
+												
+										 
+                                                    <td>
+
+                                              <input type="text" name="fname[]" placeholder="FirstName" class="form-control" value="<?php echo $fet->feature_name;?>" />
                                                     </td>
                                                     <td>
                                                         <input type="text" name="fvalue[]" placeholder="LastName" class="form-control"

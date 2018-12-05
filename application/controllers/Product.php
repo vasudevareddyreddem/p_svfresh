@@ -86,23 +86,34 @@ $this->load->model('Product_model');
 					
 				}
                   $cnt=count($f_names);
-				 
-				
-					 for($i=0;$i<$cnt;$i++){
-						 $keys=array();
+				   for($i=0;$i<$cnt;$i++){
+
+					 if(isset($f_names[$i])){
+					   {
 						 for($j=0;$j<$cnt;$j++){
-							 if($f_names[$i]==$f_names[$j]&&$f_values[$i]==$f_values[$j])
+                             if(isset($f_names[$j]))
 							 {
-								array_push($keys,$i);
+							     if($j!=$i){
+                                     if($f_names[$i]==$f_names[$j]&&$f_values[$i]==$f_values[$j])
+							        {
+								 unset($f_names[$i]);
+						         unset($f_values[$i]);
+								 break;
+
 							   
+							       }
 							 }
 						 }
-						 
+						 }
+					 } 
 					 }
-					 foreach($keys as $value){
-						 unset($f_names[$value]);
-						 unset($f_values[$value]);
-					 }
+					
+					 
+					 
+								}
+                  
+				
+					
 				 
 				//print_r($f_names);exit;
 				
@@ -143,7 +154,7 @@ $this->load->model('Product_model');
 				);
 				$product_id=$this->Product_model->save_product($data);
 				foreach($f_names as $key=>$value){
-					if(!$f_values[$key]=='' && !$value='')
+					if(!$f_values[$key]=='' && !$value=='')
 					{
 				  $features[]=array(
 				  'feature_name'=>$value,
@@ -249,8 +260,38 @@ $this->load->model('Product_model');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
 				
+				if(isset($_POST['fname'])){
+					$cnt=count($f_names);
+				 for($i=0;$i<$cnt;$i++){
+
+					 if(isset($f_names[$i])){
+					   {
+						 for($j=0;$j<$cnt;$j++){
+                             if(isset($f_names[$j]))
+							 {
+							     if($j!=$i){
+                                     if($f_names[$i]==$f_names[$j]&&$f_values[$i]==$f_values[$j])
+							        {
+								 unset($f_names[$i]);
+						         unset($f_values[$i]);
+								 break;
+
+							   
+							       }
+							 }
+						 }
+						 }
+					 } 
+					 }
+					
+					 
+					 
+								}
+				}
+			
+				
 				$status=$this->Product_model->check_unique_edit_product($pid,$product_name,$cat_id,$subcat_id);
-			//echo	$this->db->last_query(); exit;
+			
 				if($status==1){
 					$this->session->set_flashdata('error','product name  already existed'); 
 					       redirect($_SERVER['HTTP_REFERER']);
@@ -316,45 +357,52 @@ $this->load->model('Product_model');
 				
 				 $features=$this->Product_model->get_features_array($pid);
 				 
-				$fids=array_column($features, 'feature_id');
+				$fets=array_column($features, 'feature_id');
 				
 			
-		$in_features[]=array();
+		
+					if(isset($_POST['fid'])){	
 				foreach($fids as $key=>$value){
-					if(in_array($value,$fids)){
+					
+					
 						$up_features=array(
 						
 				  'feature_name'=>$f_names[$key],
 				  'feature_value'=>$f_values[$key],
 				  'product_id'=>$pid,
-				  'created_by'=>$adminid
+				  'updated_by'=>$adminid
 				  );
 				 //$key1=array_search($value, $names);
 				 //
 				 if(isset($f_names[$key])&& isset($f_values[$key]) ){
 					 $this->Product_model->save_edit_features($up_features,$value);
-				
+				         				  unset($f_names[$key]);
+										   unset($f_values[$key]);
                  }
 				 else{
 					 $this->Product_model->delete_features($value);
 				 }
 				  unset($fids[$key]);
 				
-				
-			
+				}
 			}
-			else{
-				  $in_features[]=array(
+                if(isset($f_names)){
+				if(!empty($f_names)){
+					foreach($f_names as $key=>$value){
+						if(!$value==''&& !$f_values[$key]=='')
+						{
+						$in_features[]=array(
+						
 				  'feature_name'=>$value,
 				  'feature_value'=>$f_values[$key],
 				  'product_id'=>$pid,
 				  'created_by'=>$adminid
 				  );
-				    unset($fids[$key]);
-			}
-				}
-				if(!empty($in_features)){
+					}
+					}
+					
 				$ins_status=$this->Product_model->save_features($in_features);
+				}
 				}
 				//loop the remaing feature elemnts
 				
@@ -378,6 +426,7 @@ $this->load->model('Product_model');
 			else{redirect('login');}
 			
 		}
+		
 		public function delete_product(){
 			if($this->session->userdata('svadmin_det')){
 			$id=base64_decode($this->uri->segment(3));

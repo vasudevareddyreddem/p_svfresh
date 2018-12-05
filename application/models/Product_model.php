@@ -74,6 +74,7 @@ public function get_features($pid){
 	$this->db->select('feature_id,feature_name,feature_value');
 	  $this->db->from('features_tab');
 	  $this->db->where('features_tab.product_id',$pid);
+	   $this->db->where('status',1);
 	 return $this->db->get()->result();
 }
 public function save_edit_features($up_features,$fid){
@@ -141,6 +142,13 @@ public function get_products_by_sub_category($id='')
 public function get_product_by_id($id='')
 {
 	return $this->db->get_where('product_tab',array('product_id' => $id))->row();
+}
+public function delete_product($id){
+	$this->db->set('status',0);
+		$this->db->where('product_id',$id);
+		$this->db->update('product_tab');
+		return $this->db->affected_rows()?1:0;
+	
 }
 
 	}
