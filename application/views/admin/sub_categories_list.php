@@ -19,6 +19,7 @@
                                             <th>S.No</th>
                                             <th>Category Name</th>
                                             <th>Sub-Category Name</th>
+											<th>Sub-Category Image</th>
                                             <th>No.Of Products</th>
                                             <th>Created At</th>
                                             <th>Status</th>
@@ -33,6 +34,11 @@
                                             <td><?php echo $count;?></td>
                                             <td><?php echo $subcat->cat_name;?></td>
                                             <td><?php echo $subcat->subcat_name;?></td>
+											<td>
+											 <?php if($subcat->subcat_img==''){echo 'NO Image';}else{ ?><img alt="image" 
+											src="<?php echo base_url('assets/uploads/sub_category_pics/').$subcat->subcat_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+												<?php }?>
+											</td>
                                             <td><?php echo $subcat->countproduct;?></td>
                                             <td><?php echo $subcat->created_at;?></td>
                                             <td>

@@ -61,6 +61,10 @@
                                                 <label>Net price</label>
                                                 <input id="n_price" type="text" class="form-control" name="n_price" readonly>
                                             </div>
+											  <div class="form-group col-md-4">
+                                                <label>Description</label>
+                                                <textarea id="descr"  class="form-control" name="descr" ></textarea>
+                                            </div>
 											<div class="form-group col-md-4">
                                                 <label>Product Image</label>
                                                 <input id="n_price" type="file" class="form-control" name="p_image">

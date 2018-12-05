@@ -68,6 +68,10 @@
                                                 <label>Net price</label>
                                                 <input id="n_price" type="text" class="form-control" name="n_price" value="<?php echo $product->net_price;?>">
                                             </div>
+											 <div class="form-group col-md-4">
+                                                <label>Description</label>
+                                                <textarea id="descr"  class="form-control" name="descr" ><?php echo $product->description;?></textarea>
+                                            </div>
 											<div class="form-group col-md-4">
                                                 <label>Product Image</label>
                                                 <input id="n_price" type="file" class="form-control" name="p_image">

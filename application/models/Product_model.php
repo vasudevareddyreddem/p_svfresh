@@ -49,7 +49,7 @@ class Product_model extends CI_Model
 	}
 	public function edit_product($pid){
 			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
-			product_tab.actual_price,product_tab.discount_price,product_tab.status,product_tab.net_price,
+			product_tab.actual_price,product_tab.discount_price,product_tab.status,product_tab.net_price,product_tab.description,
 			product_tab.created_at,product_tab.quantity,product_tab.cat_id,product_tab.subcat_id,product_tab.discount_percentage
 			');
 	  $this->db->from('product_tab');
@@ -93,11 +93,12 @@ public function get_features_array($pid){
 	  $this->db->where('features_tab.product_id',$pid);
 	 return $this->db->get()->result_array();
 }
-public function check_unique_product($pid,$cat_id,$subcat_id)
+public function check_unique_product($pname,$cat_id,$subcat_id)
 {
     $this->db->select('1');
 	  $this->db->from('product_tab');
 	  $this->db->group_start();
+	  $this->db->where('product_name',$pname);
 	  $this->db->where('subcat_id',$subcat_id);
 	  $this->db->where('cat_id',$cat_id);
 	   $this->db->group_end();

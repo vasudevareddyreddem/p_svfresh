@@ -20,6 +20,7 @@
                                             <th>Category Name</th>
                                             <th>Sub-Category Name</th>
                                             <th>Product Name</th>
+											<th>Product Image</th>
                                             <th>Quantity</th>
                                             <th>Actual Price</th>
                                             <th>Discount Price</th>
@@ -39,6 +40,11 @@
                                             <td><?php echo $product->cat_name;?></td>
                                             <td><?php echo $product->subcat_name;?></td>
 											<td><?php echo $product->product_name;?></td>
+											<td>
+											 <?php if($product->product_img==''){echo 'NO Image';}else{ ?><img alt="image" 
+											src="<?php echo base_url('assets/uploads/product_pics/').$product->product_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+												<?php }?>
+											</td>
                                             <td><?php echo $product->quantity;?></td>
                                             <td><?php echo $product->actual_price;?></td>
                                             <td><?php echo $product->discount_price;?></td>

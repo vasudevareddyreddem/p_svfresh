@@ -95,7 +95,7 @@ $this->load->model('Category_model')	;
                 $this->load->library('upload', $config);
 				
 			
-				  if ( ! $this->upload->do_upload('cat_image'))
+				  if ( ! $this->upload->do_upload('cat_image',time()))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -106,7 +106,7 @@ $this->load->model('Category_model')	;
 					$upload_data = $this->upload->data(); 
                     $cat_img =   $upload_data['file_name'];
 				}
-				  if ( ! $this->upload->do_upload('cat_s_image'))
+				  if ( ! $this->upload->do_upload('cat_s_image',time()))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -117,7 +117,7 @@ $this->load->model('Category_model')	;
 					$upload_data = $this->upload->data(); 
                     $cat_s_img =   $upload_data['file_name'];
 				}
-				  if ( ! $this->upload->do_upload('cat_himage1'))
+				  if ( ! $this->upload->do_upload('cat_himage1',time()))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -128,7 +128,7 @@ $this->load->model('Category_model')	;
 					$upload_data = $this->upload->data(); 
                     $cat_lh_img =   $upload_data['file_name'];
 				}
-				  if ( ! $this->upload->do_upload('cat_himage2'))
+				  if ( ! $this->upload->do_upload('cat_himage2',time()))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -274,7 +274,7 @@ $this->load->model('Category_model')	;
 				
 				
 			if($_FILES['cat_image']['name']!=''){
-				  if ( ! $this->upload->do_upload('cat_image'))
+				  if ( ! $this->upload->do_upload('cat_image',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 						
@@ -289,7 +289,7 @@ $this->load->model('Category_model')	;
 				}
 			}
 			if($_FILES['cat_himage1']['name']!=''){
-				  if ( ! $this->upload->do_upload('cat_himage1'))
+				  if ( ! $this->upload->do_upload('cat_himage1',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 
@@ -303,7 +303,7 @@ $this->load->model('Category_model')	;
 				}
 			}
 			if($_FILES['cat_himage2']['name']!=''){
-				  if ( ! $this->upload->do_upload('cat_himage2'))
+				  if ( ! $this->upload->do_upload('cat_himage2',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 
@@ -317,7 +317,7 @@ $this->load->model('Category_model')	;
 				}
 			}
 			if($_FILES['cat_s_image']['name']!=''){
-				 if ( ! $this->upload->do_upload('cat_s_image'))
+				 if ( ! $this->upload->do_upload('cat_s_image',time()))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -377,7 +377,7 @@ $this->load->model('Category_model')	;
                 $this->load->library('upload', $config);
 			
 			
-				  if ( ! $this->upload->do_upload('image'))
+				  if ( ! $this->upload->do_upload('image',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 						
@@ -479,7 +479,7 @@ $this->load->model('Category_model')	;
                 $this->load->library('upload', $config);
 			$img_status=0;
 			if($_FILES['image']['name']!=''){
-				  if ( ! $this->upload->do_upload('image'))
+				  if ( ! $this->upload->do_upload('image',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 						

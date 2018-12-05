@@ -78,17 +78,36 @@ $this->load->model('Product_model');
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
+				$descr=$this->input->post('descr');
 				$status=$this->Product_model->check_unique_product($product_name,$cat_id,$subcat_id);
 				if($status==1){
 					$this->session->set_flashdata('error','product name  already existed'); 
 					       redirect('product/add_product');
 					
 				}
+                  $cnt=count($f_names);
+				 
 				
+					 for($i=0;$i<$cnt;$i++){
+						 $keys=array();
+						 for($j=0;$j<$cnt;$j++){
+							 if($f_names[$i]==$f_names[$j]&&$f_values[$i]==$f_values[$j])
+							 {
+								array_push($keys,$i);
+							   
+							 }
+						 }
+						 
+					 }
+					 foreach($keys as $value){
+						 unset($f_names[$value]);
+						 unset($f_values[$value]);
+					 }
+				 
 				//print_r($f_names);exit;
 				
 				
-				 $config['upload_path']          = './assets/uploads/category_pics';
+				 $config['upload_path']          = './assets/uploads/product_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
                 // $config['max_size']             = 100;
                 // $config['max_width']            = 1024;
@@ -97,7 +116,7 @@ $this->load->model('Product_model');
                 $this->load->library('upload', $config);
 				
 			
-				  if ( ! $this->upload->do_upload('p_image'))
+				  if ( ! $this->upload->do_upload('p_image',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 
@@ -119,7 +138,8 @@ $this->load->model('Product_model');
 				'discount_percentage'=>$dis_percentage,
 				'net_price'=>$net_price,
 				'quantity'=>$qun,
-				 'created_by'=>$adminid
+				 'created_by'=>$adminid,
+				 'description'=>$descr
 				);
 				$product_id=$this->Product_model->save_product($data);
 				foreach($f_names as $key=>$value){
@@ -239,14 +259,14 @@ $this->load->model('Product_model');
 				
 				
 				
-				 $config['upload_path']          = './assets/uploads/category_pics';
+				 $config['upload_path']          = './assets/uploads/product_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
              
 
                 $this->load->library('upload', $config);
 				$img_status=0;
 			  if($_FILES['p_image']['name']!=''){
-				  if ( ! $this->upload->do_upload('p_image'))
+				  if ( ! $this->upload->do_upload('p_image',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
 
@@ -283,10 +303,13 @@ $this->load->model('Product_model');
 				'discount_percentage'=>$dis_percentage,
 				'net_price'=>$net_price,
 				'quantity'=>$qun,
-				 'created_by'=>$adminid
+				 'created_by'=>$adminid,
+				 'description'=>$this->input->post('descr')
 				);
 					
 				}
+				
+				
 				$status=$this->Product_model->save_edit_product($data,$pid);
 				 
 			
