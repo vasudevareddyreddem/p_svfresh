@@ -49,11 +49,11 @@
                         </a>
                         <div class="quick-view">
                           <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
+                          <!---a title="Add to compare" class="compare" href="#"></a-->
                         </div>
-                        <!-- <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div> -->
+                        <div class="add-to-cart">
+                          <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>
+                        </div>
                       </div>
                       <div class="right-block">
                         <h5 class="product-name"><a href="#"><?php echo $p->product_name;  ?></a></h5>

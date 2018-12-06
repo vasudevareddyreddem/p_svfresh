@@ -46,16 +46,43 @@ class Products extends CI_Controller
   public function Cart()
   {
     if($this->input->post()){
-      $post_data = $this->input->post();
-      $post_data = array_merge($post_data,array('created_date'=>date('Y-m-d H:i:s')));
+      $post_data = array(
+        'user_id' => $this->input->post('user_id'),
+        'product_id' => $this->input->post('product_id'),
+        'product_name' => $this->input->post('product_name'),
+        'product_img' => $this->input->post('product_img'),
+        'net_price' => $this->input->post('net_price'),
+        'quantity' => $this->input->post('quantity'),
+        'created_date'=>date('Y-m-d H:i:s')
+      );
       if($this->Cart_Model->insert($post_data)){
         $user_id = $this->input->post('user_id');
         if($user_id){
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $return['count'] = count($data['cart']);
           $return['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
-          echo json_encode($return);exit(0);
+          echo json_encode($return);
         }
+      }
+    }
+  }
+
+  public function Wishlist()
+  {
+    if($this->input->post()){
+      $post_data = array(
+        'user_id' => $this->input->post('user_id'),
+        'product_id' => $this->input->post('product_id'),
+        'product_name' => $this->input->post('product_name'),
+        'product_img' => $this->input->post('product_img'),
+        'net_price' => $this->input->post('net_price'),
+        'quantity' => $this->input->post('quantity'),
+        'created_date'=>date('Y-m-d H:i:s')
+      );
+      if($this->Wishlist_Model->insert($post_data)){
+        $return['success'] = 'Added to wishlist';
+      }else{
+        $return['error'] = 'Filed to add wishlist';
       }
     }
   }

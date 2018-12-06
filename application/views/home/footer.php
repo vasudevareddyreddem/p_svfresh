@@ -113,3 +113,64 @@ function decreaseValue() {
 <script type="text/javascript" src="<?php echo base_url('assets/js/theme-script.js'); ?>"></script>
 
 <script type="text/javascript" src="<?php echo base_url('assets/js/sweetalert.min.js'); ?>"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.addtocart').click(function(e){
+      e.preventDefault();
+      <?php
+        if($this->session->userdata('logged_in') != TRUE){
+          echo 'window.location = "'.base_url('home/login').'";';
+        } else {
+      ?>
+      var obj = $(this);
+      var user_id = $(this).data('user_id');
+      var product_id = $(this).data('product_id');
+      var product_img = $(this).data('product_img');
+      var product_name = $(this).data('product_name');
+      var net_price = $(this).data('net_price');
+      var quantity = $(this).data('quantity');
+      $.ajax({
+        url:'<?php echo base_url('products/cart'); ?>',
+        type:'POST',
+        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity},
+        dataType:'JSON',
+        success:function(data){
+          $('.cart_count').html(data.count);
+          $('#cart_template').html(data.cart_template);
+          obj.attr("disabled",true);
+          obj.html("Added to cart");
+        }
+      });
+      <?php } ?>
+    });
+
+    $('.whishlist').click(function(e){
+      e.preventDefault();
+      <?php
+        if($this->session->userdata('logged_in') != TRUE){
+          echo 'window.location = "'.base_url('home/login').'";';
+        } else {
+      ?>
+      var obj = $(this);
+      var user_id = $(this).data('user_id');
+      var product_id = $(this).data('product_id');
+      var product_img = $(this).data('product_img');
+      var product_name = $(this).data('product_name');
+      var net_price = $(this).data('net_price');
+      var quantity = $(this).data('quantity');
+      $.ajax({
+        url:'<?php echo base_url('products/Wishlist'); ?>',
+        type:'POST',
+        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity},
+        dataType:'JSON',
+        success:function(data){
+          $('.cart_count').html(data.count);
+          $('#cart_template').html(data.cart_template);
+          obj.attr("disabled",true);
+          obj.html("Added to cart");
+        }
+      });
+      <?php } ?>
+    });
+  });
+</script>
