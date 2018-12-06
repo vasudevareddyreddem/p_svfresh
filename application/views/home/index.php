@@ -18,9 +18,11 @@
                 <div class="homeslider">
                     <div class="content-slide">
                         <ul id="contenhomeslider">
-                          <li><img alt="Funky roots" src="<?php echo base_url('assets/data/slide.jpg'); ?>"  /></li>
-                          <li><img alt="Funky roots" src="<?php echo base_url('assets/data/slide2.jpg'); ?>"  /></li>
-                          <li><img  alt="Funky roots" src="<?php echo base_url('assets/data/slide3.jpg'); ?>" /></li>
+                          <?php if (count($slides) > 0) { ?>
+                            <?php foreach($slides as $s){ ?>
+                              <li><img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$s->pic_name); ?>"/></li>
+                            <?php } ?>
+                          <?php } ?>
                         </ul>
                     </div>
                 </div>

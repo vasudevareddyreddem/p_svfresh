@@ -83,7 +83,7 @@
                 </form>
             </div>
             <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
-                <a class="cart-link" href="<?php echo base_url('Checkout'); ?>">
+                <a class="cart-link" <?php if($count > 0){ ?>href="<?php echo base_url('Checkout'); ?>"<?php }else{ ?> href="#" <?php } ?>>
                     <span class="title">Shopping cart</span>
                     <span class="total"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span> items</span>
                     <span class="notify notify-left"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span></span>
@@ -113,9 +113,11 @@
                             <span>Total</span>
                             <span class="toal-price pull-right">₹ 122.38 </span>
                         </div> -->
-                        <div class="cart-buttons">
-                            <a href="<?php echo base_url('checkout'); ?>" class="btn-check-out">Checkout</a>
-                        </div>
+                        <?php if ($count > 0) { ?>
+                          <div class="cart-buttons">
+                              <a href="<?php echo base_url('checkout'); ?>" class="btn-check-out">Checkout</a>
+                          </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

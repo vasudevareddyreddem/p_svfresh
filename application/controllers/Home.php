@@ -11,22 +11,24 @@ class Home extends CI_controller
     $this->load->model('Category_model');
     $this->load->model('Product_model');
     $this->load->model('Cart_Model');
+    $this->load->model('Slider_model');
   }
 
   public function index()
   {
-    if($this->session->userdata('logged_in') == TRUE){
+    //if($this->session->userdata('logged_in') == TRUE){
       $data['pageTitle'] = 'Welcome to svfresh';
       $data['categories'] = $this->Category_model->get_all_category();
       $data['products'] = $this->Product_model->get_all_product();
+      $data['slides'] = $this->Slider_model->get_all_slides();
       $user_id = $this->session->userdata('id');
       $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
       $data['count'] = count($data['cart']);
       $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
       $this->load->view('home/index',$data);
-    }else{
-      redirect('home/login');
-    }
+    // }else{
+    //   redirect('home/login');
+    // }
   }
   //user login
   public function Login()
