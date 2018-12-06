@@ -24,7 +24,7 @@
                 <a href="#" class="has-dropdown"><i class="ion ion-pricetags"></i><span>Main Sliders</span></a>
                 <ul class="menu-dropdown">
                     <li><a href="<?php  echo base_url('slider/addslider'); ?>"><i class="ion ion-ios-circle-outline"></i>Add Slider</a></li>
-                    <li><a href="categories_list.php"><i class="ion ion-ios-circle-outline"></i>Slider List</a></li>
+                    <li><a href="<?php  echo base_url('slider/slider_list'); ?>"><i class="ion ion-ios-circle-outline"></i>Slider List</a></li>
                    
                 </ul>
             </li>

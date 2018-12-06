@@ -122,7 +122,7 @@ $this->load->model('Slider_model');
  
 		
 			$this->Slider_model->save_slider_pics($sdata);
-			redirect('slider/addslider');
+			redirect('slider/slider_list');
 			
 			
 		}
@@ -138,12 +138,93 @@ $this->load->model('Slider_model');
 						$data['status']=0;
 						
 					}
-					$this->load->view('admin/slider_list');
-		           $this->load->view('admin/footer');
+					$this->load->view('admin/slider_list',$data);
+		            $this->load->view('admin/footer');
 					
 					
 				}
 				else{redirect('login');}
 			
 		}
+		public function inactive_slider(){
+		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Slider_model->inactive_slider($id,$svadmin);
+			if($status==1){
+				$this->session->set_flashdata('success','slider inactivated');
+			  redirect('slider/slider_list');
+			}
+			else{
+				$this->session->set_flashdata('error','slider not inactivated');
+			  redirect('slider/slider_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
+	public function active_slider(){
+		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$id=base64_decode($this->uri->segment(3));
+			$this->Slider_model->all_inactive($svadmin);
+			$status=$this->Slider_model->active_slider($id,$svadmin);
+			if($status==1){
+				$this->session->set_flashdata('success','slider activated');
+			  redirect('slider/slider_list');
+			}
+			else{
+				$this->session->set_flashdata('error','slider not activated');
+			  redirect('slider/slider_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
+	public function delete_slider(){
+		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Slider_model->delete_slider($id,$svadmin);
+			if($status==1){
+				$this->session->set_flashdata('success','Slider  deleted');
+			  redirect('slider/slider_list');
+			}
+			else{
+				$this->session->set_flashdata('error','slider not deleted');
+			  redirect('slider/slider_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
+	public function edit_slider(){
+		if($this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+			$data['slider']=$this->Slider_model->get_single_slider($id);
+			
+			if($data['slider']){
+				$sid=$data['slider']->slider_id;
+				$data['pics']=$this->db->get_slider_pics($sid);
+				if(count($data['pics']>0)){
+					$data['picstatus']=1;
+				}
+				else{
+					$data['picstatus']=0;
+				}
+			$this->load->view('admin/edit_slider',$data);
+		            $this->load->view('admin/footer');
+			}else{
+					$this->session->set_flashdata('error','This slider delted by another session');
+			  redirect('slider/slider_list');
+			}
+			
+		}
+		else{redirect('login');}
+		
+		
+	}
 		}
