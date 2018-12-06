@@ -113,7 +113,7 @@
                       <div class="tab-panel active" id="tab-6">
                         <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
                           <?php if(count($products) > 0){ ?>
-                            <?php foreach ($products as $p) { if($p->cat_id == $c->cat_id){ echo $p->cat_id.''.$c->cat_id; ?>
+                            <?php foreach ($products as $p) { if($p->cat_id == $c->cat_id){ ?>
 
                               <li>
                                 <div class="left-block">
