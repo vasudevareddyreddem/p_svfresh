@@ -40,7 +40,7 @@ class Slider_model extends CI_Model
 		//SELECT * FROM slider_tab AS s LEFT JOIN slider_pic_tab AS sp ON s.slider_id = sp.slider_id WHERE s.status = '1'
 	}
 
-	}
+	
 
 	public function get_sliders(){
 		$this->db->select('*');
@@ -93,5 +93,6 @@ class Slider_model extends CI_Model
 		return $this->db->get()->result();
 
 	}
+}
 
 
