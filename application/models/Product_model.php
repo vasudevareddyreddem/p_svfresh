@@ -151,5 +151,17 @@ public function delete_product($id){
 		return $this->db->affected_rows()?1:0;
 	
 }
+public function save_product_images($pdata){
+	$this->db->insert_batch('product_images_tab',$pdata);
+	return $this->db->affected_rows()?1:0;
+}
+public function get_product_images($pid){
+	
+	$this->db->select('*');
+	$this->db->from('product_images_tab');
+	$this->db->where('product_id',$pid);
+	$this->db->where('status',1);
+	return $this->db->get()->result();
+}
 
 	}

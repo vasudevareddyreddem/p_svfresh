@@ -72,10 +72,7 @@
                                                 <label>Description</label>
                                                 <textarea id="descr"  class="form-control" name="descr" ><?php echo $product->description;?></textarea>
                                             </div>
-											<div class="form-group col-md-4">
-                                                <label>Product Image</label>
-                                                <input id="n_price" type="file" class="form-control" name="p_image">
-                                            </div>
+											
 					<?php if($fstatus==0){ ?>					
 				 <div class="row">
                                 <div class="col-md-12">
@@ -152,7 +149,44 @@
                                 </div>
                             </div>
 					<?php }?>
-					
+						<div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+									
+									 
+                                        <table id="myTable1" class="table1 order-list1">
+                                            <thead>
+                                                <tr>
+                                                    <th> Product Images</th>
+                                                   
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+												<?php $count=1;foreach($images as $image){ ?>
+												<input type="hidden" 
+												value="<?php echo base64_encode($image->image_id);?>" name="image_id" >
+												<tr>
+                                                 
+                                                    <td>
+                                                        <input type="file" name="p_image[]" placeholder="LastName" class="form-control"  required />
+                                                    </td>
+                                                    <td>
+                                                        <a class="deleteRow"></a>
+                                                    </td>
+													 <?php  if($count!=1){?>
+													<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>
+													 <?php }?>
+                                                </tr>
+												<?php $count++;}?>
+                                            </tbody>
+                                        </table>
+									
+                                        <button type="button" class="btn btn-md btn-info" id="addslider">Add Row</button>
+                                    </div>
+                                </div>
+                            </div>
                                    
                                         
                   
@@ -348,4 +382,31 @@ $('#dp_price').on('keyup',function(){
 	
 }); 
 
+</script>
+<script>
+ $(document).ready(function () {
+    var counter = 0;
+
+    $("#addslider").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="file" name="p_image[]" class="form-control" placeholder="FirstName" name="fname[]' +'"/></td>';
+        
+
+        cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
+        newRow.append(cols);
+        $("#myTable1").append(newRow);
+        counter++;
+    });
+
+
+
+    $("#myTable1").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
+});
 </script>

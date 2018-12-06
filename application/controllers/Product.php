@@ -85,6 +85,12 @@ $this->load->model('Product_model');
 					       redirect('product/add_product');
 
 				}
+				if(isset($_POST['f_names'])){
+					 $cnt=count($f_names);
+				}
+				else{
+					$cnt=0;
+				}
                   $cnt=count($f_names);
 				   for($i=0;$i<$cnt;$i++){
 
@@ -112,36 +118,16 @@ $this->load->model('Product_model');
 
 								}
 
-
-
-
-				//print_r($f_names);exit;
-
-
 				 $config['upload_path']          = './assets/uploads/product_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
-                // $config['max_size']             = 100;
-                // $config['max_width']            = 1024;
-                // $config['max_height']           = 768;
-
-                $this->load->library('upload', $config);
+              $this->load->library('upload', $config);
 
 
-				  if ( ! $this->upload->do_upload('p_image',time()))
-                {
-                        //$error = array('error' => $this->upload->display_errors());
-
-                          $this->session->set_flashdata('error','product image not uploaded');
-					      redirect('product/add_product');
-                }
-				else{
-					$upload_data = $this->upload->data();
-                    $product_img =   $upload_data['file_name'];
-				}
+				
 
 				$data=array(
 				'product_name'=>$product_name,
-				'product_img'=>$product_img,
+				
 				'cat_id'=>$cat_id,
 				'subcat_id'=>$subcat_id,
 				'actual_price'=>$act_price,
@@ -153,6 +139,49 @@ $this->load->model('Product_model');
 				 'description'=>$descr
 				);
 				$product_id=$this->Product_model->save_product($data);
+						
+			// Count total files
+      $countfiles = count($_FILES['p_image']['name']);
+
+      // Looping all files
+      for($i=0;$i<$countfiles;$i++){
+ 
+        if($_FILES['p_image']['name'][$i]!=''){
+ 
+          // Define new $_FILES array - $_FILES['file']
+           $_FILES['image']['name']     = $_FILES['p_image']['name'][$i];
+                $_FILES['image']['type']     = $_FILES['p_image']['type'][$i];
+                $_FILES['image']['tmp_name'] = $_FILES['p_image']['tmp_name'][$i];
+                $_FILES['image']['error']     = $_FILES['p_image']['error'][$i];
+                $_FILES['image']['size']     = $_FILES['p_image']['size'][$i];
+                
+		 //echo   $_FILES['slide']['name'];exit;
+		    if ( ! $this->upload->do_upload('image',time()))
+                {
+                      
+						
+                          $this->session->set_flashdata('error',' slider image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $slider_img =   $upload_data['file_name'];
+					$pdata[]=array('image_name'=>$slider_img,
+					'product_id'=>$product_id,
+					'created_by'=>$adminid);
+				}
+          
+
+        
+ 
+         
+        }
+ 
+      }
+ $this->Product_model->save_product_images($pdata);
+ 
+				
 				foreach($f_names as $key=>$value){
 					if(!$f_values[$key]=='' && !$value=='')
 					{
@@ -169,17 +198,7 @@ $this->load->model('Product_model');
 				}
 				 $this->session->set_flashdata('success','product addded  successfully');
 					      redirect('product/product_list');
-				/* if($status==1){
-				   $this->session->set_flashdata('success','product addded  successfully');
-					      redirect('product/product_list');
-
-
-				}
-				 else{
-					 $this->session->set_flashdata('error','features not added');
-					       redirect('product/add_product');
-				 }*/
-
+				
 
 			}
 			else{redirect('login');}
@@ -208,7 +227,8 @@ $this->load->model('Product_model');
 		if($this->session->userdata('svadmin_det')){
 			$pid=base64_decode($this->uri->segment(3));
 			$data['cat_list']=$this->Category_model->get_category_names();
-
+			$data['images']=$this->Product_model->get_product_images($pid);
+			
 			if(count($data['cat_list'])>0){
 					$data['status']=1;
 
