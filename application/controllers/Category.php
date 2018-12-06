@@ -473,7 +473,7 @@ $this->load->model('Category_model')	;
 				  redirect('category/add_sub_category');
 				  
 			}
-			$config['upload_path']          = './assets/uploads/sub_category_pics';
+			    $config['upload_path']          = './assets/uploads/sub_category_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
 
                 $this->load->library('upload', $config);
@@ -481,7 +481,7 @@ $this->load->model('Category_model')	;
 			if($_FILES['image']['name']!=''){
 				  if ( ! $this->upload->do_upload('image',time()))
                 {
-                        //$error = array('error' => $this->upload->display_errors());
+                       
 						
                           $this->session->set_flashdata('error','sub category image not uploaded'); 
 						 
