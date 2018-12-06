@@ -65,10 +65,17 @@
                                                 <label>Description</label>
                                                 <textarea id="descr"  class="form-control" name="descr" ></textarea>
                                             </div>
-											<div class="form-group col-md-4">
-                                                <label>Product Image</label>
-                                                <input id="n_price" type="file" class="form-control" name="p_image">
-                                            </div>
+								 <div class="entry col-md-6">
+					 <label>Sliders </label>
+					 <div class="input-group">
+                        <input class="form-control" name="slider[]" type="file" placeholder="Type something"  required />
+                    	<span class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="font-18">+</span>
+                            </button>
+                        </span>
+						</div>
+                    </div>
 															  <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -302,5 +309,32 @@ $('#dp_price').on('keyup',function(){
 	}
 	
 }); 
+
+</script>
+<script>
+$(function()
+{
+    $(document).on('click', '.btn-add', function(e)
+    {
+		alert('d');
+        e.preventDefault();
+
+        var controlForm = $('.controls form:first'),
+            currentEntry = $(this).parents('.entry:first'),
+            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+        newEntry.find('input').val('');
+        controlForm.find('.entry:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-success').addClass('btn-danger')
+            .html('<span class="font-18">-</span>');
+    }).on('click', '.btn-remove', function(e)
+    {
+		$(this).parents('.entry:first').remove();
+
+		e.preventDefault();
+		return false;
+	});
+});
 
 </script>

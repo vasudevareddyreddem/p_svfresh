@@ -7,14 +7,14 @@
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
-            <div>Add Slider</div>
+            <div>Edit Slider</div>
         </h1>
         <div class="section-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add Slider</h4>
+                            <h4>Edit Slider</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mx-auto">
@@ -39,12 +39,29 @@
 				<div class="form-group col-md-6">
 				
                            <label>Sliders Left Image</label>
-                           <input id="n_price" type="file" class="form-control" name="sl_image">
+                           <input id="" type="file" class="form-control" name="sl_image">
                             </div>
+							 <div class="form-group">
+                                            <label>sliders Right Old Image</label>
+											
+                                        <img alt="image" 
+											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->r_pic; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
+											
+											</div>
 							<div class="form-group col-md-6">
                                                 <label>Sliders Right Image</label>
                                                 <input id="n_price" type="file" class="form-control" name="sr_image">
                                             </div>
+											<?php if($picstatus==1){ 
+											foreach($pics as $pic):?>
+											 <div class="form-group">
+                                            <label>sliders  Old Images</label>
+											
+                                        <img alt="image" 
+											src="<?php echo base_url('assets/uploads/slider_pics/').$pic->pic_name; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
+											
+											</div>
+											<?php endforeach ;} ?>
                     <div class="entry col-md-6">
 					 <label>Sliders </label>
 					 <div class="input-group">
