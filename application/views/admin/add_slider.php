@@ -22,9 +22,18 @@
         <div class="control-group" id="fields">
             
             <div class="controls"> 
-                <form role="form" autocomplete="off">
+                <form id="add_slider" action="" method="post" role="form" autocomplete="off" enctype="multipart/form-data">
+				<div class="form-group col-md-4">
+                           <label>Sliders Left Image</label>
+                           <input id="n_price" type="file" class="form-control" name="sl_image">
+                            </div>
+							<div class="form-group col-md-4">
+                                                <label>Sliders Right Image</label>
+                                                <input id="n_price" type="file" class="form-control" name="sr_image">
+                                            </div>
                     <div class="entry input-group col-xs-3">
-                        <input class="form-control" name="fields[]" type="file" placeholder="Type something" />
+					 <label>Sliders </label>
+                        <input class="form-control" name="slider[]" type="file" placeholder="Type something" />
                     	<span class="input-group-btn">
                             <button class="btn btn-success btn-add" type="button">
                                 <span class="font-18">+</span>
@@ -36,7 +45,7 @@
            
             </div>
 			<div class="clearfix">&nbsp;</div>
-				<button class="btn btn-primary btn-sm">Submit</button>
+				<button type='submit' class="btn btn-primary btn-sm">Submit</button>
                 </form>
         </div>
 	</div>
@@ -51,21 +60,13 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#add_category').bootstrapValidator({
+    $('#add_slider').bootstrapValidator({
+		
         
         fields: {
-             name: {
-                validators: {
-					notEmpty: {
-						message: 'Name is required'
-					},
-					regexp: {
-					regexp:/^[ A-Za-z0-9_@.,/!;:}{@#&`~"\\|^?$*)(_+-]*$/,
-					message:'Question wont allow <> [] = % '
-					}
-				}
-            },
-            image: {
+             
+              
+			sl_image: {
                 validators: {
 					notEmpty: {
 						message: 'Image is required'
@@ -74,8 +75,39 @@ $(document).ready(function() {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
 					}
+				
 				}
-            }
+            },
+             
+			sr_image: {
+                validators: {
+					notEmpty: {
+						message: 'Image is required'
+					},
+					regexp: {
+					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
+					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
+					}
+				
+				}
+            },
+            
+           
+            
+			'slider': {
+                validators: {
+					notEmpty: {
+						message: 'Image is required'
+					},
+					regexp: {
+					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
+					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
+					}
+				
+				}
+            },
+			
+           
             }
         })
      

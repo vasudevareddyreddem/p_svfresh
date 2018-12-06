@@ -20,6 +20,14 @@
             <li class="active">
                 <a href="<?php echo base_url('admin');?>"><i class="ion ion-speedometer"></i><span>Dashboard</span></a>
             </li>
+			<li>
+                <a href="#" class="has-dropdown"><i class="ion ion-pricetags"></i><span>Main Sliders</span></a>
+                <ul class="menu-dropdown">
+                    <li><a href="<?php  echo base_url('slider/addslider'); ?>"><i class="ion ion-ios-circle-outline"></i>Add Slider</a></li>
+                    <li><a href="categories_list.php"><i class="ion ion-ios-circle-outline"></i>Slider List</a></li>
+                   
+                </ul>
+            </li>
             <li>
                 <a href="#" class="has-dropdown"><i class="ion ion-pricetags"></i><span>Categories</span></a>
                 <ul class="menu-dropdown">
