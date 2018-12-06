@@ -28,6 +28,7 @@ class Slider_model extends CI_Model
 		return $this->db->get()->result()?1:0;
 
 	}
+	// for getting slides in home page, code written by rana
 	public function get_all_slides()
 	{
 		//return $this->db->get_where('slider_pic_tab',array('status','1'))->result();
@@ -39,8 +40,7 @@ class Slider_model extends CI_Model
 		//SELECT * FROM slider_tab AS s LEFT JOIN slider_pic_tab AS sp ON s.slider_id = sp.slider_id WHERE s.status = '1'
 	}
 	}
-<<<<<<< HEAD
-=======
+
 	public function get_sliders(){
 		$this->db->select('*');
 		$this->db->from('slider_tab');
@@ -94,4 +94,4 @@ class Slider_model extends CI_Model
 	}
 
 	}
->>>>>>> 22a6f193b8c5bf823de325457dce67db0da210a9
+
