@@ -38,9 +38,7 @@ class Slider_model extends CI_Model
 		//return $this->db->last_query();
 		//SELECT * FROM slider_tab AS s LEFT JOIN slider_pic_tab AS sp ON s.slider_id = sp.slider_id WHERE s.status = '1'
 	}
-	}
-<<<<<<< HEAD
-=======
+
 	public function get_sliders(){
 		$this->db->select('*');
 		$this->db->from('slider_tab');
@@ -75,7 +73,7 @@ class Slider_model extends CI_Model
 		$this->db->set('updated_by',$admin);
 		$this->db->where('status',1);
 		$this->db->update('slider_tab');
-		
+
 		return $this->db->affected_rows()?1:0;
 	}
 	public function get_single_slider($id){
@@ -83,15 +81,14 @@ class Slider_model extends CI_Model
 		$this->db->from('slider_tab');
 		$this->db->where('slider_tab.slider_id',$id);
 		return $this->db->get()->row();
-		
+
 	}
 	public function get_slider_pics($sid){
 		$this->db->select('*');
 		$this->db->from('slider_pic_tab');
 		$this->db->where('slider_id',$id);
 		return $this->db->get()->result();
-		
+
 	}
 
 	}
->>>>>>> 22a6f193b8c5bf823de325457dce67db0da210a9
