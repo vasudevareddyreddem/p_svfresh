@@ -83,30 +83,18 @@
                 </form>
             </div>
             <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
-                <a class="cart-link" href="">
+                <a class="cart-link" href="<?php echo base_url('Checkout'); ?>">
                     <span class="title">Shopping cart</span>
-                    <span class="total">2 items - ₹ 22.38 </span>
-                    <span class="notify notify-left">2</span>
+                    <span class="total"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span> items</span>
+                    <span class="notify notify-left"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span></span>
                 </a>
                 <div class="cart-block">
                     <div class="cart-block-content">
-                        <h5 class="cart-title">2 Items in my cart</h5>
+                        <h5 class="cart-title"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span> Items in my cart</h5>
                         <div class="cart-block-list">
-                            <ul>
-                                <li class="product-info">
-                                    <div class="p-left">
-                                        <a href="#" class="remove_link"></a>
-                                        <a href="#">
-                                        <img class="img-responsive" src="<?php echo base_url('assets/data/milkbrand1.png');?>" alt="item 1">
-                                        </a>
-                                    </div>
-                                    <div class="p-right">
-                                        <p class="p-name">Donec Ac Tempus</p>
-                                        <p class="p-rice">₹ 61,19 </p>
-                                        <p>Qty: 1</p>
-                                    </div>
-                                </li>
-                                <li class="product-info">
+                            <ul id="cart_template">
+                                <?php echo $cart_template; ?>
+                                <!-- <li class="product-info">
                                     <div class="p-left">
                                         <a href="#" class="remove_link"></a>
                                         <a href="#">
@@ -118,15 +106,15 @@
                                         <p class="p-rice">₹ 61,19 </p>
                                         <p>Qty: 1</p>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
-                        <div class="toal-cart">
+                        <!-- <div class="toal-cart">
                             <span>Total</span>
                             <span class="toal-price pull-right">₹ 122.38 </span>
-                        </div>
+                        </div> -->
                         <div class="cart-buttons">
-                            <a href="checkout.php" class="btn-check-out">Checkout</a>
+                            <a href="<?php echo base_url('checkout'); ?>" class="btn-check-out">Checkout</a>
                         </div>
                     </div>
                 </div>

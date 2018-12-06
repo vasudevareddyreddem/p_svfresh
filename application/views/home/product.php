@@ -232,10 +232,15 @@
                 <div class="attributes">
                   <div class="attribute-label">Qty:</div>
 
-                  <form class="">
+                  <form class="" id="cart_form">
                     <div style="padding:5px;" class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                    <input type="number" id="number" value="0" />
+                    <input type="number" name="quantity" id="number" value="1" />
                     <div style="padding:5px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                    <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>"/>
+                    <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
+                    <input type="hidden" name="product_name" value="<?php echo $product->product_name; ?>"/>
+                    <input type="hidden" name="net_price" value="<?php echo $product->net_price; ?>"/>
+                    <input type="hidden" name="product_img" value="<?php echo $product->product_img; ?>"/>
                   </form>
 
                 </div>
@@ -252,11 +257,7 @@
               </div>
               <div class="form-action">
                 <div class="button-group">
-                  <form method="post" action="<?php echo base_url('cart'); ?>">
-                    <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>"/>
-                    <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
-                    <button class="btn-add-cart" type="submit">Add to cart</button>
-                  </form>
+                    <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>
                 </div>
                 <div class="button-group">
                   <a class="wishlist" href="#"><i class="fa fa-heart-o"></i>
@@ -649,5 +650,34 @@
     </div>
 
     <?php include("footer.php"); ?>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#addtocart').click(function(){
+          var obj = $(this);
+          <?php
+            if($this->session->userdata('logged_in') != TRUE){
+              echo 'window.location = "'.base_url('home/login').'";';
+            } else {
+            ?>
+            var formData = new FormData($('#cart_form')[0]);
+            $.ajax({
+              url:'<?php echo base_url('products/cart'); ?>',
+              type:'POST',
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+              dataType:'JSON',
+              success:function(data){
+                $('.cart_count').html(data.count);
+                $('#cart_template').html(data.cart_template);
+                obj.attr("disabled",true);
+				        obj.html("Added to cart");
+              }
+            });
+        <?php } ?>
+        });
+      });
+    </script>
   </body>
   </html>
