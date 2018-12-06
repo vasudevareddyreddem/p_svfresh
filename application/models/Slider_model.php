@@ -89,7 +89,7 @@ class Slider_model extends CI_Model
 	public function get_slider_pics($sid){
 		$this->db->select('*');
 		$this->db->from('slider_pic_tab');
-		$this->db->where('slider_id',$id);
+		$this->db->where('slider_id',$sid);
 		return $this->db->get()->result();
 
 	}

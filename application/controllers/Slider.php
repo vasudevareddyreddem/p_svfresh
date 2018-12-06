@@ -208,7 +208,7 @@ $this->load->model('Slider_model');
 			
 			if($data['slider']){
 				$sid=$data['slider']->slider_id;
-				$data['pics']=$this->db->get_slider_pics($sid);
+				$data['pics']=$this->Slider_model->get_slider_pics($sid);
 				if(count($data['pics']>0)){
 					$data['picstatus']=1;
 				}
