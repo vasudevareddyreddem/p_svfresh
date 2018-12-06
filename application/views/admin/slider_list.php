@@ -31,12 +31,12 @@
                                         <tr>
                                             <td><?php echo $count;?></td>
                                             <td><?php echo $slider->slider_name;?></td>
-                                            <td><?php echo $subcat->created_at;?></td>
+                                            <td><?php echo $slider->created_at;?></td>
                                             <td>
 											<?php if($slider->status==1){?>
 										        <div class="badge badge-success"><a href="<?php 
 												echo base_url('slider/inactive_slider/').base64_encode($slider->slider_id);?>">Active</a></div>
-											<?php }else{?>
+											<?php }if($slider->status==2){?>
 											<div class="badge badge-danger"><a href="<?php 
 												echo base_url('slider/active_slider/').base64_encode($slider->slider_id);?>">InActive</a></div>
 											<?php }?>

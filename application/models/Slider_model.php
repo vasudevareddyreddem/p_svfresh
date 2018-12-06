@@ -39,3 +39,59 @@ class Slider_model extends CI_Model
 		//SELECT * FROM slider_tab AS s LEFT JOIN slider_pic_tab AS sp ON s.slider_id = sp.slider_id WHERE s.status = '1'
 	}
 	}
+<<<<<<< HEAD
+=======
+	public function get_sliders(){
+		$this->db->select('*');
+		$this->db->from('slider_tab');
+		$this->db->where('status',1);
+		$this->db->or_where('status',2);
+		$this->db->order_by('updated_at');
+		return $this->db->get()->result();
+	}
+	public function inactive_slider($id,$admin){
+		$this->db->set('status',2);
+		$this->db->set('updated_by',$admin);
+		$this->db->where('slider_id',$id);
+		$this->db->update('slider_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	public function active_slider($id,$admin){
+		$this->db->set('status',1);
+		$this->db->set('updated_by',$admin);
+		$this->db->where('slider_id',$id);
+		$this->db->update('slider_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	public function delete_slider($id,$admin){
+		$this->db->set('status',0);
+		$this->db->set('updated_by',$admin);
+		$this->db->where('slider_id',$id);
+		$this->db->update('slider_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	public function all_inactive($admin){
+		$this->db->set('status',2);
+		$this->db->set('updated_by',$admin);
+		$this->db->where('status',1);
+		$this->db->update('slider_tab');
+		
+		return $this->db->affected_rows()?1:0;
+	}
+	public function get_single_slider($id){
+		$this->db->select('*');
+		$this->db->from('slider_tab');
+		$this->db->where('slider_tab.slider_id',$id);
+		return $this->db->get()->row();
+		
+	}
+	public function get_slider_pics($sid){
+		$this->db->select('*');
+		$this->db->from('slider_pic_tab');
+		$this->db->where('slider_id',$id);
+		return $this->db->get()->result();
+		
+	}
+
+	}
+>>>>>>> 22a6f193b8c5bf823de325457dce67db0da210a9

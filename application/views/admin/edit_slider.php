@@ -25,7 +25,7 @@
                 <form id="add_slider" action="<?php echo base_url('slider/save_slider')?>" method="post"   enctype="multipart/form-data">
 				<div class="row">
 					<div class="form-group col-md-6">
-                           <label>Sliders Name</label>
+                           <label>Slider Name</label>
                            <input id="" type="text" class="form-control" name="s_name">
                             </div>
 				<div class="form-group col-md-6">
