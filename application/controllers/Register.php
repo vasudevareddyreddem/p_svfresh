@@ -11,6 +11,7 @@ class Register extends CI_controller
     $this->load->model('Auth_Model');
     $this->load->model('Category_model');
     $this->load->library('form_validation');
+    $this->load->model('Cart_Model');
   }
 
   public function index()
@@ -24,6 +25,10 @@ class Register extends CI_controller
       if ($this->form_validation->run() == FALSE){
         $data['pageTitle'] = 'Register';
         $data['categories'] = $this->Category_model->get_all_category();
+        $user_id = $this->session->userdata('id');
+        $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+        $data['count'] = count($data['cart']);
+        $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
         $this->load->view('home/register',$data);
       }else{
         //posting formdata and inserting into database
@@ -38,7 +43,7 @@ class Register extends CI_controller
           $post_phone_number = array('phone_number' => $this->input->post('phone_number'));
           $result = $this->Auth_Model->login($post_phone_number);
           if(count($result) > 0){
-            $userData = array('email_id'=>$result->email_id,'phone_number'=>$result->phone_number,'role'=>$result->role,'logged_in'=>TRUE);
+            $userData = array('id'=>$result->id,'email_id'=>$result->email_id,'phone_number'=>$result->phone_number,'role'=>$result->role,'logged_in'=>TRUE);
             $this->session->set_userdata($userData);
           }
           redirect('home');
@@ -51,6 +56,10 @@ class Register extends CI_controller
       //loading view
       $data['pageTitle'] = 'Register';
       $data['categories'] = $this->Category_model->get_all_category();
+      $user_id = $this->session->userdata('id');
+      $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+      $data['count'] = count($data['cart']);
+      $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
       $this->load->view('home/register',$data);
     }
   }
