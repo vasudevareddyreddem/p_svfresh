@@ -88,8 +88,8 @@ function decreaseValue() {
                 </div>
             </div><!-- /#introduce-box -->
 
-
-
+        <div id="message">
+        </div>
         </div>
 </footer>
 
@@ -115,6 +115,7 @@ function decreaseValue() {
 <script type="text/javascript" src="<?php echo base_url('assets/js/sweetalert.min.js'); ?>"></script>
 <script type="text/javascript">
   $(document).ready(function(){
+    //add to cart
     $('.addtocart').click(function(e){
       e.preventDefault();
       <?php
@@ -143,7 +144,7 @@ function decreaseValue() {
       });
       <?php } ?>
     });
-
+    //wishlist
     $('.whishlist').click(function(e){
       e.preventDefault();
       <?php
@@ -158,16 +159,20 @@ function decreaseValue() {
       var product_name = $(this).data('product_name');
       var net_price = $(this).data('net_price');
       var quantity = $(this).data('quantity');
+      var discount_price = $(this).data('discount_price');
       $.ajax({
         url:'<?php echo base_url('products/Wishlist'); ?>',
         type:'POST',
-        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity},
+        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity,'discount_price':discount_price},
         dataType:'JSON',
         success:function(data){
-          $('.cart_count').html(data.count);
-          $('#cart_template').html(data.cart_template);
-          obj.attr("disabled",true);
-          obj.html("Added to cart");
+          if(data.success){
+            $('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">'+data.success+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+            obj.css('background','#57bb14');
+            obj.attr('title','Added to your wishlist');
+          }else if(data.error){
+            $('#message').html('<div class="alert_msg1 animated slideInUp bg-del">'+data.error+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+          }
         }
       });
       <?php } ?>

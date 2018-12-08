@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  *
  */
@@ -11,6 +12,7 @@ class Products extends CI_Controller
     $this->load->model('Product_model');
     $this->load->model('Category_model');
     $this->load->model('Cart_Model');
+    $this->load->model('Wishlist_Model');
   }
 
   public function index()
@@ -77,13 +79,15 @@ class Products extends CI_Controller
         'product_img' => $this->input->post('product_img'),
         'net_price' => $this->input->post('net_price'),
         'quantity' => $this->input->post('quantity'),
+        'discount_price' => $this->input->post('discount_price'),
         'created_date'=>date('Y-m-d H:i:s')
       );
       if($this->Wishlist_Model->insert($post_data)){
         $return['success'] = 'Added to wishlist';
       }else{
-        $return['error'] = 'Filed to add wishlist';
+        $return['error'] = 'Failed to add wishlist';
       }
+      echo json_encode($return);
     }
   }
 }
