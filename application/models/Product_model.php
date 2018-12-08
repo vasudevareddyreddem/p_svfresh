@@ -53,6 +53,7 @@ class Product_model extends CI_Model
 			product_tab.created_at,product_tab.quantity,product_tab.cat_id,product_tab.subcat_id,product_tab.discount_percentage
 			');
 	  $this->db->from('product_tab');
+	 
 	  $this->db->where('product_tab.product_id',$pid);
 	 $this->db->group_start();
 	  $this->db->where('product_tab.status',1);
@@ -162,6 +163,49 @@ public function get_product_images($pid){
 	$this->db->where('product_id',$pid);
 	$this->db->where('status',1);
 	return $this->db->get()->result();
+}
+public function get_rel_products($cat_id,$subcat_id){
+	
+	$this->db->select('*');
+	$this->db->from('product_tab');
+	$this->db->join('subcat_tab','product_tab.subcat_id=subcat_tab.subcat_id');
+	$this->db->join('category_tab','product_tab.cat_id=category_tab.cat_id');
+    $this->db->where('product_tab.status',1);
+	$this->db->or_where('product_tab.status',2);
+return $this->db->get()->result();
+}
+public function save_rel_products($rdata){
+	$this->db->insert_batch('rel_products_tab',$rdata);
+	return $this->db->affected_rows()?1:0;
+	
+}
+public function get_rel_proudcts_by_id($pid){
+	
+	$this->db->select('*');
+	$this->db->from('rel_products_tab');
+	$this->db->where('product_id',$pid);
+	
+ $rel_pro= $this->db->get()->result_array();
+ $rel_proids = array_column($rel_pro, 'rel_product_id');
+ return $rel_proids;
+ 
+}
+public function get_images_array($pid){
+	$this->db->select('image_id,image_name');
+	  $this->db->from('product_images_tab');
+	  $this->db->where('product_id',$pid);
+	 return $this->db->get()->result_array();
+}
+public function save_edit_product_images($pdata,$value){
+	$this->db->where('image_id',$value);
+	$this->db->update('product_images_tab',$pdata);
+	return $this->db->affected_rows()?1:0;
+}
+public function save_delete_product_images($value){
+	$this->db->set('status',2);
+	$this->db->where('image_id',$value);
+	$this->db->update('product_images_tab');
+	return $this->db->affected_rows()?1:0;
 }
 
 	}

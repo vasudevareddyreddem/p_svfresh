@@ -32,7 +32,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
-                                                <select class="form-control" name="sc_name" id="sc_name">
+                                                <select class="form-control" name="sc_name" id="sc_name" onchange="get_products(this.value)">
                                                  <option value=''>Select</option>
                                                 </select>
                                             </div>
@@ -40,6 +40,14 @@
                                                 <label>Product Name</label>
                                                 <input id="p_name" type="text" class="form-control" name="p_name">
                                             </div>
+											 <div class="form-group" name="" id="">
+                                        <label class="form-control-label">Select Group</label>
+                                        	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
+											
+											<option></option>
+                                   
+                                </select>
+                                    </div>
                                             <div class="form-group col-md-6">
                                                 <label>Quantity</label>
                                                 <input id="quantity" type="text" class="form-control" name="quantity">
@@ -223,6 +231,8 @@ $(document).ready(function() {
 <script>
  function get_category(value){
 	 $('#sc_name').empty();
+	 sel='<option value="">select</option>';
+	 $('#sc_name').append(sel);
 	
 	 $.ajax({
                     type: "GET",    
@@ -354,4 +364,41 @@ $('#dp_price').on('keyup',function(){
 }); 
 
 </script>
+<script>
+ function get_products(value){
+	 $('#rel_products').empty();
+	 cat_id=$('#c_name').val();
+	 if(value==''){
+		 return false;
+	 }
+	
+	 $.ajax({
+                    type: "GET",    
+                    url: '<?php echo base_url('product/get_rel_products/'); ?>'+cat_id+'/'+value,    
+                    data: '',    
+                    dataType: "json",   
+                    
+                    success: function (result) {
+						
+						alert(result.status);
+						if(result.status==1){
+						$.each(result.r_plist, function(i, product) {
+							temp='<option value="'+product.product_id+'">'+product.product_name+'</option>';
+							
+							$('#rel_products').append(temp);
+							
+							
+						});
+						}
+						
+       
+                                           }
+                    ,
+                    error: function() { 
+                    alert('error from server side');
 
+                    } 
+                });
+ }
+
+</script>

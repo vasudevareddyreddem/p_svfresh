@@ -139,9 +139,21 @@ $this->load->model('Product_model');
 				 'description'=>$descr
 				);
 				$product_id=$this->Product_model->save_product($data);
-						
+				//releated products
+				$rproducts=$this->input->post('rel_products');
+			if(!empty($rproducts)){
+				foreach($rproducts as $product){
+					$rdata[]=array('product_id'=>$product_id,
+					'rel_product_id'=>$product,
+					'created_by'=>$adminid);
+					
+				}
+				$this->Product_model->save_rel_products($rdata);
+			}		
 			// Count total files
       $countfiles = count($_FILES['p_image']['name']);
+	  $tst=$this->input->post('p_image');
+	 
 
       // Looping all files
       for($i=0;$i<$countfiles;$i++){
@@ -228,6 +240,9 @@ $this->load->model('Product_model');
 			$pid=base64_decode($this->uri->segment(3));
 			$data['cat_list']=$this->Category_model->get_category_names();
 			$data['images']=$this->Product_model->get_product_images($pid);
+			$data['rel_products']=$this->Product_model->get_rel_proudcts_by_id($pid);
+			//echo $this->db->last_query();exit;
+		//echo $pid;	print_r($data['rel_products']);exit;
 			
 			if(count($data['cat_list'])>0){
 					$data['status']=1;
@@ -240,11 +255,15 @@ $this->load->model('Product_model');
 				}
 
 			$data['product']=$this->Product_model->edit_product($pid);
+			
 			if(!$data['product']){
 				   $this->session->set_flashdata('error','this product deleted by another session');
 			         redirect('product/product_list');
 
 			}
+			$cat_id=$data['product']->cat_id;
+			$subcat_id=$data['product']->subcat_id;
+			$data['r_plist']=$this->Product_model->get_rel_products($cat_id,$subcat_id);
 
 			$data['fet_data']=$this->Product_model->get_features($pid);
 			if(count($data['fet_data'])>0){
@@ -318,44 +337,7 @@ $this->load->model('Product_model');
 
 				}
 
-
-
-				 $config['upload_path']          = './assets/uploads/product_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
-
-
-                $this->load->library('upload', $config);
-				$img_status=0;
-			  if($_FILES['p_image']['name']!=''){
-				  if ( ! $this->upload->do_upload('p_image',time()))
-                {
-                        //$error = array('error' => $this->upload->display_errors());
-
-                          $this->session->set_flashdata('error','product image not uploaded');
-					      redirect($_SERVER['HTTP_REFERER']);
-                }
-				else{
-					$upload_data = $this->upload->data();
-                    $product_img =   $upload_data['file_name'];
-					$img_status=1;
-				}
-			  }
-				if($img_status==1){
-				$data=array(
-				'product_name'=>$product_name,
-				'product_img'=>$product_img,
-				'cat_id'=>$cat_id,
-				'subcat_id'=>$subcat_id,
-				'actual_price'=>$act_price,
-				'discount_price'=>$dis_price,
-				'discount_percentage'=>$dis_percentage,
-				'net_price'=>$net_price,
-				'quantity'=>$qun,
-				 'created_by'=>$adminid
-				);
-				}
-				else{
-					$data=array(
+        	$data=array(
 				'product_name'=>$product_name,
 				'cat_id'=>$cat_id,
 				'subcat_id'=>$subcat_id,
@@ -368,12 +350,116 @@ $this->load->model('Product_model');
 				 'description'=>$this->input->post('descr')
 				);
 
-				}
-
-
 				$status=$this->Product_model->save_edit_product($data,$pid);
+				 $config['upload_path']          = './assets/uploads/product_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
 
 
+                $this->load->library('upload', $config);
+				//features edit
+
+				
+$pimages=$this->input->post('p_image');
+ $countfiles = count($_FILES['p_image']['name']);
+ //echo $countfiles; 
+//print_r($pimages);exit;
+            $img_ids=$this->input->post('image_id');
+//echo 		count($img_ids);exit;
+
+				$count=0;
+				foreach($img_ids as $key=>$value){
+					
+					$value=base64_decode($value);
+                             if(isset($_FILES['p_image']['name'][$key])){
+								 $count++;
+                           if($_FILES['p_image']['name'][$key]!=''){
+ 
+          // Define new $_FILES array - $_FILES['file']
+           $_FILES['image']['name']     = $_FILES['p_image']['name'][$key];
+                $_FILES['image']['type']     = $_FILES['p_image']['type'][$key];
+                $_FILES['image']['tmp_name'] = $_FILES['p_image']['tmp_name'][$key];
+                $_FILES['image']['error']     = $_FILES['p_image']['error'][$key];
+                $_FILES['image']['size']     = $_FILES['p_image']['size'][$key];
+                
+		 //echo   $_FILES['slide']['name'];exit;
+		    if ( ! $this->upload->do_upload('image',time()))
+                {
+                      
+						
+                          $this->session->set_flashdata('error',' product image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $product_img =   $upload_data['file_name'];
+					$pdata=array('image_name'=>$product_img,
+					
+					'updated_by'=>$adminid);
+					$this->Product_model->save_edit_product_images($pdata,$value);
+				
+				
+				}
+  }
+							 }
+							 //delete image
+							 else{
+								 $this->Product_model->save_delete_product_images($value);
+								 
+							 }
+				}
+			$countfiles = count($_FILES['p_image']['name']);
+			if($count<$countfiles){
+				    $img_status=0;
+				
+      // Looping all files
+      for($i=$count;$i<$countfiles;$i++){
+		 
+ 
+        if($_FILES['p_image']['name'][$i]!=''){
+			
+ 
+          // Define new $_FILES array - $_FILES['file']
+           $_FILES['image']['name']     = $_FILES['p_image']['name'][$i];
+                $_FILES['image']['type']     = $_FILES['p_image']['type'][$i];
+                $_FILES['image']['tmp_name'] = $_FILES['p_image']['tmp_name'][$i];
+                $_FILES['image']['error']     = $_FILES['p_image']['error'][$i];
+                $_FILES['image']['size']     = $_FILES['p_image']['size'][$i];
+                
+		 //echo   $_FILES['slide']['name'];exit;
+		    if ( ! $this->upload->do_upload('image',time()))
+                {
+                      
+						
+                          $this->session->set_flashdata('error',' product image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$img_status=1;
+					$upload_data = $this->upload->data(); 
+                    $product_img =   $upload_data['file_name'];
+					$image_data[]=array('image_name'=>$product_img,
+					'product_id'=>$pid,
+					'created_by'=>$adminid);
+				}
+          
+
+        
+		}
+         
+        }
+		
+			if($img_status==1){
+				
+				
+ $sta=$this->Product_model->save_product_images($image_data);
+			}
+ 
+      }
+		
+				
+				//features edit
 
 				 $features=$this->Product_model->get_features_array($pid);
 
@@ -408,9 +494,11 @@ $this->load->model('Product_model');
 			}
                 if(isset($f_names)){
 				if(!empty($f_names)){
+					$fet_status=0;
 					foreach($f_names as $key=>$value){
 						if(!$value==''&& !$f_values[$key]=='')
 						{
+							$fet_status=1;
 						$in_features[]=array(
 
 				  'feature_name'=>$value,
@@ -420,10 +508,12 @@ $this->load->model('Product_model');
 				  );
 					}
 					}
-
+              if($fet_status==1){
 				$ins_status=$this->Product_model->save_features($in_features);
+			  }
 				}
 				}
+				//end features edit
 				//loop the remaing feature elemnts
 
 				// foreach($fids as $key=>$value){
@@ -446,9 +536,12 @@ $this->load->model('Product_model');
 			else{redirect('login');}
 
 		}
+	
+	
 
 		public function delete_product(){
 			if($this->session->userdata('svadmin_det')){
+				
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Product_model->delete_product($id);
 			if($status==1){
@@ -461,5 +554,33 @@ $this->load->model('Product_model');
 			}
 		}
 		else{redirect('login');}
+		}
+		
+		public function get_rel_products(){
+			if( $this->session->userdata('svadmin_det')){
+				
+				$cat_id=base64_decode($this->uri->segment(3));
+				$subcat_id=$this->uri->segment(4);
+			//echo $cat_id; exit;
+
+				$data['r_plist']=$this->Product_model->get_rel_products($cat_id,$subcat_id);
+				
+
+				if(count($data['r_plist'])>0){
+					$data['status']=1;
+					echo json_encode($data);exit;
+
+
+				}
+				else{
+					$data['status']=0;
+					echo json_encode($data);exit;
+
+				}
+
+
+				}
+			else{redirect('login');}
+
 		}
 }

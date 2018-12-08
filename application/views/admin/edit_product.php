@@ -35,7 +35,7 @@
 											
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
-                                                <select class="form-control" name="sc_name" id="sc_name">
+                                                <select class="form-control" name="sc_name" id="sc_name" onchange="get_products(this.value)">
                                                   <?php foreach($sub_cats as $scat):?> 
                                                 <option value="<?php echo $scat['subcat_id'];?>" 
 												<?php if($scat['subcat_id']==$product->subcat_id)
@@ -47,6 +47,17 @@
                                                 <label>Product Name</label>
                                                 <input id="p_name" type="text" class="form-control" name="p_name" value="<?php  echo $product->product_name ;?>">
                                             </div>
+											 <div class="form-group" name="" id="">
+                                        <label class="form-control-label">Select Related Products</label>
+                                        	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
+											<?php foreach($r_plist as $pro):?>
+											<?php if($pro->product_id!=$product->product_id) {?>
+											<option value='<?php echo $pro->product_id; ?>' <?php if(in_array($pro->product_id,$rel_products)){echo "selected";} ?>><?php echo $pro->product_name; ?></option>
+											<?php } ?>
+											<?php endforeach;?>
+                                   
+                                       </select>
+                                          </div>
                                             <div class="form-group col-md-6">
                                                 <label>Quantity</label>
                                                 <input id="quantity" type="text" class="form-control" name="quantity" value="<?php echo $product->quantity;?>">
@@ -166,11 +177,14 @@
                                               
 												<?php $count=1;foreach($images as $image){ ?>
 												<input type="hidden" 
-												value="<?php echo base64_encode($image->image_id);?>" name="image_id" >
+												value="<?php echo base64_encode($image->image_id);?>" name="image_id[]" >
 												<tr>
-                                                 
+												<td>
+                                                   <img alt="image" 
+											src="<?php echo base_url('assets/uploads/product_pics/').$image->image_name; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
+											</td>
                                                     <td>
-                                                        <input type="file" name="p_image[]" placeholder="LastName" class="form-control"  required />
+                                                        <input type="file" name="p_image[]" placeholder="LastName" class="form-control"   />
                                                     </td>
                                                     <td>
                                                         <a class="deleteRow"></a>
@@ -273,16 +287,7 @@ $(document).ready(function() {
 					}
 				}
             },
-			p_image: {
-                validators: {
-					
-					regexp: {
-					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
-					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
-					}
-				
-				}
-            },
+			
             }
         })
      
@@ -391,7 +396,7 @@ $('#dp_price').on('keyup',function(){
         var newRow = $("<tr>");
         var cols = "";
 
-        cols += '<td><input type="file" name="p_image[]" class="form-control" placeholder="FirstName" name="fname[]' +'"/></td>';
+        cols += '<td><input type="file" name="p_image[]" class="form-control" placeholder="FirstName" /></td>';
         
 
         cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
@@ -409,4 +414,45 @@ $('#dp_price').on('keyup',function(){
 
 
 });
+</script>
+<script>
+ function get_products(value){
+	 
+	
+	 cat_id=$('#c_name').val();
+	 if(value==''){
+		 return false;
+	 }
+	
+	 $.ajax({
+                    type: "GET",    
+                    url: '<?php echo base_url('product/get_rel_products/'); ?>'+cat_id+'/'+value,    
+                    data: '',    
+                    dataType: "json",   
+                    
+                    success: function (result) {
+						
+						alert(result.status);
+						if(result.status==1){
+							 $('#rel_products').empty();
+						$.each(result.r_plist, function(i, product) {
+							
+							temp='<option value="'+product.product_id+'">'+product.product_name+'</option>';
+							
+							$('#rel_products').append(temp); 
+							
+							
+						});
+						}
+						
+       
+                                           }
+                    ,
+                    error: function() { 
+                    alert('error from server side');
+
+                    } 
+                });
+ }
+
 </script>

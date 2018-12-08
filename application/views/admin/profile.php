@@ -15,24 +15,22 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <img class="mr-3 rounded-circle float-right" width="150" src="img/avatar/avatar-1.jpeg" alt="avatar">
+                                    <img class="mr-3 rounded-circle float-right" width="150" src="<?php if($admin['profile_pic']==''){echo base_url('assets/uploads/profile_pics/').'profilepic.png';}
+									else{echo base_url('assets/uploads/profile_pics/').$admin['profile_pic'];}
+									?>" alt="avatar">
                                 </div>
                                 <div class="col-md-7">
                                     <div class="mb-2">
-                                        <b class="mr-1">Name</b> : <span class="ml-1">Ujang Maman</span>
+                                        <b class="mr-1">Name</b> : <span class="ml-1"><?php echo  $admin['f_name']; ?></span>
                                     </div>
                                     <div class="mb-2">
-                                        <b class="mr-1">Email</b> : <span class="ml-1">ujangmanam@gmail.com</span>
+                                        <b class="mr-1">Email</b> : <span class="ml-1">
+										<?php echo  $admin['login_email'];?></span>
                                     </div>
                                     <div class="mb-2">
-                                        <b class="mr-1">Phone Number</b> : <span class="ml-1">98xxxxxx23</span>
+                                        <b class="mr-1">Phone Number</b> : <span class="ml-1"><?php echo  $admin['phone_number'];?></span>
                                     </div>
-                                    <div class="mb-2">
-                                        <b class="mr-1">Gender</b> : <span class="ml-1">Male</span>
-                                    </div>
-                                    <div class="mb-2">
-                                        <b class="mr-1">City</b> : <span class="ml-1">Hyderabad</span>
-                                    </div>
+                                    
 
                                 </div>
                             </div>
@@ -46,33 +44,21 @@
                             <h4>Edit Profile</h4>
                         </div>
                         <div class="card-body">
-                            <form id="edit_profile" method="" action="">
+                            <form id="edit_profile" method="post" action="<?php echo base_url('profile/save_profile'); ?>" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" id="name" name="name" value="Ujang Maman" class="form-control">
+                                    <input type="text" id="name" name="name" value="<?php echo  $admin['f_name']; ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" id="email" name="email" value="ujangmaman@gmail.com" class="form-control">
+                                    <input type="email" id="email" name="email" value="<?php echo  $admin['login_email']; ?>" class="form-control">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Phone Number</label>
-                                    <input type="text" id="mobile" name="mobile" value="810xxxxx63" class="form-control">
+                                    <input type="text" id="mobile" name="mobile" value="<?php echo  $admin['phone_number']; ?>" class="form-control">
                                 </div>
-                                <div class="form-group">
-                                    <label>Gender</label>
-                                    <select class="form-control" name="gender">
-                                        <option disabled>Select</option>
-                                        <option value="1" selected>Male</option>
-                                        <option value="2">Female</option>
-                                        <option value="3">Others</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>City</label>
-                                    <input id="city" type="text" class="form-control" name="city" value="">
-                                </div>
+                              
                                 <div class="form-group">
                                     <label class="form-control-label">Profile Pic</label>
                                     <input type="file" id="image" name="image" class="form-control">
