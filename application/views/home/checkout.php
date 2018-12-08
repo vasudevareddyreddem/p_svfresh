@@ -75,9 +75,9 @@
                   <td class="text-center"><span>₹ <?php echo $c->net_price; ?></span></td>
                   <td class="qty">
                     <form class="form-class">
-                      <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                      <input type="number" id="number" value="<?php echo $c->quantity; ?>" />
-                      <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                      <div class="value-button decrease" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                      <input type="number" class="number" id="number" value="<?php echo $c->quantity; ?>" />
+                      <div class="value-button increase" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
                     </form>
                   </td>
                   <td class="text-center">
@@ -94,15 +94,15 @@
                 <tr>
                   <td colspan="2" rowspan="2"></td>
                   <td colspan="3">Total products (tax incl.)</td>
-                  <td colspan="2">₹ 122.38</td>
+                  <td colspan="2">₹ <?php echo $cart_total->total_cart; ?></td>
                 </tr>
                 <tr>
                   <td colspan="3"><strong>Total</strong></td>
-                  <td colspan="2"><strong>₹ 122.38 </strong></td>
+                  <td colspan="2"><strong>₹ <?php echo $cart_total->total_cart; ?></strong></td>
                 </tr>
               </tfoot>
             </table>
-            <a href="billing.php" class="button pull-right">Place Order</a>
+            <a href="<?php echo base_url('/billing'); ?>" class="button pull-right">Place Order</a>
           </div>
         </div>
       </div>
@@ -110,6 +110,23 @@
   </div>
 
   <?php include("footer.php"); ?>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.increase,.decrease').click(function(){
+        var quantity = $('.number').val();
+        alert(quantity);
+        var id = '1';
+        $.ajax({
+          url:'<?php echo base_url('checkout/update_quantity'); ?>',
+          type:'POST',
+          data:{'quantity':quantity,'id':id},
+          success:function(data){
+
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

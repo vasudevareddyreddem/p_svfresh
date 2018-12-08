@@ -50,8 +50,8 @@
                         <li><a href="<?php echo base_url('home/login'); ?>">Login</a></li>
                         <?php } ?>
                         <li><a href="orders.php">Orders</a></li>
-                        <li><a href="">Compare</a></li>
-                        <li><a href="whishlist.php">Wishlists</a></li>
+                        <!-- <li><a href="">Compare</a></li> -->
+                        <li><a href="<?php echo base_url('wishlist'); ?>">Wishlists</a></li>
                     </ul>
                 </div>
             </div>

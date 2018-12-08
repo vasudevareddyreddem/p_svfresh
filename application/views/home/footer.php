@@ -88,8 +88,8 @@ function decreaseValue() {
                 </div>
             </div><!-- /#introduce-box -->
 
-
-
+        <div id="message">
+        </div>
         </div>
 </footer>
 
@@ -113,3 +113,69 @@ function decreaseValue() {
 <script type="text/javascript" src="<?php echo base_url('assets/js/theme-script.js'); ?>"></script>
 
 <script type="text/javascript" src="<?php echo base_url('assets/js/sweetalert.min.js'); ?>"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    //add to cart
+    $('.addtocart').click(function(e){
+      e.preventDefault();
+      <?php
+        if($this->session->userdata('logged_in') != TRUE){
+          echo 'window.location = "'.base_url('home/login').'";';
+        } else {
+      ?>
+      var obj = $(this);
+      var user_id = $(this).data('user_id');
+      var product_id = $(this).data('product_id');
+      var product_img = $(this).data('product_img');
+      var product_name = $(this).data('product_name');
+      var net_price = $(this).data('net_price');
+      var quantity = $(this).data('quantity');
+      $.ajax({
+        url:'<?php echo base_url('products/cart'); ?>',
+        type:'POST',
+        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity},
+        dataType:'JSON',
+        success:function(data){
+          $('.cart_count').html(data.count);
+          $('#cart_template').html(data.cart_template);
+          obj.attr("disabled",true);
+          obj.html("Added to cart");
+        }
+      });
+      <?php } ?>
+    });
+    //wishlist
+    $('.whishlist').click(function(e){
+      e.preventDefault();
+      <?php
+        if($this->session->userdata('logged_in') != TRUE){
+          echo 'window.location = "'.base_url('home/login').'";';
+        } else {
+      ?>
+      var obj = $(this);
+      var user_id = $(this).data('user_id');
+      var product_id = $(this).data('product_id');
+      var product_img = $(this).data('product_img');
+      var product_name = $(this).data('product_name');
+      var net_price = $(this).data('net_price');
+      var quantity = $(this).data('quantity');
+      var discount_price = $(this).data('discount_price');
+      $.ajax({
+        url:'<?php echo base_url('products/Wishlist'); ?>',
+        type:'POST',
+        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity,'discount_price':discount_price},
+        dataType:'JSON',
+        success:function(data){
+          if(data.success){
+            $('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">'+data.success+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+            obj.css('background','#57bb14');
+            obj.attr('title','Added to your wishlist');
+          }else if(data.error){
+            $('#message').html('<div class="alert_msg1 animated slideInUp bg-del">'+data.error+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+          }
+        }
+      });
+      <?php } ?>
+    });
+  });
+</script>

@@ -23,10 +23,11 @@
             <div class="layered layered-category">
               <div class="layered-content">
                 <ul class="tree-menu">
-                  <li><span></span><a href="#">Fruits & Vegetables</a></li>
-                  <li><span></span><a href="#">Water</a></li>
-                  <li><span></span><a href="#">Milk</a></li>
-                  <li><span></span><a href="#">Grocery</a></li
+                  <?php if (count($categories) > 0) { ?>
+                    <?php foreach($categories as $c){ ?>
+                    <li><span></span><a href="<?php echo base_url('category/'.$c->cat_id); ?>"><?php echo $c->cat_name; ?></a></li>
+                    <?php } ?>
+                  <?php } ?>
                 </ul>
               </div>
             </div>
@@ -43,95 +44,6 @@
         </div>
         <!--./left silde-->
         <!-- block best sellers -->
-        <div class="block left-module">
-          <p class="title_block">ON SALE</p>
-          <div class="block_content product-onsale">
-            <ul class="product-list owl-carousel" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
-              <li>
-                <div class="product-container">
-                  <div class="left-block">
-                    <a href="#">
-                      <img class="img-responsive" alt="product" src="assets/data/fruits-img1.png" />
-                    </a>
-                    <div class="price-percent-reduction2">-30% OFF</div>
-                  </div>
-                  <div class="right-block">
-                    <h5 class="product-name"><a href="#">Simla Apples <?php echo $product->product_name; ?></a></h5>
-                    <div class="product-star">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <div class="content_price">
-                      <span class="price product-price">₹38,95</span>
-                      <span class="price old-price">₹52,00</span>
-                    </div>
-                  </div>
-                  <div class="product-bottom">
-                    <a class="btn-add-cart" title="Add to Cart" href="#add">Add to Cart</a>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="product-container">
-                  <div class="left-block">
-                    <a href="#">
-                      <img class="img-responsive" alt="product" src="assets/data/waterimg1.jpg" />
-                    </a>
-                    <div class="price-percent-reduction2">-10% OFF</div>
-                  </div>
-                  <div class="right-block">
-                    <h5 class="product-name"><a href="#">Bisleri water cans</a></h5>
-                    <div class="product-star">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <div class="content_price">
-                      <span class="price product-price">₹38,95</span>
-                      <span class="price old-price">₹52,00</span>
-                    </div>
-                  </div>
-                  <div class="product-bottom">
-                    <a class="btn-add-cart" title="Add to Cart" href="#add">Add to Cart</a>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="product-container">
-                  <div class="left-block">
-                    <a href="#">
-                      <img class="img-responsive" alt="product" src="assets/data/grocery-img4.png" />
-                    </a>
-                    <div class="price-percent-reduction2">-42% OFF</div>
-                  </div>
-                  <div class="right-block">
-                    <h5 class="product-name"><a href="#">KamaSutra Spark Spray</a></h5>
-                    <div class="product-star">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <div class="content_price">
-                      <span class="price product-price">₹38,95</span>
-                      <span class="price old-price">₹52,00</span>
-                    </div>
-                  </div>
-                  <div class="product-bottom">
-                    <a class="btn-add-cart" title="Add to Cart" href="#add">Add to Cart</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
       </div>
       <!-- ./left colunm -->
       <!-- Center colunm-->
@@ -145,41 +57,6 @@
                 <div class="product-full">
                   <img id="product-zoom" src='<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>' data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>"/>
                 </div>
-                <!-- product thumbnail images -->
-                <!-- <div class="product-img-thumb" id="gallery_01">
-                  <ul class="owl-carousel" data-items="3" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
-                    <li>
-                      <a href="#" data-image="assets/data/grocery-img1.png" data-zoom-image="assets/data/grocery-img1.png">
-                        <img id="product-zoom"  src="assets/data/grocery-img1.png" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" data-image="assets/data/grocery-img2.png" data-zoom-image="assets/data/grocery-img2.png">
-                        <img id="product-zoom"  src="assets/data/grocery-img2.png" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" data-image="assets/data/fruits-img2.png" data-zoom-image="assets/data/fruits-img2.png">
-                        <img id="product-zoom"  src="assets/data/fruits-img2.png" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" data-image="assets/data/fruits-img3.png" data-zoom-image="assets/data/fruits-img3.png">
-                        <img id="product-zoom"  src="assets/data/fruits-img3.png" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" data-image="assets/data/waterimg1.jpg" data-zoom-image="assets/data/waterimg1.jpg">
-                        <img id="product-zoom"  src="assets/data/waterimg1.jpg" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" data-image="assets/data/waterimg2.jpeg" data-zoom-image="assets/data/waterimg2.jpeg">
-                        <img id="product-zoom"  src="assets/data/waterimg2.jpeg" />
-                      </a>
-                    </li>
-                  </ul>
-                </div> -->
                 <!-- product thumbnail images -->
               </div>
               <!-- product-imge-->
@@ -205,9 +82,7 @@
                 <span class="discount"><?php echo $product->discount_percentage; ?></span>
               </div>
               <div class="info-orther">
-                <p>Item Code: #453217907</p>
                 <p>Availability: <span class="label label-success">In stock</span></p>
-                <p>Condition: New</p>
               </div>
               <?php if($product->description){ ?>
               <div class="product-desc">
@@ -215,23 +90,8 @@
               </div>
             <?php } ?>
               <div class="form-option">
-                <!-- <p class="form-option-title">Available Options:</p>
-                <div class="attributes">
-                  <div class="attribute-label">Color:</div>
-                  <div class="attribute-list">
-                    <ul class="list-color">
-                      <li style="background:#0c3b90;"><a href="#">red</a></li>
-                      <li style="background:#036c5d;" class="active"><a href="#">red</a></li>
-                      <li style="background:#5f2363;"><a href="#">red</a></li>
-                      <li style="background:#ffc000;"><a href="#">red</a></li>
-                      <li style="background:#36a93c;"><a href="#">red</a></li>
-                      <li style="background:#ff0000;"><a href="#">red</a></li>
-                    </ul>
-                  </div>
-                </div> -->
                 <div class="attributes">
                   <div class="attribute-label">Qty:</div>
-
                   <form class="" id="cart_form">
                     <div style="padding:5px;" class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
                     <input type="number" name="quantity" id="number" value="1" />
@@ -242,31 +102,17 @@
                     <input type="hidden" name="net_price" value="<?php echo $product->net_price; ?>"/>
                     <input type="hidden" name="product_img" value="<?php echo $product->product_img; ?>"/>
                   </form>
-
                 </div>
-                <!-- <div class="attributes">
-                  <div class="attribute-label">Size:</div>
-                  <div class="attribute-list">
-                    <select>
-                      <option value="1">X</option>
-                      <option value="2">XL</option>
-                      <option value="3">XXL</option>
-                    </select>
-                  </div>
-                </div> -->
               </div>
               <div class="form-action">
                 <div class="button-group">
-                    <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>
+                  <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>
                 </div>
                 <div class="button-group">
                   <a class="wishlist" href="#"><i class="fa fa-heart-o"></i>
                     <br>Wishlist</a>
-                    <a class="compare" href="#"><i class="fa fa-signal"></i>
-                      <br>
-                      Compare</a>
-                    </div>
                   </div>
+                </div>
 
                 </div>
               </div>
@@ -294,11 +140,6 @@
                     <?php } else { ?>
                       <p><h6>No product description</h6></p>
                     <?php } ?>
-                    <!-- <p>Morbi mollis tellus ac sapien. Nunc nec neque. Praesent nec nisl a purus blandit viverra. Nunc nec neque. Pellentesque auctor neque nec urna.</p>
-
-                    <p>Curabitur suscipit suscipit tellus. Cras id dui. Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel, lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Maecenas vestibulum mollis diam.</p>
-
-                    <p>Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in dolor. Sed lectus. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Nam at tortor in tellus interdum sagittis. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est.</p> -->
                   </div>
                   <div id="information" class="tab-panel">
                     <table class="table table-bordered">
@@ -382,99 +223,6 @@
               <div class="page-product-box">
                 <h3 class="heading">Related Products</h3>
                 <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
-                  <!-- <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/milkbrand1.png" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
-
-                        </div>
-                        <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
-                      </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">Heritage milk</a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/milkbrand2.png" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
-
-                        </div>
-                        <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
-                      </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">Thirumala milk</a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/grocery-img1.png" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
-
-                        </div>
-                        <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
-                      </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">Fortune Oil</a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li> -->
                   <li>
                     <div class="product-container">
                       <div class="left-block">
@@ -510,135 +258,6 @@
               </div>
               <!-- ./box product -->
               <!-- box product -->
-              <div class="page-product-box">
-                <h3 class="heading">You might also like</h3>
-                <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
-                  <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/grocery-img3.png" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
-
-                        </div>
-                        <!-- <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div> -->
-                      </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">Red Dal</a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/grocery-img4.png" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
-
-                        </div>
-                        <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
-                      </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">KamaSutra </a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/waterimg1.jpg" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
-
-                        </div>
-                        <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
-                      </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">Water Can</a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/waterimg2.jpeg" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
-
-                        </div>
-                        <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div>
-                      </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">Cool Water Can</a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li> -->
-                </ul>
-              </div>
               <!-- ./box product -->
             </div>
             <!-- Product -->
