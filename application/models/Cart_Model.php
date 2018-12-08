@@ -20,6 +20,18 @@ class Cart_Model extends CI_Model
   {
     return $this->db->get_where($this->table,array('user_id'=>$user_id ))->result();
   }
+  public function update($quantity='',$id='')
+  {
+    $this->db->where('id',$id);
+    return $this->db->update($this->table,array('quantity'=>$quantity));
+  }
+  public function get_cart_total_for_user($user_id='')
+  {
+    $this->db->select('SUM(quantity * net_price) AS total_cart');
+    $this->db->from($this->table);
+    $this->db->where('user_id',$user_id);
+    return $this->db->get()->row();
+  }
 }
 
 ?>
