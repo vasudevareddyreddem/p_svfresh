@@ -117,6 +117,10 @@
                           <div class="cart-buttons">
                               <a href="<?php echo base_url('checkout'); ?>" class="btn-check-out">Checkout</a>
                           </div>
+                        <?php }else{ ?>
+                          <div class="cart-buttons">
+                              <a href="<?php echo base_url('checkout'); ?>" class="btn-check-out">Checkout</a>
+                          </div>
                         <?php } ?>
                     </div>
                 </div>

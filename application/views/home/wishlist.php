@@ -18,7 +18,7 @@
               <a href="orders.php"><li class="list-group-item">My orders</li></a>
               <a href="<?php echo base_url('wishlist'); ?>"><li class="list-group-item">Wishlist</li></a>
               <a href="<?php echo base_url('checkout'); ?>"><li class="list-group-item">Checkout</li></a>
-              <a href="checkout.php"><li class="list-group-item">logout</li></a>
+              <a href="<?php echo base_url('home/logout'); ?>"><li class="list-group-item">logout</li></a>
             </ul>
           </div>
         </div>
@@ -32,7 +32,7 @@
                 <div class="panel-body" style="border-bottom:1px solid #ddd;">
                   <div class="row">
                     <div class="col-md-2">
-                      <a href="#"><img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/'.$w->product_img); ?>" alt="Product"></a>
+                      <a href="<?php echo base_url('product/'.$w->product_id); ?>"><img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/'.$w->product_img); ?>" alt="Product"></a>
                     </div>
                     <div class="col-md-9">
                       <h3 class="text-success"><?php echo $w->product_name; ?></h3>

@@ -15,24 +15,47 @@ class Checkout extends CI_Controller
 
   public function index()
   {
-    $data['pageTitle'] = 'Checkout';
-    $data['categories'] = $this->Category_model->get_all_category();
-    $user_id = $this->session->userdata('id');
-    $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
-    $data['cart_total'] = $this->Cart_Model->get_cart_total_for_user($user_id);
-    $data['count'] = count($data['cart']);
-    $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
-    $this->load->view('home/checkout',$data);
+    if ($this->session->userdata('logged_in') == TRUE) {
+      $data['pageTitle'] = 'Checkout';
+      $data['categories'] = $this->Category_model->get_all_category();
+      $user_id = $this->session->userdata('id');
+      $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+      $data['cart_total'] = $this->Cart_Model->get_cart_total_for_user($user_id);
+      $data['count'] = count($data['cart']);
+      $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+      $this->load->view('home/checkout',$data);
+    }else{
+      redirect('home/login');
+    }
   }
 
   public function update_quantity()
   {
-    $quantity = $this->input->post('quantity');
-    $id = $this->input->post('id');
-    if($this->Cart_Model->update($quantity,$id)){
-
+    if ($this->session->userdata('logged_in') == TRUE) {
+      $quantity = $this->input->post('quantity');
+      $id = $this->input->post('id');
+      if($this->Cart_Model->update($quantity,$id)){
+        $return['success'] = 'Updated successfully';
+      }
+      echo json_encode($return);
+    }else{
+      redirect('home/login');
     }
   }
+
+  public function delete_cart_item()
+  {
+    if($this->session->userdata('logged_in') == TRUE){
+      $id = $this->input->post('id');
+      if($this->Cart_Model->delete($id)){
+        $return['success'] = 'Deleted successfully';
+      }
+      echo json_encode($return);
+    }else{
+      redirect('home/login');
+    }
+  }
+
 }
 
 ?>
