@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrap.min.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrapValidator.min.css';?>">
+	<link rel="stylesheet" href="<?php echo base_url().'assets/css/chosen.min.css';?>">
     
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/ionicons.min.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/fontawesome-all.min.css';?>">
@@ -85,7 +86,7 @@
 				echo $admin['login_email'];?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="profile.php" class="dropdown-item has-icon">
+                            <a href="<?php echo base_url('profile');?>" class="dropdown-item has-icon">
                                 <i class="ion ion-android-person"></i> Profile
                             </a>
                             <a href="change_password.php" class="dropdown-item has-icon">

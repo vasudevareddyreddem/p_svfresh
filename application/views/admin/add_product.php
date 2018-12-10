@@ -32,7 +32,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
-                                                <select class="form-control" name="sc_name" id="sc_name">
+                                                <select class="form-control" name="sc_name" id="sc_name" onchange="get_products(this.value)">
                                                  <option value=''>Select</option>
                                                 </select>
                                             </div>
@@ -40,6 +40,14 @@
                                                 <label>Product Name</label>
                                                 <input id="p_name" type="text" class="form-control" name="p_name">
                                             </div>
+											 <div class="form-group" name="" id="">
+                                        <label class="form-control-label">Select Group</label>
+                                        	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
+											
+											<option></option>
+                                   
+                                </select>
+                                    </div>
                                             <div class="form-group col-md-6">
                                                 <label>Quantity</label>
                                                 <input id="quantity" type="text" class="form-control" name="quantity">
@@ -65,20 +73,7 @@
                                                 <label>Description</label>
                                                 <textarea id="descr"  class="form-control" name="descr" ></textarea>
                                             </div>
-								 
-								 <div class="controls">
-								 <div class="entry col-md-12">
-									 <label>Sliders </label>
-									 <div class="input-group">
-										<input class="form-control" name="slider[]" type="file" placeholder="Type something"  required />
-										<span class="input-group-btn">
-											<button class="btn btn-success btn-add" type="button">
-												<span class="font-18">+</span>
-											</button>
-										</span>
-										</div>
-									</div>
-								</div>
+								
 							 <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -114,18 +109,16 @@
                                         <table id="myTable1" class="table1 order-list1">
                                             <thead>
                                                 <tr>
-                                                    <th> Feature Name</th>
-                                                    <th>Feature value</th>
+                                                    <th> Product Images</th>
+                                                   
                                                     <th>&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                   
                                                     <td>
-                                                        <input type="text" name="fname[]" placeholder="FirstName" class="form-control" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="fvalue[]" placeholder="LastName" class="form-control" />
+                                                        <input type="file" name="p_image[]" placeholder="LastName" class="form-control"  required />
                                                     </td>
                                                     <td>
                                                         <a class="deleteRow"></a>
@@ -215,7 +208,7 @@ $(document).ready(function() {
 				
 				}
             },
-			p_image: {
+			'p_image[]': {
                 validators: {
 					notEmpty: {
 						message: 'Image is required'
@@ -238,6 +231,8 @@ $(document).ready(function() {
 <script>
  function get_category(value){
 	 $('#sc_name').empty();
+	 sel='<option value="">select</option>';
+	 $('#sc_name').append(sel);
 	
 	 $.ajax({
                     type: "GET",    
@@ -316,8 +311,8 @@ $(document).ready(function() {
         var newRow = $("<tr>");
         var cols = "";
 
-        cols += '<td><input type="text" class="form-control" placeholder="FirstName" name="fname[]' +'"/></td>';
-        cols += '<td><input type="text" class="form-control" placeholder="LastName" name="fvalue[]'+'"/></td>';
+        cols += '<td><input type="file" name="p_image[]" class="form-control" placeholder="FirstName" name="fname[]' +'"/></td>';
+        
 
         cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
         newRow.append(cols);
@@ -370,29 +365,40 @@ $('#dp_price').on('keyup',function(){
 
 </script>
 <script>
-$(function()
-{
-    $(document).on('click', '.btn-add', function(e)
-    {
-		//alert('d');
-        e.preventDefault();
+ function get_products(value){
+	 $('#rel_products').empty();
+	 cat_id=$('#c_name').val();
+	 if(value==''){
+		 return false;
+	 }
+	
+	 $.ajax({
+                    type: "GET",    
+                    url: '<?php echo base_url('product/get_rel_products/'); ?>'+cat_id+'/'+value,    
+                    data: '',    
+                    dataType: "json",   
+                    
+                    success: function (result) {
+						
+						alert(result.status);
+						if(result.status==1){
+						$.each(result.r_plist, function(i, product) {
+							temp='<option value="'+product.product_id+'">'+product.product_name+'</option>';
+							
+							$('#rel_products').append(temp);
+							
+							
+						});
+						}
+						
+       
+                                           }
+                    ,
+                    error: function() { 
+                    alert('error from server side');
 
-        var controlForm = $('.controls form:first'),
-            currentEntry = $(this).parents('.entry:first'),
-            newEntry = $(currentEntry.clone()).appendTo(controlForm);
-
-        newEntry.find('input').val('');
-        controlForm.find('.entry:not(:last) .btn-add')
-            .removeClass('btn-add').addClass('btn-remove')
-            .removeClass('btn-success').addClass('btn-danger')
-            .html('<span class="font-18">-</span>');
-    }).on('click', '.btn-remove', function(e)
-    {
-		$(this).parents('.entry:first').remove();
-
-		e.preventDefault();
-		return false;
-	});
-});
+                    } 
+                });
+ }
 
 </script>
