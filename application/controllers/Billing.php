@@ -12,6 +12,7 @@ class Billing extends CI_Controller
     $this->load->model('Category_model');
     $this->load->model('Cart_Model');
     $this->load->model('Billing_Model');
+    $this->load->model('Order_Model');
   }
 
   public function index()
@@ -39,6 +40,20 @@ class Billing extends CI_Controller
       }
     }else{
       redirect('home/login');
+    }
+  }
+  public function old_delivery_address()
+  {
+    if($this->input->post()){
+      $user_id = $this->session->userdata('id');
+      $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+      foreach ($cart as $c) {
+        unset($c->id);
+        unset($c->created_date);
+        $this->Order_Model->insert($c);
+        $this->Order_Model->delete_cart_after_order($c->user_id);
+      }
+      redirect('/order');
     }
   }
 
