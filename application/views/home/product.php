@@ -109,8 +109,7 @@
                   <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>
                 </div>
                 <div class="button-group">
-                  <a class="wishlist" href="#"><i class="fa fa-heart-o"></i>
-                    <br>Wishlist</a>
+                  <a class="wishlist whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $product->product_id; ?>" data-product_img="<?php echo $product->product_img; ?>" data-product_name="<?php echo $product->product_name; ?>" data-net_price="<?php echo $product->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $product->discount_price; ?>><i class="fa fa-heart-o"></i> Wishlist</a>
                   </div>
                 </div>
 

@@ -76,7 +76,7 @@
                   <td class="qty">
                     <form class="form-class">
                       <div class="value-button decrease" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                      <input type="number" class="number" id="number" value="<?php echo $c->quantity; ?>" />
+                      <input type="number" class="number" id="number" value="<?php echo $c->quantity; ?>" data-id="<?php echo $c->id; ?>"/>
                       <div class="value-button increase" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
                     </form>
                   </td>
@@ -84,25 +84,33 @@
                     <span>₹ <?php echo ($c->net_price * $c->quantity); ?></span>
                   </td>
                   <td class="text-center">
-                    <a href=""> <i class="fa fa-trash-o"></i></a>
+                    <a href="#" class="remove" data-id="<?php echo $c->id; ?>"><i class="fa fa-trash-o"></i></a>
                   </td>
                 </tr>
               <?php } ?>
-            <?php } ?>
+            <?php }else{ ?>
+              <tr>
+                <td colspan="6" style="text-align:center">No items found in cart</td>
+              </tr>
+            <?php  } ?>
               </tbody>
               <tfoot>
                 <tr>
                   <td colspan="2" rowspan="2"></td>
                   <td colspan="3">Total products (tax incl.)</td>
-                  <td colspan="2">₹ <?php echo $cart_total->total_cart; ?></td>
+                  <td colspan="2">₹ <?php if($cart_total->total_cart){ echo $cart_total->total_cart; }else{ echo '0'; } ?></td>
                 </tr>
                 <tr>
                   <td colspan="3"><strong>Total</strong></td>
-                  <td colspan="2"><strong>₹ <?php echo $cart_total->total_cart; ?></strong></td>
+                  <td colspan="2"><strong>₹ <?php if($cart_total->total_cart){ echo $cart_total->total_cart; }else{ echo '0'; } ?></strong></td>
                 </tr>
               </tfoot>
             </table>
-            <a href="<?php echo base_url('/billing'); ?>" class="button pull-right">Place Order</a>
+            <?php if(count($cart) > 0){ ?>
+              <a href="<?php echo base_url('/billing'); ?>" class="button pull-right">Place Order</a>
+            <?php }else{ ?>
+              <a href="<?php echo base_url('/home'); ?>" class="button pull-right">Back to Home</a>
+            <?php } ?>
           </div>
         </div>
       </div>
@@ -113,15 +121,33 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $('.increase,.decrease').click(function(){
-        var quantity = $('.number').val();
-        alert(quantity);
-        var id = '1';
+        var quantity = $(this).closest('td.qty').find(".number").val();
+        var id = $(this).closest('td.qty').find(".number").data('id');
         $.ajax({
           url:'<?php echo base_url('checkout/update_quantity'); ?>',
           type:'POST',
           data:{'quantity':quantity,'id':id},
+          dataType:'JSON',
           success:function(data){
+            if(data.success){
+              window.location.reload();
+            }
+          }
+        });
+      });
 
+      $('.remove').click(function(e){
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.ajax({
+          url:'<?php echo base_url('checkout/delete_cart_item'); ?>',
+          type:'POST',
+          data:{'id':id},
+          dataType:'JSON',
+          success:function(data){
+            if(data.success){
+              window.location.reload();
+            }
           }
         });
       });

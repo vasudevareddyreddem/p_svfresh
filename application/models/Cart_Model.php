@@ -32,6 +32,11 @@ class Cart_Model extends CI_Model
     $this->db->where('user_id',$user_id);
     return $this->db->get()->row();
   }
+  public function delete($id='')
+  {
+    $this->db->where('id',$id);
+    return $this->db->delete($this->table);
+  }
 }
 
 ?>
