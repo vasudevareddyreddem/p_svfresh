@@ -223,35 +223,40 @@
                 <h3 class="heading">Related Products</h3>
                 <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
                   <li>
-                    <div class="product-container">
-                      <div class="left-block">
-                        <a href="#">
-                          <img class="img-responsive" alt="product" src="assets/data/grocery-img2.png" />
-                        </a>
-                        <div class="quick-view">
-                          <a title="Add to my wishlist" class="heart" href="#"></a>
-                          <a title="Add to compare" class="compare" href="#"></a>
+                    <?php if(count($related_products) > 0){ ?>
+                      <?php foreach ($related_products as $rp) { ?>
 
+                        <div class="product-container">
+                          <div class="left-block">
+                            <a href="#">
+                              <img class="img-responsive" alt="product" src="<?php echo $rp->product_img; ?>" />
+                            </a>
+                            <div class="quick-view">
+                              <a title="Add to my wishlist" class="heart" href="#"></a>
+                              <!-- <a title="Add to compare" class="compare" href="#"></a> -->
+
+                            </div>
+                            <div class="add-to-cart">
+                            <a title="Add to Cart" href="#add">Add to Cart</a>
+                          </div>
                         </div>
-                        <!-- <div class="add-to-cart">
-                          <a title="Add to Cart" href="#add">Add to Cart</a>
-                        </div> -->
+                        <div class="right-block">
+                          <h5 class="product-name"><a href="#"><?php echo $rp->product_name; ?></a></h5>
+                          <div class="product-star">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                          </div>
+                          <div class="content_price">
+                            <span class="price product-price">₹ <?php echo $rp->actual_price; ?></span>
+                            <span class="price old-price">₹ <?php echo $rp->discount_price; ?></span>
+                          </div>
+                        </div>
                       </div>
-                      <div class="right-block">
-                        <h5 class="product-name"><a href="#">Green Grams</a></h5>
-                        <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="content_price">
-                          <span class="price product-price">₹38,95</span>
-                          <span class="price old-price">₹52,00</span>
-                        </div>
-                      </div>
-                    </div>
+                    <?php } ?>
+                  <?php } ?>
                   </li>
                 </ul>
               </div>
