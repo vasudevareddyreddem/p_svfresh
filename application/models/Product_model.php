@@ -208,11 +208,19 @@ public function save_delete_product_images($value){
 	return $this->db->affected_rows()?1:0;
 }
 public function get_related_products_by_prdouct($product_id=''){
-	$this->db->select('p.product_img,p.product_name,p.actual_price,p.discount_price');
+	$this->db->select('p.product_id,p.product_img,p.product_name,p.net_price,p.discount_price');
 	$this->db->from('product_tab AS p');
 	$this->db->join('rel_products_tab AS rp','p.product_id = rp.product_id','left');
 	return $this->db->where('p.product_id',$product_id)->get()->result();
 	//SELECT p.product_img,p.product_name,p.actual_price,p.discount_price FROM product_tab AS p LEFT JOIN rel_products_tab AS rp ON p.product_id = rp.product_id WHERE p.product_id = '29'
+}
+public function get_product_feature_by_product($product_id='')
+{
+	$this->db->select('f.feature_id,f.feature_name,f.feature_value');
+	$this->db->from('features_tab AS f');
+	$this->db->join('product_tab AS p','f.product_id = p.product_id','left');
+	return $this->db->where('p.product_id',$product_id)->get()->result();
+	//SELECT f.feature_id,f.feature_name,f.feature_value FROM features_tab AS f LEFT JOIN product_tab AS p ON f.product_id = p.product_id WHERE p.product_id = '29'
 }
 
 	}
