@@ -130,7 +130,8 @@ class Category_model extends CI_Model
 	//getting all category with active status--Rana
 	public function get_all_category()
 	{
-		return $this->db->get_where('category_tab',array('status' => '1'))->result();
+		//return $this->db->get_where('category_tab',array('status' => '1'))->result();
+		return $this->db->query("SELECT * FROM category_tab WHERE status = '1' AND cat_id IN (SELECT cat_id FROM product_tab WHERE `status` = '1')")->result();
 	}
 	public function get_subcategory_list(){
 			$this->db->select('subcat_tab.subcat_id,subcat_tab.subcat_name,subcat_tab.subcat_img,
