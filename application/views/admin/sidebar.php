@@ -5,10 +5,16 @@
         </div>
         <div class="sidebar-user">
             <div class="sidebar-user-picture">
-                <img alt="image" src="<?php echo base_url().'assets/img/avatar/avatar-1.jpeg';?>">
+                <img alt="image" src="<?php 
+				$admin=$this->session->userdata('svadmin_det');
+				if($admin['profile_pic']=='')
+				{echo base_url().'assets/uploads/profile_pics/profilepic.png';}
+			else{
+				echo base_url().'assets/uploads/profile_pics/'.$admin['profile_pic'];
+			}?>">
             </div>
             <div class="sidebar-user-details">
-                <div class="user-name"><?php $admin=$this->session->userdata('svadmin_det');
+                <div class="user-name"><?php 
 				echo $admin['login_email'];?>
 				</div>
                 <div class="user-role">

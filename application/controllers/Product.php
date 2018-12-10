@@ -351,6 +351,8 @@ $this->load->model('Product_model');
 				);
 
 				$status=$this->Product_model->save_edit_product($data,$pid);
+				//edit reltate products_list
+				
 				 $config['upload_path']          = './assets/uploads/product_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
 
@@ -359,7 +361,7 @@ $this->load->model('Product_model');
 				//features edit
 
 				
-$pimages=$this->input->post('p_image');
+//$pimages=$this->input->post('p_image');
  $countfiles = count($_FILES['p_image']['name']);
  //echo $countfiles; 
 //print_r($pimages);exit;
@@ -405,6 +407,7 @@ $pimages=$this->input->post('p_image');
 							 //delete image
 							 else{
 								 $this->Product_model->save_delete_product_images($value);
+								
 								 
 							 }
 				}

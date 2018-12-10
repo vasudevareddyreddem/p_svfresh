@@ -227,4 +227,169 @@ $this->load->model('Slider_model');
 		
 		
 	}
+	public function save_edit_slider(){
+			if($this->session->userdata('svadmin_det'))
+			{
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$s_name=$this->input->post('s_name');
+			$slider_id=$this->input->post('sid');
+			$status=$this->Slider_model->slider_edit_unique_check($slider_id,$s_name);
+			if($status==1){
+				 $this->session->set_flashdata('error','name already exited');
+				  redirect($_SERVER['HTTP_REFERER']);
+			}
+			$config['upload_path']          = './assets/uploads/slider_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
+
+                $this->load->library('upload', $config);
+				$data=array('slider_name'=>$s_name,'updated_by'=>$svadmin);
+				
+			if(!$_FILES['sl_image']['name']=='')
+			{
+				  if ( ! $this->upload->do_upload('sl_image',time()))
+                {
+                        //$error = array('error' => $this->upload->display_errors());
+						
+                          $this->session->set_flashdata('error','Left slider image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $l_img =   $upload_data['file_name'];
+					$data['l_pic']=$l_img;
+					
+				}
+				
+			}
+			
+			if(!$_FILES['sr_image']['name']=='')
+			{
+				  if ( ! $this->upload->do_upload('sr_image',time()))
+                {
+                        //$error = array('error' => $this->upload->display_errors());
+						
+                          $this->session->set_flashdata('error','Right slider image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $r_img =   $upload_data['file_name'];
+					$data['r_pic']=$r_img;
+					
+				}
+				
+			}
+			
+			
+			$this->Slider_model->save_edit_slider($data,$slider_id);
+		//start edit slider images
+		$slider_ids=$this->input->post('slider_id');
+	
+
+				$count=0;
+				foreach($slider_ids as $key=>$value){
+					
+					$value=base64_decode($value);
+                             if(isset($_FILES['slider']['name'][$key])){
+								 $count++;
+                           if($_FILES['slider']['name'][$key]!=''){
+ 
+          // Define new $_FILES array - $_FILES['file']
+           $_FILES['image']['name']     = $_FILES['slider']['name'][$key];
+                $_FILES['image']['type']     = $_FILES['slider']['type'][$key];
+                $_FILES['image']['tmp_name'] = $_FILES['slider']['tmp_name'][$key];
+                $_FILES['image']['error']     = $_FILES['slider']['error'][$key];
+                $_FILES['image']['size']     = $_FILES['slider']['size'][$key];
+                
+		 //echo   $_FILES['slide']['name'];exit;
+		    if ( ! $this->upload->do_upload('image',time()))
+                {
+                      
+						
+                          $this->session->set_flashdata('error',' slider image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $slider_img =   $upload_data['file_name'];
+					$pdata=array('pic_name'=>$slider_img,
+					
+					'updated_by'=>$svadmin);
+					$this->Slider_model->save_edit_slider_images($pdata,$value);
+				
+				
+				}
+  }
+							 }
+							 //delete image
+							 else{
+								
+								 $this->Slider_model->save_delete_slider_images($value);
+								
+								 
+							 }
+				}
+			$countfiles = count($_FILES['slider']['name']);
+			if($count<$countfiles){
+				    $img_status=0;
+				
+      // Looping all files
+      for($i=$count;$i<$countfiles;$i++){
+		 
+ 
+        if($_FILES['slider']['name'][$i]!=''){
+			
+ 
+          // Define new $_FILES array - $_FILES['file']
+           $_FILES['image']['name']     = $_FILES['slider']['name'][$i];
+                $_FILES['image']['type']     = $_FILES['slider']['type'][$i];
+                $_FILES['image']['tmp_name'] = $_FILES['slider']['tmp_name'][$i];
+                $_FILES['image']['error']     = $_FILES['slider']['error'][$i];
+                $_FILES['image']['size']     = $_FILES['slider']['size'][$i];
+                
+		 //echo   $_FILES['slide']['name'];exit;
+		    if ( ! $this->upload->do_upload('image',time()))
+                {
+                      
+						
+                          $this->session->set_flashdata('error',' Slider image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$img_status=1;
+					$upload_data = $this->upload->data(); 
+                    $slider_img =   $upload_data['file_name'];
+					$image_data[]=array('pic_name'=>$slider_img,
+					'slider_id'=>$slider_id,
+					'created_by'=>$svadmin);
+				}
+          
+
+        
+		}
+         
+        }
+		
+			if($img_status==1){
+				
+				
+ $this->Slider_model->save_slider_pics($image_data);
+ 
+			}
+ 
+      }
+		//end edit slider
+		$this->session->set_flashdata('success',' Slider Images updated successfully'); 
+						 
+					      redirect('slider/slider_list');
+			
+			
+		}
+			else{redirect('login');}
+		}
 		}

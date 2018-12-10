@@ -509,9 +509,9 @@ $this->load->model('Category_model')	;
 					
 					
 				}else{
-					$this->session->set_flashdata('error','sub category not updated'); 
+					$this->session->set_flashdata('error','sub category  updated sucessfully'); 
 						 
-					      redirect($_SERVER['HTTP_REFERER']);
+					      redirect('category/sub_category_list');
 				}
 		}
 			else{redirect('login');}
