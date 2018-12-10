@@ -12,7 +12,7 @@
               <div>
                 <ul>
                   <form action="<?php echo base_url('billing/old_delivery_address'); ?>" method="POST">
-                    <input type="radio" name="billing_address" value="<?php echo $b->id; ?>" checked>
+                    <input type="radio" name="billing_id" value="<?php echo $b->id; ?>">
                     <li><?php echo $b->first_name.' '.$b->last_name; ?></li>
                     <li><?php echo $b->company_name; ?></li>
                     <li><?php echo $b->email_address; ?></li>
@@ -29,7 +29,7 @@
               </div>
             </div>
           <?php } ?>
-        <?php }else{ ?>
+        <?php } ?>
         <br>
         <form method="POST" action="<?php echo base_url('/billing'); ?>">
           <div class="box-border">
@@ -123,7 +123,6 @@
             </div>
           </div>
         </form>
-      <?php } ?>
       </div>
     </div>
   </div>
