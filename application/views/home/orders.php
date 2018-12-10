@@ -46,7 +46,7 @@
         </div>
         <div class="panel-footer">
           <span ><strong>Ordered On <?php echo date('D, M jS Y',strtotime($o->created_date)); ?></strong></span>
-          <span class="pull-right" > <strong>  Order Total ₹11,699</strong></span>
+          <span class="pull-right" > <strong>  Order Total ₹ <?php echo $o->net_price; ?></strong></span>
         </div>
 
       </div>
