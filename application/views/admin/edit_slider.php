@@ -22,10 +22,12 @@
         <div class="control-group" id="fields">
             
             <div class="controls"> 
-                <form id="add_slider" action="<?php echo base_url('slider/save_slider')?>" method="post"   enctype="multipart/form-data">
+                <form id="add_slider" action="<?php echo base_url('slider/save_edit_slider')?>" method="post"   enctype="multipart/form-data">
 				<div class="row">
 					<div class="form-group col-md-6">
                            <label>Slider Name</label>
+						    <input id="" type="hidden" class="form-control" name="sid"
+						   value="<?php echo $slider->slider_id;?>">
                            <input id="" type="text" class="form-control" name="s_name"
 						   value="<?php echo $slider->slider_name;?>">
                             </div>
@@ -52,26 +54,53 @@
                                                 <label>Sliders Right Image</label>
                                                 <input id="n_price" type="file" class="form-control" name="sr_image">
                                             </div>
-											<?php if($picstatus==1){ 
-											foreach($pics as $pic):?>
-											 <div class="form-group">
-                                            <label>sliders  Old Images</label>
 											
-                                        <img alt="image" 
-											src="<?php echo base_url('assets/uploads/slider_pics/').$pic->pic_name; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
-											
-											</div>
-											<?php endforeach ;} ?>
                     <div class="entry col-md-6">
 					 <label>Sliders </label>
-					 <div class="input-group">
-                        <input class="form-control" name="slider[]" type="file" placeholder="Type something"  required />
-                    	<span class="input-group-btn">
-                            <button class="btn btn-success btn-add" type="button">
-                                <span class="font-18">+</span>
-                            </button>
-                        </span>
-						</div>
+						<div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+									
+									 
+                                        <table id="myTable1" class="table1 order-list1">
+                                            <thead>
+                                                <tr>
+                                                    <th> Slider Images</th>
+                                                   
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+												<?php if($picstatus==1){ 
+												$count=1;
+											foreach($pics as $pic){ ?>
+												<input type="hidden" 
+												value="<?php echo base64_encode($pic->pic_id);?>" name="slider_id[]" >
+												<tr>
+												<td>
+                                                   <img alt="image" 
+											src="<?php echo base_url('assets/uploads/slider_pics/').$pic->pic_name; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
+											</td>
+                                                    <td>
+                                                        <input type="file" name="slider[]" placeholder="LastName" class="form-control"   />
+                                                    </td>
+                                                    <td>
+                                                        <a class="deleteRow"></a>
+                                                    </td>
+													 <?php  if($count!=1){?>
+													<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>
+													 <?php }?>
+                                                </tr>
+												<?php $count++;}}?>
+                                            </tbody>
+                                        </table>
+									
+                                        <button type="button" class="btn btn-md btn-info" id="addslider">Add Slider Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                                   
                     </div>
 				</div>
             <br>
@@ -110,9 +139,7 @@ $(document).ready(function() {
             },
 			sl_image: {
                 validators: {
-					notEmpty: {
-						message: 'Image is required'
-					},
+					
 					regexp: {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
@@ -123,9 +150,7 @@ $(document).ready(function() {
              
 			sr_image: {
                 validators: {
-					notEmpty: {
-						message: 'Image is required'
-					},
+					
 					regexp: {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
@@ -170,6 +195,33 @@ $(function()
 	});
 });
 
+</script>
+<script>
+ $(document).ready(function () {
+    var counter = 0;
+
+    $("#addslider").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="file" name="slider[]" class="form-control" placeholder="FirstName" /></td>';
+        
+
+        cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
+        newRow.append(cols);
+        $("#myTable1").append(newRow);
+        counter++;
+    });
+
+
+
+    $("#myTable1").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
+});
 </script>
 
 

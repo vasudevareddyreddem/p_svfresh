@@ -50,6 +50,7 @@
 											 <div class="form-group" name="" id="">
                                         <label class="form-control-label">Select Related Products</label>
                                         	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
+											<option value=''>Select</option>
 											<?php foreach($r_plist as $pro):?>
 											<?php if($pro->product_id!=$product->product_id) {?>
 											<option value='<?php echo $pro->product_id; ?>' <?php if(in_array($pro->product_id,$rel_products)){echo "selected";} ?>><?php echo $pro->product_name; ?></option>
@@ -432,12 +433,14 @@ $('#dp_price').on('keyup',function(){
                     
                     success: function (result) {
 						
-						alert(result.status);
+						
 						if(result.status==1){
+						console.log(result);
 							 $('#rel_products').empty();
 						$.each(result.r_plist, function(i, product) {
 							
-							temp='<option value="'+product.product_id+'">'+product.product_name+'</option>';
+							temp='<option value="">select</option>';
+							temp=temp+'<option value="'+product.product_id+'">'+product.product_name+'</option>';
 							
 							$('#rel_products').append(temp); 
 							

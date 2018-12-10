@@ -32,7 +32,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
-                                                <select class="form-control" name="sc_name" id="sc_name" onchange="get_products(this.value)">
+                                                <select class="form-control  " name="sc_name" id="sc_name" onchange="get_products(this.value)">
                                                  <option value=''>Select</option>
                                                 </select>
                                             </div>
@@ -41,7 +41,7 @@
                                                 <input id="p_name" type="text" class="form-control" name="p_name">
                                             </div>
 											 <div class="form-group" name="" id="">
-                                        <label class="form-control-label">Select Group</label>
+                                        <label class="form-control-label">Select Related Products</label>
                                         	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
 											
 											<option></option>
@@ -362,7 +362,31 @@ $('#dp_price').on('keyup',function(){
 	}
 	
 }); 
-
+$('#a_price').on('keyup',function(){
+	price=$('#d_price').val();
+	percen=$('#dp_price').val();
+	if(price.length > 0||percen.length>0){
+	
+	if(price.length>0){
+		act_price=$('#a_price').val();
+		
+		percentage=(price/act_price)*100;
+		$('#dp_price').val(percentage);
+		net_price=act_price-price;
+	$('#n_price').val(net_price);
+	}
+	else{
+		act_price=$('#a_price').val();
+		
+		price=(act_price*percen)/100;
+		$('#d_price').val(price);
+		net_price=act_price-price;
+	$('#n_price').val(net_price);
+		
+	}
+	}
+	
+}); 
 </script>
 <script>
  function get_products(value){
@@ -402,3 +426,12 @@ $('#dp_price').on('keyup',function(){
  }
 
 </script>
+// <script>
+        // jQuery(document).ready(function() {
+            // jQuery(".standardSelect").chosen({
+                // disable_search_threshold: 10,
+                // no_results_text: "Oops, nothing found!",
+                // width: "100%"
+            // });
+        // });
+    // </script>

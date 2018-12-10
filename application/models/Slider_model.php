@@ -90,8 +90,57 @@ class Slider_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('slider_pic_tab');
 		$this->db->where('slider_id',$sid);
+		
+		$this->db->where('status',1);
+		
 		return $this->db->get()->result();
 
+	}
+	public function slider_edit_unique_check($slider_id,$s_name){
+		$this->db->select('*');
+	    $this->db->from('slider_tab');
+		
+		$this->db->where('slider_id !=',$slider_id);
+		
+		$this->db->group_start();
+	   $this->db->where('status',1);
+	   $this->db->or_where('status',2);
+	   $this->db->group_end();
+	   
+
+	   $result= $this->db->get()->result_array();
+	   
+
+			$slider_names = array_column($result, 'slider_name');
+			//echo $catname;exit;
+			//echo in_array($catname,$cat_names);exit;
+			if(in_array($s_name,$slider_names)){
+
+			return 1;
+			}
+			else{
+				return 0;
+			}
+	}
+	public function save_edit_slider($data,$slider_id){
+		
+		$this->db->where('slider_id',$slider_id);
+		$this->db->update('slider_tab',$data);
+		return $this->db->affected_rows()?1:0;
+		
+	}
+	public function save_edit_slider_images($pdata,$id){
+		$this->db->where('pic_id',$id);
+		$this->db->update('slider_pic_tab',$pdata);
+		return $this->db->affected_rows()?1:0;
+		
+	}
+	public function save_delete_slider_images($value){
+		$this->db->where('pic_id',$value);
+		$this->db->set('status',0);
+		$this->db->update('slider_pic_tab');
+		return $this->db->affected_rows()?1:0;
+		
 	}
 }
 

@@ -23,6 +23,7 @@
             
             <div class="controls"> 
                 <form id="add_slider" action="<?php echo base_url('slider/save_slider')?>" method="post"   enctype="multipart/form-data">
+				
 				<div class="row">
 					<div class="form-group col-md-6">
                            <label>Sliders Name</label>
@@ -37,24 +38,53 @@
                                                 <input id="n_price" type="file" class="form-control" name="sr_image">
                                             </div>
                     <div class="entry col-md-6">
-					 <label>Sliders </label>
-					 <div class="input-group">
-                        <input class="form-control" name="slider[]" type="file" placeholder="Type something"  required />
-                    	<span class="input-group-btn">
-                            <button class="btn btn-success btn-add" type="button">
-                                <span class="font-18">+</span>
-                            </button>
-                        </span>
-						</div>
+					 
+						<div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+									
+									 
+                                        <table id="myTable1" class="table1 order-list1">
+                                            <thead>
+                                                <tr>
+                                                    <th> Slider Images</th>
+                                                   
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+												
+												<tr>
+												
+                                                    <td>
+                                                        <input type="file" name="slider[]" placeholder="LastName" class="form-control"   />
+                                                    </td>
+                                                    <td>
+                                                        <a class="deleteRow"></a>
+                                                    </td>
+													
+													
+													
+                                                </tr>
+												
+                                            </tbody>
+                                        </table>
+									
+                                        <button type="button" class="btn btn-md btn-info" id="slide">Add Slider Image</button>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
 				</div>
             <br>
-           
+          
            
 			<div class="clearfix">&nbsp;</div>
 				<button type='submit' class="btn btn-primary btn-sm">Submit</button>
                 </form>
-        </div>
+				   </div>
+       
 		 </div>
 	</div>
                         </div>
@@ -107,6 +137,18 @@ $(document).ready(function() {
 				
 				}
             },
+			'slider[]': {
+                validators: {
+					notEmpty: {
+						message: 'Image is required'
+					},
+					regexp: {
+					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
+					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
+					}
+				
+				}
+            }
             
            
             
@@ -144,6 +186,33 @@ $(function()
 	});
 });
 
+</script>
+<script>
+ $(document).ready(function () {
+    var counter = 0;
+
+    $("#slide").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="file" name="slider[]" class="form-control" placeholder="FirstName" /></td>';
+        
+
+        cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
+        newRow.append(cols);
+        $("#myTable1").append(newRow);
+        counter++;
+    });
+
+
+
+    $("#myTable1").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
+});
 </script>
 
 

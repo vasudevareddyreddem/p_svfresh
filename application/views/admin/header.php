@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
     <title>SV Fresh</title>
-
+ <script src="<?php echo base_url().'assets/js/jquery.min.js';?>"></script> 
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrap.min.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrapValidator.min.css';?>">
 	<link rel="stylesheet" href="<?php echo base_url().'assets/css/chosen.min.css';?>">
@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/summernote-lite.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/style.css';?>">
-	 <script src="<?php echo base_url().'assets/js/jquery.min.js';?>"></script> 
+	
 </head>
 
 <body>
