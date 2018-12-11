@@ -31,12 +31,38 @@ class Paymentstype extends CI_Controller
           $this->load->view('home/paymentstype',$data);
         } else {
           if ($this->input->post('payment_type') == 1) {
+          //billing id for user
+          print_r($this->session->userdata('billing_id'));
+            // $user_id = $this->session->userdata('id');
+            // $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+            // foreach ($cart as $c) {
+            //   unset($c->id);
+            //   unset($c->created_date);
+            //   $c->billing_id = $billing_id;
+            //   $this->Order_Model->insert($c);
+            //   $this->Order_Model->delete_cart_after_order($c->user_id);
+            // }
+
+            //cart total for user
+            $user_id = $this->session->userdata('id');
+            $data['cart_total'] = $this->Cart_Model->get_cart_total_for_user($user_id);
+            print_r($data['cart_total']);
             echo $this->input->post('payment_type');
             // code...
           } elseif ($this->input->post('payment_type') == 2) {
+
+            //cart total for user
+            $user_id = $this->session->userdata('id');
+            $data['cart_total'] = $this->Cart_Model->get_cart_total_for_user($user_id);
+            print_r($data['cart_total']);
             echo $this->input->post('payment_type');
             // code...
           } elseif ($this->input->post('payment_type') == 3) {
+
+            //cart total for user
+            $user_id = $this->session->userdata('id');
+            $data['cart_total'] = $this->Cart_Model->get_cart_total_for_user($user_id);
+            print_r($data['cart_total']);
             echo $this->input->post('payment_type');
             // code...
           }
