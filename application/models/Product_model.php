@@ -41,7 +41,7 @@ class Product_model extends CI_Model
 	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
 	  $this->db->where('product_tab.status',1);
 	  $this->db->or_where('product_tab.status',2);
-	  $this->db->order_by('product_tab.updated_at');
+	  $this->db->order_by('product_tab.updated_at','desc');
 	 return $this->db->get()->result();
 
 
@@ -66,11 +66,11 @@ class Product_model extends CI_Model
 }
 public function save_edit_product($data,$pid){
 	$this->db->where('product_id',$pid);
-	$this->db->update('product_tab',$data);
-
-	return $this->db->affected_rows()?1:0;
+return	$this->db->update('product_tab',$data);
+	
 
 }
+
 public function get_features($pid){
 	$this->db->select('feature_id,feature_name,feature_value');
 	  $this->db->from('features_tab');
@@ -83,8 +83,9 @@ public function save_edit_features($up_features,$fid){
 	$this->db->update('features_tab',$up_features);
 
 }
-public function delete_features($value){
+public function delete_features($value,$adminid){
 	$this->db->set('status',0);
+	$this->db->set('updated_by',$adminid);
 	$this->db->where('feature_id',$value);
 	$this->db->update('features_tab');
 
@@ -124,6 +125,19 @@ public function check_unique_edit_product($pid,$pname,$cat_id,$subcat_id){
 	   $this->db->where('status',1);
 	   $this->db->or_where('status',2);
 	   $this->db->group_end();
+	    $result= $this->db->get()->result_array();
+
+			$names = array_column($result, 'product_name');
+			//echo $catname;exit;
+			//echo in_array($catname,$cat_names);exit;
+			if(in_array($pname,$names)){
+
+			return 1;
+			}
+			else{
+				return 0;
+			}
+	
 
 }
 //getting all product with active status--Rana
@@ -176,6 +190,7 @@ public function get_rel_products($cat_id,$subcat_id){
 	$this->db->group_end();
 	$this->db->group_start();
 	
+	
     $this->db->where('product_tab.status',1);
 	$this->db->or_where('product_tab.status',2);
 	$this->db->group_end();
@@ -212,19 +227,20 @@ public function save_edit_product_images($pdata,$value){
 	$this->db->update('product_images_tab',$pdata);
 	return $this->db->affected_rows()?1:0;
 }
-public function save_delete_product_images($value){
+public function save_delete_product_images($value,$adminid){
 	$this->db->set('status',0);
+	$this->db->set('updated_by',$adminid);
 	$this->db->where('image_id',$value);
 	$this->db->update('product_images_tab');
 	return $this->db->affected_rows()?1:0;
 }
 
-public function delete_rel_products($pid){
+/*public function delete_rel_products($pid){
 	$this->db->set('status',2);
 	$this->db->where('product_id',$pid);
 	$this->db->update('rel_products_tab');
 	return $this->db->affected_rows()?1:0;
-}
+}*/
 public function get_related_products_by_prdouct($product_id=''){
 	$this->db->select('p.product_img,p.product_name,p.actual_price,p.discount_price');
 	$this->db->from('product_tab AS p');
@@ -233,5 +249,33 @@ public function get_related_products_by_prdouct($product_id=''){
 	//SELECT p.product_img,p.product_name,p.actual_price,p.discount_price FROM product_tab AS p LEFT JOIN rel_products_tab AS rp ON p.product_id = rp.product_id WHERE p.product_id = '29'
 
 }
+public function inactive_product($id,$svadmin){
+		$this->db->set('status',2);
+				$this->db->set('updated_by',$svadmin);
+		$this->db->where('product_id',$id);
+		$this->db->update('product_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	public function active_product($id,$svadmin){
+		$this->db->set('status',1);
+				$this->db->set('updated_by',$svadmin);
+		$this->db->where('product_id',$id);
+		$this->db->update('product_tab');
+		return $this->db->affected_rows()?1:0;
+	}
+	public function delete_rel_products($pid,$adminid){
+		$this->db->set('status',0);
+		$this->db->set('updated_by',$adminid);
+		$this->db->where('product_id',$pid);
+		$this->db->update('rel_products_tab');
+		return $this->db->affected_rows()?1:0;
 
 	}
+	
+	/* edit products*/
+	public  function update_edit_product($id,$dat){
+		$this->db->where('product_id',$id);
+		return $this->db->update('product_tab',$dat);
+		
+	}
+}

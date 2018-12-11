@@ -47,7 +47,7 @@
                                                 <label>Product Name</label>
                                                 <input id="p_name" type="text" class="form-control" name="p_name" value="<?php  echo $product->product_name ;?>">
                                             </div>
-											 <div class="form-group" name="" id="">
+											 <div class="form-group col-md-6" name="" id="">
                                         <label class="form-control-label">Select Related Products</label>
                                         	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
 											<option value=''>Select</option>
@@ -63,7 +63,7 @@
                                                 <label>Quantity</label>
                                                 <input id="quantity" type="text" class="form-control" name="quantity" value="<?php echo $product->quantity;?>">
                                             </div>
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-6">
                                                 <label>Actual Price</label>
                                                 <input id="a_price" type="text" class="form-control" name="a_price" value="<?php echo $product->actual_price;?>">
                                             </div>
@@ -80,7 +80,7 @@
                                                 <label>Net price</label>
                                                 <input id="n_price" type="text" class="form-control" name="n_price" value="<?php echo $product->net_price;?>">
                                             </div>
-											 <div class="form-group col-md-4">
+											 <div class="form-group col-md-12">
                                                 <label>Description</label>
                                                 <textarea id="descr"  class="form-control" name="descr" ><?php echo $product->description;?></textarea>
                                             </div>
@@ -156,11 +156,15 @@
                                             </tbody>
                                         </table>
 									
-                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Row</button>
+                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Feature</button>
                                     </div>
                                 </div>
                             </div>
 					<?php }?>
+					<div class="form-group">
+                                            <label>Product Main Image</label>
+                                            <input id="" type="file" class="form-control" name="main_image">
+                                        </div>
 						<div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -190,15 +194,15 @@
                                                     <td>
                                                         <a class="deleteRow"></a>
                                                     </td>
-													 <?php  if($count!=1){?>
+													 
 													<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>
-													 <?php }?>
+													
                                                 </tr>
 												<?php $count++;}?>
                                             </tbody>
                                         </table>
 									
-                                        <button type="button" class="btn btn-md btn-info" id="addslider">Add Row</button>
+                                        <button type="button" class="btn btn-md btn-info" id="addslider">Add Image</button>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +227,15 @@
 </div>
 
 
-
+ <script>
+        jQuery(document).ready(function() {
+            jQuery(".standardSelect").chosen({
+                disable_search_threshold: 10,
+                no_results_text: "Oops, nothing found!",
+                width: "100%"
+            });
+        });
+    </script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#edit_product').bootstrapValidator({
@@ -437,17 +449,23 @@ $('#dp_price').on('keyup',function(){
 						if(result.status==1){
 						console.log(result);
 							 $('#rel_products').empty();
+							 temp1='<option value="" disabled>select</option>';
+							 $('#rel_products').append(temp1); 
 						$.each(result.r_plist, function(i, product) {
 							
-							temp='<option value="">select</option>';
-							temp=temp+'<option value="'+product.product_id+'">'+product.product_name+'</option>';
 							
-							$('#rel_products').append(temp); 
+							
+							$('#rel_products').append('<option value="'+product.product_id+'">'+product.product_name+'</option>').trigger("chosen:updated"); 
 							
 							
 						});
-						}
 						
+						
+						
+						}
+						else{
+							$('#rel_products').empty();
+						}
        
                                            }
                     ,

@@ -26,52 +26,52 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
-                                            <th>Expected Date</th>
+                                            <th>Ordered Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php if($pending_status==1){
+										foreach($pending_list as $order){?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Heritage Milk</td>
-                                            <td>250</td>
-                                            <td>38.99</td>
-                                            <td>Person 1</td>
-                                            <td>98xxxxxx20</td>
-                                            <td>2-4-87, rd no n17, 500035</td>
-                                            <td>Cash on delivery</td>
+                                            <td><?php echo $order->order_number; ?></td>
+                                            <td><?php echo $order->product_name; ?></td>
+                                            <td><?php echo $order->quantity; ?> </td>
+                                            <td><?php echo $order->net_price; ?></td>
+                                            <td><?php echo $order->first_name; ?></td>
+                                            <td><?php echo $order->phone_number; ?></td>
+                                            <td><span><?php echo $order->address; ?></span>
+											<span><?php echo $order->city; ?></span>
+											<span><?php echo $order->state; ?></span>
+											<span><?php echo $order->zip; ?></span>
+											<span><?php echo $order->country; ?></span></td>
+                                            <td><?php if($order->payment_type==1){
+												echo 'Cash On Delivery';
+											}
+											if($order->payment_type==2){
+												echo'Card Payment';
+											}?></td>
                                             <td>
-                                                <div class="badge badge-warning">Shipped</div>
+									<div class="badge badge-info" >
+											 
+											 <?php echo'Pending';?>
+											 </div>
+                                                <div class="badge badge-info" disabled>
+											 <a href="" class="btn btn-danger btn-action" ><i >
+											 <?php echo'Delivered';?></i></a>
+											 </div>
+											 
+											 <div class="badge badge-info" disabled>
+											 <a href="" class="btn btn-danger btn-action" ><i >
+											 <?php echo'cancelled';?></i></a>
+											 </div>
                                             </td>
-                                            <td>2017-01-09</td>
+                                            <td><?php 
+												echo $order->created_date;
+											?></td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Heritage Milk</td>
-                                            <td>250</td>
-                                            <td>38.99</td>
-                                            <td>Person 2</td>
-                                            <td>98xxxxxx20</td>
-                                            <td>2-4-87, rd no n17, 500035</td>
-                                            <td>Net Banking</td>
-                                            <td>
-                                                <div class="badge badge-warning">Shipped</div>
-                                            </td>
-                                            <td>2017-01-09</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Heritage Milk</td>
-                                            <td>250</td>
-                                            <td>38.99</td>
-                                            <td>Person 3</td>
-                                            <td>98xxxxxx20</td>
-                                            <td>2-4-87, rd no n17, 500035</td>
-                                            <td>Cash on delivery</td>
-                                            <td>
-                                                <div class="badge badge-warning">Shipped</div>
-                                            </td>
-                                            <td>2017-01-09</td>
-                                        </tr>
+										<?php }}?>
+                                       
+                                      
                                     </tbody>
                                 </table>
                             </div>

@@ -53,12 +53,11 @@ public function index(){
 
 	$password=md5($password);
 	
-	
 $row=$this->Login_model->logincheck($userid,$password);
-//echo $this->db->last_query();exit;
 
 
-//echo '<pre>'; print_r($row);exit;
+
+
 if(!(count($row)>0)){
 	      $this->session->set_flashdata('error','email or password is incorrect');
                     redirect('login');
@@ -93,18 +92,46 @@ public function logout(){
 	
 	
 }
-/*
+
 public function forgot_password(){
 	if(!$this->session->userdata('admindetails')){
-		$this->load->view('admin/header');
-		$this->load->view('admin/forgot_password');
+		
+		$this->load->view('admin/forgot');
 		$this->load->view('admin/footer');
 	}else{
 		redirect('admin/dashboard');
 	}
 	
 	
-} */
+} 
+public  function forgotpass(){
+	$post=$this->input->post();
+		$check_login=$this->Login_model->get_email_details_check($post['email']);
+		//echo $this->db->last_query();exit;
+		if(count($check_login)>0){
+			//echo '<pre>';print_r($check_login);exit;	
+					
+				$this->load->library('email');
+				$this->email->set_newline("\r\n");
+				$this->email->set_mailtype("html");
+				$this->email->to($check_login['login_email']);
+				$this->email->from('admin@prachatech.com'); 
+				$this->email->subject('Forgot Password'); 
+				$body = "<b> Your Account login Password is </b> : ".$check_login['org_password'];
+				$this->email->message($body);
+				if ($this->email->send())
+				{
+					$this->session->set_flashdata('success',"Password sent to your registered email address. Please Check your registered email address");
+					redirect('login');
+				}else{
+					$this->session->set_flashdata('error'," In Localhost mail  didn't sent");
+					redirect('login');
+				}
+			}else{
+				$this->session->set_flashdata('error',"Invalid email id. Please try again once");
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+}
 
 
 	

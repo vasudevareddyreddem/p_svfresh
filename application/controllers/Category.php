@@ -68,6 +68,8 @@ $this->load->model('Category_model')	;
 	}
 	public function save_category(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$this->form_validation->set_rules('cat_name', 'category name', 'required');
 	    //$this->form_validation->set_rules('cat_image', 'category image ', 'required');
 		//$this->form_validation->set_rules('cat_himage1', 'category header image', 'required');
@@ -146,7 +148,7 @@ $this->load->model('Category_model')	;
 			   'cat_scr_content'=>$this->input->post('cat_s_content'),
 			   'cat_lh_img'=>$cat_lh_img,
 			   'cat_rh_img'=>$cat_rh_img,
-			 
+			   'created_by'=>$svadmin
 			   );
                
                
@@ -170,8 +172,10 @@ $this->load->model('Category_model')	;
 	}
 	public function inactive_category(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
-			$status=$this->Category_model->inactive_category($id);
+			$status=$this->Category_model->inactive_category($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','category inactivated');
 			  redirect('category/category_list');
@@ -186,8 +190,10 @@ $this->load->model('Category_model')	;
 	}
 	public function active_category(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
-			$status=$this->Category_model->active_category($id);
+			$status=$this->Category_model->active_category($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','category activated');
 			  redirect('category/category_list');
@@ -202,8 +208,10 @@ $this->load->model('Category_model')	;
 	}
 	public function delete_category(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
-			$status=$this->Category_model->delete_category($id);
+			$status=$this->Category_model->delete_category($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','category deleted');
 			  redirect('category/category_list');
@@ -235,6 +243,8 @@ $this->load->model('Category_model')	;
 	}
 	public function save_edit_category(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 		//$this->form_validation->set_rules('cat_name', 'category name', 'required');
 	    
 		//$this->form_validation->set_rules('cat_s_content', 'scorolling content  ', 'required');
@@ -334,6 +344,7 @@ $this->load->model('Category_model')	;
                 $data=array(
 			   'cat_name'=>$this->input->post('cat_name'),
 			   'cat_scr_content'=>$this->input->post('cat_s_content'),
+			   'updated_by'=>$svadmin
 			  );
 			  if($this->input->post('cat_s_content')){
 				  $data['cat_scr_content']=$this->input->post('cat_s_content'); 
@@ -363,6 +374,8 @@ $this->load->model('Category_model')	;
 	}
 	public function save_sub_category(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$categ=base64_decode($this->input->post('c_name'));
 			$cstatus=$this->Category_model->subcategory_name_check($this->input->post('name'),$categ);
 			if($cstatus==1){
@@ -392,7 +405,8 @@ $this->load->model('Category_model')	;
 				$data=array(
 				'subcat_name'=>$this->input->post('name'),
 				'subcat_img'=>$subcat_img,
-				'cat_id'=>base64_decode($this->input->post('c_name'))
+				'cat_id'=>base64_decode($this->input->post('c_name')),
+				'created_by'=>$svadmin
 				);
 				$status=$this->Category_model->save_sub_category($data);
 				if($status==1){
@@ -413,8 +427,10 @@ $this->load->model('Category_model')	;
 	}
 	public function inactive_subcategory(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
-			$status=$this->Category_model->inactive_subcategory($id);
+			$status=$this->Category_model->inactive_subcategory($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','subcategory inactivated');
 			  redirect('category/sub_category_list');
@@ -429,8 +445,10 @@ $this->load->model('Category_model')	;
 	}
 	public function active_subcategory(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
-			$status=$this->Category_model->active_subcategory($id);
+			$status=$this->Category_model->active_subcategory($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','subcategory activated');
 			  redirect('category/sub_category_list');
@@ -465,6 +483,8 @@ $this->load->model('Category_model')	;
 	}
 	public function save_edit_subcategory(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$scid=base64_decode($this->input->post('scid'));
 		    $categ=base64_decode($this->input->post('c_name'));
 			$cstatus=$this->Category_model->subcategory_editname_check($this->input->post('name'),$categ,$scid);
@@ -495,7 +515,8 @@ $this->load->model('Category_model')	;
 			}
 				$data=array(
 				'subcat_name'=>$this->input->post('name'),
-				'cat_id'=>base64_decode($this->input->post('c_name'))
+				'cat_id'=>base64_decode($this->input->post('c_name')),
+				'updated_by'=>$svadmin
 				);
 				if($img_status==1){
 					$data['subcat_img']=$subcat_img;
@@ -520,8 +541,10 @@ $this->load->model('Category_model')	;
 	}
 	public function delete_subcategory(){
 		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
-			$status=$this->Category_model->delete_subcategory($id);
+			$status=$this->Category_model->delete_subcategory($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','subcategory deleted');
 			  redirect('category/sub_category_list');

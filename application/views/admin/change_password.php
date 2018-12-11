@@ -16,7 +16,8 @@
                             <div class="row mx-auto">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
-                                    <form id="changepassword" method="" action="">
+                                    <form id="changepassword" method="post" 
+									action="<?php echo base_url('admin/new_password');?>">
                                         <div class="form-group">
                                             <label>Old Password</label>
                                             <input type="password" id="oldpassword" name="oldpassword" value="" class="form-control">

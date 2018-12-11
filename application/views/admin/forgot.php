@@ -6,12 +6,12 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
     <title>SV Fresh</title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrapValidator.min.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>">
 </head>
 
-<body style="background-image: url(img/login.jpg);background-size: cover;">
+<body style="background-image: url(<?php echo base_url('assets/img/login.jpg');?>);background-size: cover;">
     <div id="app">
         <section class="section">
             <div class="container mt-5">
@@ -28,7 +28,8 @@
 
                             <div class="card-body">
                                 <p class="text-muted">We will send a link to reset your password</p>
-                                <form id="forgotPasswordForm" method="post" action="">
+                                <form id="forgotPasswordForm" method="post" 
+								action="<?php echo base_url('login/forgotpass');?>">
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input type="text" id="email" name="email" class="form-control">
@@ -48,10 +49,10 @@
         </section>
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrapValidator.min.js"></script>
+    <script src="<?php echo base_url('assets/js/jquery.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/popper.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/bootstrap.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/bootstrapValidator.min.js');?>"></script>
     
     <script type="text/javascript">
     $(document).ready(function() {

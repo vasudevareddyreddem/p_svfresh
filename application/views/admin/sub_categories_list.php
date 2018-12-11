@@ -52,7 +52,7 @@
                                             </td>
                                             <td>
                                                 <a href="<?php echo base_url('category/edit_subcategory/').base64_encode($subcat->subcat_id); ?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
-                                                <a href="<?php echo base_url('category/delete_subcategory/').base64_encode($subcat->subcat_id); ?>" class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
+                                                <a href="<?php echo base_url('category/delete_subcategory/').base64_encode($subcat->subcat_id); ?>" class="btn btn-danger btn-action confirmation" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b "></i></a>
                                             </td>
                                         </tr>
 									<?php $count++; endforeach;}?>
@@ -68,3 +68,10 @@
         </div>
     </section>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.confirmation').on('click', function () {
+        return confirm('Are you sure?');
+    });
+});
+</script>

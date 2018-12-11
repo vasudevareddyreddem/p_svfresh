@@ -30,25 +30,28 @@ class Category_model extends CI_Model
 	  $this->db->from('category_tab');
 	   $this->db->where('status',1);
 	   $this->db->or_where('status',2);
-	   $this->db->order_by('updated_at');
+	   $this->db->order_by('updated_at','desc');
 	   return $this->db->get()->result();
 
 
 	}
-	public function inactive_category($id){
+	public function inactive_category($id,$svadmin){
 		$this->db->set('status',2);
+		$this->db->set('updated_by',$svadmin);
 		$this->db->where('cat_id',$id);
 		$this->db->update('category_tab');
 		return $this->db->affected_rows()?1:0;
 	}
-	public function active_category($id){
+	public function active_category($id,$svadmin){
 		$this->db->set('status',1);
+		$this->db->set('updated_by',$svadmin);
 		$this->db->where('cat_id',$id);
 		$this->db->update('category_tab');
 		return $this->db->affected_rows()?1:0;
 	}
-	public function delete_category($id){
+	public function delete_category($id,$svadmin){
 		$this->db->set('status',0);
+		$this->db->set('updated_by',$svadmin);
 		$this->db->where('cat_id',$id);
 		$this->db->update('category_tab');
 		return $this->db->affected_rows()?1:0;
@@ -143,18 +146,20 @@ class Category_model extends CI_Model
 	   $this->db->or_where('subcat_tab.status',2);
 	   $this->db->group_by('subcat_tab.subcat_id,subcat_tab.subcat_name,subcat_tab.subcat_img,
 			subcat_tab.status,subcat_tab.updated_at,category_tab.cat_name');
-	   $this->db->order_by('subcat_tab.updated_at');
+	   $this->db->order_by('subcat_tab.updated_at','desc');
 	   return $this->db->get()->result();
 
 	}
-	public function inactive_subcategory($id){
+	public function inactive_subcategory($id,$svadmin){
 		$this->db->set('status',2);
+				$this->db->set('updated_by',$svadmin);
 		$this->db->where('subcat_id',$id);
 		$this->db->update('subcat_tab');
 		return $this->db->affected_rows()?1:0;
 	}
-	public function active_subcategory($id){
+	public function active_subcategory($id,$svadmin){
 		$this->db->set('status',1);
+				$this->db->set('updated_by',$svadmin);
 		$this->db->where('subcat_id',$id);
 		$this->db->update('subcat_tab');
 		return $this->db->affected_rows()?1:0;
@@ -233,8 +238,9 @@ class Category_model extends CI_Model
 		return $this->db->affected_rows()?1:0;
 
 	}
-	public function delete_subcategory($id){
+	public function delete_subcategory($id,$svadmin){
 		$this->db->set('status',0);
+				$this->db->set('updated_by',$svadmin);
 		$this->db->where('subcat_id',$id);
 		$this->db->update('subcat_tab');
 		return $this->db->affected_rows()?1:0;

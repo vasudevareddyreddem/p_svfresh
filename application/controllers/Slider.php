@@ -15,6 +15,7 @@ $this->load->model('Slider_model');
 		}
 		public function addslider(){
 			if($this->session->userdata('svadmin_det')){
+				
 				$this->load->view('admin/add_slider');
 		    $this->load->view('admin/footer');
 			
