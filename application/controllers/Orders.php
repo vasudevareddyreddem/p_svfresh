@@ -39,6 +39,8 @@ $this->load->model('Orders_model');
 				else{
 					$data['pending_status']=0;
 				}
+				
+			//echo '<pre>'	;print_r($data);exit;
 			$this->load->view('admin/pending_orders_list',$data);
 		    $this->load->view('admin/footer');
 			
@@ -60,6 +62,78 @@ $this->load->model('Orders_model');
 		}
 		else{redirect('login');}
 		}
+		public function cancel_order_list(){
+			if($this->session->userdata('svadmin_det')){
+				$data['cancel_list']=$this->Orders_model->cancel_order_list();
+				if(count($data['cancel_list']>0)){
+					$data['cancel_status']=1;
+				}
+				else{
+					$data['cancel_status']=0;
+				}
+				
+			//echo '<pre>'	;print_r($data);exit;
+			$this->load->view('admin/cancel_orders_list',$data);
+		    $this->load->view('admin/footer');
+			
+		}
+		else{redirect('login');}
+		}
+		public function deliver_order(){
+			if($this->session->userdata('svadmin_det')){
+				$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			  $id=base64_decode($this->uri->segment(3));
+             $status=$this->Orders_model->change_to_delivery_status($id,$svadmin);			  
+				
+			if($status=1){
+				redirect($_SERVER['HTTP_REFERER']);
+			} 
+			else{
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			
+		}
+		else{redirect('login');}
+		}
+		public function cancel_order(){
+			if($this->session->userdata('svadmin_det')){
+					$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			  $id=base64_decode($this->uri->segment(3));
+             $status=$this->Orders_model->change_to_cancel_status($id,$svadmin);	
+           if($status=1){
+				redirect($_SERVER['HTTP_REFERER']);
+			} 
+			else{
+				redirect($_SERVER['HTTP_REFERER']);
+			}			 
+				
+			
+			
+		}
+		else{redirect('login');}
+		}
+		public function pending_order(){
+			if($this->session->userdata('svadmin_det')){
+					$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			  $id=base64_decode($this->uri->segment(3));
+             $status=$this->Orders_model->change_to_pending_status($id,$svadmin);	
+           if($status=1){
+				redirect($_SERVER['HTTP_REFERER']);
+			} 
+			else{
+				redirect($_SERVER['HTTP_REFERER']);
+			}			 
+				
+			
+			
+		}
+		else{redirect('login');}
+		}
+		
+		
 }
 		
 		

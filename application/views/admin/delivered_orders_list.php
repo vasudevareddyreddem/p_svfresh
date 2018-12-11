@@ -50,11 +50,21 @@
 											if($order->payment_type==2){
 												echo'Card Payment';
 											}?></td>
-                                            <td>
-                                                <div class="badge badge-info">
-												<?php 
-												echo 'Delivered';
-											?></div>
+                                             <td>
+									<div class="badge badge-info" >
+											 
+											 <?php echo'Delivered';?>
+											 </div>
+                                                <div class="badge badge-info" >
+											 <a 
+							href="<?php echo base_url('orders/pending_order/').base64_encode($order->order_id) ;?>" class="btn btn-danger btn-action" ><i >
+											 <?php echo'Pending';?></i></a>
+											 </div>
+											 
+											 <div class="badge badge-info" >
+								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class="btn btn-danger btn-action" ><i >
+											 <?php echo'cancelled';?></i></a>
+											 </div>
                                             </td>
                                             <td><?php 
 												echo $order->delivered_time;

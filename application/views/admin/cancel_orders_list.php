@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Pending Orders List</h4>
+                            <h4>Cancel Orders List</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -30,8 +30,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if($pending_status==1){
-										foreach($pending_list as $order){?>
+                                        <?php if($cancel_status==1){
+										foreach($cancel_list as $order){?>
                                         <tr>
                                             <td><?php echo $order->order_number; ?></td>
                                             <td><?php echo $order->product_name; ?></td>
@@ -53,7 +53,7 @@
                                             <td>
 									<div class="badge badge-info" >
 											 
-											 <?php echo'Pending';?>
+											 <?php echo'Cancelled';?>
 											 </div>
                                                 <div class="badge badge-info" >
 											 <a 
@@ -62,8 +62,8 @@
 											 </div>
 											 
 											 <div class="badge badge-info" >
-								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class="btn btn-danger btn-action" ><i >
-											 <?php echo'cancelled';?></i></a>
+								<a href="<?php echo base_url('orders/pending_order/').base64_encode($order->order_id);?>" class="btn btn-danger btn-action" ><i >
+											 <?php echo 'Pending';?></i></a>
 											 </div>
                                             </td>
                                             <td><?php 

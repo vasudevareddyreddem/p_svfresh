@@ -56,6 +56,7 @@
                     <li><a href="<?php echo base_url('orders/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Total Orders List</a></li>
                     <li><a href="<?php echo base_url('orders/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
                     <li><a href="<?php echo base_url('orders/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
+					<li><a href="<?php echo base_url('orders/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
                 </ul>
             </li>
           
