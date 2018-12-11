@@ -58,6 +58,20 @@
                       <img id="product-zoom" src='<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>' data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>"/>
                     </div>
                     <!-- product thumbnail images -->
+                    <?php if (count($product_related_images) > 0) { ?>
+                      <div class="product-img-thumb" id="gallery_01">
+                          <ul class="owl-carousel" data-items="3" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
+                            <?php foreach ($product_related_images as $pri) { ?>
+                              <li>
+                                  <a href="#" data-image="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>" data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>">
+                                      <img id="product-zoom"  src="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>" />
+                                  </a>
+                              </li>
+                            <?php } ?>
+                          </ul>
+                      </div>
+                    <?php } ?>
+
                   </div>
                   <!-- product-imge-->
                 </div>

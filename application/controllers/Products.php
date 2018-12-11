@@ -39,6 +39,7 @@ class Products extends CI_Controller
     $data['product'] = $this->Product_model->get_product_by_id($id);
     $data['related_products'] = $this->Product_model->get_related_products_by_prdouct($id);
     $data['features'] = $this->Product_model->get_product_feature_by_product($id);
+    $data['product_related_images'] = $this->Product_model->get_product_related_images($id);
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
     $data['count'] = count($data['cart']);
