@@ -38,20 +38,24 @@
                 <div class="col-sm-6">
                   <label for="first_name" class="required">First Name</label>
                   <input type="text" class="input form-control" name="first_name" id="first_name" value="">
+                  <?php echo form_error('first_name','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
                 <div class="col-sm-6">
                   <label for="last_name" class="required">Last Name</label>
                   <input type="text" name="last_name" class="input form-control" id="last_name" value="">
+                  <?php echo form_error('last_name','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
               </li><!--/ .row -->
               <li class="row">
                 <div class="col-sm-6">
                   <label for="company_name">Company Name</label>
                   <input type="text" name="company_name" class="input form-control" id="company_name" value="">
+                  <?php echo form_error('company_name','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
                 <div class="col-sm-6">
                   <label for="email_address" class="required">Email Address</label>
                   <input type="text" class="input form-control" name="email_address" id="email_address" value="">
+                  <?php echo form_error('email_address','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
               </li><!--/ .row -->
               <li class="row">
@@ -59,6 +63,7 @@
 
                   <label for="address" class="required">Address</label>
                   <input type="text" class="input form-control" name="address" id="address" value="">
+                  <?php echo form_error('address','<div class="text-danger">', '</div>'); ?>
 
                 </div><!--/ [col] -->
 
@@ -70,6 +75,7 @@
 
                   <label for="city" class="required">City</label>
                   <input class="input form-control" type="text" name="city" id="city" value="">
+                  <?php echo form_error('city','<div class="text-danger">', '</div>'); ?>
 
                 </div><!--/ [col] -->
 
@@ -78,8 +84,8 @@
                   <select class="input form-control" name="state">
                     <option value="">Select State</option>
                     <option value="Telangana">Telangana</option>
-                    <!-- <option value="Kansas">Kansas</option> -->
                   </select>
+                  <?php echo form_error('state','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
               </li><!--/ .row -->
 
@@ -89,6 +95,7 @@
 
                   <label for="postal_code" class="required">Zip/Postal Code</label>
                   <input class="input form-control" type="text" name="zip" id="postal_code" value="">
+                  <?php echo form_error('zip','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
 
                 <div  class="col-sm-6">
@@ -96,21 +103,21 @@
                   <select class="input form-control" name="country">
                     <option value="">Select Country</option>
                     <option value="India">India</option>
-                    <!-- <option value="Austria">Austria</option>
-                    <option value="Argentina">Argentina</option>
-                    <option value="Canada">Canada</option> -->
                   </select>
+                  <?php echo form_error('country','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
               </li><!--/ .row -->
               <li class="row">
                 <div class="col-sm-6">
                   <label for="telephone" class="required">Telephone</label>
                   <input class="input form-control" type="text" name="telephone" id="telephone" value="">
+                  <?php echo form_error('telephone','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
 
                 <div class="col-sm-6">
                   <label for="fax">Fax</label>
                   <input class="input form-control" type="text" name="fax" id="fax" value="">
+                  <?php echo form_error('fax','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
 
               </li>
@@ -118,14 +125,14 @@
             </ul>
 
           </div>
-            <div class="pull-right">
-              <button type="submit" name="" class="btn btn-success">Proceed For Payment </button>
-            </div>
+          <div class="pull-right mt-10">
+            <button type="submit" name="" class="btn btn-success">Proceed For Payment </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
-  <?php include("footer.php"); ?>
+</div>
+<?php include("footer.php"); ?>
 </body>
 </html>
