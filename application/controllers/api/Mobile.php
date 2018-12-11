@@ -33,7 +33,7 @@ class Mobile extends REST_Controller {
 		$this->load->library('form_validation');
 		$this->load->library('session');
 		$this->load->helper('security');
-		$this->load->model('Diagnosticapp_model');
+		$this->load->model('User_model');
 		
     }
 
