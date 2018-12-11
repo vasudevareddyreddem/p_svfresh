@@ -10,14 +10,16 @@
           <div class="panel panel-default">
             <div class="panel-body text-center">
               <div class="">
-                <img src="assets/data/user1.jpg" alt="user" class="avatar thumbanail">
+                <img src="<?php echo base_url('assets/data/users.png'); ?>" alt="user" class="avatar thumbanail">
               </div>
-              <h4 class="pd-tb10">User one</h4>
+              <h4 class="pd-tb10"><?php if($this->session->userdata('logged_in') == TRUE){ echo $this->session->userdata('phone_number'); } ?></h4>
             </div>
             <ul class="list-group">
+              <a href="<?php echo base_url('home/profile'); ?>"><li class="list-group-item">My profile</li></a>
               <a href="orders.php"><li class="list-group-item">My orders</li></a>
               <a href="<?php echo base_url('wishlist'); ?>"><li class="list-group-item">Wishlist</li></a>
               <a href="<?php echo base_url('checkout'); ?>"><li class="list-group-item">Checkout</li></a>
+              <a href="<?php echo base_url('home/cpassword'); ?>"><li class="list-group-item">Change password</li></a>
               <a href="<?php echo base_url('home/logout'); ?>"><li class="list-group-item">logout</li></a>
             </ul>
           </div>

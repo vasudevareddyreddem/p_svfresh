@@ -15,16 +15,48 @@ class Auth_Model extends CI_Model
   {
     return $this->db->insert($this->table,$post_data);
   }
-
-  public function check_exists($post_phone)
+  //checking email unique
+  public function check_email_exists($email='',$id='')
   {
-    $this->db->where($post_phone);
+    $this->db->where(array('email_id'=>$email,'id!='=>$id));
+    return $this->db->get($this->table)->row();
+  }
+  //checking user name unique
+  public function check_username_exists($user_name='',$id='')
+  {
+    $this->db->where(array('user_name'=>$user_name,'id!='=>$id));
+    return $this->db->get($this->table)->row();
+  }
+  //checking phone number unique
+  public function check_phone_number_exists($phone_number='',$id='')
+  {
+    $this->db->where(array('phone_number'=>$phone_number,'id!='=>$id));
     return $this->db->get($this->table)->row();
   }
 
   public function login($post_data)
   {
     return $this->db->get_where($this->table,$post_data)->row();
+  }
+
+  public function update($post_data='',$id='')
+  {
+    $this->db->where('id',$id);
+    $this->db->set($post_data);
+    return $this->db->update($this->table);
+  }
+
+  public function get_user_details($user_id='')
+  {
+    $this->db->where('id',$user_id);
+    return $this->db->get($this->table)->row();
+  }
+  //change password
+  public function change_password($user_id='',$password='')
+  {
+    $this->db->where('id',$user_id);
+    $this->db->set($password);
+    return $this->db->update($this->table);
   }
 
 }

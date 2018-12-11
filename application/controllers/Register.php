@@ -21,7 +21,8 @@ class Register extends CI_controller
       $this->form_validation->set_rules('email_id', 'Email id', 'required|is_unique[users_tab.email_id]');
       $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|regex_match[/^[0-9]{10}$/]|is_unique[users_tab.phone_number]');
       $this->form_validation->set_rules('user_name', 'User Name', 'required|is_unique[users_tab.user_name]');
-      $this->form_validation->set_rules('password', 'Password', 'required|matches[password]');
+      $this->form_validation->set_rules('password', 'Password', 'required|matches[confirm_password]');
+      $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required');
       if ($this->form_validation->run() == FALSE){
         $data['pageTitle'] = 'Register';
         $data['categories'] = $this->Category_model->get_all_category();
