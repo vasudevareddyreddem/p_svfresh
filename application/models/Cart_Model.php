@@ -37,6 +37,13 @@ class Cart_Model extends CI_Model
     $this->db->where('id',$id);
     return $this->db->delete($this->table);
   }
+  
+  public  function get_billing_details($billing_id){
+	  $this->db->select('*')->from('billing_tab');
+	  $this->db->where('id',$billing_id);
+	  return $this->db->get()->row_array();
+	  
+  }
 }
 
 ?>
