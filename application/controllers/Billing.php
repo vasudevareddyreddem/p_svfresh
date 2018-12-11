@@ -12,6 +12,7 @@ class Billing extends CI_Controller
     $this->load->model('Category_model');
     $this->load->model('Cart_Model');
     $this->load->model('Billing_Model');
+    $this->load->model('Order_Model');
   }
 
   public function index()
@@ -22,7 +23,17 @@ class Billing extends CI_Controller
         $addl_data = array('user_id' => $this->session->userdata('id'),created_date => date('Y-m-d H:i:s'),created_by => $this->session->userdata('id'),status => 'Active');
         $post_data = array_merge($post_data,$addl_data);
         if($this->Billing_Model->insert($post_data)){
-          redirect('/home');
+          $billing_id = $this->db->insert_id();
+          $user_id = $this->session->userdata('id');
+          $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+          foreach ($cart as $c) {
+            unset($c->id);
+            unset($c->created_date);
+            $c->billing_id = $billing_id;
+            $this->Order_Model->insert($c);
+            $this->Order_Model->delete_cart_after_order($c->user_id);
+          }
+          redirect('/order');
         }else{
           $this->session->set_flashdata('error', 'Please,try again');
           redirect('/billing');
@@ -39,6 +50,22 @@ class Billing extends CI_Controller
       }
     }else{
       redirect('home/login');
+    }
+  }
+  public function old_delivery_address()
+  {
+    if($this->input->post()){
+      $billing_id = $this->input->post('billing_id');
+      $user_id = $this->session->userdata('id');
+      $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+      foreach ($cart as $c) {
+        unset($c->id);
+        unset($c->created_date);
+        $c->billing_id = $billing_id;
+        $this->Order_Model->insert($c);
+        $this->Order_Model->delete_cart_after_order($c->user_id);
+      }
+      redirect('/order');
     }
   }
 

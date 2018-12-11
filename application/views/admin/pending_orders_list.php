@@ -55,13 +55,13 @@
 											 
 											 <?php echo'Pending';?>
 											 </div>
-                                                <div class="badge badge-info" disabled>
-											 <a href="" class="btn btn-danger btn-action" ><i >
+                                                <div class="badge badge-info" >
+											 <a href="<?php echo base_url('order/deliver_order');?>" class="btn btn-danger btn-action" ><i >
 											 <?php echo'Delivered';?></i></a>
 											 </div>
 											 
-											 <div class="badge badge-info" disabled>
-											 <a href="" class="btn btn-danger btn-action" ><i >
+											 <div class="badge badge-info" >
+											 <a href="<?php echo base_url('order/cancel_order');?>" class="btn btn-danger btn-action" ><i >
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>

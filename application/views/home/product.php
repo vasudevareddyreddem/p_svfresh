@@ -142,18 +142,18 @@
                   </div>
                   <div id="information" class="tab-panel">
                     <table class="table table-bordered">
-                      <tr>
-                        <td width="200">Compositions</td>
-                        <td>Cotton</td>
-                      </tr>
-                      <tr>
-                        <td>Styles</td>
-                        <td>Girly</td>
-                      </tr>
-                      <tr>
-                        <td>Properties</td>
-                        <td>Colorful Dress</td>
-                      </tr>
+                      <?php if(count($features) > 0){ ?>
+                        <?php foreach ($features as $f) { ?>
+                          <tr>
+                            <td width="200"><?php echo $f->feature_name; ?></td>
+                            <td><?php echo $f->feature_value; ?></td>
+                          </tr>
+                        <?php } ?>
+                      <?php }else{ ?>
+                        <tr>
+                          <td colspan="2" style="text-align:center;">No product features found</td>
+                        </tr>
+                      <?php } ?>
                     </table>
                   </div>
                   <div id="reviews" class="tab-panel">
@@ -222,22 +222,21 @@
               <div class="page-product-box">
                 <h3 class="heading">Related Products</h3>
                 <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
+                  <?php if(count($related_products) > 0){ ?>
+                    <?php foreach ($related_products as $rp) { ?>
                   <li>
-                    <?php if(count($related_products) > 0){ ?>
-                      <?php foreach ($related_products as $rp) { ?>
-
                         <div class="product-container">
                           <div class="left-block">
                             <a href="#">
                               <img class="img-responsive" alt="product" src="<?php echo $rp->product_img; ?>" />
                             </a>
                             <div class="quick-view">
-                              <a title="Add to my wishlist" class="heart" href="#"></a>
+                              <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $rp->product_id; ?>" data-product_img="<?php echo $rp->product_img; ?>" data-product_name="<?php echo $rp->product_name; ?>" data-net_price="<?php echo $rp->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $rp->discount_price; ?>></a>
                               <!-- <a title="Add to compare" class="compare" href="#"></a> -->
 
                             </div>
                             <div class="add-to-cart">
-                            <a title="Add to Cart" href="#add">Add to Cart</a>
+                            <a title="Add to Cart" href="#add" class="addtocart" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $rp->product_id; ?>" data-product_img="<?php echo $rp->product_img; ?>" data-product_name="<?php echo $rp->product_name; ?>" data-net_price="<?php echo $rp->net_price; ?>" data-quantity="1">Add to Cart</a>
                           </div>
                         </div>
                         <div class="right-block">
@@ -250,14 +249,15 @@
                             <i class="fa fa-star-half-o"></i>
                           </div>
                           <div class="content_price">
-                            <span class="price product-price">₹ <?php echo $rp->actual_price; ?></span>
+                            <span class="price product-price">₹ <?php echo $rp->net_price; ?></span>
                             <span class="price old-price">₹ <?php echo $rp->discount_price; ?></span>
                           </div>
                         </div>
                       </div>
-                    <?php } ?>
-                  <?php } ?>
+
                   </li>
+                <?php } ?>
+              <?php } ?>
                 </ul>
               </div>
               <!-- ./box product -->

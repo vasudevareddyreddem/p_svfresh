@@ -18,7 +18,8 @@ class Billing_Model extends CI_Model
   }
   public function get_user_billing_details_by_userid($user_id='')
   {
-    return $this->db->get_where($this->table,array('user_id',$user_id))->row();
+    $this->db->where('user_id',$user_id);
+    return $this->db->get($this->table)->result();
   }
 }
 
