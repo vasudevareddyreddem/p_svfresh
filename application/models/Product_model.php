@@ -67,7 +67,7 @@ class Product_model extends CI_Model
 public function save_edit_product($data,$pid){
 	$this->db->where('product_id',$pid);
 return	$this->db->update('product_tab',$data);
-	
+
 
 }
 
@@ -137,7 +137,7 @@ public function check_unique_edit_product($pid,$pname,$cat_id,$subcat_id){
 			else{
 				return 0;
 			}
-	
+
 
 }
 //getting all product with active status--Rana
@@ -189,8 +189,6 @@ public function get_rel_products($cat_id,$subcat_id){
 	$this->db->where('subcat_tab.subcat_id',$subcat_id);
 	$this->db->group_end();
 	$this->db->group_start();
-	
-	
     $this->db->where('product_tab.status',1);
 	$this->db->or_where('product_tab.status',2);
 	$this->db->group_end();
@@ -208,7 +206,7 @@ public function get_rel_proudcts_by_id($pid){
 	$this->db->where('product_id',$pid);
 
 	$this->db->where('status',1);
-	
+
 
  $rel_pro= $this->db->get()->result_array();
  $rel_proids = array_column($rel_pro, 'rel_product_id');
@@ -245,7 +243,8 @@ public function get_related_products_by_prdouct($product_id=''){
 	$this->db->select('p.product_id,p.product_img,p.product_name,p.net_price,p.discount_price');
 	$this->db->from('product_tab AS p');
 	$this->db->join('rel_products_tab AS rp','p.product_id = rp.product_id','left');
-	return $this->db->where('p.product_id',$product_id)->get()->result();
+	$this->db->where('p.product_id',$product_id);
+	return $this->db->where('rp.status','1')->get()->result();
 	//SELECT p.product_img,p.product_name,p.actual_price,p.discount_price FROM product_tab AS p LEFT JOIN rel_products_tab AS rp ON p.product_id = rp.product_id WHERE p.product_id = '29'
 
 }
@@ -277,17 +276,18 @@ public function get_product_feature_by_product($product_id='')
 	$this->db->select('f.feature_id,f.feature_name,f.feature_value');
 	$this->db->from('features_tab AS f');
 	$this->db->join('product_tab AS p','f.product_id = p.product_id','left');
-	return $this->db->where('p.product_id',$product_id)->get()->result();
+	$this->db->where('p.product_id',$product_id);
+	return $this->db->where('f.status','1')->get()->result();
 	//SELECT f.feature_id,f.feature_name,f.feature_value FROM features_tab AS f LEFT JOIN product_tab AS p ON f.product_id = p.product_id WHERE p.product_id = '29'
 }
 
 
-	
-	
+
+
 	/* edit products*/
 	public  function update_edit_product($id,$dat){
 		$this->db->where('product_id',$id);
 		return $this->db->update('product_tab',$dat);
-		
+
 	}
 }
