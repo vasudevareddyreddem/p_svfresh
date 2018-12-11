@@ -75,9 +75,9 @@
                   <td class="text-center"><span>₹ <?php echo $c->net_price; ?></span></td>
                   <td class="qty">
                     <form class="form-class">
-                      <div class="value-button decrease" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                      <div class="value-button decrease" id="decrease" value="Decrease Value">-</div>
                       <input type="number" class="number" id="number" value="<?php echo $c->quantity; ?>" data-id="<?php echo $c->id; ?>"/>
-                      <div class="value-button increase" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                      <div class="value-button increase" id="increase" value="Increase Value">+</div>
                     </form>
                   </td>
                   <td class="text-center">
@@ -120,6 +120,18 @@
   <?php include("footer.php"); ?>
   <script type="text/javascript">
     $(document).ready(function(){
+      $('.increase').click(function(){
+        var value = parseInt($(this).closest('td.qty').find(".number").val(), 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        $(this).closest('td.qty').find(".number").val(value);
+      });
+      $('.decrease').click(function(){
+        var value = parseInt($(this).closest('td.qty').find(".number").val(), 10);
+        value = isNaN(value) ? 0 : value;
+        value--;
+        $(this).closest('td.qty').find(".number").val(value);
+      });
       $('.increase,.decrease').click(function(){
         var quantity = $(this).closest('td.qty').find(".number").val();
         var id = $(this).closest('td.qty').find(".number").data('id');
