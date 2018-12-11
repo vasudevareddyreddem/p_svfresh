@@ -46,15 +46,16 @@ class Billing extends CI_Controller
           $post_data = array_merge($post_data,$addl_data);
           if($this->Billing_Model->insert($post_data)){
             $billing_id = $this->db->insert_id();
-            $user_id = $this->session->userdata('id');
-            $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
-            foreach ($cart as $c) {
-              unset($c->id);
-              unset($c->created_date);
-              $c->billing_id = $billing_id;
-              $this->Order_Model->insert($c);
-              $this->Order_Model->delete_cart_after_order($c->user_id);
-            }
+            // $user_id = $this->session->userdata('id');
+            // $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+            // foreach ($cart as $c) {
+            //   unset($c->id);
+            //   unset($c->created_date);
+            //   $c->billing_id = $billing_id;
+            //   $this->Order_Model->insert($c);
+            //   $this->Order_Model->delete_cart_after_order($c->user_id);
+            // }
+            $this->session->set_userdata('billing_id',$billing_id);
             redirect('/Paymentstype');
           }else{
             $this->session->set_flashdata('error', 'Please,try again');
@@ -79,15 +80,16 @@ class Billing extends CI_Controller
   {
     if($this->input->post()){
       $billing_id = $this->input->post('billing_id');
-      $user_id = $this->session->userdata('id');
-      $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
-      foreach ($cart as $c) {
-        unset($c->id);
-        unset($c->created_date);
-        $c->billing_id = $billing_id;
-        $this->Order_Model->insert($c);
-        $this->Order_Model->delete_cart_after_order($c->user_id);
-      }
+      // $user_id = $this->session->userdata('id');
+      // $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+      // foreach ($cart as $c) {
+      //   unset($c->id);
+      //   unset($c->created_date);
+      //   $c->billing_id = $billing_id;
+      //   $this->Order_Model->insert($c);
+      //   $this->Order_Model->delete_cart_after_order($c->user_id);
+      // }
+      $this->session->set_userdata('billing_id',$billing_id);
       redirect('/Paymentstype');
     }
   }
