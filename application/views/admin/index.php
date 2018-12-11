@@ -16,7 +16,7 @@
                             <h4>Categories</h4>
                         </div>
                         <div class="card-body">
-                            10
+                           <?php echo $cat_count;?>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                             <h4>Products</h4>
                         </div>
                         <div class="card-body">
-                            42
+                           <?php echo $products_count;?>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                             <h4>Orders</h4>
                         </div>
                         <div class="card-body">
-                            1,201
+                         <?php echo $orders_count;?>
                         </div>
                     </div>
                 </div>
@@ -61,34 +61,13 @@
                             <h4>Customers</h4>
                         </div>
                         <div class="card-body">
-                            47
+                           <?php echo $users_count;?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Monthly Sales</h4>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Yearly Sales</h4>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myChart2"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
     </section>
 </div>
 

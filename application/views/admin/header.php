@@ -89,7 +89,7 @@
                             <a href="<?php echo base_url('profile');?>" class="dropdown-item has-icon">
                                 <i class="ion ion-android-person"></i> Profile
                             </a>
-                            <a href="change_password.php" class="dropdown-item has-icon">
+                            <a href="<?php echo base_url('admin/change_password');?>" class="dropdown-item has-icon">
                                 <i class="ion ion-wrench"></i> Settings
                             </a>
                             <a href="<?php echo base_url('login/logout');?>" class="dropdown-item has-icon">

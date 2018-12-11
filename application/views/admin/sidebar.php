@@ -53,20 +53,13 @@
             <li>
                 <a href="#" class="has-dropdown"><i class="ion ion-ios-cart"></i><span>Orders</span></a>
                 <ul class="menu-dropdown">
-                    <li><a href="<?php echo base_url('admin/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Total Orders List</a></li>
-                    <li><a href="<?php echo base_url('admin/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
-                    <li><a href="<?php echo base_url('admin/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
+                    <li><a href="<?php echo base_url('orders/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Total Orders List</a></li>
+                    <li><a href="<?php echo base_url('orders/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
+                    <li><a href="<?php echo base_url('orders/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
+					<li><a href="<?php echo base_url('orders/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>Pages</span></a>
-                <ul class="menu-dropdown">
-                    <li><a href="login.php"><i class="ion ion-ios-circle-outline"></i> Login</a></li>
-                    <li><a href="register.php"><i class="ion ion-ios-circle-outline"></i> Register</a></li>
-                    <li><a href="forgot.php"><i class="ion ion-ios-circle-outline"></i> Forgot Password</a></li>
-                    <li><a href="reset.php"><i class="ion ion-ios-circle-outline"></i> Reset Password</a></li>
-                </ul>
-            </li>
+          
         </ul>
     </aside>
 </div>

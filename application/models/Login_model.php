@@ -27,4 +27,11 @@ public function	get_admin_details($svadmin){
 	$this->db->where('admin_id',$svadmin);
 	return $this->db->get()->row_array();
 }
+public  function get_email_details_check($email){
+	  $this->db->select('*')->from('admin_tab');
+	  $this->db->where('login_email',$email);
+	  return $this->db->get()->row_array();
+	}
+
+
 	}

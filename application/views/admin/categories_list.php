@@ -74,7 +74,7 @@
                                                 <a href="<?php 
 												echo base_url('category/edit_category/').base64_encode($cat->cat_id);?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
                                                 <a href="<?php 
-												echo base_url('category/delete_category/').base64_encode($cat->cat_id);?>" class="btn btn-danger btn-action" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
+												echo base_url('category/delete_category/').base64_encode($cat->cat_id);?>" class="btn btn-danger btn-action confirmation" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b "></i></a>
                                             </td>
                                         </tr>
 										<?php $count++;
@@ -90,4 +90,11 @@
         </div>
     </section>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.confirmation').on('click', function () {
+        return confirm('Are you sure?');
+    });
+});
+</script>
 

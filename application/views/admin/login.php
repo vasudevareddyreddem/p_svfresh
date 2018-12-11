@@ -60,7 +60,7 @@
                             <input type="checkbox"  name='remember_me'> Remember Me
                                   </label>
                                         <div class="float-right">
-                                            <a href="forgot.php">
+                                            <a href="<?php echo base_url('login/forgot_password'); ?>">
                                                 Forgot Password?
                                             </a>
                                         </div>
@@ -72,9 +72,7 @@
                                         </button>
                                     </div>
                                 </form>
-                                <div class="mt-4 text-muted text-center">
-                                    Don't have an account? <a href="register.php">Create One</a>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>

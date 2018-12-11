@@ -66,6 +66,7 @@ $this->load->model('Product_model');
 		}
 		public function save_product(){
 			if( $this->session->userdata('svadmin_det')){
+				
 				$admin=$this->session->userdata('svadmin_det');
 				$adminid=$admin['admin_id'];
 				$cat_id=base64_decode($this->input->post('c_name'));
@@ -73,8 +74,8 @@ $this->load->model('Product_model');
 				$product_name=$this->input->post('p_name');
 				$act_price=$this->input->post('a_price');
 				$qun=$this->input->post('quantity');
-				$dis_price=$this->input->post('d_price');
-				$dis_percentage=$this->input->post('dp_price');
+				$dis_price= round($this->input->post('d_price'),2);
+				$dis_percentage= round($this->input->post('dp_price'),2);
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
@@ -121,13 +122,23 @@ $this->load->model('Product_model');
 				 $config['upload_path']          = './assets/uploads/product_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
               $this->load->library('upload', $config);
+if ( ! $this->upload->do_upload('main_image',time()))
+                {
+                        $error = array('error' => $this->upload->display_errors());
 
+                          $this->session->set_flashdata('error',$error); 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $main_img =   $upload_data['file_name'];
+				}
 
 				
 
 				$data=array(
 				'product_name'=>$product_name,
-				
+				'product_img'=>$main_img,
 				'cat_id'=>$cat_id,
 				'subcat_id'=>$subcat_id,
 				'actual_price'=>$act_price,
@@ -141,6 +152,7 @@ $this->load->model('Product_model');
 				$product_id=$this->Product_model->save_product($data);
 				//releated products
 				$rproducts=$this->input->post('rel_products');
+				
 			if(!empty($rproducts)){
 				foreach($rproducts as $product){
 					$rdata[]=array('product_id'=>$product_id,
@@ -151,8 +163,10 @@ $this->load->model('Product_model');
 				$this->Product_model->save_rel_products($rdata);
 			}		
 			// Count total files
+			//statr of uploading images
+			if(isset($_FILES['p_image']['name'])){
       $countfiles = count($_FILES['p_image']['name']);
-	  $tst=$this->input->post('p_image');
+
 	 
 
       // Looping all files
@@ -192,7 +206,8 @@ $this->load->model('Product_model');
  
       }
  $this->Product_model->save_product_images($pdata);
- 
+			}
+			//end of uploading images
 				
 				foreach($f_names as $key=>$value){
 					if(!$f_values[$key]=='' && !$value=='')
@@ -242,7 +257,7 @@ $this->load->model('Product_model');
 			$data['images']=$this->Product_model->get_product_images($pid);
 			$data['rel_products']=$this->Product_model->get_rel_proudcts_by_id($pid);
 			//echo $this->db->last_query();exit;
-		//echo $pid;	print_r($data['rel_products']);exit;
+		
 			
 			if(count($data['cat_list'])>0){
 					$data['status']=1;
@@ -264,6 +279,7 @@ $this->load->model('Product_model');
 			$cat_id=$data['product']->cat_id;
 			$subcat_id=$data['product']->subcat_id;
 			$data['r_plist']=$this->Product_model->get_rel_products($cat_id,$subcat_id);
+			//echo $pid;	print_r($data['rel_products']);print_r($data['r_plist']);exit;
 
 			$data['fet_data']=$this->Product_model->get_features($pid);
 			if(count($data['fet_data'])>0){
@@ -287,13 +303,14 @@ $this->load->model('Product_model');
 				$admin=$this->session->userdata('svadmin_det');
 				$adminid=$admin['admin_id'];
 				$pid=base64_decode($this->input->post('pid'));
+				
 				$cat_id=base64_decode($this->input->post('c_name'));
 				$subcat_id=$this->input->post('sc_name');
 				$product_name=$this->input->post('p_name');
 				$act_price=$this->input->post('a_price');
 				$qun=$this->input->post('quantity');
-				$dis_price=$this->input->post('d_price');
-				$dis_percentage=$this->input->post('dp_price');
+				$dis_price=round($this->input->post('d_price'),2);
+				$dis_percentage=round($this->input->post('dp_price'),2);
 				$fids=$this->input->post('fid');
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
@@ -336,9 +353,12 @@ $this->load->model('Product_model');
 					       redirect($_SERVER['HTTP_REFERER']);
 
 				}
-
-        	$data=array(
+								 $config['upload_path']          = './assets/uploads/product_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
+              $this->load->library('upload', $config);
+			  $add=array(
 				'product_name'=>$product_name,
+				
 				'cat_id'=>$cat_id,
 				'subcat_id'=>$subcat_id,
 				'actual_price'=>$act_price,
@@ -346,27 +366,77 @@ $this->load->model('Product_model');
 				'discount_percentage'=>$dis_percentage,
 				'net_price'=>$net_price,
 				'quantity'=>$qun,
-				 'created_by'=>$adminid,
+				 'updated_by'=>$adminid,
 				 'description'=>$this->input->post('descr')
 				);
+		if($_FILES['main_image']['name']!=''){ 
+if ( ! $this->upload->do_upload('main_image',time()))
+                {
+                       
+                         echo 'working'; exit;
+                          $this->session->set_flashdata('error','product image not uploaded'); 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					
+					$upload_data = $this->upload->data(); 
+                    $main_img =  $upload_data['file_name'];
+					
+					$add['product_img']=$main_img;
+				}
+		}
 
-				$status=$this->Product_model->save_edit_product($data,$pid);
+        	//echo 'else';exit;
+		
+
+				$status=$this->Product_model->update_edit_product($pid,$add);
+					
+				
+			
 				//edit reltate products_list
+				$rproducts=$this->input->post('rel_products');
+			if(!empty($rproducts)){
+				foreach($rproducts as $product){
+					$rdata[]=array('product_id'=>$pid,
+					'rel_product_id'=>$product,
+					'created_by'=>$adminid);
+					
+				}
+				$this->Product_model->delete_rel_products($pid,$adminid);
+				$this->Product_model->save_rel_products($rdata);
+			}	
+             else{
+				 $this->Product_model->delete_rel_products($pid,$adminid);
+				 
+			 }			
 				
 				 $config['upload_path']          = './assets/uploads/product_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
 
 
                 $this->load->library('upload', $config);
-				//features edit
+				
 
 				
 //$pimages=$this->input->post('p_image');
- $countfiles = count($_FILES['p_image']['name']);
+ 
  //echo $countfiles; 
 //print_r($pimages);exit;
+if(isset($_POST['image_id'])){
             $img_ids=$this->input->post('image_id');
-//echo 		count($img_ids);exit;
+
+}
+else{
+	$img_ids=array();
+	
+}
+if(isset($_FILES['p_image']['name'])){
+         $countfiles = count($_FILES['p_image']['name']);
+//echo $countfiles;exit;
+}
+else{
+	$countfiles=0;
+}
 
 				$count=0;
 				foreach($img_ids as $key=>$value){
@@ -374,6 +444,7 @@ $this->load->model('Product_model');
 					$value=base64_decode($value);
                              if(isset($_FILES['p_image']['name'][$key])){
 								 $count++;
+								 
                            if($_FILES['p_image']['name'][$key]!=''){
  
           // Define new $_FILES array - $_FILES['file']
@@ -406,12 +477,12 @@ $this->load->model('Product_model');
 							 }
 							 //delete image
 							 else{
-								 $this->Product_model->save_delete_product_images($value);
+								 $this->Product_model->save_delete_product_images($value,$adminid);
 								
 								 
 							 }
 				}
-			$countfiles = count($_FILES['p_image']['name']);
+			
 			if($count<$countfiles){
 				    $img_status=0;
 				
@@ -489,7 +560,7 @@ $this->load->model('Product_model');
 										   unset($f_values[$key]);
                  }
 				 else{
-					 $this->Product_model->delete_features($value);
+					 $this->Product_model->delete_features($value,$adminid);
 				 }
 				  unset($fids[$key]);
 
@@ -531,7 +602,7 @@ $this->load->model('Product_model');
 				}
 				 else{
 					 $this->session->set_flashdata('error','product updated');
-					       redirect($_SERVER['HTTP_REFERER']);
+					       redirect('product/product_list');
 				 }
 
 
@@ -586,4 +657,40 @@ $this->load->model('Product_model');
 			else{redirect('login');}
 
 		}
+		public function inactive_product(){
+		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Product_model->inactive_product($id,$svadmin);
+			if($status==1){
+				$this->session->set_flashdata('success','product inactivated');
+			  redirect('product/product_list');
+			}
+			else{
+				$this->session->set_flashdata('error','subcategory not inactivated');
+			  redirect('product/product_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
+	public function active_product(){
+		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$id=base64_decode($this->uri->segment(3));
+			$status=$this->Product_model->active_product($id,$svadmin);
+			if($status==1){
+				$this->session->set_flashdata('success','product activated');
+			  redirect('category/sub_category_list');
+			}
+			else{
+				$this->session->set_flashdata('error','product not activated');
+			  redirect('category/sub_category_list');
+			}
+		}
+		else{redirect('login');}
+		
+	}
 }

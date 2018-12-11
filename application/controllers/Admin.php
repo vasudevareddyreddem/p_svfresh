@@ -9,14 +9,18 @@ class Admin extends In_frontend{
 	{
 		parent::__construct();	
 				
-		
+		$this->load->model('Admin_model');	
 	
 		
 	}
 	public function index(){
 		if($this->session->userdata('svadmin_det')){
+			$data['cat_count']=$this->Admin_model->count_cat();
+			$data['users_count']=$this->Admin_model->count_users();
+			$data['products_count']=$this->Admin_model->count_products();
+			$data['orders_count']=$this->Admin_model->count_orders();
 			
-			$this->load->view('admin/index');
+			$this->load->view('admin/index',$data);
 		    $this->load->view('admin/footer');
 		}
 		else{
@@ -29,53 +33,61 @@ class Admin extends In_frontend{
 			
 			redirect('admin');
 		}
+		else{
+			redirect('login');
+		}
 		
 	}
+	public function change_password(){
+		if($this->session->userdata('svadmin_det')){
+			
+			$this->load->view('admin/change_password');
+		$this->load->view('admin/footer');
+		}
+		else{
+			redirect('login');
+		}
+		
+	}
+	public function new_password(){
+	if($this->session->userdata('svadmin_det')){
+	$this->form_validation->set_rules('oldpassword', 'olde Password', 'required');
+	$this->form_validation->set_rules('newpassword', 'new Password', 'required|min_length[6]');
+    $this->form_validation->set_rules('confirmpassword', 'Confirm Password', 'required|matches[newpassword]');
+ if ($this->form_validation->run() == FALSE)
+                {
+          $this->session->set_flashdata('error',validation_errors());
+	
+                    redirect($_SERVER['HTTP_REFERER']);
+
+               }
+			   $det=$this->session->userdata('svadmin_det');
+			   $id=$det['admin_id'];
+			   $pwd=$this->input->post('oldpassword');
+			   $newpwd=$this->input->post('newpassword');
+			  $flag=$this->Admin_model->check_password($id,$pwd);
+			  if($flag==1){
+				 $flag=$this->Admin_model->set_new_password($id,$newpwd);
+				 if($flag==1){
+					 $this->session->set_flashdata('success','password successfully changed');
+					 redirect('admin');
+				 }
+				 else{
+					 $this->session->set_flashdata('error','your password  is as same as old password ,change password');
+					redirect($_SERVER['HTTP_REFERER']);
+				 }
+			  }
+			  else{
+				 $this->session->set_flashdata('error','old password is incorrect enter correct password');
+				   redirect($_SERVER['HTTP_REFERER']);
+
+			  }
+			  
+}
+}
 	
 
-		public function add_product(){
-		if($this->session->userdata('svadmin_det')){
-			$this->load->view('admin/add_product');
-		    $this->load->view('admin/footer');
-			
-			
-		}
 	
-	}
-	public function product_list(){
-		if($this->session->userdata('svadmin_det')){
-			$this->load->view('admin/products_list');
-		    $this->load->view('admin/footer');
-			
-			
-		}
 	
-	}
-	public function total_order_list(){
-		if($this->session->userdata('svadmin_det')){
-			$this->load->view('admin/total_orders_list');
-		    $this->load->view('admin/footer');
-			
-			
-		}
 	
-	}
-	public function pending_order_list(){
-		if($this->session->userdata('svadmin_det')){
-			$this->load->view('admin/pending_orders_list');
-		    $this->load->view('admin/footer');
-			
-			
-		}
-	
-	}
-	public function delivered_order_list(){
-		if($this->session->userdata('svadmin_det')){
-			$this->load->view('admin/delivered_orders_list');
-		    $this->load->view('admin/footer');
-			
-			
-		}
-	
-	}
 }

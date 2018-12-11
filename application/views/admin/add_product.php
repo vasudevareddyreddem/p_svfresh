@@ -40,11 +40,13 @@
                                                 <label>Product Name</label>
                                                 <input id="p_name" type="text" class="form-control" name="p_name">
                                             </div>
-											 <div class="form-group" name="" id="">
+											 <div class="form-group col-md-6" name="" id="">
                                         <label class="form-control-label">Select Related Products</label>
                                         	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
 											
-											<option></option>
+											
+											
+											
                                    
                                 </select>
                                     </div>
@@ -52,7 +54,7 @@
                                                 <label>Quantity</label>
                                                 <input id="quantity" type="text" class="form-control" name="quantity">
                                             </div>
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-6">
                                                 <label>Actual Price</label>
                                                 <input id="a_price" type="text" class="form-control" name="a_price">
                                             </div>
@@ -69,7 +71,7 @@
                                                 <label>Net price</label>
                                                 <input id="n_price" type="text" class="form-control" name="n_price" readonly>
                                             </div>
-											  <div class="form-group col-md-4">
+											  <div class="form-group col-md-12">
                                                 <label>Description</label>
                                                 <textarea id="descr"  class="form-control" name="descr" ></textarea>
                                             </div>
@@ -99,7 +101,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Row</button>
+                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Feature</button>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +120,7 @@
                                                 <tr>
                                                    
                                                     <td>
-                                                        <input type="file" name="p_image[]" placeholder="LastName" class="form-control"  required />
+                                                        <input type="file" name="main_image" placeholder="LastName" class="form-control"  required />
                                                     </td>
                                                     <td>
                                                         <a class="deleteRow"></a>
@@ -126,7 +128,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button type="button" class="btn btn-md btn-info" id="addslider">Add Row</button>
+                                        <button type="button" class="btn btn-md btn-info" id="addslider">Add Image</button>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +210,7 @@ $(document).ready(function() {
 				
 				}
             },
-			'p_image[]': {
+			'main_image': {
                 validators: {
 					notEmpty: {
 						message: 'Image is required'
@@ -390,7 +392,8 @@ $('#a_price').on('keyup',function(){
 </script>
 <script>
  function get_products(value){
-	 $('#rel_products').empty();
+	 
+	
 	 cat_id=$('#c_name').val();
 	 if(value==''){
 		 return false;
@@ -404,17 +407,27 @@ $('#a_price').on('keyup',function(){
                     
                     success: function (result) {
 						
-						alert(result.status);
+						
 						if(result.status==1){
+						console.log(result);
+							 $('#rel_products').empty();
+							 temp1='<option value="" disabled>select</option>';
+							 $('#rel_products').append(temp1); 
 						$.each(result.r_plist, function(i, product) {
-							temp='<option value="'+product.product_id+'">'+product.product_name+'</option>';
 							
-							$('#rel_products').append(temp);
+							
+							
+							$('#rel_products').append('<option value="'+product.product_id+'">'+product.product_name+'</option>').trigger("chosen:updated");
 							
 							
 						});
-						}
 						
+						
+						
+						}
+						else{
+							$('#rel_products').empty();
+						}
        
                                            }
                     ,
@@ -426,12 +439,18 @@ $('#a_price').on('keyup',function(){
  }
 
 </script>
-// <script>
-        // jQuery(document).ready(function() {
-            // jQuery(".standardSelect").chosen({
-                // disable_search_threshold: 10,
-                // no_results_text: "Oops, nothing found!",
-                // width: "100%"
-            // });
-        // });
-    // </script>
+<script>
+        $(document).ready(function() {
+            $(".standardSelect").chosen({
+                disable_search_threshold: 10,
+                no_results_text: "Oops, nothing found!",
+                width: "100%"
+            });
+        });
+    </script>
+	<script>
+	$('#n_price').on('click',function(){
+		ff=$('#rel_products').val();
+		alert(ff);
+	});
+	</script>

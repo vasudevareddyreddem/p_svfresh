@@ -47,7 +47,7 @@ class Slider_model extends CI_Model
 		$this->db->from('slider_tab');
 		$this->db->where('status',1);
 		$this->db->or_where('status',2);
-		$this->db->order_by('updated_at');
+		$this->db->order_by('updated_at','desc');
 		return $this->db->get()->result();
 	}
 	public function inactive_slider($id,$admin){
