@@ -14,6 +14,7 @@ class Home extends CI_controller
     $this->load->model('Product_model');
     $this->load->model('Cart_Model');
     $this->load->model('Slider_model');
+    $this->load->model('Wishlist_Model');
   }
 
   public function index()
@@ -26,6 +27,8 @@ class Home extends CI_controller
     $data['slider_side_images'] = $this->Slider_model->get_slides_side_images();
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+    $data['cart_product_id'] = $this->Cart_Model->get_product_ids_in_cart($user_id);
+    $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $this->load->view('home/index',$data);

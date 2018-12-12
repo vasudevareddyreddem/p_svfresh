@@ -20,11 +20,14 @@
 								<div class="container">
 									<div id="online_amt_1" style="padding-left:50px;">
 										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation_payment(this.form);">
-											<input type="radio" id="radio1"  name="payment" onclick="payment_type(this.value);" value="2"><span >Cash On Delivery</span>
+											<input type="radio" id="radio1"  name="payment" onclick="payment_type(this.value);" value="2"><span > Cash On Delivery</span>
 											<br>
-											<input type="radio" id="radio2" name="payment" onclick="payment_type(this.value);"  value="3"><span >Swipe on Delivery</span>
 											<br>
-											<input type="radio" id="radio3" name="payment" onclick="payment_type(this.value);" value="1"><span>Online Payment</span>
+											<input type="radio" id="radio2" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
+											<br>
+											<br>
+											<input type="radio" id="radio3" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
+											<br>
 											<br>
 											<?php echo form_error('payment_type','<div class="text-danger">', '</div>'); ?>
 											<button type="submit" class="btn btn-success" name="submit">Submit</button>
@@ -32,13 +35,16 @@
 									</div>
 									<div id="online_amt" style="display:none;padding-left:50px;">
 										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation(this.form);">
-											<div class="row" >
+											<div class="" >
 												<span id="paymenterrormsg" style="color:red"></span>
-												<input type="radio" id="radio11"  name="payment" onclick="payment_type(this.value);" value="2"><span >Cash On Delivery</span>
+												<input type="radio" id="radio11"  name="payment" onclick="payment_type(this.value);" value="2"><span > Cash On Delivery</span>
 												<br>
-												<input type="radio" id="radio22" name="payment" onclick="payment_type(this.value);"  value="3"><span >Swipe on Delivery</span>
 												<br>
-												<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span>Online Payment</span>
+												<input type="radio" id="radio22" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
+												<br>
+												<br>
+												<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
+												<br>
 												<br>
 											</div>
 											<script
