@@ -39,6 +39,8 @@ class Home extends CI_controller
   //user login
   public function Login()
   {
+	 
+	if (!$this->session->userdata('logged_in') == TRUE) {
     if($this->input->post()){
       //validating login form
       $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|regex_match[/^[0-9]{10}$/]');
@@ -59,7 +61,9 @@ class Home extends CI_controller
           if(password_verify($this->input->post('password'),$result->password)){
             $userData = array('id'=>$result->id,'email_id'=>$result->email_id,'phone_number'=>$result->phone_number,'role'=>$result->role,'logged_in'=>TRUE);
             $this->session->set_userdata($userData);
-            redirect('home');//redirecting user to home page with user details
+			redirect('home');
+			//redirect($this->agent->referrer());
+			//redirecting user to home page with user details
           }else{
             $this->session->set_flashdata('error','Password entered with phone number is incorrect');
             redirect('home/login');//redirecting user to login page for invalid password
@@ -79,6 +83,11 @@ class Home extends CI_controller
       $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
       $this->load->view('home/login',$data);
     }
+  }else{
+	  $this->session->set_flashdata('error','You have no permissions to access');
+     redirect('home');
+  }
+  
   }
 
   public function profile(){
