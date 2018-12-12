@@ -37,12 +37,24 @@ class Cart_Model extends CI_Model
     $this->db->where('id',$id);
     return $this->db->delete($this->table);
   }
-  
+
   public  function get_billing_details($billing_id){
 	  $this->db->select('*')->from('billing_tab');
 	  $this->db->where('id',$billing_id);
 	  return $this->db->get()->row_array();
-	  
+
+  }
+
+  public function get_product_ids_in_cart($user_id=''){
+    $this->db->select('product_id');
+    $this->db->from($this->table);
+    $this->db->where('user_id',$user_id);
+    $result = $this->db->get()->result();
+    $return = array();
+    foreach($result as $r){
+      $return[] = $r->product_id;
+    }
+    return $return;
   }
 }
 
