@@ -59,6 +59,8 @@ class Auth_Model extends CI_Model
     return $this->db->update($this->table);
   }
   
+  
+  /* return by vasu*/
   public function save_newsletters_emails($data){
 	  $this->db->insert('newsletters_list',$data);
 	  return $this->db->insert_id();
@@ -69,6 +71,11 @@ class Auth_Model extends CI_Model
 	  $this->db->where('email',$email);
 	  return $this->db->get()->row_array();
 	  
+  }
+  
+  public  function delete_cart_item($id){
+	 $this->db->where('id',$id); 
+	 return $this->db->delete('cart_tab');
   }
 
 }
