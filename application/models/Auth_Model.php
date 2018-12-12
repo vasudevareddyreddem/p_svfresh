@@ -58,6 +58,18 @@ class Auth_Model extends CI_Model
     $this->db->set($password);
     return $this->db->update($this->table);
   }
+  
+  public function save_newsletters_emails($data){
+	  $this->db->insert('newsletters_list',$data);
+	  return $this->db->insert_id();
+	  
+  }
+  public  function check_email_ornot($email){
+	  $this->db->select('*')->from('newsletters_list');
+	  $this->db->where('email',$email);
+	  return $this->db->get()->row_array();
+	  
+  }
 
 }
 
