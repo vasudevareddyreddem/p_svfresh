@@ -39,7 +39,10 @@
                 <ul class="menu-dropdown">
                     <li><a href="<?php echo base_url('category/add_category');?>"><i class="ion ion-ios-circle-outline"></i>Add Category</a></li>
                     <li><a href="<?php echo base_url('category/category_list');?>"><i class="ion ion-ios-circle-outline"></i>Categories List</a></li>
+					 <li><a href="<?php echo base_url('category/add_discount_image');?>"><i class="ion ion-ios-circle-outline"></i> Add Discount Image</a></li>
                     <li><a href="<?php echo base_url('category/add_sub_category');?>"><i class="ion ion-ios-circle-outline"></i>Add Sub Category</a></li>
+					 <li><a href="<?php echo base_url('category/add_subcategory_slider');?>"><i class="ion ion-ios-circle-outline"></i>Add Sub Category Slider</a></li>
+					  <li><a href="<?php echo base_url('category/subcat_slider_list');?>"><i class="ion ion-ios-circle-outline"></i> Sub Category Slider List</a></li>
                     <li><a href="<?php echo base_url('category/sub_category_list');?>"><i class="ion ion-ios-circle-outline"></i>Sub Categories List</a></li>
                 </ul>
             </li>

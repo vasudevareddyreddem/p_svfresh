@@ -152,7 +152,10 @@ $this->load->model('Category_model')	;
 			   );
                
                
-            $flag=$this->Category_model->insert_category($data);
+            $insert_id=$this->Category_model->insert_category($data);
+			if(isset($_POST['slider_image'])){
+				
+			}
 			if($flag==1){
 				$this->session->set_flashdata('success','category added successfully');
 			     redirect('category/category_list');
@@ -557,5 +560,197 @@ $this->load->model('Category_model')	;
 		else{redirect('login');}
 		
 	}
-	
+	public function add_discount_image(){
+		if( $this->session->userdata('svadmin_det')){
+			$data['cat_list']=$this->Category_model->get_category_names();
+			$this->load->view('admin/add_discount',$data);
+		    $this->load->view('admin/footer');
+			
+			
+		}
+		else{redirect('login');}
+		
+		
+		
+	}
+	public function save_discount_image(){
+		if( $this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			
+			
+			$config['upload_path']          = './assets/uploads/category_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
+                
+
+                $this->load->library('upload', $config);
+			
+			
+				  if ( ! $this->upload->do_upload('image',time()))
+                {
+                        //$error = array('error' => $this->upload->display_errors());
+						
+                          $this->session->set_flashdata('error','discount image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $dis_img =   $upload_data['file_name'];
+				}
+				$data=array(
+				
+				'cat_dis_img'=>$dis_img,
+				
+				'updated_by'=>$svadmin
+				);
+				$cat_id=base64_decode($this->input->post('c_name'));
+				$status=$this->Category_model->update_discount_category($data,$cat_id);
+				if($status==1){
+					 $this->session->set_flashdata('success','Discount Image added successfully'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+					
+					
+				}else{
+					$this->session->set_flashdata('error','Discount Image not added'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+				}
+			
+		}
+		else{redirect('login');}
+		
+		
+		
+	}
+	public function add_subcategory_slider(){
+		if( $this->session->userdata('svadmin_det')){
+			$data['cat_list']=$this->Category_model->get_category_names();
+			$this->load->view('admin/add_sub_category_slider',$data);
+		    $this->load->view('admin/footer');
+			
+			
+		}
+		else{redirect('login');}
+		
+	}
+	public function save_subcat_slider(){
+		if( $this->session->userdata('svadmin_det')){
+			$subcat_id=$this->input->post('sc_name');
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$config['upload_path']          = './assets/uploads/sub_category_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
+                
+
+                $this->load->library('upload', $config);
+				if(isset($_FILES['slider_image']['name'])){
+      $countfiles = count($_FILES['slider_image']['name']);
+
+	 
+
+      // Looping all files
+      for($i=0;$i<$countfiles;$i++){
+ 
+        if($_FILES['slider_image']['name'][$i]!=''){
+ 
+          // Define new $_FILES array - $_FILES['file']
+           $_FILES['image']['name']     = $_FILES['slider_image']['name'][$i];
+                $_FILES['image']['type']     = $_FILES['slider_image']['type'][$i];
+                $_FILES['image']['tmp_name'] = $_FILES['slider_image']['tmp_name'][$i];
+                $_FILES['image']['error']     = $_FILES['slider_image']['error'][$i];
+                $_FILES['image']['size']     = $_FILES['slider_image']['size'][$i];
+                
+		 //echo   $_FILES['slide']['name'];exit;
+		    if ( ! $this->upload->do_upload('image',time()))
+                {
+                      
+						
+                          $this->session->set_flashdata('error',' slider image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $slider_img =   $upload_data['file_name'];
+					$data[]=array('image_path'=>$slider_img,
+					'subcat_id'=>$subcat_id,
+					'created_by'=>$svadmin);
+				}
+          
+
+        
+ 
+         
+        }
+ 
+      }
+ $flag=$this->Category_model->save_subcat_slider($data);
+ if($flag==1){
+	 
+                          $this->session->set_flashdata('success','Subcategory slider image  uploaded successfully'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+	 
+	 
+ }
+ else{
+	   $this->session->set_flashdata('error','Subcategory slider images not   uploaded '); 
+					 redirect($_SERVER['HTTP_REFERER']);	 
+					     
+	 
+ }
+			}
+			
+			
+			
+		}
+		else{redirect('login');}
+		
+	}
+	public function subcat_slider_list(){
+		if( $this->session->userdata('svadmin_det')){
+			$data['slider_list']=$this->Category_model->subcat_slider_list();
+			//echo $this->db->last_query();
+			//echo '<pre>';print_r($data);
+		
+			if(count($data['slider_list'])>0)
+			{
+				$data['slider_status']=1;
+				
+			}
+			else{
+				$data['slider_status']=0;
+				}
+			$this->load->view('admin/subcat_slider_list',$data);
+		    $this->load->view('admin/footer');
+			
+			
+		}
+		else{redirect('login');}
+		
+	}
+	public function edit_subcat_slider(){
+		if( $this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+			$data['cat_list']=$this->Category_model->get_category_names();
+			$data['slider']=$this->Category_model->get_slider_image($id);
+			if(!count($data['slider'])>0){
+				$this->session->set_flashdata('error','This Slider Image Deleted by another session '); 
+					 redirect($_SERVER['HTTP_REFERER']);
+				
+			}
+			
+			$this->load->view('admin/edit_subcat_slider',$data);
+		    $this->load->view('admin/footer');
+			
+			
+		}
+		else{redirect('login');}
+		
+		
+		
+	}
+
 }

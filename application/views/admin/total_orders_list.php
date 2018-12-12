@@ -51,19 +51,19 @@
 											}?></td>
                                             <td>
                                                 <div class="badge badge-info">
-												<?php if($order->order_status==1)
+												<?php if($order->status==1)
 												{echo 'Delivered';}
-											if($order->order_status==0)
+											if($order->status==0)
 												{echo 'Cancelled';}
-											if($order->order_status==2)
+											if($order->status==2)
 												{echo 'Pending';}
 											?></div>
                                             </td>
-                                            <td><?php if($order->order_status==1)
+                                            <td><?php if($order->status==1)
 												{echo $order->delivered_time;}
-											if($order->order_status==0)
+											if($order->status==0)
 												{echo $order->cancelled_time;}
-											if($order->order_status==2)
+											if($order->status==2)
 												{echo $order->created_date;}
 											?></td>
                                         </tr>

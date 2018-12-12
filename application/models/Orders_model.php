@@ -9,10 +9,11 @@ class Orders_model extends CI_Model
 		$this->load->database("default");
 	}
 	public function total_order_list(){
-		$this->db->select('order_tab.id  order_id,order_tab.product_name,order_tab.order_number,order_tab.quantity,
-		order_tab.net_price,order_tab.payment_type,order_tab.order_status,order_tab.created_date,
-		order_tab.delivered_time,order_tab.cancelled_time,users_tab.phone_number,
+		$this->db->select('order_tab.order_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
+		order_items_tab.net_price,order_tab.payment_type,order_items_tab.status,order_items_tab.created_date,
+		order_items_tab.delivered_time,order_items_tab.cancelled_time,users_tab.phone_number,
 		billing_tab.*')->from('order_tab')->
+		join('order_items_tab','order_items_tab.order_id=order_tab.order_id')->
 		join('billing_tab','order_tab.billing_id=billing_tab.id')->join('users_tab','users_tab.id=billing_tab.user_id')
 		->order_by('order_tab.updated_date','desc');
 		
