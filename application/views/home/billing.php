@@ -7,9 +7,18 @@
       <div class="row">
         <h3 class="checkout-sep pd-tb20 h2"> Billing Infomation</h3>
         <?php if(count($billing) > 0){ ?>
-            <div>
-              <div>
-                <ul>
+            <div class="">
+              <div class="row">
+				  <div class="col-md-3">
+					<div class="box-shadow-site modal-body">
+						 <input type="radio" name="billing_id" value="">
+						 <p>Plot No. 177, 1st Floor, Beside Sri Chaitanya High School, 
+Sardar Patel Nagar, Opp Nizampet X-Road, Hyderabad, 
+Telangana - 500072.</p>
+					</div>					
+				  </div>
+			  </div>
+                <ul class="">
                   <form action="<?php echo base_url('billing/old_delivery_address'); ?>" method="POST">
                     <?php $i=1; foreach($billing as $b){ ?>
                     <input type="radio" name="billing_id" value="<?php echo $b->id; ?>" <?php echo ($i == 1) ? 'checked':''; ?>>
@@ -28,7 +37,7 @@
                     <button type="submit" class="btn btn-success">Proceed For Payment</button>
                   </form>
                 </ul>
-              </div>
+             
             </div>
         <?php } ?>
         <br>
@@ -126,6 +135,7 @@
             </ul>
 
           </div>
+		  <div class="clearfix">&nbsp;</div>
           <div class="pull-right mt-10">
             <button type="submit" name="" class="btn btn-success">Proceed For Payment </button>
           </div>
