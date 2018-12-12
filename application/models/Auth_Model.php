@@ -58,24 +58,19 @@ class Auth_Model extends CI_Model
     $this->db->set($password);
     return $this->db->update($this->table);
   }
-  
-  
+
+
   /* return by vasu*/
   public function save_newsletters_emails($data){
 	  $this->db->insert('newsletters_list',$data);
 	  return $this->db->insert_id();
-	  
+
   }
   public  function check_email_ornot($email){
 	  $this->db->select('*')->from('newsletters_list');
 	  $this->db->where('email',$email);
 	  return $this->db->get()->row_array();
-	  
-  }
-  
-  public  function delete_cart_item($id){
-	 $this->db->where('id',$id); 
-	 return $this->db->delete('cart_tab');
+
   }
   
   public function get_cart_item_qty($user_id){

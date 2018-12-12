@@ -247,6 +247,8 @@ class Home extends CI_controller
 				$this->session->set_flashdata('error',"Please log in or sign up to continue");
 			  redirect('home/login'); 
 		 }
+
+
 	}
   public function logout()
   {

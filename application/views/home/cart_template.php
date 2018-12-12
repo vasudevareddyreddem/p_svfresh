@@ -1,10 +1,8 @@
 <?php if(count($cart) > 0){ ?>
-
-<?php //echo '<pre>';print_r($cart);exit; ?>
   <?php $cnt=1; foreach($cart as $c){ ?>
     <li class="product-info" id="item_ids<?php echo $c->id; ?>">
         <div class="p-left">
-            <a href="javascript:void(0);" onclick="removecart_item('<?php echo $c->id; ?>');" class="remove_link"></a>
+            <a href="#" class="remove_link remove_cart_item" data-cart_id="<?php echo $c->id; ?>"></a>
             <a href="<?php echo base_url('product/'.$c->product_id); ?>">
             <img class="img-responsive" src="<?php echo base_url('assets/uploads/product_pics/'.$c->product_img);?>" alt="item 1">
             </a>
@@ -49,3 +47,4 @@ function removecart_item(c_id){
 }
 }
 </script>
+
