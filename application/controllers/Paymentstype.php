@@ -75,8 +75,8 @@ class Paymentstype extends CI_Controller
   }
 
   public  function success(){
-    // $post=$this->input->post();
-    // echo '<pre>';print_r($post);exit;
+    $post=$this->input->post();
+     //echo '<pre>';print_r($post);exit;
     $user_id = $this->session->userdata('id');
     $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
     $billing_id = $this->session->userdata('billing_id');

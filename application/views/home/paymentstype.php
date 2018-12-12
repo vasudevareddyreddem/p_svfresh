@@ -30,7 +30,7 @@
 											<br>
 											<br>
 											<?php echo form_error('payment_type','<div class="text-danger">', '</div>'); ?>
-											<button type="submit" class="btn btn-success" name="submit">Submit</button>
+											<button type="submit" class="btn btn-success" name="pay_submit">Pay</button>
 										</form>
 									</div>
 									<div id="online_amt" style="display:none;padding-left:50px;">
@@ -64,7 +64,7 @@
 											<?php if ($details['display_currency'] !== 'INR') { ?> data-display_currency="<?php echo $details['display_currency']?>" <?php } ?>
 											>
 											</script>
-											<button type="submit" class="btn btn-success" name="submit">Submit</button>
+											<button type="submit" class="btn btn-success" name="pay_submit">Pay</button>
 										</form>
 									</div>
 								</div>
