@@ -85,12 +85,12 @@
             <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
                 <a class="cart-link" <?php if($count > 0){ ?>href="<?php echo base_url('Checkout'); ?>"<?php }else{ ?> href="#" <?php } ?>>
                     <span class="title">Shopping cart</span>
-                    <span class="total"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span> items</span>
-                    <span class="notify notify-left"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span></span>
+                    <span class="total"><span class="cart_count" id="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span> items</span>
+                    <span class="notify notify-left"><span class="cart_count" id="cart_count1"><?php if($count){echo $count;}else{ echo '0'; } ?></span></span>
                 </a>
                 <div class="cart-block">
                     <div class="cart-block-content">
-                        <h5 class="cart-title"><span class="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span> Items in my cart</h5>
+                        <h5 class="cart-title"><span class="cart_count" id="cart_count2"><?php if($count){echo $count;}else{ echo '0'; } ?></span> Items in my cart</h5>
                         <div class="cart-block-list">
                             <ul id="cart_template">
                                 <?php echo $cart_template; ?>
@@ -175,4 +175,13 @@
         </div>
     </div>
 </div>
+ <div id="sucessmsg" style=""></div>
+  <?php if($this->session->flashdata('success')): ?>
+        <div class="alert_msg1 animated slideInUp bg-succ">
+            <?php echo $this->session->flashdata('success');?> &nbsp; <i class="fa fa-check text-success ico_bac" aria-hidden="true"></i> </div>
+        <?php endif; ?>
+        <?php if($this->session->flashdata('error')): ?>
+        <div class="alert_msg1 animated slideInUp bg-warn">
+            <?php echo $this->session->flashdata('error');?> &nbsp; <i class="fa fa-exclamation-triangle text-success ico_bac" aria-hidden="true"></i> </div>
+        <?php endif; ?>
 <!-- end header -->

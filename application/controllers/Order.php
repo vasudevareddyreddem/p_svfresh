@@ -31,6 +31,17 @@ class Order extends CI_Controller
     }
   }
 
+  public function cancel_order()
+  {
+    $order_items_id = $this->input->post('order_items_id');
+    if($this->Order_Model->cancel_order($order_items_id)){
+      $return['success'] = 'Order cancelled successfully';
+    }else{
+      $return['error'] = 'Please try again';
+    }
+    echo json_encode($return);exit(0);
+  }
+
 }
 
 ?>

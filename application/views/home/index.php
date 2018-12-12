@@ -7,7 +7,9 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-3 ">
-          <img alt="Funky roots" src="assets/data/adsv2.jpg" />
+          <?php if($slider_side_images->l_pic){ ?>
+          <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->l_pic); ?>" />
+          <?php } ?>
         </div>
         <div class="col-sm-6 header-top-right">
           <?php if (count($slides) > 0) { ?>
@@ -23,7 +25,9 @@
           <?php } ?>
         </div>
         <div class="col-sm-3 ">
-          <img alt="Funky roots" src="assets/data/ads1.jpg" />
+          <?php if($slider_side_images->l_pic){ ?>
+          <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->r_pic); ?>" />
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -114,12 +118,20 @@
                                   <div class="left-block">
                                     <a href="<?php echo base_url('product/'.$p->product_id); ?>"><img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/'.$p->product_img); ?>" /></a>
                                     <div class="quick-view">
-                                      <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $p->discount_price; ?>></a>
+                                      <?php if (in_array($p->product_id,$wishlist_product_id)){ ?>
+                                        <a title="Added to your wishlist" class="heart whishlist" style="background:#57bb14" href="#"></a>
+                                      <?php } else { ?>
+                                        <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $p->discount_price; ?>></a>
+                                      <?php } ?>
                                       <!-- <a title="Add to compare" class="compare" href="#"></a> -->
 
                                     </div>
                                     <div class="add-to-cart">
+                                      <?php if (in_array($p->product_id,$cart_product_id)) { ?>
+                                        <a title="Added to Cart" class="addtocart" href="#">Added to cart</a>
+                                      <?php }else{ ?>
                                       <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>
+                                      <?php } ?>
                                     </div>
                                   </div>
                                   <div class="right-block">

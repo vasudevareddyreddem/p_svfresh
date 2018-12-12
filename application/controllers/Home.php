@@ -6,12 +6,15 @@ class Home extends CI_controller
   function __construct()
   {
     parent::__construct();
+	$this->load->library('user_agent');
+
     $this->load->library('form_validation');
     $this->load->model('Auth_Model');
     $this->load->model('Category_model');
     $this->load->model('Product_model');
     $this->load->model('Cart_Model');
     $this->load->model('Slider_model');
+    $this->load->model('Wishlist_Model');
   }
 
   public function index()
@@ -21,8 +24,11 @@ class Home extends CI_controller
     $data['categories'] = $this->Category_model->get_all_category();
     $data['products'] = $this->Product_model->get_all_product();
     $data['slides'] = $this->Slider_model->get_all_slides();
+    $data['slider_side_images'] = $this->Slider_model->get_slides_side_images();
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+    $data['cart_product_id'] = $this->Cart_Model->get_product_ids_in_cart($user_id);
+    $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $this->load->view('home/index',$data);
@@ -33,6 +39,8 @@ class Home extends CI_controller
   //user login
   public function Login()
   {
+	 
+	if (!$this->session->userdata('logged_in') == TRUE) {
     if($this->input->post()){
       //validating login form
       $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|regex_match[/^[0-9]{10}$/]');
@@ -53,7 +61,9 @@ class Home extends CI_controller
           if(password_verify($this->input->post('password'),$result->password)){
             $userData = array('id'=>$result->id,'email_id'=>$result->email_id,'phone_number'=>$result->phone_number,'role'=>$result->role,'logged_in'=>TRUE);
             $this->session->set_userdata($userData);
-            redirect('home');//redirecting user to home page with user details
+			redirect('home');
+			//redirect($this->agent->referrer());
+			//redirecting user to home page with user details
           }else{
             $this->session->set_flashdata('error','Password entered with phone number is incorrect');
             redirect('home/login');//redirecting user to login page for invalid password
@@ -73,6 +83,11 @@ class Home extends CI_controller
       $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
       $this->load->view('home/login',$data);
     }
+  }else{
+	  $this->session->set_flashdata('error','You have no permissions to access');
+     redirect('home');
+  }
+  
   }
 
   public function profile(){
@@ -189,7 +204,52 @@ class Home extends CI_controller
       $this->load->view('home/changepassword');
     }
   }
+	public  function newletterpost(){
+		$post=$this->input->post();
+		$add=array(
+		'email'=>isset($post['email'])?$post['email']:'',
+		'created_at'=>date('Y-m-d H:i:s'),
+		);
+		$check=$this->Auth_Model->check_email_ornot($post['email']);
+		if(count($check)>0){
+			$this->session->set_flashdata('error',"Your are already subscribed. Please try another email id");
+			redirect($this->agent->referrer());
+		}else{
+			$save=$this->Auth_Model->save_newsletters_emails($add);
+			if(count($save)>0){
+				$this->session->set_flashdata('success',"Successfully subscribed newsletter");
+				redirect($this->agent->referrer());
+			}else{
+				$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+				redirect($this->agent->referrer());
+			}
+		}
+		
+	
+	}
+	/* remove cart item*/
+	public  function remove_cart_item(){
+		 if ($this->session->userdata('logged_in') == TRUE) {
+			 $post=$this->input->post();
+			 $delete=$this->Auth_Model->delete_cart_item($post['cart_id']);
+			 if(count($delete)>0){
+				  $user_id = $this->session->userdata('id');
+				 $qty_cnt=$this->Auth_Model->get_cart_item_qty($user_id);
+				 $data['msg']=1;
+				 $data['qty_count']=$qty_cnt['cnt'];
+				 echo json_encode($data);
+			 }else{
+				 $data['msg']=0;
+				 echo json_encode($data);
+			 }
+			 
+		 }else{
+				$this->session->set_flashdata('error',"Please log in or sign up to continue");
+			  redirect('home/login'); 
+		 }
 
+
+	}
   public function logout()
   {
     $this->session->sess_destroy();

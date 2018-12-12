@@ -27,6 +27,8 @@ class Products extends CI_Controller
     $data['sub_category'] = $this->Category_model->get_sub_category_name_by_id($id);
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+    $data['cart_product_id'] = $this->Cart_Model->get_product_ids_in_cart($user_id);
+    $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $data['pageTitle'] = 'Products';
@@ -42,6 +44,8 @@ class Products extends CI_Controller
     $data['product_related_images'] = $this->Product_model->get_product_related_images($id);
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+    $data['cart_product_id'] = $this->Cart_Model->get_product_ids_in_cart($user_id);
+    $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $data['pageTitle'] = 'Product';
@@ -93,6 +97,8 @@ class Products extends CI_Controller
       echo json_encode($return);
     }
   }
+
+
 }
 
 ?>
