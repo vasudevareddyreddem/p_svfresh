@@ -253,12 +253,20 @@
                               <img class="img-responsive" alt="product" src="<?php echo $rp->product_img; ?>" />
                             </a>
                             <div class="quick-view">
-                              <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $rp->product_id; ?>" data-product_img="<?php echo $rp->product_img; ?>" data-product_name="<?php echo $rp->product_name; ?>" data-net_price="<?php echo $rp->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $rp->discount_price; ?>></a>
+                              <?php if (in_array($rp->product_id,$wishlist_product_id)) { ?>
+                                <a title="Added to your wishlist" class="heart whishlist" href="#" style="background:#57bb14"></a>
+                              <?php } else{ ?>
+                                <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $rp->product_id; ?>" data-product_img="<?php echo $rp->product_img; ?>" data-product_name="<?php echo $rp->product_name; ?>" data-net_price="<?php echo $rp->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $rp->discount_price; ?>></a>
+                              <?php } ?>
                               <!-- <a title="Add to compare" class="compare" href="#"></a> -->
 
                             </div>
                             <div class="add-to-cart">
-                              <a title="Add to Cart" href="#add" class="addtocart" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $rp->product_id; ?>" data-product_img="<?php echo $rp->product_img; ?>" data-product_name="<?php echo $rp->product_name; ?>" data-net_price="<?php echo $rp->net_price; ?>" data-quantity="1">Add to Cart</a>
+                              <?php if (in_array($rp->product_id,$cart_product_id)) { ?>
+                                <a title="Added to Cart" href="#add" class="addtocart">Added to Cart</a>
+                              <?php } else { ?>
+                                <a title="Add to Cart" href="#add" class="addtocart" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $rp->product_id; ?>" data-product_img="<?php echo $rp->product_img; ?>" data-product_name="<?php echo $rp->product_name; ?>" data-net_price="<?php echo $rp->net_price; ?>" data-quantity="1">Add to Cart</a>
+                              <?php } ?>
                             </div>
                           </div>
                           <div class="right-block">
