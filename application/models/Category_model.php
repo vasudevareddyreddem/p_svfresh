@@ -268,6 +268,12 @@ class Category_model extends CI_Model
 		;
 		return $this->db->get()->row();
 	}
+	public function update_subcat_slider($id,$data)
+	{
+		$this->db->where('id',$id);
+		$this->db->update('subcat_slider',$slider);
+		
+	}
 	}
 
 	

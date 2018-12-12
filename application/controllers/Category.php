@@ -752,5 +752,67 @@ $this->load->model('Category_model')	;
 		
 		
 	}
+	public function save_edit_subcat_slider(){
+			if( $this->session->userdata('svadmin_det')){
+			$subcat_id=$this->input->post('sc_name');
+			$slider_id=base64_decode($this->input->post('slider'));
+			$admin=$this->session->userdata('svadmin_det');
+			$svadmin=$admin['admin_id'];
+			$config['upload_path']          = './assets/uploads/sub_category_pics';
+                $config['allowed_types']        = 'gif|jpg|png';
+                
+
+                $this->load->library('upload', $config);
+				$data[]=array(
+					'subcat_id'=>$subcat_id,
+					'updated_by'=>$svadmin,
+					             );
+				if(isset($_FILES['slider_image']['name'])){
+     
+               if($_FILES['slider_image']['name']!=''){
+	          if ( ! $this->upload->do_upload('slider_image',time()))
+                {
+                      
+						
+                          $this->session->set_flashdata('error',' slider image not uploaded'); 
+						 
+					      redirect($_SERVER['HTTP_REFERER']);
+                }
+				else{
+					$upload_data = $this->upload->data(); 
+                    $slider_img =   $upload_data['file_name'];
+					$data['image_path']=$slider_img;
+				}
+          
+}
+ 
+      }
+	   $flag=$this->Category_model->update_subcat_slider($data);
+ 
+ if($flag==1){
+	 
+                          $this->session->set_flashdata('success','updated successfully'); 
+						 
+					      redirect('category/subcat_slider_list');	 
+	 
+	 
+ }
+ else{
+	   $this->session->set_flashdata('success','updated successfully'); 
+					 redirect('category/subcat_slider_list');	 
+					     
+	 
+ }
+			}
+			
+			
+			
+		
+		else{redirect('login');}
+		
+		
+		
+	}
+	
 
 }
