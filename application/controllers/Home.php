@@ -6,6 +6,8 @@ class Home extends CI_controller
   function __construct()
   {
     parent::__construct();
+	$this->load->library('user_agent');
+
     $this->load->library('form_validation');
     $this->load->model('Auth_Model');
     $this->load->model('Category_model');
@@ -193,7 +195,29 @@ class Home extends CI_controller
       $this->load->view('home/changepassword');
     }
   }
-
+	public  function newletterpost(){
+		$post=$this->input->post();
+		$add=array(
+		'email'=>isset($post['email'])?$post['email']:'',
+		'created_at'=>date('Y-m-d H:i:s'),
+		);
+		$check=$this->Auth_Model->check_email_ornot($post['email']);
+		if(count($check)>0){
+			$this->session->set_flashdata('error',"Your are already subscribed. Please try another email id");
+			redirect($this->agent->referrer());
+		}else{
+			$save=$this->Auth_Model->save_newsletters_emails($add);
+			if(count($save)>0){
+				$this->session->set_flashdata('success',"Successfully subscribed newsletter");
+				redirect($this->agent->referrer());
+			}else{
+				$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+				redirect($this->agent->referrer());
+			}
+		}
+		
+	
+	}
   public function logout()
   {
     $this->session->sess_destroy();

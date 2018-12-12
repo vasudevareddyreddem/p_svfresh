@@ -21,7 +21,7 @@ function decreaseValue() {
             <div id="introduce-box" class="row">
                 <div class="col-md-3">
                     <div id="address-box">
-                        <a href="#"><img src="assets/images/logo.png" alt="" /></a>
+                        <a href="#"><img src="<?php echo base_url(); ?>assets/images/logo.png" alt="" /></a>
                         <div id="address-list">
                             <div class="tit-name">Address:</div>
                             <div class="tit-contain">Flat No:123, ABC Apts, Your Street, Hyderabad-84</div>
@@ -68,13 +68,15 @@ function decreaseValue() {
                 </div>
                 <div class="col-md-3">
                     <div id="contact-box">
-                        <div class="introduce-title">Newsletter</div>
-                        <div class="input-group" id="mail-box">
-                          <input type="text" placeholder="Your Email Address"/>
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">OK</button>
-                          </span>
-                        </div><!-- /input-group -->
+						<form action="<?php echo base_url('home/newletterpost'); ?>" method="post">
+							<div class="introduce-title">Newsletter</div>
+							<div class="input-group" id="mail-box">
+							  <input type="email" name="email" id="email" placeholder="Your Email Address" required>
+							  <span class="input-group-btn">
+								<button class="btn btn-default" type="submit">OK</button>
+							  </span>
+							</div><!-- /input-group -->
+						</form>
                         <div class="introduce-title">Let's Socialize</div>
                         <div class="social-link">
                             <a href="#"><i class="fa fa-facebook"></i></a>
