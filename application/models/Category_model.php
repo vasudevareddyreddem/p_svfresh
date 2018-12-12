@@ -246,5 +246,28 @@ class Category_model extends CI_Model
 		$this->db->update('subcat_tab');
 		return $this->db->affected_rows()?1:0;
 	}
-
+	public function update_discount_category($data,$cat_id){
+		$this->db->where('cat_id',$cat_id);
+		$this->db->update('category_tab',$data);
+		return $this->db->affected_rows()?1:0;
 	}
+	public function save_subcat_slider($data){
+		
+		$this->db->insert_batch('subcat_slider',$data);
+		return $this->db->affected_rows()?1:0;
+	}
+	public function subcat_slider_list(){
+		
+	$this->db->select('subcat_tab.*,subcat_slider.*')->from('subcat_slider')->join('subcat_tab','subcat_tab.subcat_id=subcat_slider.subcat_id')->where('subcat_slider.status',1)
+	->order_by('subcat_tab.updated_at,subcat_tab.subcat_id','desc');
+	return $this->db->get()->result();
+	}
+	public function get_slider_image($id){
+		$this->db->select('*')->from('subcat_slider')->join('subcat_tab','subcat_tab.subcat_id=subcat_slider.subcat_id')->join('category_tab','category_tab.cat_id=subcat_tab.cat_id')
+		->where('id',$id)
+		;
+		return $this->db->get()->row();
+	}
+	}
+
+	

@@ -9,14 +9,14 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add Sub-Category</h4>
+                            <h4>Add Discount</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mx-auto">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
                                     <form method="post" id="add_sub_category" action="
-									<?php  echo base_url('category/save_sub_category')?>" enctype="multipart/form-data">
+									<?php  echo base_url('category/save_discount_image')?>" enctype="multipart/form-data">
                                         <div class="form-group">
 										 <div class="form-group">
                                             <label>Category</label>
@@ -29,11 +29,10 @@
                                                 
                                             </select>
                                         </div>
-                                            <label>Sub-Category Name</label>
-                                            <input id="name" type="text" class="form-control" name="name">
+                                           
                                         </div>
                                         <div class="form-group">
-                                            <label>Sub-Category Image</label>
+                                            <label>Discount Image</label>
                                             <input id="image" type="file" class="form-control" name="image">
                                         </div>
 							
