@@ -181,5 +181,19 @@ function decreaseValue() {
       });
       <?php } ?>
     });
+    $('.remove_cart_item').click(function(e){
+      e.preventDefault();
+      var cart_id = $(this).data('cart_id');
+      $.ajax({
+        url:'<?php echo base_url('products/remove_cart_item'); ?>',
+        type:'POST',
+        data:{'cart_id':cart_id},
+        dataType:'JSON',
+        success:function(data){
+          $('.cart_count').html(data.count);
+          $('#cart_template').html(data.cart_template);
+        }
+      });
+    });
   });
 </script>

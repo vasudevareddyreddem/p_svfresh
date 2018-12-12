@@ -215,26 +215,8 @@ class Home extends CI_controller
 				redirect($this->agent->referrer());
 			}
 		}
-		
-	
-	}
-	/* remove cart item*/
-	public  function remove_cart_item(){
-		 if ($this->session->userdata('logged_in') == TRUE) {
-			 $post=$this->input->post();
-			 $delete=$this->Auth_Model->delete_cart_item($post['cart_id']);
-			 if(count($delete)>0){
-				 $data['msg']=1;
-				 echo json_encode($data);
-			 }else{
-				 $data['msg']=0;
-				 echo json_encode($data);
-			 }
-			 
-		 }else{
-				$this->session->set_flashdata('error',"Please log in or sign up to continue");
-			  redirect('home/login'); 
-		 }
+
+
 	}
   public function logout()
   {

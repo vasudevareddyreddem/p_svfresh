@@ -97,6 +97,21 @@ class Products extends CI_Controller
       echo json_encode($return);
     }
   }
+
+  public function remove_cart_item()
+  {
+    $cart_id = $this->input->post('cart_id');
+    if($this->Cart_Model->delete($cart_id)){
+      $user_id = $this->session->userdata('id');
+      $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+      $return['count'] = count($data['cart']);
+      $return['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+      echo json_encode($return);
+    }else{
+
+    }
+  }
+
 }
 
 ?>
