@@ -21,7 +21,7 @@ function decreaseValue() {
             <div id="introduce-box" class="row">
                 <div class="col-md-3">
                     <div id="address-box">
-                        <a href="#"><img src="assets/images/logo.png" alt="" /></a>
+                        <a href="#"><img src="<?php echo base_url(); ?>assets/images/logo.png" alt="" /></a>
                         <div id="address-list">
                             <div class="tit-name">Address:</div>
                             <div class="tit-contain">Flat No:123, ABC Apts, Your Street, Hyderabad-84</div>
