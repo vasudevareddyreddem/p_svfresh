@@ -77,6 +77,13 @@ class Auth_Model extends CI_Model
 	 $this->db->where('id',$id); 
 	 return $this->db->delete('cart_tab');
   }
+  
+  public function get_cart_item_qty($user_id){
+	  $this->db->select('count(cart_tab.id) as cnt')->from('cart_tab');
+	  $this->db->where('user_id',$user_id);
+	  return $this->db->get()->row_array();
+	  
+  }
 
 }
 

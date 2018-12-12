@@ -233,7 +233,10 @@ class Home extends CI_controller
 			 $post=$this->input->post();
 			 $delete=$this->Auth_Model->delete_cart_item($post['cart_id']);
 			 if(count($delete)>0){
+				  $user_id = $this->session->userdata('id');
+				 $qty_cnt=$this->Auth_Model->get_cart_item_qty($user_id);
 				 $data['msg']=1;
+				 $data['qty_count']=$qty_cnt['cnt'];
 				 echo json_encode($data);
 			 }else{
 				 $data['msg']=0;

@@ -33,6 +33,12 @@ function removecart_item(c_id){
 					type: 'POST',
 					success: function (data) {
 					if(data.msg==1){
+						$('#cart_count').empty();
+						$('#cart_count1').empty();
+						$('#cart_count2').empty();
+						$('#cart_count').append(data.qty_count);
+						$('#cart_count1').append(data.qty_count);
+						$('#cart_count2').append(data.qty_count);
 						$('#sucessmsg').html('<div class="alert_msg1 animated slideInUp bg-succ"> Item successfully removed to cart <i class="fa fa-check text-success ico_bac" aria-hidden="true"></i> </div>');
 
 						jQuery('#item_ids'+c_id).hide();
