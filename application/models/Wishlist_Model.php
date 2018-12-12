@@ -37,6 +37,10 @@ class Wishlist_Model extends CI_Model
     }
     return $return;
   }
+  public  function remove_wishlist_item($id){
+	 $this->db->where('id',$id); 
+	 return $this->db->delete('wishlist_tab');
+  }
 }
 
 ?>
