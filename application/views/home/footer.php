@@ -142,6 +142,7 @@ function decreaseValue() {
           $('#cart_template').html(data.cart_template);
           obj.attr("disabled",true);
           obj.html("Added to cart");
+          obj.off('click');
         }
       });
       <?php } ?>
@@ -172,6 +173,7 @@ function decreaseValue() {
             $('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">'+data.success+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
             obj.css('background','#57bb14');
             obj.attr('title','Added to your wishlist');
+            obj.off('click');
           }else if(data.error){
             $('#message').html('<div class="alert_msg1 animated slideInUp bg-del">'+data.error+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
           }

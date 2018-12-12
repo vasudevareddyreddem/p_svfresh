@@ -120,10 +120,18 @@
                   </div>
                   <div class="form-action">
                     <div class="button-group">
-                      <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>
+                      <?php if (in_array($product->product_id,$cart_product_id)){ ?>
+                        <button class="btn-add-cart" type="button" id="addtocart" disabled>Added to cart</button>
+                      <?php }else{ ?>
+                        <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>
+                      <?php } ?>
                     </div>
                     <div class="button-group">
-                      <a class="wishlist whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $product->product_id; ?>" data-product_img="<?php echo $product->product_img; ?>" data-product_name="<?php echo $product->product_name; ?>" data-net_price="<?php echo $product->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $product->discount_price; ?>><i class="fa fa-heart-o"></i> Wishlist</a>
+                      <?php if (in_array($product->product_id,$wishlist_product_id)){ ?>
+                        <a class="wishlist whishlist" href="#" title="Added to your wishlist"><i class="fa fa-heart-o" style="background:#57bb14"></i> Wishlist</a>
+                      <?php }else{ ?>
+                        <a class="wishlist whishlist" href="#" title="Add to my wishlist" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $product->product_id; ?>" data-product_img="<?php echo $product->product_img; ?>" data-product_name="<?php echo $product->product_name; ?>" data-net_price="<?php echo $product->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $product->discount_price; ?>><i class="fa fa-heart-o"></i> Wishlist</a>
+                      <?php } ?>
                     </div>
                   </div>
 
