@@ -13,7 +13,7 @@
       <div class="panel panel-default ">
 
         <div class="panel-heading bg-white">
-          <span class="btn btn-success border-radius-none"><strong>OD113799154347687000</strong></span>
+          <span class="btn btn-success border-radius-none"><strong><?php echo $o->order_number; ?></strong></span>
           <span class="btn btn-warning border-radius-none pull-right"> <strong> <i class="fa fa-truck" style="font-size:20px;" aria-hidden="true"></i> Track</strong></span>
 
         </div>

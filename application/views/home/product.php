@@ -37,9 +37,9 @@
             <!-- left silide -->
             <div class="col-left-slide left-module">
               <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
-                <li><a href="#"><img src="assets/data/fruits-cat-img.jpg" alt="slide-left"></a></li>
-                <li><a href="#"><img src="assets/data/grocery-cat-ban.jpg" alt="slide-left"></a></li>
-                <li><a href="#"><img src="assets/data/milkcataban.jpg" alt="slide-left"></a></li>
+                <li><a href="#"><img src="<?php echo base_url('assets/data/fruits-cat-img.jpg'); ?>" alt="slide-left"></a></li>
+                <li><a href="#"><img src="<?php echo base_url('assets/data/grocery-cat-ban.jpg'); ?>" alt="slide-left"></a></li>
+                <li><a href="#"><img src="<?php echo base_url('assets/data/milkcataban.jpg'); ?>" alt="slide-left"></a></li>
               </ul>
             </div>
             <!--./left silde-->

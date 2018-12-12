@@ -75,10 +75,34 @@ class Paymentstype extends CI_Controller
   }
 
   public  function success(){
-
-    $post=$this->input->post();
-    echo '<pre>';print_r($post);exit;
-
+    // $post=$this->input->post();
+    // echo '<pre>';print_r($post);exit;
+    $user_id = $this->session->userdata('id');
+    $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+    $billing_id = $this->session->userdata('billing_id');
+    $payment_type=$this->input->post('payment');
+    $razorpay_payment_id=$this->input->post('razorpay_payment_id');
+    $razorpay_order_id=$this->input->post('razorpay_order_id');
+    $razorpay_signature=$this->input->post('razorpay_signature');
+    // $c->billing_id = $billing_id;
+    // $c->payment_type = $payment;
+    // $c->razorpay_payment_id = $razorpay_payment_id;
+    // $c->razorpay_order_id = $razorpay_order_id;
+    // $c->razorpay_signature = $razorpay_signature;
+    $post_data = array('user_id' => $user_id,'billing_id' => $billing_id,'payment_type' => $payment_type,'razorpay_payment_id' => $razorpay_payment_id,'razorpay_order_id' => $razorpay_order_id,'razorpay_signature'=>$razorpay_signature);
+      $this->Order_Model->insert_order($post_data);
+      $order_id = $this->db->insert_id();
+      foreach ($cart as $c) {
+        unset($c->id);
+        unset($c->created_date);
+        $str = date('Ymd').$order_id;
+        $c->order_number =  'SV'.str_pad($str,10,'0',STR_PAD_LEFT);
+        $c->order_id = $order_id;
+        $this->Order_Model->insert_order_items($c);
+        $this->Order_Model->delete_cart_after_order($c->user_id);
+      }
+      $this->session->unset_userdata('billing_id');
+      redirect('/order');
   }
 
 }
