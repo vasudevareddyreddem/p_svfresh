@@ -21,6 +21,7 @@ class Home extends CI_controller
     $data['categories'] = $this->Category_model->get_all_category();
     $data['products'] = $this->Product_model->get_all_product();
     $data['slides'] = $this->Slider_model->get_all_slides();
+    $data['slider_side_images'] = $this->Slider_model->get_slides_side_images();
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
     $data['count'] = count($data['cart']);

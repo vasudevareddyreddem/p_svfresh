@@ -31,16 +31,16 @@ class Slider_model extends CI_Model
 	// for getting slides in home page, code written by rana
 	public function get_all_slides()
 	{
-		//return $this->db->get_where('slider_pic_tab',array('status','1'))->result();
-		$this->db->select('sp.pic_name');
-		$this->db->from('slider_tab s');
-		$this->db->join('slider_pic_tab sp','s.slider_id = sp.slider_id','left');
-		return $this->db->where('s.status','1')->get()->result();
-		//return $this->db->last_query();
+		return $this->db->query('SELECT * FROM slider_pic_tab WHERE slider_id IN (SELECT slider_id FROM slider_tab WHERE status = "1" )')->result();
 		//SELECT * FROM slider_tab AS s LEFT JOIN slider_pic_tab AS sp ON s.slider_id = sp.slider_id WHERE s.status = '1'
 	}
 
-	
+	public function get_slides_side_images()
+	{
+		$this->db->select('slider_id,l_pic,r_pic');
+		$this->db->from('slider_tab');
+		return $this->db->where('status','1')->get()->row();
+	}
 
 	public function get_sliders(){
 		$this->db->select('*');
@@ -90,26 +90,26 @@ class Slider_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('slider_pic_tab');
 		$this->db->where('slider_id',$sid);
-		
+
 		$this->db->where('status',1);
-		
+
 		return $this->db->get()->result();
 
 	}
 	public function slider_edit_unique_check($slider_id,$s_name){
 		$this->db->select('*');
 	    $this->db->from('slider_tab');
-		
+
 		$this->db->where('slider_id !=',$slider_id);
-		
+
 		$this->db->group_start();
 	   $this->db->where('status',1);
 	   $this->db->or_where('status',2);
 	   $this->db->group_end();
-	   
+
 
 	   $result= $this->db->get()->result_array();
-	   
+
 
 			$slider_names = array_column($result, 'slider_name');
 			//echo $catname;exit;
@@ -123,25 +123,23 @@ class Slider_model extends CI_Model
 			}
 	}
 	public function save_edit_slider($data,$slider_id){
-		
+
 		$this->db->where('slider_id',$slider_id);
 		$this->db->update('slider_tab',$data);
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 	public function save_edit_slider_images($pdata,$id){
 		$this->db->where('pic_id',$id);
 		$this->db->update('slider_pic_tab',$pdata);
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 	public function save_delete_slider_images($value){
 		$this->db->where('pic_id',$value);
 		$this->db->set('status',0);
 		$this->db->update('slider_pic_tab');
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 }
-
-

@@ -7,7 +7,9 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-3 ">
-          <img alt="Funky roots" src="assets/data/adsv2.jpg" />
+          <?php if($slider_side_images->l_pic){ ?>
+          <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->l_pic); ?>" />
+          <?php } ?>
         </div>
         <div class="col-sm-6 header-top-right">
           <?php if (count($slides) > 0) { ?>
@@ -23,7 +25,9 @@
           <?php } ?>
         </div>
         <div class="col-sm-3 ">
-          <img alt="Funky roots" src="assets/data/ads1.jpg" />
+          <?php if($slider_side_images->l_pic){ ?>
+          <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->r_pic); ?>" />
+          <?php } ?>
         </div>
       </div>
     </div>
