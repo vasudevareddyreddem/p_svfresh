@@ -10,25 +10,25 @@
           <div class="">
             <div class="row">
 
-                <form action="<?php echo base_url('billing/old_delivery_address'); ?>" method="POST">
+              <form action="<?php echo base_url('billing/old_delivery_address'); ?>" method="POST">
                 <?php $i=1; foreach($billing as $b){ ?>
-                <div class="col-md-3">
-                <div class="box-shadow-site modal-body">
-                  <input type="radio" name="billing_id" value="<?php echo $b->id; ?>" <?php echo ($i == 1) ? 'checked':''; ?>>
-                  <p><?php echo $b->first_name.' '.$b->last_name; ?>, <?php echo $b->company_name; ?>, <?php echo $b->email_address; ?>,
-                    <?php echo $b->address; ?>,<?php echo $b->city; ?>,<?php echo $b->state; ?>,
-                    <?php echo $b->country; ?>,<?php echo $b->telephone; ?> - <?php echo $b->fax; ?>.</p>
-                  </div>
-                  </div>
-                  <?php $i++; } ?>
-                  <div class="clearfix">
-                  </div>
-                  <br>
-                  <button type="submit" class="btn btn-success">Proceed For Payment</button>
-                </form>
+                  <div class="col-md-3">
+                    <div class="box-shadow-site modal-body">
+                      <input type="radio" name="billing_id" value="<?php echo $b->id; ?>" <?php echo ($i == 1) ? 'checked':''; ?>>
+                      <p><?php echo $b->first_name.' '.$b->last_name; ?>, <?php echo $b->company_name; ?>, <?php echo $b->email_address; ?>,
+                        <?php echo $b->address; ?>,<?php echo $b->city; ?>,<?php echo $b->state; ?>,
+                        <?php echo $b->country; ?>,<?php echo $b->telephone; ?> - <?php echo $b->fax; ?>.</p>
+                      </div>
+                    </div>
+                    <?php $i++; } ?>
+                    <div class="clearfix">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success">Proceed For Payment</button>
+                  </form>
 
+                </div>
               </div>
-            </div>
             <?php } ?>
             <br>
             <form method="POST" action="<?php echo base_url('/billing'); ?>">
