@@ -253,7 +253,7 @@ class Category_model extends CI_Model
 	}
 	public function save_subcat_slider($data){
 		
-		$this->db->insert_batch('subcat_slider',$data);
+		$this->db->insert('subcat_slider',$data);
 		return $this->db->affected_rows()?1:0;
 	}
 	public function subcat_slider_list(){
@@ -271,8 +271,15 @@ class Category_model extends CI_Model
 	public function update_subcat_slider($id,$data)
 	{
 		$this->db->where('id',$id);
-		$this->db->update('subcat_slider',$slider);
+		$this->db->update('subcat_slider',$data);
+		return $this->db->affected_rows()?1:0;
 		
+	}
+	public function delete_slider_image($id){
+		$this->db->where('id',$id);
+		$this->db->set('status',0);
+		$this->db->update('subcat_slider');
+		return $this->db->affected_rows()?1:0;
 	}
 	}
 

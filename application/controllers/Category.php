@@ -646,24 +646,16 @@ $this->load->model('Category_model')	;
 
                 $this->load->library('upload', $config);
 				if(isset($_FILES['slider_image']['name'])){
-      $countfiles = count($_FILES['slider_image']['name']);
+    
 
 	 
 
-      // Looping all files
-      for($i=0;$i<$countfiles;$i++){
+     
  
         if($_FILES['slider_image']['name'][$i]!=''){
  
-          // Define new $_FILES array - $_FILES['file']
-           $_FILES['image']['name']     = $_FILES['slider_image']['name'][$i];
-                $_FILES['image']['type']     = $_FILES['slider_image']['type'][$i];
-                $_FILES['image']['tmp_name'] = $_FILES['slider_image']['tmp_name'][$i];
-                $_FILES['image']['error']     = $_FILES['slider_image']['error'][$i];
-                $_FILES['image']['size']     = $_FILES['slider_image']['size'][$i];
-                
-		 //echo   $_FILES['slide']['name'];exit;
-		    if ( ! $this->upload->do_upload('image',time()))
+          
+		    if ( ! $this->upload->do_upload('slider_image',time()))
                 {
                       
 						
@@ -674,7 +666,7 @@ $this->load->model('Category_model')	;
 				else{
 					$upload_data = $this->upload->data(); 
                     $slider_img =   $upload_data['file_name'];
-					$data[]=array('image_path'=>$slider_img,
+					$data=array('image_path'=>$slider_img,
 					'subcat_id'=>$subcat_id,
 					'created_by'=>$svadmin);
 				}
@@ -685,13 +677,13 @@ $this->load->model('Category_model')	;
          
         }
  
-      }
+   
  $flag=$this->Category_model->save_subcat_slider($data);
  if($flag==1){
 	 
                           $this->session->set_flashdata('success','Subcategory slider image  uploaded successfully'); 
 						 
-					      redirect($_SERVER['HTTP_REFERER']);
+					      redirect('category/subcat_slider_list');
 	 
 	 
  }
@@ -755,7 +747,7 @@ $this->load->model('Category_model')	;
 	public function save_edit_subcat_slider(){
 			if( $this->session->userdata('svadmin_det')){
 			$subcat_id=$this->input->post('sc_name');
-			$slider_id=base64_decode($this->input->post('slider'));
+			$slider_id=base64_decode($this->input->post('slider_id'));
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
 			$config['upload_path']          = './assets/uploads/sub_category_pics';
@@ -763,13 +755,15 @@ $this->load->model('Category_model')	;
                 
 
                 $this->load->library('upload', $config);
-				$data[]=array(
+				$data=array(
 					'subcat_id'=>$subcat_id,
 					'updated_by'=>$svadmin,
 					             );
 				if(isset($_FILES['slider_image']['name'])){
+					
      
                if($_FILES['slider_image']['name']!=''){
+				  
 	          if ( ! $this->upload->do_upload('slider_image',time()))
                 {
                       
@@ -779,6 +773,7 @@ $this->load->model('Category_model')	;
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
 				else{
+					 
 					$upload_data = $this->upload->data(); 
                     $slider_img =   $upload_data['file_name'];
 					$data['image_path']=$slider_img;
@@ -786,8 +781,9 @@ $this->load->model('Category_model')	;
           
 }
  
-      }
-	   $flag=$this->Category_model->update_subcat_slider($data);
+      } 
+	 
+	   $flag=$this->Category_model->update_subcat_slider($slider_id,$data);
  
  if($flag==1){
 	 
@@ -798,7 +794,7 @@ $this->load->model('Category_model')	;
 	 
  }
  else{
-	   $this->session->set_flashdata('success','updated successfully'); 
+	   $this->session->set_flashdata('success','updated fffsuccessfully'); 
 					 redirect('category/subcat_slider_list');	 
 					     
 	 
@@ -811,6 +807,26 @@ $this->load->model('Category_model')	;
 		else{redirect('login');}
 		
 		
+		
+	}
+	public function delete_subcat_slider(){
+		if( $this->session->userdata('svadmin_det')){
+			$id=base64_decode($this->uri->segment(3));
+		
+			$flag=$this->Category_model->delete_slider_image($id);
+			if($flag==1){
+				$this->session->set_flashdata('success','Slider Image Delete successfully '); 
+					 redirect($_SERVER['HTTP_REFERER']);
+				
+			}
+			$this->session->set_flashdata('error','Slider Image not deleted '); 
+					 redirect($_SERVER['HTTP_REFERER']);
+			
+		
+			
+			
+		}
+		else{redirect('login');}
 		
 	}
 	
