@@ -61,7 +61,7 @@ function decreaseValue() {
                                 <li><a href="#">Testimonials</a></li>
                                 <li><a href="#">Affiliate Program</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="<?php echo base_url('home/contactus'); ?>">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>

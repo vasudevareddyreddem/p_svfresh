@@ -14,7 +14,7 @@
 
               <div class="panel-heading bg-white">
                 <span class="btn btn-success border-radius-none"><strong><?php echo $o->order_number; ?></strong></span>
-					<a href="<?php echo  base_url('order/details/'.base64_encode($o->order_items_id)); ?>"><span class="btn btn-warning border-radius-none pull-right"> <strong> <i class="fa fa-truck" style="font-size:20px;" aria-hidden="true"></i> Track</strong></span></a>
+                <a href="<?php echo  base_url('order/details/'.base64_encode($o->order_items_id)); ?>"><span class="btn btn-warning border-radius-none pull-right"> <strong> <i class="fa fa-truck" style="font-size:20px;" aria-hidden="true"></i> Track</strong></span></a>
 
               </div>
               <div class="panel-body">
