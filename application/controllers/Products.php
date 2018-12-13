@@ -51,7 +51,10 @@ class Products extends CI_Controller
     $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+	$data['slider_images'] = $this->Product_model->get_all_slider_images_by_ategory();
+
     $data['pageTitle'] = 'Product';
+	//echo "<pre>";print_r($data);exit;
     $this->load->view('home/product',$data);
   }
 
