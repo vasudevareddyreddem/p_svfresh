@@ -307,15 +307,12 @@ public function get_product_related_images($product_id='')
 		$this->db->select('subcat_slider.image_path')->from('subcat_slider');
 		$this->db->where('subcat_slider.subcat_id',$id);
 		$this->db->where('subcat_slider.status',1);
-<<<<<<< HEAD
 		return $this->db->get()->result_array();
-=======
 		return $this->db->get()->result_array();	
 	}
 	public  function get_all_slider_images_by_ategory(){
 		$this->db->select('category_tab.cat_dis_img,category_tab.cat_id')->from('category_tab');
 		$this->db->where('category_tab.status',1);
 		return $this->db->get()->result_array();	
->>>>>>> 7816e0045a3a773aab37cde9d9829def04ea9c62
 	}
 }

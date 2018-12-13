@@ -281,10 +281,11 @@ class Category_model extends CI_Model
 		$this->db->update('subcat_slider');
 		return $this->db->affected_rows()?1:0;
 	}
-	}
-
 	public function get_category_name_by_subcat_id($id='')
 	{
 		return $this->db->query("SELECT cat_name FROM category_tab WHERE status = '1' AND cat_id IN (SELECT cat_id FROM subcat_tab WHERE subcat_id = $id)")->row();
 	}
 	}
+
+	
+	
