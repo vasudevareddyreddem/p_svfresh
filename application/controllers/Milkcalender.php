@@ -33,11 +33,12 @@ class Milkcalender extends CI_Controller
   {
     $month = $this->input->post('month');
     $days = cal_days_in_month(CAL_GREGORIAN,$month,date('Y'));
-    $days_array = array();
-    for($d = 0;$d < $days; $d++){
+    //$days_array = array();
+    for($d = 1;$d <= $days; $d++){
       $days_array[] = $d;
     }
-    $data['days'] = array_chunk($days_array,6);
+    $data['days'] = array_chunk($days_array,5);
+	//echo '<pre>';print_r($data['days']);exit;
     $return['calender_template'] = $this->load->view('home/calender_template',$data,TRUE);
     echo json_encode($return);
   }

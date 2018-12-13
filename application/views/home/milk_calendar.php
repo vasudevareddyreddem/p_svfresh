@@ -53,8 +53,8 @@ td { width: 20%; }
 
 									</tr>
 								  </thead>
-								  <tbody>
-										<tr id="calender_template"></tr>
+								  <tbody id="calender_template">
+										
 									<!-- <tr>
 									  <th class="h4">6</th>
 									  <td >
@@ -581,6 +581,7 @@ $(".input-number").keydown(function (e) {
 					data:{'month':month},
 					dataType:'JSON',
 					success:function(data){
+						$('#calender_template').empty();
 						$('#calender_template').html(data.calender_template);
 					}
 				});
