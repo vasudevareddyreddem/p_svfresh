@@ -47,6 +47,18 @@ class Order_Model extends CI_Model
     $this->db->where('order_items_id',$order_item_id);
 	 return $this->db->get()->row_array();
   }
+  
+	public  function save_item_review($data){
+	  $this->db->insert('rating_list',$data);
+	  return $this->db->insert_id();
+	}
+	
+	public  function check_rating_exits($user_id,$o_i_id){
+		$this->db->select('*')->from('rating_list');
+		$this->db->where('order_item_id',$o_i_id);
+		$this->db->where('user_id',$user_id);
+		return $this->db->get()->row_array();
+	}
 
 }
 

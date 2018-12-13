@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php //echo '<pre>';print_r($order_details);exit; ?>
 <html>
 <head>
   <?php include("header.php"); ?>
@@ -11,17 +11,16 @@
                               <div class="panel panel-default ">
 
               <div class="panel-heading bg-white">
-                <span class="btn btn-success border-radius-none"><strong>SV0201812128</strong></span>
+                <span class="btn btn-success border-radius-none"><strong><?php echo isset($order_details['order_number'])?$order_details['order_number']:''; ?></strong></span>
 
               </div>
               <div class="panel-body">
 			  <div class="col-md-4">
-				<img class="img-responsive" src="http://localhost/p_svfresh/assets/uploads/product_pics/fruits-img3.png" alt="Product">
+				<img class="img-responsive" src="<?php echo base_url('assets/uploads/product_pics/'.$order_details['product_img']); ?>" alt="<?php echo isset($order_details['product_img'])?$order_details['product_img']:''; ?>">
 			  </div>
 			  <div class="col-md-8">
-				<h3>gauva</h3>
-				<h4 class="py-2">₹ 44</h4>
-				<h4 class="py-2">Delivered on Sat, Nov 3rd 2018</h4>
+				<h3><?php echo isset($order_details['product_name'])?$order_details['product_name']:''; ?></h3>
+				<h4 class="py-2">₹ <?php echo isset($order_details['net_price'])?$order_details['net_price']:''; ?></h4>
 
 
 
@@ -33,6 +32,7 @@
 						<div style="color:#fd4f00" id="stars" class="starrr"></div>
 						You gave a rating of <span id="count">0</span> star(s)
 					</div>
+					<input  type="hidden" id="order_item_id" value="<?php echo isset($order_details['order_items_id'])?$order_details['order_items_id']:''; ?>">
               </div>
 
             </div>
@@ -151,6 +151,27 @@ $( document ).ready(function() {
       
   $('#stars').on('starrr:change', function(e, value){
     $('#count').html(value);
+		$.ajax({
+					url:'<?php echo base_url('order/update_review_ratings'); ?>',
+					type:'POST',
+					data:{
+						'rate':value,
+						'order_item_id':$('#order_item_id').val(),
+						
+						},
+					dataType:'JSON',
+					success:function(data){
+						if(data.msg==1){
+							$('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">'+data.message+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+						}else if(data.msg==2){
+							$('#message').html('<div class="alert_msg1 animated slideInUp bg-warn">'+data.message+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+
+						}else if(data.msg==0){
+							$('#message').html('<div class="alert_msg1 animated slideInUp bg-warn">'+data.message+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+						}
+					}
+				});
+    
   });
   
   $('#stars-existing').on('starrr:change', function(e, value){
