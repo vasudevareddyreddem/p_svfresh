@@ -299,4 +299,14 @@ public function get_product_related_images($product_id='')
 	return $this->db->where('pi.status','1')->get()->result();
 	//SELECT ip.image_name FROM product_images_tab AS ip LEFT JOIN product_tab AS p ON ip.product_id = p.product_id WHERE p.product_id = '39' AND ip.status = '1'
 }
+
+
+/* subcate slider */
+
+	public  function get_slider_images_by_sub_category($id){
+		$this->db->select('subcat_slider.image_path')->from('subcat_slider');
+		$this->db->where('subcat_slider.subcat_id',$id);
+		$this->db->where('subcat_slider.status',1);
+		return $this->db->get()->result_array();	
+	}
 }
