@@ -185,53 +185,53 @@
                     </table>
                   </div>
                   <div id="reviews" class="tab-panel">
+				  <?php if(isset($reviewandrating_lists) && count($reviewandrating_lists)>0){ ?>
                     <div class="product-comments-block-tab">
+					<?php foreach($reviewandrating_lists as $list){ ?>
                       <div class="comment row">
                         <div class="col-sm-3 author">
                           <div class="grade">
                             <span>Grade</span>
                             <span class="reviewRating">
+							<?php if($list['rate']==1){ ?>
+							<i class="fa fa-star"></i>
+							<?php }else if($list['rate']==2){ ?>
+							  <i class="fa fa-star"></i>
                               <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
+							<?php }else if($list['rate']==3){ ?>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							<?php }else if($list['rate']==4){ ?>
+								<i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+							<?php }else if($list['rate']==5){ ?>
+								<i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+							<?php } ?>
                             </span>
                           </div>
                           <div class="info-author">
-                            <span><strong>Jame</strong></span>
-                            <em>04/08/2015</em>
+                            <span><strong><?php echo isset($list['user_name'])?$list['user_name']:''; ?></strong></span>
+                            <em><?php echo isset($list['created_at'])?$list['created_at']:''; ?></em>
                           </div>
                         </div>
                         <div class="col-sm-9 commnet-dettail">
-                          Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar
+                          <?php echo isset($list['message'])?$list['message']:''; ?>
                         </div>
                       </div>
-                      <div class="comment row">
-                        <div class="col-sm-3 author">
-                          <div class="grade">
-                            <span>Grade</span>
-                            <span class="reviewRating">
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                            </span>
-                          </div>
-                          <div class="info-author">
-                            <span><strong>Author</strong></span>
-                            <em>04/08/2015</em>
-                          </div>
-                        </div>
-                        <div class="col-sm-9 commnet-dettail">
-                          Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar
-                        </div>
-                      </div>
-                      <p>
-                        <a class="btn-comment" href="#">Write your review !</a>
-                      </p>
+					  
+					  <?php } ?>
+                     
                     </div>
+					<?php }else{ ?>
+						No data available 
+					<?php } ?>
 
                   </div>
 

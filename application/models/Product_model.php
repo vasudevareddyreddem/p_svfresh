@@ -318,4 +318,13 @@ public function get_category_name_by_product_id($id='')
 		$this->db->where('category_tab.status',1);
 		return $this->db->get()->result_array();	
 	}
+	
+	public  function get_product_reviewandrating_list($p_id){
+		$this->db->select('rating_list.*,users_tab.user_name')->from('rating_list');
+		$this->db->join('order_items_tab','order_items_tab.order_items_id = rating_list.order_item_id','left');
+		$this->db->join('users_tab','users_tab.id = rating_list.user_id','left');
+		$this->db->join('product_tab','product_tab.product_id = order_items_tab.product_id','left');
+		$this->db->where('order_items_tab.product_id',$p_id);
+		return $this->db->get()->result_array();
+	}
 }
