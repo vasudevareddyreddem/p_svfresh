@@ -98,13 +98,17 @@
                     <a href="<?php echo base_url('category/'.$c->cat_id); ?>"><?php if(!empty($c->cat_rh_img) && file_exists('assets/uploads/category_pics/'.$c->cat_rh_img)){ ?><img alt="ads2" class="img-responsive" src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_rh_img);?>" /><?php } ?></a>
                   </div>
                 </div>
+				
                 <div class="product-featured clearfix">
+				<?php if(!empty($c->cat_dis_img) && file_exists('assets/uploads/category_pics/'.$c->cat_dis_img)){ ?>
                   <div class="banner-featured">
                     <div class="featured-text"><span>featured</span></div>
                     <div class="banner-img">
-                      <a href="#"><img  style="height:240px;"class="img-responsive"  src="assets/data/milkcataban.jpg" /></a>
+                      <a href="#"><img alt="<?php echo $c->cat_dis_img; ?>" style="height:240px;" class="img-responsive"  src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_dis_img); ?>" /></a>
+                     
                     </div>
                   </div>
+				  <?php } ?>
                   <div class="product-featured-content">
                     <div class="product-featured-list">
                       <div class="tab-container autoheight">

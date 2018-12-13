@@ -34,7 +34,7 @@ class Products extends CI_Controller
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $data['pageTitle'] = 'Products';
 	
-	//echo "<pre>";print_r($data);exit;
+	//echo "<pre>";print_r( $data['slider_images']);exit;
     $this->load->view('home/products',$data);
   }
 
