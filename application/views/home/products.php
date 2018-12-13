@@ -15,16 +15,18 @@
       <div class="row">
         <div class=" col-xs-12 col-sm-12" id="center_column">
           <!-- category-slider -->
+		  <?php if(isset($slider_images) && count($slider_images)>0){ ?>
           <div class="category-slider">
             <ul class="owl-carousel owl-style2" data-dots="false" data-loop="true" data-nav = "true" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1">
-              <li>
-                <img src="<?php echo base_url('assets/data/category-slide.jpg'); ?>" alt="category-slider">
+              <?php foreach($slider_images as $imgs){ ?>
+			  <li>
+                <img src="<?php echo base_url('assets/uploads/sub_category_pics/'.$imgs['image_path']); ?>" alt="<?php echo $imgs['image_path']; ?>">
               </li>
-              <li>
-                <img src="<?php echo base_url('assets/data/slide-cart2.jpg');?>" alt="category-slider">
-              </li>
+			  <?php } ?>
+              
             </ul>
           </div>
+		  <?php } ?>
           <div id="view-product-list" class="view-product-list">
             <h2 class="page-heading">
               <span class="page-heading-title"><?php echo ucwords($sub_category->subcat_name); ?></span>

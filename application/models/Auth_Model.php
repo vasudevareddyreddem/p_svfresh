@@ -79,6 +79,11 @@ class Auth_Model extends CI_Model
 	  return $this->db->get()->row_array();
 	  
   }
+  public  function get_all_products_lists(){
+	  $this->db->select('product_tab.product_name,product_tab.product_id')->from('product_tab');
+	  $this->db->where('status',1);
+	  return $this->db->get()->result_array();
+  }
 
 }
 
