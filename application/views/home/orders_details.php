@@ -28,11 +28,36 @@
                 
               </div>
               <div class="panel-footer">
+				<form>
+                  <div class="row ">
+				   <h2 class="py-2 h3 col-md-8 col-md-offset-2" style="text-algin:left">Rating</h2>
+				  </div>
+                  <div class="row lead text-center">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group ">
+								<input type="text" name="name" class="form-control" placeholder="Your Name " value="" required />
+						</div>
+						<div class="form-group ">
+								<input type="mail" name="name" class="form-control" placeholder="Your Email " value="" required />
+						</div>
+						<div class="form-group ">
+								<textarea name="txtMsg" class="form-control" placeholder="Your Message "  required></textarea>
+						</div>
+                    </div>
+				  </div>
                   <div class="row lead text-center">
 						<div style="color:#fd4f00" id="stars" class="starrr"></div>
 						You gave a rating of <span id="count">0</span> star(s)
 					</div>
 					<input  type="hidden" id="order_item_id" value="<?php echo isset($order_details['order_items_id'])?$order_details['order_items_id']:''; ?>">
+					<div class="row">
+					<div class="col-md-2 col-md-offset-5">
+						<div class="form-group ">
+								<button class="btn btn-success">Submit</button>
+						</div>
+					</div>
+					</div>
+					</form>
               </div>
 
             </div>
