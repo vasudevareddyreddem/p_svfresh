@@ -290,6 +290,12 @@ if(count($cat_list)>0)
 public function orders_post(){
 	$user_id=$this->post('user_id');
 	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
 	$orders=$this->Mobile_model->get_user_orders($user_id);
 	if(count($orders)>0)
  { 
@@ -310,6 +316,12 @@ public function orders_post(){
 public function wishlist_post(){
 	$user_id=$this->post('user_id');
 	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
 	$wishlist=$this->Mobile_model->get_user_wishlist($user_id);
 	if(count($wishlist)>0)
  { 
@@ -330,6 +342,12 @@ public function wishlist_post(){
 public function profile_post(){
 	$user_id=$this->post('user_id');
 	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
 	$profile=$this->Mobile_model->get_user_profile($user_id);
 	if(count($profile)>0)
  { 
@@ -350,6 +368,12 @@ public function profile_post(){
 public function cart_post(){
 	$user_id=$this->post('user_id');
 	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
 	$cart=$this->Mobile_model->get_user_cart($user_id);
 	if(count($cart)>0)
  { 
@@ -366,6 +390,35 @@ public function cart_post(){
 	
 	
 }
+// delete the cart product
+public function delete_cart_product_post(){
+	$user_id=$this->post('user_id');
+	$cart_id=$this->post('cart_id');
+	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$cart=$this->Mobile_model->delete_cart_product($cart_id);
+	if($cart==1)
+ { 
+ $message['cart_status']=1;
+	 $message['message']='product deleted from cart';
+	
+ }
+ else{
+	  $message['cart_status']=0;
+	   $message['message']='product not deleted from cart';
+ }
+ 
+   $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+}
+
 
 
 }

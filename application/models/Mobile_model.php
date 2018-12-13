@@ -128,7 +128,12 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 		
-		
+		public function delete_cart_product($id){
+			$this->db->where('id',$id);
+			$this->db->delete('cart_tab');
+			return $this->db->affected_rows()?1:0;
+			
+		}
 	
 
 }
