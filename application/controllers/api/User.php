@@ -234,7 +234,43 @@ $message=array();
  $prod_imgs=$this->Mobile_model->single_product_images($pid);
  $prod_fet=$this->Mobile_model->single_product_features($pid);
  $prod_rel=$this->Mobile_model->single_product_rel_products($pid);
- 
+ if(count($prod_det)>0)
+ { 
+	
+	 $message['prod_det_status']=1;
+	  $message['prod_det']=$prod_det;
+ }
+ else{
+	  $message['prod_det_status']=0;
+ }
+ if(count($prod_imgs)>0)
+ { 
+	
+	 $message['prod_imgs_status']=1;
+	  $message['prod_imgs']=$prod_imgs;
+ }
+ else{
+	  $message['prod_imgs_status']=0;
+ }
+ if(count($prod_fet)>0)
+ { 
+	 
+	 $message['prod_fet_status']=1;
+	 $message['prod_fet']=$prod_fet;
+ }
+ else{
+	  $message['prod_fet_status']=0;
+ }
+ if(count($prod_rel)>0)
+ { 
+ $message['prod_rel_status']=1;
+	 $message['prod_rel']=$prod_rel;
+	
+ }
+ else{
+	  $message['prod_rel_status']=0;
+ }
+   $this->response($message, REST_Controller::HTTP_OK);
 	
 	
 }

@@ -94,8 +94,8 @@ class Mobile_model extends CI_Model
 	}
 	public function single_product_rel_products($id){
 		$this->db->select('rel_products_tab.*,product_tab.product_name')->from('rel_products_tab')->
-		join('product_tab','rel_products_tab.product_id=product_tab.product_id')->where('product_id',$id)
-		->where('status',1)->where('rel_products_tab.status',1);
+		join('product_tab','rel_products_tab.product_id=product_tab.product_id')->where('product_tab.product_id',$id)
+		->where('product_tab.status',1)->where('rel_products_tab.status',1);
 	  return $this->db->get()->result_array();
 	}
-	
+}
