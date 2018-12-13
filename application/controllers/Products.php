@@ -23,6 +23,7 @@ class Products extends CI_Controller
   public function products($id='')
   {
     $data['categories'] = $this->Category_model->get_all_category();
+    $data['category_name'] = $this->Category_model->get_category_name_by_subcat_id($id);
     $data['product'] = $this->Product_model->get_products_by_sub_category($id);
     $data['sub_category'] = $this->Category_model->get_sub_category_name_by_id($id);
     $user_id = $this->session->userdata('id');
@@ -38,6 +39,7 @@ class Products extends CI_Controller
   public function product($id='')
   {
     $data['categories'] = $this->Category_model->get_all_category();
+    $data['category_name'] = $this->Product_model->get_category_name_by_product_id($id);
     $data['product'] = $this->Product_model->get_product_by_id($id);
     $data['related_products'] = $this->Product_model->get_related_products_by_prdouct($id);
     $data['features'] = $this->Product_model->get_product_feature_by_product($id);

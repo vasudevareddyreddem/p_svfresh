@@ -120,7 +120,9 @@
                   </div>
                   <div class="form-action">
                     <div class="button-group">
-                      <?php if (in_array($product->product_id,$cart_product_id)){ ?>
+                      <?php if(strcasecmp($category_name->cat_name,'MILK') == 0){ ?>
+                        <button class="btn-add-cart" type="button" >Add to calender</button>
+                      <?php } else if (in_array($product->product_id,$cart_product_id)){ ?>
                         <button class="btn-add-cart" type="button" id="addtocart" disabled>Added to cart</button>
                       <?php }else{ ?>
                         <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>

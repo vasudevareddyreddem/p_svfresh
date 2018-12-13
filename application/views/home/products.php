@@ -39,6 +39,7 @@
             </ul>
             <!-- PRODUCT LIST -->
             <ul class="row product-list grid">
+              <?php //print_r($category_name->cat_name); ?>
               <?php if(count($product) > 0){ ?>
                 <?php foreach ($product as $p) { ?>
                   <li class="col-md-3">
@@ -56,11 +57,13 @@
                           <!---a title="Add to compare" class="compare" href="#"></a-->
                         </div>
                         <div class="add-to-cart">
-                          <?php if (in_array($p->product_id,$cart_product_id)) { ?>
+                          <?php if(strcasecmp($category_name->cat_name,'MILK') == 0){ ?>
+                            <a title="Add to Calender" class="" href="<?php echo base_url('milkcalender/'.$p->product_id); ?>" >Add to Calender</a>
+                          <?php }elseif (in_array($p->product_id,$cart_product_id)) { ?>
                             <a title="Added to Cart" class="addtocart" href="#" >Added to Cart</a>
-                        <?php  }else{ ?>
-                          <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>
-                        <?php  } ?>
+                          <?php  }else{ ?>
+                            <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>
+                          <?php  } ?>
 
                         </div>
                       </div>

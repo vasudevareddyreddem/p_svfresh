@@ -252,12 +252,12 @@ class Category_model extends CI_Model
 		return $this->db->affected_rows()?1:0;
 	}
 	public function save_subcat_slider($data){
-		
+
 		$this->db->insert_batch('subcat_slider',$data);
 		return $this->db->affected_rows()?1:0;
 	}
 	public function subcat_slider_list(){
-		
+
 	$this->db->select('subcat_tab.*,subcat_slider.*')->from('subcat_slider')->join('subcat_tab','subcat_tab.subcat_id=subcat_slider.subcat_id')->where('subcat_slider.status',1)
 	->order_by('subcat_tab.updated_at,subcat_tab.subcat_id','desc');
 	return $this->db->get()->result();
@@ -268,6 +268,9 @@ class Category_model extends CI_Model
 		;
 		return $this->db->get()->row();
 	}
-	}
 
-	
+	public function get_category_name_by_subcat_id($id='')
+	{
+		return $this->db->query("SELECT cat_name FROM category_tab WHERE status = '1' AND cat_id IN (SELECT cat_id FROM subcat_tab WHERE subcat_id = $id)")->row();
+	}
+	}

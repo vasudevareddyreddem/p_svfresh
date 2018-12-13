@@ -56,3 +56,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['category/(:num)'] = 'categories/category/$1';
 $route['products/(:num)'] = 'products/products/$1';
 $route['product/(:num)'] = 'products/product/$1';
+$route['milkcalender/(:num)'] = 'milkcalender/milkcalender/$1';

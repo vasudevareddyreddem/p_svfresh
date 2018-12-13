@@ -181,6 +181,6 @@ function decreaseValue() {
       });
       <?php } ?>
     });
-   
+
   });
 </script>
