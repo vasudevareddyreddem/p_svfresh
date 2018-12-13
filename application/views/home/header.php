@@ -66,19 +66,12 @@
                 <a href="<?php echo base_url('home'); ?>"><img  style="height:70px;width:auto;"alt="SV Fresh" src="<?php echo base_url('assets/images/logo.png'); ?>" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
-                <form class="form-inline">
-                      <div class="form-group form-category">
-                        <select class="select-category">
-                            <option value="2">All Categories</option>
-                            <option value="1">Fruits & Vegetables</option>
-                            <option value="2">grocery</option>
-                            <option value="2">Milk</option>
-                            <option value="2">water</option>
-                        </select>
-                      </div>
+                <form class="form-inline" method="post" action="<?php echo base_url('home/search'); ?>">
+                     
                       <div class="form-group input-serach">
-                        <input class="palce-hold-col" style="color:#fff" type="text"  placeholder="Keyword here...">
-                      </div>
+                        <input class="palce-hold-col"  id="search_value" name="search_value"  style="color:#fff" type="text"  placeholder="Keyword here...">
+						<input type="hidden" name="search_key" id="search_key" value="">
+					 </div>
                       <button type="submit" class="pull-right btn-search"></button>
                 </form>
             </div>
@@ -184,4 +177,5 @@
         <div class="alert_msg1 animated slideInUp bg-warn">
             <?php echo $this->session->flashdata('error');?> &nbsp; <i class="fa fa-exclamation-triangle text-success ico_bac" aria-hidden="true"></i> </div>
         <?php endif; ?>
-<!-- end header -->
+
+ 

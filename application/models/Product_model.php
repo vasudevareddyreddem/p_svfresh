@@ -300,8 +300,13 @@ public function get_product_related_images($product_id='')
 	//SELECT ip.image_name FROM product_images_tab AS ip LEFT JOIN product_tab AS p ON ip.product_id = p.product_id WHERE p.product_id = '39' AND ip.status = '1'
 }
 
-public function get_category_name_by_product_id($id='')
-{
-	return $this->db->query("SELECT cat_name FROM category_tab WHERE status = '1' AND cat_id IN (SELECT cat_id FROM subcat_tab WHERE status = '1' AND subcat_id IN (SELECT subcat_id FROM product_tab WHERE product_id = $id))")->row();
-}
+
+/* subcate slider */
+
+	public  function get_slider_images_by_sub_category($id){
+		$this->db->select('subcat_slider.image_path')->from('subcat_slider');
+		$this->db->where('subcat_slider.subcat_id',$id);
+		$this->db->where('subcat_slider.status',1);
+		return $this->db->get()->result_array();
+	}
 }

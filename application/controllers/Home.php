@@ -261,6 +261,30 @@ class Home extends CI_controller
       $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $this->load->view('home/contactus',$data);
   }
+  
+  public  function get_all_products_list(){
+	  $post=$this->input->post();
+	  $p_list=$this->Auth_Model->get_all_products_lists($post['serach']);
+	  foreach($p_list as $list){
+			$product_lists[] = $list['product_name'];
+		}
+		$imp = "'" . implode( "','", $product_lists) . "'";
+		$data['msg']=$imp ;
+		echo json_encode($data);
+	  
+  }
+  public  function search(){
+	  $post=$this->input->post();
+	  //echo '<pre>';print_r($post);exit;
+	  if($post['search_key']!=''){
+		  redirect('product/'.$post['search_key']);
+		  
+	  }else{
+			$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+				redirect($this->agent->referrer()); 
+	  }
+	  
+  }
   public function logout()
   {
     $this->session->sess_destroy();

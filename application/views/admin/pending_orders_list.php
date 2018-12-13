@@ -45,11 +45,15 @@
 											<span><?php echo $order->zip; ?></span>
 											<span><?php echo $order->country; ?></span></td>
                                             <td><?php if($order->payment_type==1){
-												echo 'Cash On Delivery';
+												echo 'Online Payment';
 											}
 											if($order->payment_type==2){
-												echo'Card Payment';
-											}?></td>
+												echo'Cash on Delivery';
+											}
+											if($order->payment_type==3){
+												echo'Swiping';
+											}
+											?></td>
                                             <td>
 									<div class="badge badge-info" >
 											 

@@ -115,9 +115,55 @@ function decreaseValue() {
 <script type="text/javascript" src="<?php echo base_url('assets/js/theme-script.js'); ?>"></script>
 
 <script type="text/javascript" src="<?php echo base_url('assets/js/sweetalert.min.js'); ?>"></script>
+<?php 
+$servername = "166.62.26.2";
+$username = "sv_fresh_staging";
+$password = "sv_fresh_staging@123#@";
+$dbname = "sv_fresh_staging";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+mysqli_query($conn, "SET NAMES 'utf8'");
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$sql = "SELECT product_name,product_id FROM product_tab";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+		$datas_list[]=array('key'=>$row['product_id'],'value'=>$row['product_name']);
+		//$datas_list[]=$row['product_name'];
+	}
+}
+
+//echo '<pre>';print_r($datas_list);exit;
+ ?>
 <script type="text/javascript">
+  $( function() {
+    var availableTags = [
+	<?php foreach($datas_list as $li){ ?>
+		{key: "<?php echo $li['key']; ?>",value: "<?php echo $li['value']; ?>"},
+	<?php } ?>
+    ];
+    $( "#search_value" ).autocomplete({
+      minLength: 0,
+      source: availableTags,
+      focus: function( event, ui ) {
+        $( "#search_value" ).val( ui.item.value );
+        return false;
+      },
+      select: function( event, ui ) {
+        $( "#search_value" ).val( ui.item.value );
+        $( "#search_key" ).val( ui.item.key );
+ 
+        return false;
+      } 
+	  });
+  } );
+
   $(document).ready(function(){
-    //add to cart
+    
     $('.addtocart').click(function(e){
       e.preventDefault();
       <?php

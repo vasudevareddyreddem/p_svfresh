@@ -25,6 +25,7 @@ class Products extends CI_Controller
     $data['categories'] = $this->Category_model->get_all_category();
     $data['category_name'] = $this->Category_model->get_category_name_by_subcat_id($id);
     $data['product'] = $this->Product_model->get_products_by_sub_category($id);
+    $data['slider_images'] = $this->Product_model->get_slider_images_by_sub_category($id);
     $data['sub_category'] = $this->Category_model->get_sub_category_name_by_id($id);
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
@@ -33,6 +34,8 @@ class Products extends CI_Controller
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $data['pageTitle'] = 'Products';
+	
+	//echo "<pre>";print_r($data);exit;
     $this->load->view('home/products',$data);
   }
 
