@@ -17,8 +17,8 @@
                                 <div class="col-md-6">
                                     <form method="post" id="add_sub_category" action="
 									<?php  echo base_url('category/save_subcat_slider')?>" enctype="multipart/form-data">
-                                        <div class="form-group">
-										 <div class="form-group">
+                                        <div class="row">
+										  <div class="form-group col-md-12">
                                             <label>Category</label>
                                             <select class="form-control" id="c_name" name="c_name" onchange="get_category(this.value)">
                                                 <option disabled selected>Select</option>
@@ -29,13 +29,13 @@
                                                 
                                             </select>
                                         </div>
-										  <div class="form-group col-md-6">
+										  <div class="form-group col-md-12">
                                                 <label>Sub-Category Name</label>
                                                 <select class="form-control  " name="sc_name" id="sc_name" >
                                                  <option value=''>Select</option>
                                                 </select>
                                             </div>
-											 <div class="form-group col-md-6">
+											 <div class="form-group col-md-12">
                                                 <label>Slider Image</label>
                                                  <input type="file" name="slider_image" placeholder="LastName" class="form-control"  required />
                                             </div>
