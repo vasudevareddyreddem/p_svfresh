@@ -41,7 +41,7 @@ class User extends REST_Controller {
 		$email=$this->post('email');
 		$password=$this->post('password');
 		echo $email;
-		echo $password;exit;
+		echo $password;
 		
 		if($email==''){
 			$message = array('status'=>0,'message'=>'Email Id is required');
@@ -234,6 +234,17 @@ $message=array();
  $prod_imgs=$this->Mobile_model->single_product_images($pid);
  $prod_fet=$this->Mobile_model->single_product_features($pid);
  $prod_rel=$this->Mobile_model->single_product_rel_products($pid);
+ $dis_imgs=$this->Mobile_model->cat_dis_imgs();
+    $cat_list=$this->Mobile_model->category_list();
+if(count($cat_list)>0)
+ { 
+	
+	 $message['cat_list_status']=1;
+	  $message['cat_list']=$cat_list;
+ }
+ else{
+	  $message['cat_list_status']=0;
+ }
  if(count($prod_det)>0)
  { 
 	
@@ -270,7 +281,88 @@ $message=array();
  else{
 	  $message['prod_rel_status']=0;
  }
+ 
    $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+}
+//get user orders
+public function orders_post(){
+	$user_id=$this->post('user_id');
+	$message=array();
+	$orders=$this->Mobile_model->get_user_orders($user_id);
+	if(count($orders)>0)
+ { 
+ $message['orders_status']=1;
+	 $message['orders']=$orders;
+	
+ }
+ else{
+	  $message['orders_status']=0;
+ }
+ 
+   $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+}
+//get wishlist
+public function wishlist_post(){
+	$user_id=$this->post('user_id');
+	$message=array();
+	$wishlist=$this->Mobile_model->get_user_wishlist($user_id);
+	if(count($wishlist)>0)
+ { 
+ $message['wishlist_status']=1;
+	 $message['wishlist']=$wishlist;
+	
+ }
+ else{
+	  $message['wishlist_status']=0;
+ }
+ 
+   $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+}
+//getting user profile
+public function profile_post(){
+	$user_id=$this->post('user_id');
+	$message=array();
+	$profile=$this->Mobile_model->get_user_profile($user_id);
+	if(count($profile)>0)
+ { 
+ $message['profile_status']=1;
+	 $message['profile']=$profile;
+	
+ }
+ else{
+	  $message['profile_status']=0;
+ }
+ 
+   $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+}
+//get the cart products
+public function cart_post(){
+	$user_id=$this->post('user_id');
+	$message=array();
+	$cart=$this->Mobile_model->get_user_cart($user_id);
+	if(count($cart)>0)
+ { 
+ $message['cart_status']=1;
+	 $message['cart']=$cart;
+	
+ }
+ else{
+	  $message['cart_status']=0;
+ }
+ 
+   $this->response($message, REST_Controller::HTTP_OK);
+	
 	
 	
 }
