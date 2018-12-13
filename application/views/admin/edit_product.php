@@ -86,7 +86,7 @@
                                             </div>
 											  <div class="form-group col-md-12">
                                                 <label>Guarantee Policy</label>
-                                                <textarea id=""  class="form-control" name="guaran" ><?php echo $product->guarantee_policy;?></textarea>
+                                                <textarea id=""  class="form-control" name="guaran" ><?php echo $product->guarantee_policys;?></textarea>
                                             </div>
 											
 					<?php if($fstatus==0){ ?>					

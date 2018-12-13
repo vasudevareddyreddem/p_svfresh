@@ -418,6 +418,32 @@ public function delete_cart_product_post(){
 	
 	
 }
+//get the checkout products
+public function checkout_post(){
+	$user_id=$this->post('user_id');
+	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$checkout=$this->Mobile_model->get_user_checkout($user_id);
+	if(count($checkout)>0)
+ { 
+ $message['checkout_status']=1;
+	 $message['checkout']=$checkout;
+	
+ }
+ else{
+	  $message['checkout_status']=0;
+ }
+ 
+   $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+}
 
 
 

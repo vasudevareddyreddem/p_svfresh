@@ -123,7 +123,7 @@ class Mobile_model extends CI_Model
 	}
 		public function get_user_cart($id){
 		$this->db->select('product_id,product_name,product_img,quantity,net_price')->from('cart_tab')->
-		where('cart_tab.user_id',$id)->order_by('created_date',desc);
+		where('cart_tab.user_id',$id)->order_by('created_date','desc');
 	
 	  return $this->db->get()->result_array();
 	}
@@ -134,6 +134,15 @@ class Mobile_model extends CI_Model
 			return $this->db->affected_rows()?1:0;
 			
 		}
+		public function get_user_checkout($id){
+		$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+		product_tab.description,product_tab.net_price')->from('cart_tab')->
+		join('product_tab','product_tab.product_id=cart_tab.product_id')->
+		where('cart_tab.user_id',$id)->where('product_tab.status',1)->
+		order_by('created_date','desc');
+
+	  return $this->db->get()->result_array();
+	}
 	
 
 }

@@ -2,14 +2,14 @@
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
-            <div>Sub Category</div>
+            <div>Product</div>
         </h1>
         <div class="section-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add Slider </h4>
+                            <h4>Add Guarantee Policy</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mx-auto">
