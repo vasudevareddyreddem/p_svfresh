@@ -23,6 +23,7 @@ class Products extends CI_Controller
   public function products($id='')
   {
     $data['categories'] = $this->Category_model->get_all_category();
+    $data['category_name'] = $this->Category_model->get_category_name_by_subcat_id($id);
     $data['product'] = $this->Product_model->get_products_by_sub_category($id);
     $data['slider_images'] = $this->Product_model->get_slider_images_by_sub_category($id);
     $data['sub_category'] = $this->Category_model->get_sub_category_name_by_id($id);
@@ -33,14 +34,15 @@ class Products extends CI_Controller
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $data['pageTitle'] = 'Products';
-	
-	//echo "<pre>";print_r($data);exit;
+
+	//echo "<pre>";print_r( $data['slider_images']);exit;
     $this->load->view('home/products',$data);
   }
 
   public function product($id='')
   {
     $data['categories'] = $this->Category_model->get_all_category();
+    $data['category_name'] = $this->Product_model->get_category_name_by_product_id($id);
     $data['product'] = $this->Product_model->get_product_by_id($id);
     $data['related_products'] = $this->Product_model->get_related_products_by_prdouct($id);
     $data['features'] = $this->Product_model->get_product_feature_by_product($id);
@@ -51,7 +53,10 @@ class Products extends CI_Controller
     $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+	$data['slider_images'] = $this->Product_model->get_all_slider_images_by_ategory();
+
     $data['pageTitle'] = 'Product';
+	//echo "<pre>";print_r($data);exit;
     $this->load->view('home/product',$data);
   }
 

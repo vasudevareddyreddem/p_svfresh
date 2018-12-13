@@ -35,13 +35,17 @@
             </div>
             </div
             <!-- left silide -->
+
+			<?php if(isset($slider_images) && count($slider_images)>0){ ?>
             <div class="col-left-slide left-module">
               <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
-                <li><a href="#"><img src="<?php echo base_url('assets/data/fruits-cat-img.jpg'); ?>" alt="slide-left"></a></li>
-                <li><a href="#"><img src="<?php echo base_url('assets/data/grocery-cat-ban.jpg'); ?>" alt="slide-left"></a></li>
-                <li><a href="#"><img src="<?php echo base_url('assets/data/milkcataban.jpg'); ?>" alt="slide-left"></a></li>
-              </ul>
+                <?php foreach($slider_images as $imgs){ ?>
+				<li><a href="<?php echo base_url('category/'.$imgs['cat_id']); ?>"><img src="<?php echo base_url('assets/uploads/category_pics/'.$imgs['cat_dis_img']); ?>" alt="<?php echo $imgs['cat_dis_img']; ?>"></a></li>
+              
+				<?php } ?>
+			  </ul>
             </div>
+			<?php } ?>
             <!--./left silde-->
             <!-- block best sellers -->
           </div>
@@ -120,7 +124,9 @@
                   </div>
                   <div class="form-action">
                     <div class="button-group">
-                      <?php if (in_array($product->product_id,$cart_product_id)){ ?>
+                      <?php if(strcasecmp($category_name->cat_name,'MILK') == 0){ ?>
+                        <button class="btn-add-cart" type="button" >Add to calender</button>
+                      <?php } else if (in_array($product->product_id,$cart_product_id)){ ?>
                         <button class="btn-add-cart" type="button" id="addtocart" disabled>Added to cart</button>
                       <?php }else{ ?>
                         <button class="btn-add-cart" type="button" id="addtocart">Add to cart</button>
@@ -141,10 +147,10 @@
               <div class="product-tab">
                 <ul class="nav-tab">
                   <li class="active">
-                    <a aria-expanded="false" data-toggle="tab" href="#product-detail">Product Details</a>
+                    <a aria-expanded="false" data-toggle="tab" href="#product-detail">Product Description</a>
                   </li>
                   <li>
-                    <a aria-expanded="true" data-toggle="tab" href="#information">information</a>
+                    <a aria-expanded="true" data-toggle="tab" href="#information">Product Details</a>
                   </li>
                   <li>
                     <a data-toggle="tab" href="#reviews">reviews</a>
@@ -230,13 +236,11 @@
                   </div>
 
                   <div id="guarantees" class="tab-panel">
-                    <p>Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est. Sed lectus. Sed a libero. Vestibulum eu odio.</p>
-
-                    <p>Maecenas vestibulum mollis diam. In consectetuer turpis ut velit. Curabitur at lacus ac velit ornare lobortis. Praesent ac sem eget est egestas volutpat. Nam eget dui.</p>
-
-                    <p>Maecenas nec odio et ante tincidunt tempus. Vestibulum suscipit nulla quis orci. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Aenean ut eros et nisl sagittis vestibulum. Aliquam eu nunc.</p>
-                    <p>Maecenas vestibulum mollis diam. In consectetuer turpis ut velit. Curabitur at lacus ac velit ornare lobortis. Praesent ac sem eget est egestas volutpat. Nam eget dui.</p>
-                  </div>
+                    <?php if($product->guarantee_policy){ ?>
+                      <p><?php echo $product->guarantee_policy; ?></p>
+                    <?php } else { ?>
+                      <p><h6>No product guarantee</h6></p>
+                    <?php } ?></div>
                 </div>
               </div>
               <!-- ./tab product -->

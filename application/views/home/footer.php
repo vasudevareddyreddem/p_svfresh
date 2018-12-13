@@ -227,6 +227,6 @@ if ($result->num_rows > 0) {
       });
       <?php } ?>
     });
-   
+
   });
 </script>

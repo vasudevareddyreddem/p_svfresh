@@ -31,6 +31,8 @@ class Home extends CI_controller
     $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+	
+	//echo '<pre>';print_r($data);exit;
     $this->load->view('home/index',$data);
     // }else{
     //   redirect('home/login');
