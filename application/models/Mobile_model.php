@@ -98,4 +98,37 @@ class Mobile_model extends CI_Model
 		->where('product_tab.status',1)->where('rel_products_tab.status',1);
 	  return $this->db->get()->result_array();
 	}
+	public function get_user_orders($id){
+		$this->db->select('order_items_tab.order_number,order_items_tab.product_name,order_items_tab.product_id,
+		order_items_tab.product_img,order_items_tab.quantity,order_items_tab.net_price,
+		order_items_tab.delivery_status')->from('order_tab')->
+		join('order_items_tab','order_tab.order_id=order_items_tab.order_id')
+		->where('order_tab.user_id',$id)->order_by('order_items_tab.created_date','desc');
+	
+	  return $this->db->get()->result_array();
+	}
+	public function get_user_wishlist($id){
+		$this->db->select('wishlist_tab.product_name,wishlist_tab.product_id,
+		wishlist_tab.product_img,wishlist_tab.quantity,wishlist_tab.net_price,wishlist_tab.discount_price
+		')->from('wishlist_tab')->
+		where('wishlist_tab.user_id',$id);
+	
+	  return $this->db->get()->result_array();
+	}
+		public function get_user_profile($id){
+		$this->db->select('email_id,phone_number,user_name')->from('users_tab')->
+		where('users_tab.id',$id);
+	
+	  return $this->db->get()->row_array();
+	}
+		public function get_user_cart($id){
+		$this->db->select('product_id,product_name,product_img,quantity,net_price')->from('cart_tab')->
+		where('cart_tab.user_id',$id)->order_by('created_date',desc);
+	
+	  return $this->db->get()->result_array();
+	}
+		
+		
+	
+
 }
