@@ -252,9 +252,8 @@ class Category_model extends CI_Model
 		return $this->db->affected_rows()?1:0;
 	}
 	public function save_subcat_slider($data){
-
+		
 		$this->db->insert('subcat_slider',$data);
-
 		return $this->db->affected_rows()?1:0;
 	}
 	public function subcat_slider_list(){
