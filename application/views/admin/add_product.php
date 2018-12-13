@@ -75,6 +75,10 @@
                                                 <label>Description</label>
                                                 <textarea id="descr"  class="form-control" name="descr" ></textarea>
                                             </div>
+											  <div class="form-group col-md-12">
+                                                <label>Guarantee Policy</label>
+                                                <textarea id=""  class="form-control" name="guaran" ></textarea>
+                                            </div>
 								
 							 <div class="row">
                                 <div class="col-md-12">

@@ -84,6 +84,10 @@
                                                 <label>Description</label>
                                                 <textarea id="descr"  class="form-control" name="descr" ><?php echo $product->description;?></textarea>
                                             </div>
+											  <div class="form-group col-md-12">
+                                                <label>Guarantee Policy</label>
+                                                <textarea id=""  class="form-control" name="guaran" ><?php echo $product->guarantee_policy;?></textarea>
+                                            </div>
 											
 					<?php if($fstatus==0){ ?>					
 				 <div class="row">
