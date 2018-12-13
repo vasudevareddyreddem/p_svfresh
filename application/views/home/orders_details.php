@@ -28,11 +28,37 @@
                 
               </div>
               <div class="panel-footer">
+				<form method="post" action="<?php echo base_url('order/update_review_ratings'); ?>">
+                  <div class="row ">
+				   <h2 class="py-2 h3 col-md-8 col-md-offset-2" style="text-algin:left">Rating</h2>
+				  </div>
+                  <div class="row lead text-center">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group ">
+								<input type="text" name="name" class="form-control" placeholder="Your Name " value="" required />
+						</div>
+						<div class="form-group ">
+								<input type="mail" name="email" class="form-control" placeholder="Your Email " value="" required />
+						</div>
+						<div class="form-group ">
+								<textarea name="message" class="form-control" placeholder="Your Message "  required></textarea>
+						</div>
+                    </div>
+				  </div>
                   <div class="row lead text-center">
 						<div style="color:#fd4f00" id="stars" class="starrr"></div>
 						You gave a rating of <span id="count">0</span> star(s)
 					</div>
-					<input  type="hidden" id="order_item_id" value="<?php echo isset($order_details['order_items_id'])?$order_details['order_items_id']:''; ?>">
+					<input  type="hidden" id="order_item_id" name="order_item_id" value="<?php echo isset($order_details['order_items_id'])?$order_details['order_items_id']:''; ?>">
+					<input  type="hidden" id="rate" name="rate" value="">
+					<div class="row">
+					<div class="col-md-2 col-md-offset-5">
+						<div class="form-group ">
+								<button class="btn btn-success">Submit</button>
+						</div>
+					</div>
+					</div>
+					</form>
               </div>
 
             </div>
@@ -151,26 +177,7 @@ $( document ).ready(function() {
       
   $('#stars').on('starrr:change', function(e, value){
     $('#count').html(value);
-		$.ajax({
-					url:'<?php echo base_url('order/update_review_ratings'); ?>',
-					type:'POST',
-					data:{
-						'rate':value,
-						'order_item_id':$('#order_item_id').val(),
-						
-						},
-					dataType:'JSON',
-					success:function(data){
-						if(data.msg==1){
-							$('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">'+data.message+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
-						}else if(data.msg==2){
-							$('#message').html('<div class="alert_msg1 animated slideInUp bg-warn">'+data.message+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
-
-						}else if(data.msg==0){
-							$('#message').html('<div class="alert_msg1 animated slideInUp bg-warn">'+data.message+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
-						}
-					}
-				});
+    $('#rate').val(value);
     
   });
   

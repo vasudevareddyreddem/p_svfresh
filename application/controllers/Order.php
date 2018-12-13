@@ -14,6 +14,8 @@ class Order extends CI_Controller
     $this->load->model('Cart_Model');
     $this->load->model('Wishlist_Model');
     $this->load->model('Auth_Model');
+		$this->load->library('user_agent');
+
   }
 
   public function index()
@@ -65,26 +67,27 @@ class Order extends CI_Controller
 	 if($this->session->userdata('logged_in') == TRUE){ 
 	   $user_id = $this->session->userdata('id');
 	  $post=$this->input->post();
+	  //echo '<pre>';print_r($post);exit;
 	  $add=array(
 	  'rate'=>isset($post['rate'])?$post['rate']:'',
+	  'name'=>isset($post['name'])?$post['name']:'',
+	  'email'=>isset($post['email'])?$post['email']:'',
+	  'message'=>isset($post['message'])?$post['message']:'',
 	  'order_item_id'=>isset($post['order_item_id'])?$post['order_item_id']:'',
 	  'user_id'=>$user_id,
 	  );
 	  $check=$this->Order_Model->check_rating_exits($user_id,$post['order_item_id']);
 	  if(count($check)>0){
-			$data['msg']=2;
-			$data['message']='you are already submitted your rating';
-			echo json_encode($data);exit;
+			$this->session->set_flashdata('error',"you are already submitted your rating");
+			 redirect($this->agent->referrer());
 	  }else{
 		  $save=$this->Order_Model->save_item_review($add);
 		  if(count($save)>0){
-			  $data['msg']=1;
-			  $data['message']='Rating successfully submitted';
-			  echo json_encode($data);exit;
+			  $this->session->set_flashdata('success',"Rating successfully submitted.");
+			  redirect($this->agent->referrer());
 		  }else{
-			 $data['msg']=0;
-			 $data['message']='technical problem will occurred. Please try again';
-			 echo json_encode($data);exit;
+			 $this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+			 redirect($this->agent->referrer()); 
 		  }
 	  }
 	  //echo '<pre>';print_r($post);exit;

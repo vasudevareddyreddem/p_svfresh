@@ -54,9 +54,10 @@ class Products extends CI_Controller
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
 	$data['slider_images'] = $this->Product_model->get_all_slider_images_by_ategory();
+	$data['reviewandrating_lists'] = $this->Product_model->get_product_reviewandrating_list($id);
 
     $data['pageTitle'] = 'Product';
-	//echo "<pre>";print_r($data);exit;
+	//echo "<pre>";print_r($data['reviewandrating_lists']);exit;
     $this->load->view('home/product',$data);
   }
 
