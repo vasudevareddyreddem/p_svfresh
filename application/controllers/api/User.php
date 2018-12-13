@@ -138,6 +138,7 @@ public function products_post(){
 		    $this->response($message, REST_Controller::HTTP_OK);
 	
 }
+//home page
 public function home_post(){
 	$userid=$this->post('user_id');
 	// $flag=$this->Mobile_model->user_checking($userid);
@@ -188,6 +189,7 @@ public function home_post(){
 		 $this->response($message, REST_Controller::HTTP_OK)  ;
 		
 	}
+	//get product for single category
 	public function subcatproducts_post(){
 	
 	$userid=$this->post('user_id');
@@ -198,13 +200,37 @@ public function home_post(){
 		 $message = array('status'=>0,'message'=>' unauthorized user');
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
+	$slider=$this->Mobile_model->subcat_img_slider($subcat);
+	
+	$message=array();
+
+	if(count($slider)>0){
+		$message['slider_status']=1;
+		$message['subcat_slider']=$slider;
+		
+	}
+	else{
+		$message['slider_status']=0;
+	}
+	
 	$products=$this->Mobile_model->product_list($subcat);
 	if(count($products)>0){
-	 $message = array('status'=>1,'message'=>$products);
+		$message['product_status']=1;
+		$message['products']=$products;
+	
+		 }
+		 else{
+			 $message['product_status']=0;
+		 }
+
 		    $this->response($message, REST_Controller::HTTP_OK);
-	}
-	 $message = array('status'=>0,'message'=>'NO Products for this subcategory');
-		    $this->response($message, REST_Controller::HTTP_OK);
+	
+}
+//get single product
+public function singleproduct_post(){
+$pid=$this->post('product_id');
+ $product=$this->Mobile_model->single_product_details($pid);
+	
 	
 }
 
