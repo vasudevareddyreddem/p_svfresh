@@ -60,6 +60,40 @@ class Order extends CI_Controller
     }
     echo json_encode($return);exit(0);
   }
+  
+  public  function update_review_ratings(){
+	 if($this->session->userdata('logged_in') == TRUE){ 
+	   $user_id = $this->session->userdata('id');
+	  $post=$this->input->post();
+	  $add=array(
+	  'rate'=>isset($post['rate'])?$post['rate']:'',
+	  'order_item_id'=>isset($post['order_item_id'])?$post['order_item_id']:'',
+	  'user_id'=>$user_id,
+	  );
+	  $check=$this->Order_Model->check_rating_exits($user_id,$post['order_item_id']);
+	  if(count($check)>0){
+			$data['msg']=2;
+			$data['message']='you are already submitted your rating';
+			echo json_encode($data);exit;
+	  }else{
+		  $save=$this->Order_Model->save_item_review($add);
+		  if(count($save)>0){
+			  $data['msg']=1;
+			  $data['message']='Rating successfully submitted';
+			  echo json_encode($data);exit;
+		  }else{
+			 $data['msg']=0;
+			 $data['message']='technical problem will occurred. Please try again';
+			 echo json_encode($data);exit;
+		  }
+	  }
+	  //echo '<pre>';print_r($post);exit;
+	 }else{
+		 $this->session->set_flashdata('error',"Please login and continue.");
+		redirect('home/login');
+    }
+	  
+  }
 
 }
 

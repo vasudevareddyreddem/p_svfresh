@@ -84,6 +84,11 @@ class Auth_Model extends CI_Model
 	  $this->db->where('status',1);
 	  return $this->db->get()->result_array();
   }
+  
+  public  function delete_cart_item($id){
+	   $this->db->where('id',$id);
+	   return $this->db->delete('cart_tab');
+  }
 
 }
 
