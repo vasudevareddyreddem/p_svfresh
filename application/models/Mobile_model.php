@@ -25,20 +25,21 @@ class Mobile_model extends CI_Model
 		
 	}
 	public function subcategory_list($cat){
-			$this->db->select('*');
+			$this->db->select('category_tab.cat_id,category_tab.cat_name,subcat_tab.subcat_id,subcat_tab.subcat_name');
 	  $this->db->from('subcat_tab');
-	   $this->db->where('status',1);
-	    $this->db->where('cat_id',$cat);
-	   $this->db->order_by('updated_at','desc');
+	  $this->db->join('category_tab','subcat_tab.cat_id=category_tab.cat_id');
+	   $this->db->where('subcat_tab.status',1);
+	    $this->db->where('category_tab.cat_id',$cat);
+	   $this->db->order_by('subcat_tab.updated_at','desc');
 	   return $this->db->get()->result_array();
 		
 		
 	}
-	public function product_list($cat,$subcat){
+	public function product_list($subcat){
 			$this->db->select('*');
 	  $this->db->from('product_tab');
 	   $this->db->where('status',1);
-	    $this->db->where('cat_id',$cat);
+
 		$this->db->where('subcat_id',$subcat);
 	   $this->db->order_by('updated_at','desc');
 	   return $this->db->get()->result_array();
@@ -59,7 +60,7 @@ class Mobile_model extends CI_Model
 	}
 	public function get_all_products(){
 		$this->db->select('product_tab.product_id,product_tab.product_name,product_img,category_tab.*')->from('product_tab')->
-		join('category_tab','category_tab.cat_id=product_tab.cat_id')->order_by('updated_at,cat_id','desc');
+		join('category_tab','category_tab.cat_id=product_tab.cat_id')->order_by('updated_at,cat_id','desc')->where('category_tab.status',1)->where('product_tab.status',1);
 		return $this->db->get()->result_array();
 	}
 	
