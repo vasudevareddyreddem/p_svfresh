@@ -140,11 +140,11 @@ public function products_post(){
 }
 public function home_post(){
 	$userid=$this->post('user_id');
-	$flag=$this->Mobile_model->user_checking($userid);
-	if($flag==0){
-		 $message = array('status'=>0,'message'=>' unauthorized user');
-		    $this->response($message, REST_Controller::HTTP_OK);
-	}
+	// $flag=$this->Mobile_model->user_checking($userid);
+	// if($flag==0){
+		 // $message = array('status'=>0,'message'=>' unauthorized user');
+		    // $this->response($message, REST_Controller::HTTP_OK);
+	// }
 	$products=$this->Mobile_model->get_all_products();
 	$message=array();
 	if(count($products)>0){

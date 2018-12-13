@@ -25,8 +25,9 @@ class Mobile_model extends CI_Model
 		
 	}
 	public function subcategory_list($cat){
-			$this->db->select('*');
+			$this->db->select('category_tab.cat_id,category_tab.cat_name,subcat_tab.subcat_id,subcat_tab.subcat_name');
 	  $this->db->from('subcat_tab');
+	  $this->db->join('category_tab','subcat_tab.cat_id=category_tab.cat_id');
 	   $this->db->where('status',1);
 	    $this->db->where('cat_id',$cat);
 	   $this->db->order_by('updated_at','desc');
