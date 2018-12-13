@@ -188,6 +188,25 @@ public function home_post(){
 		 $this->response($message, REST_Controller::HTTP_OK)  ;
 		
 	}
+	public function subcatproducts_post(){
+	
+	$userid=$this->post('user_id');
+	$cat=$this->post('cat_id');
+	$subcat=$this->post('subcat_id');
+	$flag=$this->Mobile_model->user_checking($userid);
+	if($flag==0){
+		 $message = array('status'=>0,'message'=>' unauthorized user');
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$products=$this->Mobile_model->product_list($subcat);
+	if(count($products)>0){
+	 $message = array('status'=>1,'message'=>$products);
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	 $message = array('status'=>0,'message'=>'NO Products for this subcategory');
+		    $this->response($message, REST_Controller::HTTP_OK);
+	
+}
 
 
 }
