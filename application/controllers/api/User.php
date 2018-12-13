@@ -229,7 +229,12 @@ public function home_post(){
 //get single product
 public function singleproduct_post(){
 $pid=$this->post('product_id');
- $product=$this->Mobile_model->single_product_details($pid);
+$message=array();
+ $prod_det=$this->Mobile_model->single_product_details($pid);
+ $prod_imgs=$this->Mobile_model->single_product_images($pid);
+ $prod_fet=$this->Mobile_model->single_product_features($pid);
+ $prod_rel=$this->Mobile_model->single_product_rel_products($pid);
+ 
 	
 	
 }

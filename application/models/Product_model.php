@@ -49,7 +49,7 @@ class Product_model extends CI_Model
 	}
 	public function edit_product($pid){
 		$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
-		product_tab.actual_price,product_tab.discount_price,product_tab.status,product_tab.net_price,product_tab.description,
+		product_tab.actual_price,product_tab.discount_price,product_tab.status,product_tab.net_price,product_tab.description,product_tab.guarantee_policy,
 		product_tab.created_at,product_tab.quantity,product_tab.cat_id,product_tab.subcat_id,product_tab.discount_percentage
 		');
 		$this->db->from('product_tab');

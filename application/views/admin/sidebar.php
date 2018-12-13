@@ -51,6 +51,7 @@
                 <ul class="menu-dropdown">
                     <li><a href="<?php echo base_url('product/add_product');?>"><i class="ion ion-ios-circle-outline"></i>Add Product</a></li>
                     <li><a href="<?php echo base_url('product/product_list');?>"><i class="ion ion-ios-circle-outline"></i>Products List</a></li>
+					 
                 </ul>
             </li>
             <li>

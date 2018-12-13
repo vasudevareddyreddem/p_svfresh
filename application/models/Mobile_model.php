@@ -82,14 +82,20 @@ class Mobile_model extends CI_Model
 		->where('status',1);
 	  return $this->db->get()->row_array();
 	}
+	public function single_product_images($id){
+		$this->db->select('product_images_tab.*')->from('product_images_tab')->where('product_id',$id)
+		->where('status',1);
+	  return $this->db->get()->result_array();
+	}
 	public function single_product_features($id){
 		$this->db->select('features_tab.*')->from('features_tab')->where('product_id',$id)
 		->where('status',1);
 	  return $this->db->get()->result_array();
 	}
-	public function single_product_images($id){
-		$this->db->select('product_images_tab.*')->from('features_tab')->where('product_id',$id)
-		->where('status',1);
+	public function single_product_rel_products($id){
+		$this->db->select('rel_products_tab.*,product_tab.product_name')->from('rel_products_tab')->
+		join('product_tab','rel_products_tab.product_id=product_tab.product_id')->where('product_id',$id)
+		->where('status',1)->where('rel_products_tab.status',1);
 	  return $this->db->get()->result_array();
 	}
 	

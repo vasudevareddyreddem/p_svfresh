@@ -80,6 +80,7 @@ $this->load->model('Product_model');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
 				$descr=$this->input->post('descr');
+				$guaran=$this->input->post('guaran');
 				$status=$this->Product_model->check_unique_product($product_name,$cat_id,$subcat_id);
 				if($status==1){
 					$this->session->set_flashdata('error','product name  already existed');
@@ -147,7 +148,8 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				'net_price'=>$net_price,
 				'quantity'=>$qun,
 				 'created_by'=>$adminid,
-				 'description'=>$descr
+				 'description'=>$descr,
+				 'guarantee_policy'=>$guaran
 				);
 				$product_id=$this->Product_model->save_product($data);
 				//releated products
@@ -315,6 +317,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				$f_names=$this->input->post('fname');
 				$f_values=$this->input->post('fvalue');
 				$net_price=$act_price-$dis_price;
+				$guaran=$this->input->post('guaran');
 
 				if(isset($_POST['fname'])){
 					$cnt=count($f_names);
@@ -367,7 +370,8 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				'net_price'=>$net_price,
 				'quantity'=>$qun,
 				 'updated_by'=>$adminid,
-				 'description'=>$this->input->post('descr')
+				 'description'=>$this->input->post('descr'),
+				 'guarantee_policy'=>$guaran
 				);
 		if($_FILES['main_image']['name']!=''){ 
 if ( ! $this->upload->do_upload('main_image',time()))
@@ -693,4 +697,26 @@ else{
 		else{redirect('login');}
 		
 	}
+		public function add_guarantee(){
+		if($this->session->userdata('svadmin_det')){
+			$data['cat_list']=$this->Category_model->get_category_names();
+				if(count($data['cat_list'])>0){
+					$data['status']=1;
+
+
+				}
+				else{
+					$data['status']=0;
+
+				}
+
+			$this->load->view('admin/add_guarantee',$data);
+		    $this->load->view('admin/footer');
+
+
+		}
+		else{redirect('login');}
+
+	}
+
 }
