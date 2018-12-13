@@ -89,6 +89,11 @@ class Auth_Model extends CI_Model
 	   $this->db->where('id',$id);
 	   return $this->db->delete('cart_tab');
   }
+  
+  public  function save_contactus($data){
+	   $this->db->insert('contactus_list',$data);
+	  return $this->db->insert_id();
+  }
 
 }
 

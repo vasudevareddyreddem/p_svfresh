@@ -60,21 +60,21 @@
             <div class="contact-image">
                 <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
             </div>
-            <form method="post">
+            <form method="post" action="<?php echo base_url('home/contactuspost'); ?>">
                 <h3>Contact US</h3>
                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" name="txtName" class="form-control" placeholder="Your Name *" value="" required />
+                            <input type="text" name="name" class="form-control" placeholder="Your Name *" value="" required />
                         </div>
                         <div class="form-group">
-                            <input type="text" name="txtEmail" class="form-control" placeholder="Your Email *" value="" required />
+                            <input type="email" name="email" class="form-control" placeholder="Your Email *" value="" required />
                         </div>
                         <div class="form-group">
-                            <input type="text" name="txtPhone" class="form-control" placeholder="Your Phone Number *" value="" required />
+                            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Your Phone Number *" value="" required />
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="Send Message" required />
+                            <input type="submit" name="message" class="btnContact" value="Send Message" required />
                         </div>
                     </div>
                     <div class="col-md-6">
