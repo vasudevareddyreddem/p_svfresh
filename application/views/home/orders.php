@@ -14,7 +14,7 @@
 
               <div class="panel-heading bg-white">
                 <span class="btn btn-success border-radius-none"><strong><?php echo $o->order_number; ?></strong></span>
-                <span class="btn btn-warning border-radius-none pull-right"> <strong> <i class="fa fa-truck" style="font-size:20px;" aria-hidden="true"></i> Track</strong></span>
+					<a href="<?php echo  base_url('order/details/'.base64_encode($o->order_items_id)); ?>"><span class="btn btn-warning border-radius-none pull-right"> <strong> <i class="fa fa-truck" style="font-size:20px;" aria-hidden="true"></i> Track</strong></span></a>
 
               </div>
               <div class="panel-body">
@@ -36,7 +36,7 @@
                         <h4 ><a href="#">Delivered on Sat, Nov 3rd 2018</a></h4>
                       </td>
                       <td style="border-top:0px solid #fff;" >
-                        <?php if($o->status == 2){ echo 'Pending'; }elseif ($o->status == 1) { echo 'Delivered'; } else { echo 'Cancelled'; } ?>
+                        <?php if($o->order_status == 0){ echo 'Pending'; }elseif ($o->order_status == 1) { echo 'Confirmed'; }?>
                       </td>
                       <td style="border-top:0px solid #fff;" >
                         <h4 class="pull-right"><a href="#" class="cancel_order" data-order_items_id = "<?php echo $o->order_items_id; ?>"><span class="btn btn-danger btn-xs border-radius-none "> <strong>  Cancel Order</strong></span> </a></h4>

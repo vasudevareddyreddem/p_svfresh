@@ -40,6 +40,13 @@ class Order_Model extends CI_Model
     $this->db->set(array('status'=>'0'));
     return $this->db->update($this->table_order_items);
   }
+  
+  public  function get_order_item_details($order_item_id){
+	  
+    $this->db->select('*')->from('order_items_tab');
+    $this->db->where('order_items_id',$order_item_id);
+	 return $this->db->get()->row_array();
+  }
 
 }
 
