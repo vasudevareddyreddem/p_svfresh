@@ -263,6 +263,45 @@ class Home extends CI_controller
       $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $this->load->view('home/contactus',$data);
   }
+  public  function contactuspost(){
+	  $post=$this->input->post();
+		
+		$addcontact=array(
+		'name'=>isset($post['name'])?$post['name']:'',
+		'email'=>isset($post['email'])?$post['email']:'',
+		'mobile'=>isset($post['mobile'])?$post['mobile']:'',
+		'message'=>isset($post['message'])?$post['message']:'',
+		'create_at'=>date('Y-m-d H:i:s'),
+		);
+		
+		//echo '<pre>';print_r($post);exit;
+		
+		$save=$this->Auth_Model->save_contactus($addcontact);
+		if(count($save)>0){
+				$data['details']=$post;
+				$this->load->library('email');
+				$this->load->library('email');
+			    $this->email->set_newline("\r\n");
+			    $this->email->set_mailtype("html");
+				$this->email->from($post['email']);
+				$this->email->to('support@svfresh.com');
+				$this->email->subject('Contact us - Request');
+				//$body = $this->load->view('email/contactus.php',$data,true);
+				//$html = $this->load->view('email/orderconfirmation.php', $data, true); 
+
+				$msg='Name:'.$post['name'].' Email :'.$post['email'].'<br> Phone  number :'.$post['phone'].'<br> Message :'.$post['message'];
+				$this->email->message($msg);
+				//echo $body;exit;
+				$this->email->send();
+				
+				//echo "test";exit;
+				$this->session->set_flashdata('success',"Your message was successfully sent.");
+				redirect($this->agent->referrer()); 
+			}else{
+				$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+				redirect($this->agent->referrer()); 
+			}
+  }
   
   public  function get_all_products_list(){
 	  $post=$this->input->post();
