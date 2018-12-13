@@ -74,7 +74,7 @@
                             <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Your Phone Number *" value="" required />
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="Send Message" required />
+                            <input type="submit" name="message" class="btnContact" value="Send Message" required />
                         </div>
                     </div>
                     <div class="col-md-6">
