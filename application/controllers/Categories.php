@@ -28,6 +28,7 @@
         $data['count'] = count($data['cart']);
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
         $data['pageTitle'] = 'Categories';
+        $data['id'] = $id;
         $this->load->view('home/category',$data);
     }
 
