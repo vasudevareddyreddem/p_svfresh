@@ -27,6 +27,12 @@ class Calender_Model extends CI_Model
     return $this->db->insert($this->table,$post_data);
   }
 
+  public function update($post_data='',$calender_id='')
+  {
+    $this->db->where('calender_id',$calender_id);
+    return $this->db->update($this->table,$post_data);
+  }
+
 }
 
 

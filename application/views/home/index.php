@@ -3,11 +3,13 @@
 <head>
   <?php include("header.php"); ?>
   <!-- Home slideder-->
+  <?php if($slider_side_images){ ?>
+
   <div id="home-slider">
     <div class="container">
       <div class="row">
         <div class="col-sm-3 ">
-          <?php if($slider_side_images->l_pic){ ?>
+          <?php if(!empty($slider_side_images->l_pic) && file_exists('assets/uploads/slider_pics/'.$slider_side_images->l_pic)){ ?>
           <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->l_pic); ?>" />
           <?php } ?>
         </div>
@@ -17,7 +19,11 @@
               <div class="content-slide">
                 <ul id="contenhomeslider">
                   <?php foreach($slides as $s){ ?>
-                    <li><img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$s->pic_name); ?>"/></li>
+                    <?php if(!empty($s->pic_name) && file_exists('assets/uploads/slider_pics/'.$s->pic_name)){ ?>
+                    <li>
+                        <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$s->pic_name); ?>"/>
+                    </li>
+                    <?php } ?>
                   <?php } ?>
                 </ul>
               </div>
@@ -25,13 +31,15 @@
           <?php } ?>
         </div>
         <div class="col-sm-3 ">
-          <?php if($slider_side_images->l_pic){ ?>
+          <?php if(!empty($slider_side_images->r_pic) && file_exists('assets/uploads/slider_pics/'.$slider_side_images->r_pic)){ ?>
           <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->r_pic); ?>" />
           <?php } ?>
         </div>
       </div>
     </div>
   </div>
+
+  <?php } ?>
   <!-- END Home slideder-->
   <!-- servives -->
   <section class="bg-success py-3">
