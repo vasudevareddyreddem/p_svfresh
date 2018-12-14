@@ -83,15 +83,16 @@ class User extends REST_Controller {
 	
 
 }
+//categories
 public function categories_post(){
 	
-	$userid=$this->post('user_id');
+	// $userid=$this->post('user_id');
 	
-	$flag=$this->Mobile_model->user_checking($userid);
-	if($flag==0){
-		 $message = array('status'=>0,'message'=>' unauthorized user');
-		    $this->response($message, REST_Controller::HTTP_OK);
-	}
+	// $flag=$this->Mobile_model->user_checking($userid);
+	// if($flag==0){
+		 // $message = array('status'=>0,'message'=>' unauthorized user');
+		    // $this->response($message, REST_Controller::HTTP_OK);
+	// }
 	
 	$cat=$this->Mobile_model->category_list();
 	if(count($cat)>0){
@@ -100,6 +101,30 @@ public function categories_post(){
 	}
 	    $message = array('status'=>0,'message'=>'No records in category');
 		    $this->response($message, REST_Controller::HTTP_OK);
+}
+public function home_slider_post(){
+		 $images=$this->Mobile_model->home_slider_two_images();
+		 if(count($images)>0){
+			 $id=$images['slider_id'];
+			 $slider=$this->Mobile_model->home_sliders($id);
+			if(count($slider)>0){
+				$message['status']=1;
+			 $message['siider']=$slider;
+			 $message['image_path']=base_url().'assets/uploads/slider_pics/';
+			}
+			else{
+					$message['status']=0;
+					
+			}
+			
+			 }
+		 else{
+			 $message['status']=0;
+			 $message['message']='no slider Images';
+			 
+		 }
+		  $this->response($message, REST_Controller::HTTP_OK);
+	
 }
 public function subcatgories_post(){
 	
@@ -146,21 +171,21 @@ public function home_post(){
 		 // $message = array('status'=>0,'message'=>' unauthorized user');
 		    // $this->response($message, REST_Controller::HTTP_OK);
 	// }
-	$products=$this->Mobile_model->get_all_products();
-	$message=array();
-	if(count($products)>0){
-		$message['prodcut_status']=1;
-		$message['prodcuts']=$products;
+	// $products=$this->Mobile_model->get_all_products();
+	// $message=array();
+	// if(count($products)>0){
+		// $message['prodcut_status']=1;
+		// $message['prodcuts']=$products;
 		   
 		
-	}
-	else{
-		$message['prodcut_status']=0;
-	}
-	$images=$this->Mobile_model->home_slider_two_images();
-		if(count($images)>0){
-			$id=$images['slider_id'];
-			$slider=$this->Mobile_model->home_sliders($id);
+	// }
+	// else{
+		// $message['prodcut_status']=0;
+	// }
+	 $images=$this->Mobile_model->home_slider_two_images();
+		 if(count($images)>0){
+			 $id=$images['slider_id'];
+			 $slider=$this->Mobile_model->home_sliders($id);
 			if(count($slider)>0){
 				$message['slider_staus']=1;
 			 $message['siider']=$slider;
@@ -168,15 +193,17 @@ public function home_post(){
 			else{
 					$message['slider_staus']=0;
 			}
-			 $message['simg_staus']=1;
-			 $message['simages']=$images;
+			
+			  //$message['simg_staus']=1;
+			  //$message['simages']=$images;
 		   
 			
-		}
-		else{
-			 $message['simg_staus']=0;
+		 }
+		 else{
+			 // $message['simg_staus']=0;
 			 
-		}
+		 }
+		
 		$cat=$this->Mobile_model->category_list();
 		if(count($cat)>0){
 			$message['cat_status']=1;
@@ -195,32 +222,33 @@ public function home_post(){
 	$userid=$this->post('user_id');
 	$cat=$this->post('cat_id');
 	$subcat=$this->post('subcat_id');
-	$flag=$this->Mobile_model->user_checking($userid);
-	if($flag==0){
-		 $message = array('status'=>0,'message'=>' unauthorized user');
-		    $this->response($message, REST_Controller::HTTP_OK);
-	}
-	$slider=$this->Mobile_model->subcat_img_slider($subcat);
+	// $flag=$this->Mobile_model->user_checking($userid);
+	// if($flag==0){
+		 // $message = array('status'=>0,'message'=>' unauthorized user');
+		    // $this->response($message, REST_Controller::HTTP_OK);
+	// }
+	// $slider=$this->Mobile_model->subcat_img_slider($subcat);
 	
-	$message=array();
+	// $message=array();
 
-	if(count($slider)>0){
-		$message['slider_status']=1;
-		$message['subcat_slider']=$slider;
+	// if(count($slider)>0){
+		// $message['status']=1;
+		// $message['subcat_slider']=$slider;
 		
-	}
-	else{
-		$message['slider_status']=0;
-	}
+	// }
+	// else{
+		// $message['slider_status']=0;
+	// }
 	
 	$products=$this->Mobile_model->product_list($subcat);
 	if(count($products)>0){
-		$message['product_status']=1;
+		$message['status']=1;
 		$message['products']=$products;
 	
 		 }
 		 else{
-			 $message['product_status']=0;
+			 $message['status']=0;
+			 $message[]='No products available';
 		 }
 
 		    $this->response($message, REST_Controller::HTTP_OK);

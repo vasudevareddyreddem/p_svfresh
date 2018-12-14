@@ -9,14 +9,14 @@ class Mobile_model extends CI_Model
 		$this->load->database("default");
 	}
 	public function category_list(){
-       $this->db->select('category_tab.*');
+       $this->db->select('category_tab.cat_id,category_tab.cat_name,category_tab.cat_img');
 	   $this->db->from('category_tab');
 	   $this->db->join('subcat_tab','subcat_tab.cat_id=category_tab.cat_id');
 	   $this->db->join('product_tab','subcat_tab.subcat_id=product_tab.subcat_id');
 	   $this->db->where('category_tab.status',1);
 	   $this->db->where('subcat_tab.status',1);
 	   $this->db->where('product_tab.status',1);
-	   
+	   $this->db->group_by('category_tab.cat_id,category_tab.cat_name,category_tab.cat_img');
 	   $this->db->order_by('product_tab.updated_at','desc');
 	   return $this->db->get()->result_array();
 
@@ -41,7 +41,9 @@ class Mobile_model extends CI_Model
 	}
 	//gettting from category and subcategory
 	public function product_list($subcat){
-			$this->db->select('product_tab.*,subcat_tab.subcat_name');
+			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
+			product_tab.guarantee_policy,product_tab.description,subcat_tab.subcat_name');
 	  $this->db->from('product_tab');
 	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
 	   $this->db->where('product_tab.status',1);
@@ -59,7 +61,7 @@ class Mobile_model extends CI_Model
 		
 	}
 	public function home_sliders($id){
-			$this->db->select('*')->from('slider_pic_tab')->where('status',1)->where('slider_id',$id);
+			$this->db->select('pic_name')->from('slider_pic_tab')->where('status',1)->where('slider_id',$id);
 	return	$this->db->get()->result_array();
 		
 		
