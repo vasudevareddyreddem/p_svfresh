@@ -29,7 +29,8 @@ class Mobile_model extends CI_Model
 		
 	}
 	public function subcategory_list($cat){
-			$this->db->select('category_tab.cat_id,category_tab.cat_name,subcat_tab.subcat_id,subcat_tab.subcat_name');
+			$this->db->select('category_tab.cat_id,category_tab.cat_name,subcat_tab.subcat_id,subcat_tab.subcat_name
+			,subcat_tab.subcat_img');
 	  $this->db->from('subcat_tab');
 	  $this->db->join('category_tab','subcat_tab.cat_id=category_tab.cat_id');
 	   $this->db->where('subcat_tab.status',1);
@@ -47,6 +48,7 @@ class Mobile_model extends CI_Model
 	  $this->db->from('product_tab');
 	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
 	   $this->db->where('product_tab.status',1);
+	    $this->db->where('subcat_tab.status',1);
 
 		$this->db->where('subcat_tab.subcat_id',$subcat);
 	   $this->db->order_by('product_tab.updated_at','desc');
@@ -169,5 +171,11 @@ class Mobile_model extends CI_Model
     {
 		$this->db->insert('cart_tab',$data);
 		return $this->db->affected_rows()?1:0;
+	}
+	public function insert_billing_address($data){
+		$this->db->insert('billing_tab',$data);
+		$insert_id=$this->db->insert_id();
+		return $insert_id?$insert_id:0;
+		
 	}
 }

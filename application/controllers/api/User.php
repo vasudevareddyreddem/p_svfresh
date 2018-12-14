@@ -129,7 +129,7 @@ public function home_slider_post(){
 }
 public function subcatgories_post(){
 	
-	$userid=$this->post('user_id');
+	
 	$cat=$this->post('cat_id');
 	$flag=$this->Mobile_model->user_checking($userid);
 	if($flag==0){
@@ -140,6 +140,7 @@ public function subcatgories_post(){
 	
 	if(count($subcat)>0){
 	 $message = array('status'=>1,'message'=>$subcat);
+	 $message['subcat_img_path']=base_url().'assets/uploads/sub_category_pics/';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
 	 $message = array('status'=>0,'message'=>'NO Subcategories for this Category');
@@ -220,14 +221,10 @@ public function home_post(){
 	//get product for single category
 	public function subcatproducts_post(){
 	
-	$userid=$this->post('user_id');
-	$cat=$this->post('cat_id');
+	
+	//$cat=$this->post('cat_id');
 	$subcat=$this->post('subcat_id');
-	// $flag=$this->Mobile_model->user_checking($userid);
-	// if($flag==0){
-		 // $message = array('status'=>0,'message'=>' unauthorized user');
-		    // $this->response($message, REST_Controller::HTTP_OK);
-	// }
+	
 	// $slider=$this->Mobile_model->subcat_img_slider($subcat);
 	
 	// $message=array();
@@ -245,6 +242,7 @@ public function home_post(){
 	if(count($products)>0){
 		$message['status']=1;
 		$message['products']=$products;
+		$message['product_image_path']=base_url().'assets/uploads/product_pics/';
 	
 		 }
 		 else{
@@ -544,23 +542,62 @@ public function billing_address_post(){
 	$message=array();
 	$flag=$this->Mobile_model->user_checking($user_id);
 	if($flag==0){
-		 $message['check_staus'] =0;
+		 $message['status'] =0;
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
 	$address=$this->Mobile_model->get_user_billing_address($user_id);
 	if(count($address)>0)
  { 
- $message['address_status']=1;
+ $message['status']=1;
 	 $message['address']=$address;
 	
  }
  else{
-	  $message['address_status']=0;
+	  $message['status']=0;
  }
  
    $this->response($message, REST_Controller::HTTP_OK);
 	
+	
+	
+}
+public function insert_billing_address_post(){
+	
+	$user_id=$this->post('user_id');
+	$fname=$this->post('fname');
+	$lname=$this->post('lname');
+	$comp_name=$this->post('comp_name');
+	$email=$this->post('email');
+	$address=$this->post('address');
+	$city=$this->post('city');
+	$state=$this->post('state');
+	$pin=$this->post('pin');
+	$mobile=$this->post('mobile');
+	$fax=$this->post('fax');
+	
+	$data=array('user_id'=>$user_id,
+	'first_name'=>$fname,
+	'last_name'=>$lname,
+	'company_name'=>$comp_name,
+	'email_address'=>$email,
+	'address'=>$address,
+	'state'=>$state,
+	'city'=>$city,
+	'zip'=>$pin,
+	'telephone'=>$mobile,
+	'fax'=>$fax,
+	'created_by'=>$user_id
+	);
+    $insert_id=$this->Mobile_model->insert_billing_address($data);
+	if($insert_id==0){
+		$message=array('status'=>0,'message'=>'Billing address not added ');
+	 $this->response($message, REST_Controller::HTTP_OK);
+		
+	}
+	
+		$message=array('status'=>1,'billing_id'=>$insert_id);
+		 $this->response($message, REST_Controller::HTTP_OK);
 	
 	
 }
