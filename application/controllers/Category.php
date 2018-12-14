@@ -737,8 +737,9 @@ $this->load->model('Product_model')	;
 				
 			}
 			$cat_id=$data['slider']->cat_id;
+			
 			 $data['sub_cats']=$this->Product_model->get_sub_category_names($cat_id);
-			 
+			
 			
 			$this->load->view('admin/edit_subcat_slider',$data);
 		    $this->load->view('admin/footer');
