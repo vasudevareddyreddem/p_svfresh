@@ -482,24 +482,29 @@ public function get_cart_post(){
 }
 // delete the cart product
 public function delete_cart_product_post(){
+	
 	$user_id=$this->post('user_id');
 	$cart_id=$this->post('cart_id');
 	$message=array();
+	
+	
 	$flag=$this->Mobile_model->user_checking($user_id);
+	
 	if($flag==0){
-		 $message['check_staus'] =0;
+		 $message['status'] =0;
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
+	
 	$cart=$this->Mobile_model->delete_cart_product($cart_id);
 	if($cart==1)
  { 
- $message['cart_status']=1;
+ $message['status']=1;
 	 $message['message']='product deleted from cart';
 	
  }
  else{
-	  $message['cart_status']=0;
+	  $message['status']=0;
 	   $message['message']='product not deleted from cart';
  }
  

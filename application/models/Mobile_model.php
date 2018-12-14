@@ -128,7 +128,7 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->row_array();
 	}
 		public function get_user_cart($id){
-		$this->db->select('product_id,product_name,product_img,quantity,net_price')->from('cart_tab')->
+		$this->db->select('id,product_id,product_name,product_img,quantity,net_price')->from('cart_tab')->
 		where('cart_tab.user_id',$id)->order_by('created_date','desc');
 	
 	  return $this->db->get()->result_array();
