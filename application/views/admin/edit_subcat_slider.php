@@ -35,7 +35,12 @@
 										  <div class="form-group col-md-6">
                                                 <label>Sub-Category Name</label>
                                                 <select class="form-control  " name="sc_name" id="sc_name" >
-                                                 <option value='<?php echo $slider->subcat_id; ?>'><?php echo $slider->subcat_name;?></option>
+                                                 
+												 <?php foreach($sub_cats as $scat):?> 
+                                                <option value="<?php echo $scat['subcat_id'];?>" 
+												<?php if($scat['subcat_id']==$slider->subcat_id)
+												{echo 'selected';}?>><?php echo $scat['subcat_name']; ?></option>
+                                                   <?php endforeach;?>
                                                 </select>
                                             </div>
 											 <div class="form-group col-md-6">

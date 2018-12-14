@@ -143,6 +143,12 @@ class Mobile_model extends CI_Model
 
 	  return $this->db->get()->result_array();
 	}
+	public function get_user_billing_address($user_id){
+		
+		$this->db->select('*')->from('billing_tab')->where('user_id',$user_id)
+		->where('status','Active');
+		  return $this->db->get()->result_array();
+	}
 	
 
 }

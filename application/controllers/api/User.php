@@ -444,6 +444,31 @@ public function checkout_post(){
 	
 	
 }
+public function billing_address_post(){
+	$user_id=$this->post('user_id');
+	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$address=$this->Mobile_model->get_user_billing_address($user_id);
+	if(count($address)>0)
+ { 
+ $message['address_status']=1;
+	 $message['address']=$address;
+	
+ }
+ else{
+	  $message['address_status']=0;
+ }
+ 
+   $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+}
 
 
 

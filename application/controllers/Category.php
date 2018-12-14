@@ -9,6 +9,7 @@ class Category extends In_frontend{
 	{
 		parent::__construct();
 $this->load->model('Category_model')	;	
+$this->load->model('Product_model')	;	
 				
 		}
 		public function add_category(){
@@ -637,6 +638,7 @@ $this->load->model('Category_model')	;
 	}
 	public function save_subcat_slider(){
 		if( $this->session->userdata('svadmin_det')){
+			$cat_id=base64_decode($this->input->post('c_name'));
 			$subcat_id=$this->input->post('sc_name');
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
@@ -667,6 +669,7 @@ $this->load->model('Category_model')	;
 					$upload_data = $this->upload->data(); 
                     $slider_img =   $upload_data['file_name'];
 					$data=array('image_path'=>$slider_img,
+					'cat_id'=>$cat_id,
 					'subcat_id'=>$subcat_id,
 					'created_by'=>$svadmin);
 				}
@@ -733,6 +736,9 @@ $this->load->model('Category_model')	;
 					 redirect($_SERVER['HTTP_REFERER']);
 				
 			}
+			$cat_id=$data['slider']->cat_id;
+			 $data['sub_cats']=$this->Product_model->get_sub_category_names($cat_id);
+			 
 			
 			$this->load->view('admin/edit_subcat_slider',$data);
 		    $this->load->view('admin/footer');
