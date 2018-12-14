@@ -311,14 +311,14 @@ public function get_category_name_by_product_id($id='')
 		$this->db->where('subcat_slider.subcat_id',$id);
 		$this->db->where('subcat_slider.status',1);
 		return $this->db->get()->result_array();
-		return $this->db->get()->result_array();	
+		return $this->db->get()->result_array();
 	}
 	public  function get_all_slider_images_by_ategory(){
 		$this->db->select('category_tab.cat_dis_img,category_tab.cat_id')->from('category_tab');
 		$this->db->where('category_tab.status',1);
-		return $this->db->get()->result_array();	
+		return $this->db->get()->result_array();
 	}
-	
+
 	public  function get_product_reviewandrating_list($p_id){
 		$this->db->select('rating_list.*,users_tab.user_name')->from('rating_list');
 		$this->db->join('order_items_tab','order_items_tab.order_items_id = rating_list.order_item_id','left');
@@ -326,5 +326,12 @@ public function get_category_name_by_product_id($id='')
 		$this->db->join('product_tab','product_tab.product_id = order_items_tab.product_id','left');
 		$this->db->where('order_items_tab.product_id',$p_id);
 		return $this->db->get()->result_array();
+	}
+
+	//product name by product id
+	public function get_product_name_by_product_id($product_id='')
+	{
+		$this->db->select('product_name');
+		return $this->db->get_where('product_tab',array('product_id' => $product_id))->row();
 	}
 }

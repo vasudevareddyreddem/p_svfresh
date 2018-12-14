@@ -12,6 +12,7 @@ class Milkcalender extends CI_Controller
     $this->load->model('Category_model');
     $this->load->model('Cart_Model');
     $this->load->model('Calender_Model');
+    $this->load->model('Product_model');
   }
 
   public function index()
@@ -21,14 +22,21 @@ class Milkcalender extends CI_Controller
 
   public function milkcalender($id='')
   {
-    $data['categories'] = $this->Category_model->get_all_category();
-    $user_id = $this->session->userdata('id');
-    $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
-    $data['count'] = count($data['cart']);
-    $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
-    $data['pageTitle'] = 'Milk Calender';
-    $data['product_id'] = $id;
-    $this->load->view('home/milk_calendar',$data);
+
+    if($this->session->userdata('logged_in') == TRUE){
+      $data['categories'] = $this->Category_model->get_all_category();
+      $user_id = $this->session->userdata('id');
+      $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+      $data['count'] = count($data['cart']);
+      $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+      $data['pageTitle'] = 'Milk Calender';
+      $data['product_id'] = $id;
+      $data['product_name'] = $this->Product_model->get_product_name_by_product_id($id);
+      $this->load->view('home/milk_calendar',$data);
+    }else{
+      redirect('home/login');
+    }
+
   }
 
   public function month_calender()
@@ -43,7 +51,9 @@ class Milkcalender extends CI_Controller
     $data['month'] = $month;
     $data['year'] = date('Y');
     $data['product_id'] = $product_id;
-    $data['user_id'] = $this->session->userdata('id');
+    $user_id = $this->session->userdata('id');
+    $data['user_id'] = $user_id;
+    //$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id);
     $return['calender_template'] = $this->load->view('home/calender_template',$data,TRUE);
     echo json_encode($return);
   }
@@ -51,12 +61,16 @@ class Milkcalender extends CI_Controller
   public function insert_calender()
   {
     $post = $this->input->post();
-    for($i = 1;$i <= count($post['quant']);$i++){
-      if(($post['quant'][$i]) != 0 ){
-        $this->Calender_Model->insert(array('product_id' => $post['product_id'][$i],'user_id' => $post['user_id'][$i],'year' => $post['year'][$i],'month' => $post['month'][$i],'date' => $post['date'][$i],'quantity' => $post['quant'][$i],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
+    if(!empty($post)){
+
+      for($i = 1;$i <= count($post['quant']);$i++){
+        if(($post['quant'][$i]) != 0 ){
+          $this->Calender_Model->insert(array('product_id' => $post['product_id'][$i],'user_id' => $post['user_id'][$i],'year' => $post['year'][$i],'month' => $post['month'][$i],'date' => $post['date'][$i],'quantity' => $post['quant'][$i],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
+        }
       }
+      redirect('/billing');
+
     }
-    redirect('/billing');
   }
 
 }
