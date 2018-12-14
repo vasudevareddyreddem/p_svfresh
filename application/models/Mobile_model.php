@@ -80,7 +80,9 @@ class Mobile_model extends CI_Model
 	}
 	//getting single product details
 	public function single_product_details($id){
-		$this->db->select('product_tab.*')->from('product_tab')->where('product_id',$id)
+		$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
+			product_tab.guarantee_policy,product_tab.description')->from('product_tab')->where('product_id',$id)
 		->where('status',1);
 	  return $this->db->get()->row_array();
 	}
@@ -90,13 +92,15 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 	public function single_product_features($id){
-		$this->db->select('features_tab.*')->from('features_tab')->where('product_id',$id)
+		$this->db->select('feature_name,feature_value')->from('features_tab')->where('product_id',$id)
 		->where('status',1);
 	  return $this->db->get()->result_array();
 	}
 	public function single_product_rel_products($id){
-		$this->db->select('rel_products_tab.*,product_tab.product_name')->from('rel_products_tab')->
-		join('product_tab','rel_products_tab.product_id=product_tab.product_id')->where('product_tab.product_id',$id)
+		$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
+			product_tab.guarantee_policy,product_tab.description')->from('rel_products_tab')->
+		join('product_tab','rel_products_tab.rel_product_id=product_tab.product_id')->where('rel_products_tab.product_id',$id)
 		->where('product_tab.status',1)->where('rel_products_tab.status',1);
 	  return $this->db->get()->result_array();
 	}
@@ -151,6 +155,19 @@ class Mobile_model extends CI_Model
 		->where('status','Active');
 		  return $this->db->get()->result_array();
 	}
-	
-
+	public function product_list_by_cat($cat){
+		$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
+			product_tab.guarantee_policy,product_tab.description')->from('product_tab')->
+			join('category_tab','category_tab.cat_id=product_tab.cat_id')->where('product_tab.cat_id',$cat)->where('product_tab.status',1)->
+			order_by('product_tab.updated_at','desc');
+			
+			return $this->db->get()->result_array();
+		
+	}
+	public function insert_cart_product($data)
+    {
+		$this->db->insert('cart_tab',$data);
+		return $this->db->affected_rows()?1:0;
+	}
 }

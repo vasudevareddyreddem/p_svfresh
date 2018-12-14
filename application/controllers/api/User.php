@@ -97,6 +97,7 @@ public function categories_post(){
 	$cat=$this->Mobile_model->category_list();
 	if(count($cat)>0){
 	       $message = array('status'=>1,'message'=>$cat);
+		   $message['image_path']=base_url().'assets/uploads/category_pics/';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
 	    $message = array('status'=>0,'message'=>'No records in category');
@@ -254,25 +255,48 @@ public function home_post(){
 		    $this->response($message, REST_Controller::HTTP_OK);
 	
 }
+//get products for single category
+	public function catproducts_post(){
+	
+	$userid=$this->post('user_id');
+	$cat=$this->post('cat_id');
+	
+	
+	
+	$products=$this->Mobile_model->product_list_by_cat($cat);
+	if(count($products)>0){
+		$message['status']=1;
+		$message['products']=$products;
+		 $message['image_path']=base_url().'assets/uploads/product_pics/';
+	
+		 }
+		 else{
+			 $message['status']=0;
+			 $message[]='No products available';
+		 }
+
+		    $this->response($message, REST_Controller::HTTP_OK);
+	
+}
 //get single product
 public function singleproduct_post(){
 $pid=$this->post('product_id');
 $message=array();
  $prod_det=$this->Mobile_model->single_product_details($pid);
- $prod_imgs=$this->Mobile_model->single_product_images($pid);
+ //$prod_imgs=$this->Mobile_model->single_product_images($pid);
  $prod_fet=$this->Mobile_model->single_product_features($pid);
  $prod_rel=$this->Mobile_model->single_product_rel_products($pid);
- $dis_imgs=$this->Mobile_model->cat_dis_imgs();
-    $cat_list=$this->Mobile_model->category_list();
-if(count($cat_list)>0)
- { 
+ //$dis_imgs=$this->Mobile_model->cat_dis_imgs();
+    // $cat_list=$this->Mobile_model->category_list();
+// if(count($cat_list)>0)
+ // { 
 	
-	 $message['cat_list_status']=1;
-	  $message['cat_list']=$cat_list;
- }
- else{
-	  $message['cat_list_status']=0;
- }
+	 // $message['cat_list_status']=1;
+	  // $message['cat_list']=$cat_list;
+ // }
+ // else{
+	  // $message['cat_list_status']=0;
+ // }
  if(count($prod_det)>0)
  { 
 	
@@ -282,32 +306,32 @@ if(count($cat_list)>0)
  else{
 	  $message['prod_det_status']=0;
  }
- if(count($prod_imgs)>0)
- { 
+ // if(count($prod_imgs)>0)
+ // { 
 	
-	 $message['prod_imgs_status']=1;
-	  $message['prod_imgs']=$prod_imgs;
- }
- else{
-	  $message['prod_imgs_status']=0;
- }
+	 // $message['prod_imgs_status']=1;
+	  // $message['prod_imgs']=$prod_imgs;
+ // }
+ // else{
+	  // $message['prod_imgs_status']=0;
+ // }
  if(count($prod_fet)>0)
  { 
 	 
-	 $message['prod_fet_status']=1;
+	
 	 $message['prod_fet']=$prod_fet;
  }
  else{
-	  $message['prod_fet_status']=0;
+	  $message['prod_fet']='No Product Features';
  }
  if(count($prod_rel)>0)
  { 
- $message['prod_rel_status']=1;
+ 
 	 $message['prod_rel']=$prod_rel;
 	
  }
  else{
-	  $message['prod_rel_status']=0;
+	  $message['prod_rel']='No related Products';
  }
  
    $this->response($message, REST_Controller::HTTP_OK);
@@ -392,25 +416,63 @@ public function profile_post(){
 	
 	
 }
+//add to cart
+public function add_to_cart_post(){
+	 $product_id=$this->post('product_id');
+	 $user_id=$this->post('user_id');
+	 $quan=$this->post('quantity');
+	 $net_price=$this->post('net_price');
+	 $flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message = array('status'=>0,'message'=>' unauthorized user');
+		    $this->response($message, REST_Controller::HTTP_OK);
+	 }
+	$prod_det=$this->Mobile_model->single_product_details($product_id);
+	
+	
+	if(!count($prod_det)>0){
+		 $message = array('status'=>0,'message'=>'Product Not available');
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$data=array('user_id'=>$user_id,
+	 'product_id'=>$product_id,
+	 'product_img'=>$prod_det['product_img'],
+	 'product_name'=>$prod_det['product_name'],
+	  'net_price'=>$net_price,
+	 'quantity'=>$quan,
+	 
+	 );
+	$flag= $this->Mobile_model->insert_cart_product($data);
+	if($flag==1){
+	 $message = array('status'=>1,'message'=>'Add to cart Successfully');
+		    $this->response($message, REST_Controller::HTTP_OK);
+		
+	}
+	 $message = array('status'=>1,'message'=>'Product not added to cart');
+		    $this->response($message, REST_Controller::HTTP_OK);
+}
+
+
 //get the cart products
-public function cart_post(){
+public function get_cart_post(){
 	$user_id=$this->post('user_id');
 	$message=array();
 	$flag=$this->Mobile_model->user_checking($user_id);
 	if($flag==0){
-		 $message['check_staus'] =0;
+		 $message['status'] =0;
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
 	$cart=$this->Mobile_model->get_user_cart($user_id);
 	if(count($cart)>0)
  { 
- $message['cart_status']=1;
-	 $message['cart']=$cart;
+ $message['status']=1;
+	 $message['cart_list']=$cart;
 	
  }
  else{
-	  $message['cart_status']=0;
+	  $message['status']=0;
+	   $message['message']='No cart products Available';
  }
  
    $this->response($message, REST_Controller::HTTP_OK);
