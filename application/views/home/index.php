@@ -98,14 +98,14 @@
                     <a href="<?php echo base_url('category/'.$c->cat_id); ?>"><?php if(!empty($c->cat_rh_img) && file_exists('assets/uploads/category_pics/'.$c->cat_rh_img)){ ?><img alt="ads2" class="img-responsive" src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_rh_img);?>" /><?php } ?></a>
                   </div>
                 </div>
-				
+
                 <div class="product-featured clearfix">
 				<?php if(!empty($c->cat_dis_img) && file_exists('assets/uploads/category_pics/'.$c->cat_dis_img)){ ?>
                   <div class="banner-featured">
                     <div class="featured-text"><span>featured</span></div>
                     <div class="banner-img">
                       <a href="#"><img alt="<?php echo $c->cat_dis_img; ?>" style="height:240px;" class="img-responsive"  src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_dis_img); ?>" /></a>
-                     
+
                     </div>
                   </div>
 				  <?php } ?>
@@ -131,7 +131,9 @@
 
                                     </div>
                                     <div class="add-to-cart">
-                                      <?php if (in_array($p->product_id,$cart_product_id)) { ?>
+                                      <?php if(strcasecmp($c->cat_name,'MILK') == 0){ ?>
+                                        <a title="Add to Calender" href="<?php echo base_url('milkcalender/'.$p->product_id); ?>" >Add to Calender</a>
+                                      <?php } elseif (in_array($p->product_id,$cart_product_id)) { ?>
                                         <a title="Added to Cart" class="addtocart" href="#">Added to cart</a>
                                       <?php }else{ ?>
                                       <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>

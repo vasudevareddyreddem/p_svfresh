@@ -41,7 +41,7 @@
               <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
                 <?php foreach($slider_images as $imgs){ ?>
 				<li><a href="<?php echo base_url('category/'.$imgs['cat_id']); ?>"><img src="<?php echo base_url('assets/uploads/category_pics/'.$imgs['cat_dis_img']); ?>" alt="<?php echo $imgs['cat_dis_img']; ?>"></a></li>
-              
+
 				<?php } ?>
 			  </ul>
             </div>
@@ -107,25 +107,27 @@
                       <?php echo $product->description; ?>
                     </div>
                   <?php } ?>
+                  <?php if(strcasecmp($category_name->cat_name,'MILK') != 0){ ?>
                   <div class="form-option">
-                    <div class="attributes">
-                      <div class="attribute-label">Qty:</div>
-                      <form class="" id="cart_form">
-                        <div style="padding:5px;" class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                        <input type="number" name="quantity" id="number" value="1" />
-                        <div style="padding:5px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-                        <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>"/>
-                        <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
-                        <input type="hidden" name="product_name" value="<?php echo $product->product_name; ?>"/>
-                        <input type="hidden" name="net_price" value="<?php echo $product->net_price; ?>"/>
-                        <input type="hidden" name="product_img" value="<?php echo $product->product_img; ?>"/>
-                      </form>
-                    </div>
+                      <div class="attributes">
+                        <div class="attribute-label">Qty:</div>
+                        <form class="" id="cart_form">
+                          <div style="padding:5px;" class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                          <input type="number" name="quantity" id="number" value="1" />
+                          <div style="padding:5px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                          <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>"/>
+                          <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
+                          <input type="hidden" name="product_name" value="<?php echo $product->product_name; ?>"/>
+                          <input type="hidden" name="net_price" value="<?php echo $product->net_price; ?>"/>
+                          <input type="hidden" name="product_img" value="<?php echo $product->product_img; ?>"/>
+                        </form>
+                      </div>
                   </div>
+                  <?php } ?>
                   <div class="form-action">
                     <div class="button-group">
                       <?php if(strcasecmp($category_name->cat_name,'MILK') == 0){ ?>
-                        <button class="btn-add-cart" type="button" >Add to calender</button>
+                        <a title="Add to Calender" class="btn-add-cart" href="<?php echo base_url('milkcalender/'.$product->product_id); ?>" >Add to Calender</a>
                       <?php } else if (in_array($product->product_id,$cart_product_id)){ ?>
                         <button class="btn-add-cart" type="button" id="addtocart" disabled>Added to cart</button>
                       <?php }else{ ?>
@@ -225,12 +227,12 @@
                           <?php echo isset($list['message'])?$list['message']:''; ?>
                         </div>
                       </div>
-					  
+
 					  <?php } ?>
-                     
+
                     </div>
 					<?php }else{ ?>
-						No data available 
+						No data available
 					<?php } ?>
 
                   </div>

@@ -14,6 +14,7 @@ class Order extends CI_Controller
     $this->load->model('Cart_Model');
     $this->load->model('Wishlist_Model');
     $this->load->model('Auth_Model');
+    $this->load->model('Calender_Model');
 		$this->load->library('user_agent');
 
   }
@@ -32,7 +33,7 @@ class Order extends CI_Controller
     }else{
       redirect('home/login');
     }
-  } 
+  }
   public function details()
   {
     if($this->session->userdata('logged_in') == TRUE){
@@ -62,9 +63,9 @@ class Order extends CI_Controller
     }
     echo json_encode($return);exit(0);
   }
-  
+
   public  function update_review_ratings(){
-	 if($this->session->userdata('logged_in') == TRUE){ 
+	 if($this->session->userdata('logged_in') == TRUE){
 	   $user_id = $this->session->userdata('id');
 	  $post=$this->input->post();
 	  //echo '<pre>';print_r($post);exit;
@@ -87,7 +88,7 @@ class Order extends CI_Controller
 			  redirect($this->agent->referrer());
 		  }else{
 			 $this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
-			 redirect($this->agent->referrer()); 
+			 redirect($this->agent->referrer());
 		  }
 	  }
 	  //echo '<pre>';print_r($post);exit;
@@ -95,7 +96,25 @@ class Order extends CI_Controller
 		 $this->session->set_flashdata('error',"Please login and continue.");
 		redirect('home/login');
     }
-	  
+
+  }
+
+  public function milk_orders()
+  {
+
+    if ($this->session->userdata('logged_in') == TRUE) {
+      $data['categories'] = $this->Category_model->get_all_category();
+      $user_id = $this->session->userdata('id');
+      $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+      $data['count'] = count($data['cart']);
+      $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+      $data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id);
+      $data['pageTitle'] = 'Milk Order';
+      $this->load->view('home/milk_orders',$data);
+    } else {
+      $this->session->set_flashdata('error',"Please login and continue.");
+      redirect('home/login');
+    }
   }
 
 }

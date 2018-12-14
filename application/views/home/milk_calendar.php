@@ -23,7 +23,7 @@
 						<div class="card-header  py-4 px-4 text-white" style="background:#57bb14;">
 							<div class="row">
 								<div class="col-md-9">
-									<strong class="h3">March (<span>Heritage Milk</span>)</strong>
+									<strong class="h3">March (<span><?php echo ucwords($product_name->product_name); ?></span>)</strong>
 								</div>
 								<div class="col-md-3">
 									<select class="form-control months">
@@ -77,21 +77,23 @@
 <script>
 
 $(document).ready(function(){
-	$('.months').on('change',function(){
-		var month = $(this).val();
-		var product_id = $('#product_id').val();
-		$.ajax({
-			url:'<?php echo base_url('Milkcalender/month_calender'); ?>',
-			type:'POST',
-			data:{'month':month,'product_id':product_id},
-			dataType:'JSON',
-			success:function(data){
-				$('#calender_template').empty();
-				$('#calender_template').html(data.calender_template);
-			}
-		});
-	});
+	$('.months').change(get_calender).trigger('change');
 });
+
+function get_calender() {
+	var month = $(this).val();
+	var product_id = $('#product_id').val();
+	$.ajax({
+		url:'<?php echo base_url('Milkcalender/month_calender'); ?>',
+		type:'POST',
+		data:{'month':month,'product_id':product_id},
+		dataType:'JSON',
+		success:function(data){
+			$('#calender_template').empty();
+			$('#calender_template').html(data.calender_template);
+		}
+	});
+}
 
 </script>
 </body>

@@ -50,6 +50,7 @@
                         <li><a href="<?php echo base_url('home/login'); ?>">Login</a></li>
                         <?php } ?>
                         <li><a href="<?php echo base_url('order'); ?>">Orders</a></li>
+                        <li><a href="<?php echo base_url('order/milk_orders'); ?>">Milk Orders</a></li>
                         <!-- <li><a href="">Compare</a></li> -->
                         <li><a href="<?php echo base_url('wishlist'); ?>">Wishlists</a></li>
                     </ul>
@@ -67,7 +68,7 @@
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline" method="post" action="<?php echo base_url('home/search'); ?>">
-                     
+
                       <div class="form-group input-serach">
                         <input class="palce-hold-col"  id="search_value" name="search_value"  style="color:#fff" type="text"  placeholder="Keyword here...">
 						<input type="hidden" name="search_key" id="search_key" value="">
@@ -177,5 +178,3 @@
         <div class="alert_msg1 animated slideInUp bg-warn">
             <?php echo $this->session->flashdata('error');?> &nbsp; <i class="fa fa-exclamation-triangle text-success ico_bac" aria-hidden="true"></i> </div>
         <?php endif; ?>
-
- 
