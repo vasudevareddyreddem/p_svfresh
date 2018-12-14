@@ -14,6 +14,7 @@ class Billing extends CI_Controller
     $this->load->model('Cart_Model');
     $this->load->model('Billing_Model');
     $this->load->model('Order_Model');
+    $this->load->model('Calender_Model');
   }
 
   public function index()
@@ -55,8 +56,20 @@ class Billing extends CI_Controller
             //   $this->Order_Model->insert($c);
             //   $this->Order_Model->delete_cart_after_order($c->user_id);
             // }
-            $this->session->set_userdata('billing_id',$billing_id);
-            redirect('/Paymentstype');
+
+            if($this->session->userdata('milk_order') == 'MILK'){
+              $calender_id = $this->session->userdata('calender_id');
+              foreach ($calender_id as $key => $cid) {
+                $this->Calender_Model->update(array('billing_id'=>$billing_id),$cid);
+                $this->session->unset_userdata($calender_id[$key]);
+              }
+              $this->session->unset_userdata('milk_order');
+              redirect('order/milk_orders');
+            }else{
+              $this->session->set_userdata('billing_id',$billing_id);
+              redirect('/Paymentstype');
+            }
+
           }else{
             $this->session->set_flashdata('error', 'Please,try again');
             redirect('/billing');
@@ -89,8 +102,21 @@ class Billing extends CI_Controller
       //   $this->Order_Model->insert($c);
       //   $this->Order_Model->delete_cart_after_order($c->user_id);
       // }
-      $this->session->set_userdata('billing_id',$billing_id);
-      redirect('/Paymentstype');
+
+
+      if($this->session->userdata('milk_order') == 'MILK'){
+        $calender_id = $this->session->userdata('calender_id');
+        foreach ($calender_id as $key => $cid) {
+          $this->Calender_Model->update(array('billing_id'=>$billing_id),$cid);
+          $this->session->unset_userdata($calender_id[$key]);
+        }
+        $this->session->unset_userdata('milk_order');
+        redirect('order/milk_orders');
+      }else{
+        $this->session->set_userdata('billing_id',$billing_id);
+        redirect('/Paymentstype');
+      }
+
     }
   }
 

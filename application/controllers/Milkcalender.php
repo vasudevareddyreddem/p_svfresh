@@ -62,12 +62,15 @@ class Milkcalender extends CI_Controller
   {
     $post = $this->input->post();
     if(!empty($post)){
-
+      $calender_id = array();
       for($i = 1;$i <= count($post['quant']);$i++){
         if(($post['quant'][$i]) != 0 ){
           $this->Calender_Model->insert(array('product_id' => $post['product_id'][$i],'user_id' => $post['user_id'][$i],'year' => $post['year'][$i],'month' => $post['month'][$i],'date' => $post['date'][$i],'quantity' => $post['quant'][$i],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
+          $calender_id[] = $this->db->insert_id();
         }
       }
+      $this->session->set_userdata('calender_id',$calender_id);
+      $this->session->set_userdata('milk_order','MILK');
       redirect('/billing');
 
     }

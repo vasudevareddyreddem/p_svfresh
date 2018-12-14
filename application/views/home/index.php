@@ -7,7 +7,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-3 ">
-          <?php if($slider_side_images->l_pic){ ?>
+          <?php if($slider_side_images){ ?>
           <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->l_pic); ?>" />
           <?php } ?>
         </div>
@@ -25,7 +25,7 @@
           <?php } ?>
         </div>
         <div class="col-sm-3 ">
-          <?php if($slider_side_images->l_pic){ ?>
+          <?php if($slider_side_images){ ?>
           <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->r_pic); ?>" />
           <?php } ?>
         </div>
