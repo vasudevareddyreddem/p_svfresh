@@ -131,11 +131,7 @@ public function subcatgories_post(){
 	
 	
 	$cat=$this->post('cat_id');
-	$flag=$this->Mobile_model->user_checking($userid);
-	if($flag==0){
-		 $message = array('status'=>0,'message'=>' unauthorized user');
-		    $this->response($message, REST_Controller::HTTP_OK);
-	}
+	
 	$subcat=$this->Mobile_model->subcategory_list($cat);
 	
 	if(count($subcat)>0){
@@ -359,6 +355,48 @@ public function orders_post(){
  
    $this->response($message, REST_Controller::HTTP_OK);
 	
+	
+	
+}
+//insert wishlist
+public function insert_wishlist_product_post(){
+	$user_id=$this->post('user_id');
+	$message=array();
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	
+	$pid=$this->post('product_id');
+	$quan=$this->post('quantity');
+	$prod_det=$this->Mobile_model->single_product_details($pid);
+	
+	
+	if(!count($prod_det)>0){
+		 $message = array('status'=>0,'message'=>'Product Not available');
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$data=array('user_id'=>$user_id,
+	            'product_id'=>$pid,
+				'product_img'=>$prod_det['product_img'],
+				'product_name'=>$prod_det['product_name'],
+				'quantity'=>$quan,
+				'net_price'=>$prod_det['net_price'],
+				'discount_price'=>$prod_det['discount_price'],
+			
+				);
+	
+		    
+	$flag=$this->Mobile_model->insert_wishlist_product($data);
+	if($flag==1) {
+		$message['status']=1;
+	    $message['message']='product placed in whishlist';
+		 $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$message = array('status'=>0,'message'=>'product not added  to whishlist');
+		    $this->response($message, REST_Controller::HTTP_OK);
 	
 	
 }
@@ -599,6 +637,24 @@ public function insert_billing_address_post(){
 		$message=array('status'=>1,'billing_id'=>$insert_id);
 		 $this->response($message, REST_Controller::HTTP_OK);
 	
+	
+}
+public function insert_order_post(){
+	$billing_id=$this->post('billing_id');
+	$user_id=$this->post('user_id');
+	$payment_type=$this->post('payment_type');
+    $razor_payment_id=$this->post('$razor_payment_id');
+   $razor_order_id=$this->post('$razor_order_id');
+   $razor_sig=$this->post('$razor_signature');
+   $data=array('user_id'=>$user_id,
+               'billing_id'=>$billing_id,
+			   'payment_type'=>$payment_type,
+			    'created_by'=>$user_id,
+				'razorpay_payment_id'=>$razor_payment_id,
+				'razorpay_order_id'=>$razor_order_id,
+				'razorpay_signature'=>$razor_sig
+				);
+	$this->Mobile_model->insert_order($data);
 	
 }
 

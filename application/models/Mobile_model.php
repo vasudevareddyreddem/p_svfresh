@@ -178,4 +178,13 @@ class Mobile_model extends CI_Model
 		return $insert_id?$insert_id:0;
 		
 	}
+	public function insert_order(){
+		$this->db->insert('order_tab',$data);
+		return $this->db->affected_rows()?1:0;
+	}
+	public function insert_wishlist_product($data){
+		$this->db->insert('wishlist_tab',$data);
+		return $this->db->affected_rows()?1:0;
+		
+	}
 }
