@@ -642,6 +642,7 @@ public function insert_billing_address_post(){
 public function insert_order_post(){
 	$billing_id=$this->post('billing_id');
 	$user_id=$this->post('user_id');
+	$items=$this->post('order_ids');
 	$payment_type=$this->post('payment_type');
     $razor_payment_id=$this->post('$razor_payment_id');
    $razor_order_id=$this->post('$razor_order_id');
@@ -654,7 +655,37 @@ public function insert_order_post(){
 				'razorpay_order_id'=>$razor_order_id,
 				'razorpay_signature'=>$razor_sig
 				);
-	$this->Mobile_model->insert_order($data);
+	$insert_id=$this->Mobile_model->insert_order($data);
+	    $str = date('Ymd').$insert_id;
+        $order_number =  'SV'.str_pad($str,10,'0',STR_PAD_LEFT);
+     foreach($items as $item)
+	 {
+		 $cart_det=$this->Mobile_model->single_cart_item($item);
+		 
+		 
+		$product=$this->Mobile_model->single_product_details($cart_det['product_id']);
+		$net_price=$cart_det['quantity']*$product['net_price'];
+		
+		 $itemdata[]=array('order_id'=>$insert_id,
+		                  'order_number'=>$order_number,
+						  'user_id'=>$user_id,
+						  'product_id'=>$product['product_id'],
+						  'product_name'=>$product['product_name'],
+						  'product_img'=>$product['product_img'],
+						  'quantity'=>$cart_det['quantity'],
+						  'net_price'=>$net_price,
+						  );
+	 }
+	
+	$status=$this->Mobile_model->insert_order_items($itemdata);
+	if($status==1){
+		$this->Mobile_model->delete_cart_items($user_id);
+	$message=array('status'=>1,'order_id'=>$insert_id);
+		 $this->response($message, REST_Controller::HTTP_OK);
+		 
+	}
+		$message=array('status'=>0,'message'=>'order_items not added');
+		 $this->response($message, REST_Controller::HTTP_OK);
 	
 }
 

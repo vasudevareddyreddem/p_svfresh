@@ -44,7 +44,8 @@ class Mobile_model extends CI_Model
 	public function product_list($subcat){
 			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
 			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
-			product_tab.guarantee_policy,product_tab.description,subcat_tab.subcat_name');
+			product_tab.guarantee_policy,product_tab.description,subcat_tab.subcat_name,
+			(select sum(rate)/count(product_id)   from rating_list where rating_list.product_id=product_tab.product_id group by product_id) AS rating ');
 	  $this->db->from('product_tab');
 	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
 	   $this->db->where('product_tab.status',1);
@@ -52,10 +53,13 @@ class Mobile_model extends CI_Model
 
 		$this->db->where('subcat_tab.subcat_id',$subcat);
 	   $this->db->order_by('product_tab.updated_at','desc');
+	  
+	   
 	   return $this->db->get()->result_array();
 		
 		
 	}
+	
 	public function home_slider_two_images(){
 		$this->db->select('*')->from('slider_tab')->where('status',1);
 	return	$this->db->get()->row_array();
@@ -116,9 +120,9 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 	public function get_user_wishlist($id){
-		$this->db->select('wishlist_tab.product_name,wishlist_tab.product_id,
-		wishlist_tab.product_img,wishlist_tab.quantity,wishlist_tab.net_price,wishlist_tab.discount_price
-		')->from('wishlist_tab')->
+		$this->db->select('product_tab.product_name,product_tab.product_id,
+		product_tab.product_img,product_tab.quantity,product_tab.net_price,product_tab.discount_price
+		')->from('wishlist_tab')->join('product_tab','product_tab.product_id=wishlist_tab.product_id')->
 		where('wishlist_tab.user_id',$id);
 	
 	  return $this->db->get()->result_array();
@@ -130,7 +134,9 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->row_array();
 	}
 		public function get_user_cart($id){
-		$this->db->select('id,product_id,product_name,product_img,quantity,net_price')->from('cart_tab')->
+		$this->db->select('cart_tab.id,product_tab.product_id,product_tab.product_name,product_tab.product_img,
+		product_tab.quantity,product_tab.net_price')->from('cart_tab')->
+		join('product_tab','product_tab.product_id=cart_tab.product_id')->
 		where('cart_tab.user_id',$id)->order_by('created_date','desc');
 	
 	  return $this->db->get()->result_array();
@@ -178,13 +184,28 @@ class Mobile_model extends CI_Model
 		return $insert_id?$insert_id:0;
 		
 	}
-	public function insert_order(){
+	public function insert_order($data){
 		$this->db->insert('order_tab',$data);
-		return $this->db->affected_rows()?1:0;
+		$insert_id=$this->db->insert_id();
+		return $insert_id;
+	
 	}
 	public function insert_wishlist_product($data){
 		$this->db->insert('wishlist_tab',$data);
 		return $this->db->affected_rows()?1:0;
 		
+	}
+	public function single_cart_item($item){
+		$this->db->select('*')->from('cart_tab')->where('id',$item);
+		return $this->db->get()->row_array();
+	}
+	public function insert_order_items($itemdata){
+		$this->db->insert_batch('order_items_tab',$itemdata);
+		return $this->db->affected_rows()?1:0;
+	}
+	public function delete_cart_items($user_id){
+		$this->db->where('user_id',$user_id);
+		$this->db->delete('cart_tab');
+	return $this->db->affected_rows()?1:0;
 	}
 }
