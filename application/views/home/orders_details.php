@@ -15,9 +15,9 @@
 
               </div>
               <div class="panel-body">
-			  <div class="col-md-4">
+			 <a href="<?php echo base_url('product/'.$order_details['product_id']); ?>"> <div class="col-md-4">
 				<img class="img-responsive" src="<?php echo base_url('assets/uploads/product_pics/'.$order_details['product_img']); ?>" alt="<?php echo isset($order_details['product_img'])?$order_details['product_img']:''; ?>">
-			  </div>
+			  </div></a>
 			  <div class="col-md-8">
 				<h3><?php echo isset($order_details['product_name'])?$order_details['product_name']:''; ?></h3>
 				<h4 class="py-2">₹ <?php echo isset($order_details['net_price'])?$order_details['net_price']:''; ?></h4>
@@ -29,6 +29,7 @@
               </div>
               <div class="panel-footer">
 				<form method="post" action="<?php echo base_url('order/update_review_ratings'); ?>">
+				<input type="hidden" name="product_id" id="product_id" value="<?php echo isset($order_details['product_id'])?$order_details['product_id']:''; ?>">
                   <div class="row ">
 				   <h2 class="py-2 h3 col-md-8 col-md-offset-2" style="text-algin:left">Rating</h2>
 				  </div>
