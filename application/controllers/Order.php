@@ -75,6 +75,7 @@ class Order extends CI_Controller
 	  'email'=>isset($post['email'])?$post['email']:'',
 	  'message'=>isset($post['message'])?$post['message']:'',
 	  'order_item_id'=>isset($post['order_item_id'])?$post['order_item_id']:'',
+	  'product_id'=>isset($post['product_id'])?$post['product_id']:'',
 	  'user_id'=>$user_id,
 	  );
 	  $check=$this->Order_Model->check_rating_exits($user_id,$post['order_item_id']);

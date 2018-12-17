@@ -155,11 +155,21 @@
                                       <span class="price old-price"> ₹ <?php echo $p->actual_price; ?></span>
                                     </div>
                                     <div class="product-star">
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star-half-o"></i>
+                                      <?php if (count($rating) > 0) { ?>
+                                        <?php foreach ($rating as $r) { ?>
+                                          <?php if($p->product_id == $r->product_id){ ?>
+                                            <?php for ($i=1; $i <= $r->rate; $i++) { ?>
+                                              <i class="fa fa-star"></i>
+                                            <?php } ?>
+                                            <?php if (strpos($r->rate,'.')) { ?>
+                                              <i class="fa fa-star-half-o"></i>
+                                            <?php $i++; } ?>
+                                            <?php while ($i<=5) { ?>
+                                                <i class="fa fa-star-o"></i>
+                                            <?php $i++; } ?>
+                                          <?php } ?>
+                                        <?php } ?>
+                                      <?php } ?>
                                     </div>
                                   </div>
                                 </li>

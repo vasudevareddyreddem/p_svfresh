@@ -334,4 +334,8 @@ public function get_category_name_by_product_id($id='')
 		$this->db->select('product_name');
 		return $this->db->get_where('product_tab',array('product_id' => $product_id))->row();
 	}
+	//get product rating...
+	public function get_product_rating(){
+		return $this->db->query('SELECT AVG(rate) AS rate,r.product_id AS product_id FROM rating_list AS r LEFT JOIN product_tab AS p ON r.product_id = p.product_id GROUP BY r.product_id')->result();
+	}
 }
