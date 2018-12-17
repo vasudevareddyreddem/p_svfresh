@@ -169,7 +169,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 			if(isset($_FILES['p_image']['name'])){
       $countfiles = count($_FILES['p_image']['name']);
 
-	 
+	 $img_stat=0;
 
       // Looping all files
       for($i=0;$i<$countfiles;$i++){
@@ -194,6 +194,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					$img_stat=1;
                     $slider_img =   $upload_data['file_name'];
 					$pdata[]=array('image_name'=>$slider_img,
 					'product_id'=>$product_id,
@@ -207,7 +208,9 @@ if ( ! $this->upload->do_upload('main_image',time()))
         }
  
       }
+	  if($img_stat==1){
  $this->Product_model->save_product_images($pdata);
+	  }
 			}
 			//end of uploading images
 				

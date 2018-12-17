@@ -644,16 +644,15 @@ public function insert_order_post(){
 	$user_id=$this->post('user_id');
 	$items=$this->post('order_ids');
 	$payment_type=$this->post('payment_type');
-    $razor_payment_id=$this->post('$razor_payment_id');
-   $razor_order_id=$this->post('$razor_order_id');
-   $razor_sig=$this->post('$razor_signature');
+    $razor_payment_id=$this->post('razor_payment_id');
+   $razor_order_id=$this->post('razor_order_id');
+   $razor_sig=$this->post('razor_signature');
    $data=array('user_id'=>$user_id,
                'billing_id'=>$billing_id,
 			   'payment_type'=>$payment_type,
 			    'created_by'=>$user_id,
 				'razorpay_payment_id'=>$razor_payment_id,
-				'razorpay_order_id'=>$razor_order_id,
-				'razorpay_signature'=>$razor_sig
+				
 				);
 	$insert_id=$this->Mobile_model->insert_order($data);
 	    $str = date('Ymd').$insert_id;

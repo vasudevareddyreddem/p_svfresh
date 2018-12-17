@@ -578,7 +578,7 @@ $this->load->model('Product_model')	;
 		if( $this->session->userdata('svadmin_det')){
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
-			
+			//echo '<pre>';print_r($_FILES);exit;
 			
 			$config['upload_path']          = './assets/uploads/category_pics';
                 $config['allowed_types']        = 'gif|jpg|png';
@@ -597,6 +597,30 @@ $this->load->model('Product_model')	;
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+				
+					//start
+	
+    $img=$upload_data['file_name']; /*for geting uploaded image name*/
+
+         $config['image_library'] = 'gd2';
+         $config['source_image'] = './assets/uploads/category_pics/'.$img;
+	
+         $config['new_image'] = './assets/uploads/category_pics/';
+         $config['maintain_ratio'] = TRUE;
+         $config['width']    = 640;
+         $config['height']   = 480;
+
+         $this->load->library('image_lib', $config); 
+
+         if (!$this->image_lib->resize()) {
+            echo $this->image_lib->display_errors();
+         }
+         else
+         {
+            echo "success"; /*and some code here*/
+         }
+					//end
+					
                     $dis_img =   $upload_data['file_name'];
 				}
 				$data=array(
