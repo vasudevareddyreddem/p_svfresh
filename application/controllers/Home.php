@@ -23,6 +23,7 @@ class Home extends CI_controller
     $data['pageTitle'] = 'Welcome to svfresh';
     $data['categories'] = $this->Category_model->get_all_category();
     $data['products'] = $this->Product_model->get_all_product();
+    $data['rating'] = $this->Product_model->get_product_rating();
     $data['slides'] = $this->Slider_model->get_all_slides();
     $data['slider_side_images'] = $this->Slider_model->get_slides_side_images();
     $user_id = $this->session->userdata('id');
@@ -31,7 +32,7 @@ class Home extends CI_controller
     $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
-	
+
 	//echo '<pre>';print_r($data);exit;
     $this->load->view('home/index',$data);
     // }else{
@@ -41,7 +42,7 @@ class Home extends CI_controller
   //user login
   public function Login()
   {
-	 
+
 	if (!$this->session->userdata('logged_in') == TRUE) {
     if($this->input->post()){
       //validating login form
@@ -89,7 +90,7 @@ class Home extends CI_controller
 	  $this->session->set_flashdata('error','You have no permissions to access');
      redirect('home');
   }
-  
+
   }
 
   public function profile(){
@@ -226,8 +227,8 @@ class Home extends CI_controller
 				redirect($this->agent->referrer());
 			}
 		}
-		
-	
+
+
 	}
 	/* remove cart item*/
 	public  function remove_cart_item(){
@@ -244,16 +245,16 @@ class Home extends CI_controller
 				 $data['msg']=0;
 				 echo json_encode($data);
 			 }
-			 
+
 		 }else{
 				$this->session->set_flashdata('error',"Please log in or sign up to continue");
-			  redirect('home/login'); 
+			  redirect('home/login');
 		 }
 
 
 	}
   public function contactus()
-  { 
+  {
 	  $data['pageTitle'] = 'Contact Us';
       $data['categories'] = $this->Category_model->get_all_category();
       $user_id = $this->session->userdata('id');
@@ -265,7 +266,7 @@ class Home extends CI_controller
   }
   public  function contactuspost(){
 	  $post=$this->input->post();
-		
+
 		$addcontact=array(
 		'name'=>isset($post['name'])?$post['name']:'',
 		'email'=>isset($post['email'])?$post['email']:'',
@@ -273,9 +274,9 @@ class Home extends CI_controller
 		'message'=>isset($post['message'])?$post['message']:'',
 		'create_at'=>date('Y-m-d H:i:s'),
 		);
-		
+
 		//echo '<pre>';print_r($post);exit;
-		
+
 		$save=$this->Auth_Model->save_contactus($addcontact);
 		if(count($save)>0){
 				$data['details']=$post;
@@ -287,22 +288,22 @@ class Home extends CI_controller
 				$this->email->to('support@svfresh.com');
 				$this->email->subject('Contact us - Request');
 				//$body = $this->load->view('email/contactus.php',$data,true);
-				//$html = $this->load->view('email/orderconfirmation.php', $data, true); 
+				//$html = $this->load->view('email/orderconfirmation.php', $data, true);
 
 				$msg='Name:'.$post['name'].' Email :'.$post['email'].'<br> Phone  number :'.$post['phone'].'<br> Message :'.$post['message'];
 				$this->email->message($msg);
 				//echo $body;exit;
 				$this->email->send();
-				
+
 				//echo "test";exit;
 				$this->session->set_flashdata('success',"Your message was successfully sent.");
-				redirect($this->agent->referrer()); 
+				redirect($this->agent->referrer());
 			}else{
 				$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
-				redirect($this->agent->referrer()); 
+				redirect($this->agent->referrer());
 			}
   }
-  
+
   public  function get_all_products_list(){
 	  $post=$this->input->post();
 	  $p_list=$this->Auth_Model->get_all_products_lists($post['serach']);
@@ -312,19 +313,19 @@ class Home extends CI_controller
 		$imp = "'" . implode( "','", $product_lists) . "'";
 		$data['msg']=$imp ;
 		echo json_encode($data);
-	  
+
   }
   public  function search(){
 	  $post=$this->input->post();
 	  //echo '<pre>';print_r($post);exit;
 	  if($post['search_key']!=''){
 		  redirect('product/'.$post['search_key']);
-		  
+
 	  }else{
 			$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
-				redirect($this->agent->referrer()); 
+				redirect($this->agent->referrer());
 	  }
-	  
+
   }
   public function logout()
   {

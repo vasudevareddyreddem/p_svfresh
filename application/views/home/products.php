@@ -23,7 +23,7 @@
                 <img src="<?php echo base_url('assets/uploads/sub_category_pics/'.$imgs['image_path']); ?>" alt="<?php echo $imgs['image_path']; ?>">
               </li>
 			  <?php } ?>
-              
+
             </ul>
           </div>
 		  <?php } ?>
@@ -72,11 +72,21 @@
                       <div class="right-block">
                         <h5 class="product-name"><a href="#"><?php echo $p->product_name;  ?></a></h5>
                         <div class="product-star">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-o"></i>
+                          <?php if (count($rating) > 0) { ?>
+                            <?php foreach ($rating as $r) { ?>
+                              <?php if($p->product_id == $r->product_id){ ?>
+                                <?php for ($i=1; $i <= $r->rate; $i++) { ?>
+                                  <i class="fa fa-star"></i>
+                                <?php } ?>
+                                <?php if (strpos($r->rate,'.')) { ?>
+                                  <i class="fa fa-star-half-o"></i>
+                                <?php $i++; } ?>
+                                <?php while ($i<=5) { ?>
+                                    <i class="fa fa-star-o"></i>
+                                <?php $i++; } ?>
+                              <?php } ?>
+                            <?php } ?>
+                          <?php } ?>
                         </div>
                         <div class="content_price">
                           <span class="price product-price">₹ <?php echo $p->net_price; ?></span>
