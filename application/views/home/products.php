@@ -48,7 +48,11 @@
                     <div class="product-container">
                       <div class="left-block">
                         <a href="<?php echo base_url('product/'.$p->product_id); ?>">
-                          <img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/'.$p->product_img); ?>" />
+                          <?php if(!empty($p->product_img) && file_exists('assets/uploads/product_pics/'.$p->product_img)){ ?>
+                            <img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/'.$p->product_img); ?>" />
+                          <?php } else { ?>
+                            <img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/no-product.png'); ?>" />
+                          <?php } ?>
                         </a>
                         <div class="quick-view">
                           <?php if (in_array($p->product_id,$wishlist_product_id)) { ?>

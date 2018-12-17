@@ -59,7 +59,11 @@
                   <!-- product-imge-->
                   <div class="product-image">
                     <div class="product-full">
-                      <img id="product-zoom" src='<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>' data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>"/>
+                      <?php if(!empty($product->product_img) && file_exists('assets/uploads/product_pics/'.$product->product_img)){ ?>
+                        <img id="product-zoom" src='<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>' data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$product->product_img); ?>"/>
+                      <?php } else { ?>
+                        <img id="product-zoom" src='<?php echo base_url('assets/uploads/product_pics/no-product.png'); ?>' data-zoom-image="<?php echo base_url('assets/uploads/product_pics/no-product.png'); ?>"/>
+                      <?php } ?>
                     </div>
                     <!-- product thumbnail images -->
                     <?php if (count($product_related_images) > 0) { ?>
@@ -83,12 +87,22 @@
                   <h1 class="product-name"><?php echo $product->product_name; ?></h1>
                   <div class="product-comments">
                     <div class="product-star">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-half-o"></i>
-                    </div>
+                      <?php if (count($rating) > 0) { ?>
+                        <?php foreach ($rating as $r) { ?>
+                          <?php if($product->product_id == $r->product_id){ ?>
+                            <?php for ($i=1; $i <= $r->rate; $i++) { ?>
+                              <i class="fa fa-star"></i>
+                            <?php } ?>
+                            <?php if (strpos($r->rate,'.')) { ?>
+                              <i class="fa fa-star-half-o"></i>
+                              <?php $i++; } ?>
+                              <?php while ($i<=5) { ?>
+                                <i class="fa fa-star-o"></i>
+                                <?php $i++; } ?>
+                              <?php } ?>
+                            <?php } ?>
+                          <?php } ?>
+                        </div>
                     <div class="comments-advices">
                       <a href="#">Based  on 3 ratings</a>
 

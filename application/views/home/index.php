@@ -5,39 +5,39 @@
   <!-- Home slideder-->
   <?php if($slider_side_images){ ?>
 
-  <div id="home-slider">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-3 ">
-          <?php if(!empty($slider_side_images->l_pic) && file_exists('assets/uploads/slider_pics/'.$slider_side_images->l_pic)){ ?>
-          <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->l_pic); ?>" />
-          <?php } ?>
-        </div>
-        <div class="col-sm-6 header-top-right">
-          <?php if (count($slides) > 0) { ?>
-            <div class="homeslider">
-              <div class="content-slide">
-                <ul id="contenhomeslider">
-                  <?php foreach($slides as $s){ ?>
-                    <?php if(!empty($s->pic_name) && file_exists('assets/uploads/slider_pics/'.$s->pic_name)){ ?>
-                    <li>
-                        <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$s->pic_name); ?>"/>
-                    </li>
+    <div id="home-slider">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3 ">
+            <?php if(!empty($slider_side_images->l_pic) && file_exists('assets/uploads/slider_pics/'.$slider_side_images->l_pic)){ ?>
+              <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->l_pic); ?>" />
+            <?php } ?>
+          </div>
+          <div class="col-sm-6 header-top-right">
+            <?php if (count($slides) > 0) { ?>
+              <div class="homeslider">
+                <div class="content-slide">
+                  <ul id="contenhomeslider">
+                    <?php foreach($slides as $s){ ?>
+                      <?php if(!empty($s->pic_name) && file_exists('assets/uploads/slider_pics/'.$s->pic_name)){ ?>
+                        <li>
+                          <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$s->pic_name); ?>"/>
+                        </li>
+                      <?php } ?>
                     <?php } ?>
-                  <?php } ?>
-                </ul>
+                  </ul>
+                </div>
               </div>
-            </div>
-          <?php } ?>
-        </div>
-        <div class="col-sm-3 ">
-          <?php if(!empty($slider_side_images->r_pic) && file_exists('assets/uploads/slider_pics/'.$slider_side_images->r_pic)){ ?>
-          <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->r_pic); ?>" />
-          <?php } ?>
+            <?php } ?>
+          </div>
+          <div class="col-sm-3 ">
+            <?php if(!empty($slider_side_images->r_pic) && file_exists('assets/uploads/slider_pics/'.$slider_side_images->r_pic)){ ?>
+              <img alt="Funky roots" src="<?php echo base_url('assets/uploads/slider_pics/'.$slider_side_images->r_pic); ?>" />
+            <?php } ?>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   <?php } ?>
   <!-- END Home slideder-->
@@ -108,15 +108,15 @@
                 </div>
 
                 <div class="product-featured clearfix">
-				<?php if(!empty($c->cat_dis_img) && file_exists('assets/uploads/category_pics/'.$c->cat_dis_img)){ ?>
-                  <div class="banner-featured">
-                    <div class="featured-text"><span>featured</span></div>
-                    <div class="banner-img">
-                      <a href="#"><img alt="<?php echo $c->cat_dis_img; ?>" style="height:240px;" class="img-responsive"  src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_dis_img); ?>" /></a>
+                  <?php if(!empty($c->cat_dis_img) && file_exists('assets/uploads/category_pics/'.$c->cat_dis_img)){ ?>
+                    <div class="banner-featured">
+                      <div class="featured-text"><span>featured</span></div>
+                      <div class="banner-img">
+                        <a href="#"><img alt="<?php echo $c->cat_dis_img; ?>" style="height:240px;" class="img-responsive"  src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_dis_img); ?>" /></a>
 
+                      </div>
                     </div>
-                  </div>
-				  <?php } ?>
+                  <?php } ?>
                   <div class="product-featured-content">
                     <div class="product-featured-list">
                       <div class="tab-container autoheight">
@@ -128,7 +128,13 @@
 
                                 <li>
                                   <div class="left-block">
-                                    <a href="<?php echo base_url('product/'.$p->product_id); ?>"><img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/'.$p->product_img); ?>" /></a>
+                                    <a href="<?php echo base_url('product/'.$p->product_id); ?>">
+                                      <?php if (!empty($p->product_img) && file_exists('assets/uploads/product_pics/'.$p->product_img)) { ?>
+                                        <img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/'.$p->product_img); ?>" />
+                                      <?php }else{ ?>
+                                        <img class="img-responsive" alt="product" src="<?php echo base_url('assets/uploads/product_pics/no-product.png'); ?>" />
+                                      <?php } ?>
+                                    </a>
                                     <div class="quick-view">
                                       <?php if (in_array($p->product_id,$wishlist_product_id)){ ?>
                                         <a title="Added to your wishlist" class="heart whishlist" style="background:#57bb14" href="#"></a>
@@ -144,7 +150,7 @@
                                       <?php } elseif (in_array($p->product_id,$cart_product_id)) { ?>
                                         <a title="Added to Cart" class="addtocart" href="#">Added to cart</a>
                                       <?php }else{ ?>
-                                      <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>
+                                        <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>
                                       <?php } ?>
                                     </div>
                                   </div>
@@ -163,37 +169,37 @@
                                             <?php } ?>
                                             <?php if (strpos($r->rate,'.')) { ?>
                                               <i class="fa fa-star-half-o"></i>
-                                            <?php $i++; } ?>
-                                            <?php while ($i<=5) { ?>
+                                              <?php $i++; } ?>
+                                              <?php while ($i<=5) { ?>
                                                 <i class="fa fa-star-o"></i>
-                                            <?php $i++; } ?>
+                                                <?php $i++; } ?>
+                                              <?php } ?>
+                                            <?php } ?>
                                           <?php } ?>
-                                        <?php } ?>
-                                      <?php } ?>
-                                    </div>
-                                  </div>
-                                </li>
-                              <?php  } }?>
-                            <?php } ?>
-                          </ul>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  <?php  } }?>
+                                <?php } ?>
+                              </ul>
+                            </div>
+                            <!-- tab product -->
+                          </div>
                         </div>
-                        <!-- tab product -->
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            <?php } ?>
-          <?php } ?>
-          <!-- end featured category Milk-->
+                <?php } ?>
+              <?php } ?>
+              <!-- end featured category Milk-->
 
-          <!-- end featured category vegetables-->
+              <!-- end featured category vegetables-->
 
-          <!-- end featured category grocery-->
+              <!-- end featured category grocery-->
 
-          <!-- end banner bottom -->
-        </div>
-      </div>
-      <?php include("footer.php"); ?>
-    </body>
-    </html>
+              <!-- end banner bottom -->
+            </div>
+          </div>
+          <?php include("footer.php"); ?>
+        </body>
+        </html>
