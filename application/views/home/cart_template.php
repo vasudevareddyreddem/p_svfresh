@@ -4,7 +4,11 @@
         <div class="p-left">
             <a href="javascript:void(0);" onclick="removecart_item('<?php echo $c->id; ?>')" class="remove_link remove_cart_item" data-cart_id="<?php echo $c->id; ?>"></a>
             <a href="<?php echo base_url('product/'.$c->product_id); ?>">
-            <img class="img-responsive" src="<?php echo base_url('assets/uploads/product_pics/'.$c->product_img);?>" alt="item 1">
+              <?php if (!empty($c->product_img) && file_exists('assets/uploads/product_pics/'.$c->product_img)) { ?>
+                <img class="img-responsive" src="<?php echo base_url('assets/uploads/product_pics/'.$c->product_img);?>" alt="item 1">
+              <?php } else { ?>
+                <img class="img-responsive" src="<?php echo base_url('assets/uploads/product_pics/no-product.png');?>" alt="item 1">
+              <?php } ?>
             </a>
         </div>
         <div class="p-right">
@@ -43,8 +47,7 @@ function removecart_item(c_id){
 					}
 				 }
 				});
-			
+
 }
 }
 </script>
-
