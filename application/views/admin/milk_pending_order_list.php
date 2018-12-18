@@ -9,7 +9,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Pending Orders List</h4>
+                            <h4>Pending Order List</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -25,6 +25,7 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
+											<th>Delivery Date</th> 
                                             <th>Ordered Date & Time</th>
                                         </tr>
                                     </thead>
@@ -60,15 +61,19 @@
 											 </div>
                                                 <div class="badge badge-info" >
 											 <a 
-							href="<?php echo base_url('orders/deliver_order/').base64_encode($order->calender_id) ;?>" class="btn btn-danger btn-action" ><i >
+							href="<?php echo base_url('milkorder/deliver_order/').base64_encode($order->calender_id) ;?>" class="btn btn-danger btn-action" ><i >
 											 <?php echo'Delivered';?></i></a>
 											 </div>
 											 
 											 <div class="badge badge-info" >
-								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->calender_id);?>" class="btn btn-danger btn-action" ><i >
+								<a href="<?php echo base_url('milkorder/cancel_order/').base64_encode($order->calender_id);?>" class="btn btn-danger btn-action" ><i >
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>
+											<td>
+											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
+											</td>
+                                        
                                             <td><?php if($order->delivery_status==1)
 												{echo $order->delivered_time;}
 											if($order->delivery_status==0)
