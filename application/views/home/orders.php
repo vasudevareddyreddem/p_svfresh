@@ -45,7 +45,9 @@
                         <?php if($o->order_status == 0){ echo 'Cancelled'; } elseif ($o->order_status == 1) { echo 'Confirmed'; }?>
                       </td>
                       <td style="border-top:0px solid #fff;" >
-                        <h4 class="pull-right"><a href="#" class="cancel_order" data-order_items_id = "<?php echo $o->order_items_id; ?>"><span class="btn btn-danger btn-xs border-radius-none "> <strong>  Cancel Order</strong></span> </a></h4>
+                        <h4 class="pull-right"><a <?php if ($o->order_status == 0) { ?> class="" <?php } else { ?> href="#" class="cancel_order" <?php } ?> data-order_items_id = "<?php echo $o->order_items_id; ?>"><span class="btn btn-danger btn-xs border-radius-none "> <strong><?php if ($o->order_status == 0) { ?>
+                          Cancelled
+                        <?php } else {  ?> Cancel Order <?php } ?></strong></span> </a></h4>
                       </td>
                     </tr>
 
