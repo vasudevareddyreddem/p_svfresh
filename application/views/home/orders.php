@@ -24,7 +24,13 @@
 
                     <tr >
                       <td class="cart_product" style="border-top:0px solid #fff;">
-                        <a href="#"><img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/'.$o->product_img); ?>" alt="Product"></a>
+                        <a href="<?php echo base_url('product/'.$o->product_id); ?>">
+                          <?php if (!empty($o->product_img) && file_exists('assets/uploads/product_pics/'.$o->product_img)) { ?>
+                            <img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/'.$o->product_img); ?>" alt="Product">
+                          <?php } else { ?>
+                            <img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/no-product.png'); ?>" alt="Product">
+                          <?php } ?>
+                        </a>
                       </td>
                       <td colspan="3" style="border-top:0px solid #fff;">
                         <h4 ><a href="#"><?php echo $o->product_name; ?></a></h4>
