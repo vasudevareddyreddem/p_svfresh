@@ -18,7 +18,7 @@ class Cart_Model extends CI_Model
   }
   public function get_all_items_from_cart($user_id)
   {
-    return $this->db->get_where($this->table,array('user_id'=>$user_id ))->result();
+    return $this->db->order_by('created_date','asc')->get_where($this->table,array('user_id'=>$user_id ))->result();
   }
   public function update($quantity='',$id='')
   {
