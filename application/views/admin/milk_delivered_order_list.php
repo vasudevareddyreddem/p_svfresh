@@ -25,6 +25,7 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
+											<th>Delivery Date</th> 
                                             <th>Delivered Date & Time</th>
                                         </tr>
                                     </thead>
@@ -69,6 +70,10 @@
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>
+											<td>
+											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
+											</td>
+                                          
                                             <td><?php if($order->delivery_status==1)
 												{echo $order->delivered_time;}
 											if($order->delivery_status==0)
