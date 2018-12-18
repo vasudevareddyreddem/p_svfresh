@@ -9,7 +9,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Total Orders List</h4>
+                            <h4>Pending Orders List</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -29,8 +29,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-									<?php if($tot_status==1){
-										foreach($tot_list as $order){?>
+									<?php if($pending_status==1){
+										foreach($pending_list as $order){?>
                                         <tr>
                                            
                                             <td><?php echo $order->product_name; ?></td>
@@ -53,15 +53,21 @@
 											if($order->payment_type==3){
 												echo 'Swiping';
 											}?></td>
-                                            <td>
-                                                <div class="badge badge-info">
-												<?php if($order->delivery_status==1)
-												{echo 'Delivered';}
-											if($order->delivery_status==0)
-												{echo 'Cancelled';}
-											if($order->delivery_status==2)
-												{echo 'Pending';}
-											?></div>
+                                             <td>
+									<div class="badge badge-info" >
+											 
+											 <?php echo'Delivered';?>
+											 </div>
+                                                <div class="badge badge-info" >
+											 <a 
+							href="<?php echo base_url('orders/pending_order/').base64_encode($order->calender_id) ;?>" class="btn btn-danger btn-action" ><i >
+											 <?php echo'Pending';?></i></a>
+											 </div>
+											 
+											 <div class="badge badge-info" >
+								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->calender_id);?>" class="btn btn-danger btn-action" ><i >
+											 <?php echo'cancelled';?></i></a>
+											 </div>
                                             </td>
                                             <td><?php if($order->delivery_status==1)
 												{echo $order->delivered_time;}

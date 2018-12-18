@@ -66,8 +66,8 @@
 			  <li>
                 <a href="#" class="has-dropdown"><i class="ion ion-ios-cart"></i><span>Milk Orders</span></a>
                 <ul class="menu-dropdown">
-                    <li><a href="<?php echo base_url('milkorders/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Total Orders List</a></li>
-                    <li><a href="<?php echo base_url('milkorders/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
+                    <li><a href="<?php echo base_url('milkorder/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Total Orders List</a></li>
+                    <li><a href="<?php echo base_url('milkorder/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
                     <li><a href="<?php echo base_url('milkorders/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
 					<li><a href="<?php echo base_url('milkorders/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
                 </ul>

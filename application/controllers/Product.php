@@ -380,7 +380,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 if ( ! $this->upload->do_upload('main_image',time()))
                 {
                        
-                         echo 'working'; exit;
+                         
                           $this->session->set_flashdata('error','product image not uploaded'); 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
