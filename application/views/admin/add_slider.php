@@ -26,15 +26,15 @@
 				
 				<div class="row">
 					<div class="form-group col-md-6">
-                           <label>Sliders Name</label>
+                           <label>Banner Name</label>
                            <input id="" type="text" class="form-control" name="s_name">
                             </div>
 				<div class="form-group col-md-6">
-                           <label>Sliders Left Image</label>
+                           <label>Banner Left Image</label>
                            <input id="n_price" type="file" class="form-control" name="sl_image">
                             </div>
 							<div class="form-group col-md-6">
-                                                <label>Sliders Right Image</label>
+                                                <label>Banner Right Image</label>
                                                 <input id="n_price" type="file" class="form-control" name="sr_image">
                                             </div>
                     <div class="entry col-md-6">

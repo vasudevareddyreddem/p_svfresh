@@ -135,7 +135,9 @@ class Mobile_model extends CI_Model
 	}
 		public function get_user_cart($id){
 		$this->db->select('cart_tab.id,product_tab.product_id,product_tab.product_name,product_tab.product_img,
-		product_tab.quantity,product_tab.net_price')->from('cart_tab')->
+		cart_tab.quantity,product_tab.net_price,
+		product_tab.discount_price,
+			product_tab.guarantee_policy,product_tab.description')->from('cart_tab')->
 		join('product_tab','product_tab.product_id=cart_tab.product_id')->
 		where('cart_tab.user_id',$id)->order_by('created_date','desc');
 	
@@ -207,5 +209,33 @@ class Mobile_model extends CI_Model
 		$this->db->where('user_id',$user_id);
 		$this->db->delete('cart_tab');
 	return $this->db->affected_rows()?1:0;
+	}
+	public function check_loging($username){
+		$this->db->select('*')->from('users_tab')->
+		where('phone_number',$username)->or_where('email_id',$username);
+
+		return $this->db->get()->row_array();
+		
+	}
+	public function insert_user_reg($data){
+		$this->db->insert('users_tab',$data);
+	 return $this->db->affected_rows()?1:0;
+		
+	}
+	public function user_email_checking($email){
+		
+		$this->db->select('*')->from('users_tab')->where('status','active')->
+		where('email_id',$email);
+		$res=$this->db->get()->result();
+		if(count($res)>0)
+		{
+			return 1;
+			
+		}
+		else{
+			return 0;
+		}
+		
+		
 	}
 }

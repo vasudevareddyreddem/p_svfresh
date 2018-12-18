@@ -118,6 +118,7 @@ $this->load->model('Product_model')	;
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					$this->resize_image($upload_data, $config['upload_path'],32,32);
                     $cat_s_img =   $upload_data['file_name'];
 				}
 				  if ( ! $this->upload->do_upload('cat_himage1',time()))
@@ -128,7 +129,8 @@ $this->load->model('Product_model')	;
 					      redirect('category/add_category');
                 }
 				else{
-					$upload_data = $this->upload->data(); 
+					$upload_data = $this->upload->data();
+                 $this->resize_image($upload_data, $config['upload_path'],585,65);					
                     $cat_lh_img =   $upload_data['file_name'];
 				}
 				  if ( ! $this->upload->do_upload('cat_himage2',time()))
@@ -140,6 +142,7 @@ $this->load->model('Product_model')	;
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					  $this->resize_image($upload_data, $config['upload_path'],585,65);
                     $cat_rh_img =   $upload_data['file_name'];
 				}
                 $data=array(
@@ -311,7 +314,8 @@ $this->load->model('Product_model')	;
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
 				else{
-					$upload_data = $this->upload->data(); 
+					$upload_data = $this->upload->data();
+          $this->resize_image($upload_data, $config['upload_path'],585,65);					
                     $cat_lh_img =   $upload_data['file_name'];
 					$lhimg_status=1;
 				}
@@ -326,6 +330,7 @@ $this->load->model('Product_model')	;
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					  $this->resize_image($upload_data, $config['upload_path'],585,65);
                     $cat_rh_img =   $upload_data['file_name'];
 					$rhimg_status=1;
 				}
@@ -339,7 +344,8 @@ $this->load->model('Product_model')	;
 					      redirect('category/add_category');
                 }
 				else{
-					$upload_data = $this->upload->data(); 
+					$upload_data = $this->upload->data();
+  $this->resize_image($upload_data, $config['upload_path'],32,32);					
                     $cat_s_img =   $upload_data['file_name'];
 				}
 				$simg_status=1;
@@ -597,30 +603,9 @@ $this->load->model('Product_model')	;
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					  $this->resize_image($upload_data, $config['upload_path'],700,700);
 				
-					//start
-	
-    $img=$upload_data['file_name']; /*for geting uploaded image name*/
-
-         $config['image_library'] = 'gd2';
-         $config['source_image'] = './assets/uploads/category_pics/'.$img;
-	
-         $config['new_image'] = './assets/uploads/category_pics/';
-         $config['maintain_ratio'] = TRUE;
-         $config['width']    = 640;
-         $config['height']   = 480;
-
-         $this->load->library('image_lib', $config); 
-
-         if (!$this->image_lib->resize()) {
-            echo $this->image_lib->display_errors();
-         }
-         else
-         {
-            echo "success"; /*and some code here*/
-         }
-					//end
-					
+                      
                     $dis_img =   $upload_data['file_name'];
 				}
 				$data=array(
@@ -860,6 +845,58 @@ $this->load->model('Product_model')	;
 		else{redirect('login');}
 		
 	}
+	public function resize_image($image_data,$path,$width,$height){
+    $this->load->library('image_lib');
+    $w = $image_data['image_width']; // original image's width
+    $h = $image_data['image_height']; // original images's height
+
+    $n_w = $width; // destination image's width
+    $n_h = $height; // destination image's height
+
+    $source_ratio = $w / $h;
+    $new_ratio = $n_w / $n_h;
+    if($source_ratio != $new_ratio){
+
+        $config['image_library'] = 'gd2';
+        $config['source_image'] = $image_data['full_path'];
+        $config['maintain_ratio'] = FALSE;
+        if($new_ratio > $source_ratio || (($new_ratio == 1) && ($source_ratio < 1))){
+            $config['width'] = $w;
+            $config['height'] = round($w/$new_ratio);
+            $config['y_axis'] = round(($h - $config['height'])/2);
+            $config['x_axis'] = 0;
+
+        } else {
+
+            $config['width'] = round($h * $new_ratio);
+            $config['height'] = $h;
+            $size_config['x_axis'] = round(($w - $config['width'])/2);
+            $size_config['y_axis'] = 0;
+
+        }
+
+        $this->image_lib->initialize($config);
+        $this->image_lib->crop();
+        $this->image_lib->clear();
+    }
+    $config['image_library'] = 'gd2';
+    $config['source_image'] = $image_data['full_path'];
+    $config['new_image'] = $path;
+    $config['maintain_ratio'] = TRUE;
+    $config['width'] = $n_w;
+    $config['height'] = $n_h;
+    $this->image_lib->initialize($config);
+
+    if (!$this->image_lib->resize()){
+
+
+
+    } else {
+
+      
+
+    }
+}
 	
 
 }

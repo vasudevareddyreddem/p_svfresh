@@ -51,6 +51,8 @@ $this->load->model('Slider_model');
 				else{
 					$upload_data = $this->upload->data(); 
                     $l_img =   $upload_data['file_name'];
+					$this->resize_image($upload_data,1000,1100);
+										
 					
 				}
 				
@@ -69,6 +71,8 @@ $this->load->model('Slider_model');
 				else{
 					$upload_data = $this->upload->data(); 
                     $r_img =   $upload_data['file_name'];
+					$this->resize_image($upload_data,1000,1100);
+										
 					
 				}
 				
@@ -108,6 +112,7 @@ $this->load->model('Slider_model');
 				else{
 					$upload_data = $this->upload->data(); 
                     $slider_img =   $upload_data['file_name'];
+						$this->resize_image($upload_data,650,310);
 					$sdata[]=array('pic_name'=>$slider_img,
 					'slider_id'=>$sid);
 					
@@ -258,6 +263,7 @@ $this->load->model('Slider_model');
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					$this->resize_image($upload_data,1000,1100);
                     $l_img =   $upload_data['file_name'];
 					$data['l_pic']=$l_img;
 					
@@ -277,6 +283,7 @@ $this->load->model('Slider_model');
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					$this->resize_image($upload_data,1000,1100);
                     $r_img =   $upload_data['file_name'];
 					$data['r_pic']=$r_img;
 					
@@ -316,6 +323,7 @@ $this->load->model('Slider_model');
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					$this->resize_image($upload_data,650,310);
                     $slider_img =   $upload_data['file_name'];
 					$pdata=array('pic_name'=>$slider_img,
 					
@@ -364,6 +372,7 @@ $this->load->model('Slider_model');
 				else{
 					$img_status=1;
 					$upload_data = $this->upload->data(); 
+					$this->resize_image($upload_data);
                     $slider_img =   $upload_data['file_name'];
 					$image_data[]=array('pic_name'=>$slider_img,
 					'slider_id'=>$slider_id,
@@ -393,4 +402,57 @@ $this->load->model('Slider_model');
 		}
 			else{redirect('login');}
 		}
+		
+		public function resize_image($image_data,$newwidth,$new_height){
+    $this->load->library('image_lib');
+    $w = $image_data['image_width']; // original image's width
+    $h = $image_data['image_height']; // original images's height
+
+    $n_w = $newwidth; // destination image's width
+    $n_h = $new_height; // destination image's height
+
+    $source_ratio = $w / $h;
+    $new_ratio = $n_w / $n_h;
+    if($source_ratio != $new_ratio){
+
+        $config['image_library'] = 'gd2';
+        $config['source_image'] = $image_data['full_path'];
+        $config['maintain_ratio'] = FALSE;
+        if($new_ratio > $source_ratio || (($new_ratio == 1) && ($source_ratio < 1))){
+            $config['width'] = $w;
+            $config['height'] = round($w/$new_ratio);
+            $config['y_axis'] = round(($h - $config['height'])/2);
+            $config['x_axis'] = 0;
+
+        } else {
+
+            $config['width'] = round($h * $new_ratio);
+            $config['height'] = $h;
+            $size_config['x_axis'] = round(($w - $config['width'])/2);
+            $size_config['y_axis'] = 0;
+
+        }
+
+        $this->image_lib->initialize($config);
+        $this->image_lib->crop();
+        $this->image_lib->clear();
+    }
+    $config['image_library'] = 'gd2';
+    $config['source_image'] = $image_data['full_path'];
+    $config['new_image'] = './assets/uploads/slider_pics';
+    $config['maintain_ratio'] = TRUE;
+    $config['width'] = $n_w;
+    $config['height'] = $n_h;
+    $this->image_lib->initialize($config);
+
+    if (!$this->image_lib->resize()){
+
+        //echo $this->image_lib->display_errors();
+
+    } else {
+
+       // echo "done";
+
+    }
+}
 		}

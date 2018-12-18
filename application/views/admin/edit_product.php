@@ -90,7 +90,7 @@
                                             </div>
 											
 					<?php if($fstatus==0){ ?>					
-				 <div class="row">
+				 
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table id="myTable" class=" table order-list">
@@ -116,14 +116,16 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Row</button>
+										<div class="text-center">
+                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Feature</button>
+										</div>
                                     </div>
                                 </div>
-                            </div>
+                          
 					<?php }else{?>
 										
 					
-				 <div class="row">
+				
                                 <div class="col-md-12">
                                     <div class="table-responsive">
 									
@@ -163,14 +165,16 @@
                                         <button type="button" class="btn btn-md btn-info" id="addrow">Add Feature</button>
                                     </div>
                                 </div>
-                            </div>
+                            
 					<?php }?>
-					<div class="form-group">
+								
+								<div class="col-md-6">
+									<div class="form-group">
                                             <label>Product Main Image</label>
                                             <input id="" type="file" class="form-control" name="main_image">
                                         </div>
-						<div class="row">
-                                <div class="col-md-12">
+								</div>
+                                <div class="col-md-6">
                                     <div class="table-responsive">
 									
 									 
@@ -205,11 +209,13 @@
 												<?php $count++;}?>
                                             </tbody>
                                         </table>
-									
+										<br>
+										<div class="text-center">
                                         <button type="button" class="btn btn-md btn-info" id="addslider">Add Image</button>
+										</div>
                                     </div>
                                 </div>
-                            </div>
+                            
                                    
                                         
                   

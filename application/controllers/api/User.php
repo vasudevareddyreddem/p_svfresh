@@ -35,13 +35,49 @@ class User extends REST_Controller {
 		$this->load->helper('security');
 		$this->load->model('Mobile_model');
 		
+		
     }
+	public function user_reg_post(){
+		$fname=$this->post('fname');
+		$lname=$this->post('lname');
+		$username=$fname." ".$lname;
+		$email=$this->post('email');
+		$mobile=$this->post('mobile');
+		$org_password=$this->post('password');
+	    $password=password_hash($this->post('password'),PASSWORD_DEFAULT);
+		$flag=$this->Mobile_model->user_email_checking($email);
+		//echo $this->db->last_query();exit;
+		if($flag==1){
+			$message = array('status'=>0,'message'=>'emal already  existed');
+			$this->response($message, REST_Controller::HTTP_OK);
+		
+			
+		}
+		
+		$data=array('email_id'=>$email,
+		'phone_number'=>$mobile,
+		'user_name'=>$username,
+		'org_password'=>$org_password,
+		'password'=>$password,
+		'status'=>'active'
+		);
+		
+		$status=$this->Mobile_model->insert_user_reg($data);
+		if($status==1){
+			$message = array('status'=>1,'message'=>'user registered');
+			$this->response($message, REST_Controller::HTTP_OK);
+			
+		}
+		$message = array('status'=>0,'message'=>'user not registered');
+			$this->response($message, REST_Controller::HTTP_OK);
+		
+		
+	}
 
 	public function login_post(){
 		$email=$this->post('email');
 		$password=$this->post('password');
-		echo $email;
-		echo $password;
+		
 		
 		if($email==''){
 			$message = array('status'=>0,'message'=>'Email Id is required');
@@ -53,20 +89,21 @@ class User extends REST_Controller {
 		}
 	
 		
-		$user=$this->User_model->check_loging($email);
+		$user=$this->Mobile_model->check_loging($email);
+		//echo $this->db->last_query();exit;
 		
 		
 		if(count($user)>0){
-			if(password_verify($this->input->post('password'),$user['password']))
+			if(password_verify($this->post('password'),$user['password']))
 			{
 				$message = array('status'=>1,'message'=>$user);
 			$this->response($message, REST_Controller::HTTP_OK);
 				
 			}
 			else{
-				echo $this->input->post('password');exit;
+				
 					$message = array('status'=>0,'message'=>'email is wrong');
-			 //$this->response($message, REST_Controller::HTTP_OK);
+			 $this->response($message, REST_Controller::HTTP_OK);
 				
 			}
 		
@@ -504,6 +541,7 @@ public function get_cart_post(){
  { 
  $message['status']=1;
 	 $message['cart_list']=$cart;
+	  $message['image_path']=base_url().'assets/uploads/product_pics/';
 	
  }
  else{

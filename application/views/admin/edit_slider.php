@@ -24,15 +24,15 @@
             <div class="controls"> 
                 <form id="add_slider" action="<?php echo base_url('slider/save_edit_slider')?>" method="post"   enctype="multipart/form-data">
 				<div class="row">
-					<div class="form-group col-md-6">
-                           <label>Slider Name</label>
+					<div class="form-group col-md-12">
+                           <label>Banner Name</label>
 						    <input id="" type="hidden" class="form-control" name="sid"
 						   value="<?php echo $slider->slider_id;?>">
                            <input id="" type="text" class="form-control" name="s_name"
 						   value="<?php echo $slider->slider_name;?>">
                             </div>
 							 <div class="form-group">
-                                            <label>sliders Left Old Image</label>
+                                            <label>Banner Left Old Image</label>
 											
                                         <img alt="image" 
 											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->l_pic; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
@@ -40,23 +40,23 @@
 											</div>
 				<div class="form-group col-md-6">
 				
-                           <label>Sliders Left Image</label>
+                           <label>Banner Left Image</label>
                            <input id="" type="file" class="form-control" name="sl_image">
                             </div>
 							 <div class="form-group">
-                                            <label>sliders Right Old Image</label>
+                                            <label>Banner Right Old Image</label>
 											
                                         <img alt="image" 
 											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->r_pic; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
 											
 											</div>
 							<div class="form-group col-md-6">
-                                                <label>Sliders Right Image</label>
+                                                <label>Banner Right Image</label>
                                                 <input id="n_price" type="file" class="form-control" name="sr_image">
                                             </div>
 											
                     <div class="entry col-md-6">
-					 <label>Sliders </label>
+					
 						<div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
