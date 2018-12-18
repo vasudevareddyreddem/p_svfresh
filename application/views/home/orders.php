@@ -42,7 +42,7 @@
                         <h4 ><a href="#">Delivered on Sat, Nov 3rd 2018</a></h4>
                       </td>
                       <td style="border-top:0px solid #fff;" >
-                        <?php if($o->order_status == 0){ echo 'Pending'; }elseif ($o->order_status == 1) { echo 'Confirmed'; }?>
+                        <?php if($o->order_status == 0){ echo 'Cancelled'; } elseif ($o->order_status == 1) { echo 'Confirmed'; }?>
                       </td>
                       <td style="border-top:0px solid #fff;" >
                         <h4 class="pull-right"><a href="#" class="cancel_order" data-order_items_id = "<?php echo $o->order_items_id; ?>"><span class="btn btn-danger btn-xs border-radius-none "> <strong>  Cancel Order</strong></span> </a></h4>
@@ -72,9 +72,9 @@
   <?php include("footer.php"); ?>
   <script type="text/javascript">
     $(document).ready(function(){
-      $('.cancel_order').click(function(){
+      $('.cancel_order').click(function(e){
+        e.preventDefault();
         var order_items_id = $(this).data('order_items_id');
-        alert(order_items_id);
         $.ajax({
           url:"<?php echo base_url('order/cancel_order'); ?>",
           type:"POST",

@@ -35,7 +35,13 @@
                 <div class="panel-body" style="border-bottom:1px solid #ddd;">
                   <div class="row">
                     <div class="col-md-2">
-                      <a href="<?php echo base_url('product/'.$w->product_id); ?>"><img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/'.$w->product_img); ?>" alt="Product"></a>
+                      <a href="<?php echo base_url('product/'.$w->product_id); ?>">
+                        <?php if (!empty($w->product_img) && file_exists('assets/uploads/product_pics/'.$w->product_img)) { ?>
+                          <img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/'.$w->product_img); ?>" alt="Product">
+                        <?php } else { ?>
+                          <img style="width:auto;height:80px;" src="<?php echo base_url('assets/uploads/product_pics/no-product.png'); ?>" alt="Product">
+                        <?php } ?>
+                      </a>
                     </div>
                     <div class="col-md-9">
                       <h3 class="text-success"><?php echo $w->product_name; ?></h3>
@@ -57,20 +63,6 @@
                 </div>
               </div>
             <?php } ?>
-            <!-- <div class="panel-body" style="border-bottom:1px solid #ddd;">
-              <div class="row">
-                <div class="col-md-2">
-                  <a href="#"><img style="width:auto;height:80px;" src="assets/data/grocery-img4.png" alt="Product"></a>
-                </div>
-                <div class="col-md-9">
-                  <h3 class="text-success">KamaSutra Spark Spray</h3>
-                  <div class="h4">₹ 145.12 &nbsp; <span  style="text-decoration: line-through;color:#aaa">₹ 165.12  </span></div>
-                </div>
-                <div class="col-md-1">
-                  <a href="#" class="h2" ><i class="fa fa-trash-o " aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
