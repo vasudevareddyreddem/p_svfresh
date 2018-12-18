@@ -110,8 +110,17 @@
                           <?php } ?>
                         </div>
                     <div class="comments-advices">
-                      <a href="#">Based  on 3 ratings</a>
-
+                      <?php if(count($rating) > 0){ ?>
+                        <a href="#">
+                          Based  on
+                          <?php foreach ($rating as $r) { ?>
+                            <?php if($product->product_id == $r->product_id){ ?>
+                              <?php echo $r->users_count; ?>
+                            <?php } ?>
+                          <?php } ?>
+                          ratings
+                        </a>
+                      <?php } ?>
                     </div>
                   </div>
                   <div class="product-price-group">
