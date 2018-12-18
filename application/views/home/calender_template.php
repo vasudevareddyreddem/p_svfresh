@@ -10,6 +10,7 @@
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
             </span>
+            <input type="hidden" name="product_price[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" value="<?php echo $product_price->net_price; ?>">
             <input type="hidden" name="product_id[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" value="<?php echo $product_id; ?>">
             <input type="hidden" name="user_id[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" value="<?php echo $user_id; ?>">
             <input type="hidden" name="year[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" value="<?php echo $year; ?>">
@@ -33,6 +34,7 @@
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
             </span>
+            <input type="hidden" name="product_price[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" value="<?php echo $product_price->net_price; ?>">
             <input type="hidden" name="product_id[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" value="<?php echo $product_id; ?>">
             <input type="hidden" name="user_id[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" value="<?php echo $user_id; ?>">
             <input type="hidden" name="year[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" value="<?php echo $year; ?>">
@@ -56,6 +58,7 @@
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
             </span>
+            <input type="hidden" name="product_price[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" value="<?php echo $product_price->net_price; ?>">
             <input type="hidden" name="product_id[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" value="<?php echo $product_id; ?>">
             <input type="hidden" name="user_id[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" value="<?php echo $user_id; ?>">
             <input type="hidden" name="year[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" value="<?php echo $year; ?>">
@@ -79,6 +82,7 @@
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
             </span>
+            <input type="hidden" name="product_price[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" value="<?php echo $product_price->net_price; ?>">
             <input type="hidden" name="product_id[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" value="<?php echo $product_id; ?>">
             <input type="hidden" name="user_id[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" value="<?php echo $user_id; ?>">
             <input type="hidden" name="year[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" value="<?php echo $year; ?>">
@@ -102,6 +106,7 @@
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
             </span>
+            <input type="hidden" name="product_price[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" value="<?php echo $product_price->net_price; ?>">
             <input type="hidden" name="product_id[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" value="<?php echo $product_id; ?>">
             <input type="hidden" name="user_id[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" value="<?php echo $user_id; ?>">
             <input type="hidden" name="year[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" value="<?php echo $year; ?>">

@@ -72,7 +72,13 @@
                             <?php foreach ($product_related_images as $pri) { ?>
                               <li>
                                   <a href="#" data-image="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>" data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>">
+                                    <?php if (!empty($pri->image_name) && file_exists('assets/uploads/product_pics/'.$pri->image_name)) {
+                                    ?>
                                       <img id="product-zoom"  src="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>" />
+                                    <?php } else { ?>
+                                      <img id="product-zoom"  src="<?php echo base_url('assets/uploads/product_pics/no-product.png'); ?>" />
+                                    <?php }?>
+
                                   </a>
                               </li>
                             <?php } ?>

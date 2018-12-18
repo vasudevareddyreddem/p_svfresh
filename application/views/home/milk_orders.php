@@ -26,6 +26,7 @@
                   <th class="text-center">Product</th>
                   <th class="text-center">Date</th>
                   <th class="text-center">Quantity</th>
+                  <th class="text-center">Price</th>
                 </tr>
               </thead>
               <tbody>
@@ -41,11 +42,14 @@
                   <td class="text-center">
                     <?php echo ($co->quantity > 1) ? $co->quantity.' Packets' : $co->quantity.' Packet'; ?>
                   </td>
+                  <td class="text-center">
+                    <?php  echo ($co->price) ? '₹ '.$co->price : ''; ?>
+                  </td>
                 </tr>
               <?php } ?>
             <?php }else{ ?>
               <tr>
-                <td colspan="3" style="text-align:center">No items found</td>
+                <td colspan="4" style="text-align:center">No items found</td>
               </tr>
             <?php  } ?>
               </tbody>

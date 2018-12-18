@@ -51,6 +51,7 @@ class Milkcalender extends CI_Controller
     $data['month'] = $month;
     $data['year'] = date('Y');
     $data['product_id'] = $product_id;
+    $data['product_price'] = $this->Product_model->get_product_price_by_product_id($product_id);
     $user_id = $this->session->userdata('id');
     $data['user_id'] = $user_id;
     //$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id);
@@ -65,7 +66,7 @@ class Milkcalender extends CI_Controller
       $calender_id = array();
       for($i = 1;$i <= count($post['quant']);$i++){
         if(($post['quant'][$i]) != 0 ){
-          $this->Calender_Model->insert(array('product_id' => $post['product_id'][$i],'user_id' => $post['user_id'][$i],'year' => $post['year'][$i],'month' => $post['month'][$i],'date' => $post['date'][$i],'quantity' => $post['quant'][$i],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
+          $this->Calender_Model->insert(array('price' => $post['product_price'][$i],'product_id' => $post['product_id'][$i],'user_id' => $post['user_id'][$i],'year' => $post['year'][$i],'month' => $post['month'][$i],'date' => $post['date'][$i],'quantity' => $post['quant'][$i],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
           $calender_id[] = $this->db->insert_id();
         }
       }
