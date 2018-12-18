@@ -11,7 +11,7 @@ class Milkorders_model extends CI_Model
 	public function total_order_list()
 	{
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,calender_tab.price,calender_tab.delivery_status,calender_tab.created_date,
+calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
 calender_tab.payment_type,
 product_tab.product_name,users_tab.email_id,billing_tab.first_name,
 billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
@@ -26,7 +26,7 @@ users_tab.phone_number,calender_tab.delivered_time,calender_tab.cancelled_time')
 	}
 	public function pending_order_list(){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,calender_tab.price,calender_tab.delivery_status,calender_tab.created_date,
+calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 calender_tab.payment_type,
 product_tab.product_name,users_tab.email_id,billing_tab.first_name,
 billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
@@ -40,7 +40,7 @@ users_tab.phone_number')->from('calender_tab')->
 	}
 	public function delivered_order_list(){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,calender_tab.price,calender_tab.delivery_status,calender_tab.created_date,
+calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 calender_tab.payment_type,
 product_tab.product_name,users_tab.email_id,billing_tab.first_name,
 billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
@@ -54,7 +54,7 @@ users_tab.phone_number,calender_tab.delivered_time')->from('calender_tab')->
 	}
 	public function cancel_order_list(){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,calender_tab.price,calender_tab.delivery_status,calender_tab.created_date,
+calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 calender_tab.payment_type,
 product_tab.product_name,users_tab.email_id,billing_tab.first_name,
 billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
