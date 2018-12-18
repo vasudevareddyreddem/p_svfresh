@@ -25,7 +25,8 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
-                                            <th>Ordered Date & Time</th>
+											<th>Delivery Date</th> 
+                                            <th>Ordered/Delivered/Cancelled Date & Time</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,6 +64,9 @@
 												{echo 'Pending';}
 											?></div>
                                             </td>
+											<td>
+											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
+											</td>
                                             <td><?php if($order->delivery_status==1)
 												{echo $order->delivered_time;}
 											if($order->delivery_status==0)
@@ -84,4 +88,13 @@
         </div>
     </section>
 </div>
+<script>
+$(document).ready(function() {
+        $('#bootstrap-data-table').DataTable({
+            "order": [
+                [6, "desc"]
+            ]
+        });
+    });
+	</script>
 
