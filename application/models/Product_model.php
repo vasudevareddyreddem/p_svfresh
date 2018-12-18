@@ -240,13 +240,7 @@ class Product_model extends CI_Model
 	return $this->db->affected_rows()?1:0;
 }*/
 public function get_related_products_by_prdouct($product_id=''){
-	$this->db->select('p.product_id,p.product_img,p.product_name,p.net_price,p.discount_price');
-	$this->db->from('product_tab AS p');
-	$this->db->join('rel_products_tab AS rp','p.product_id = rp.product_id','left');
-	$this->db->where('p.product_id',$product_id);
-	return $this->db->where('rp.status','1')->get()->result();
-	//SELECT p.product_img,p.product_name,p.actual_price,p.discount_price FROM product_tab AS p LEFT JOIN rel_products_tab AS rp ON p.product_id = rp.product_id WHERE p.product_id = '29'
-
+	return $this->db->query("SELECT product_id,product_name,product_img,actual_price,net_price,discount_price FROM product_tab WHERE product_id IN (SELECT rel_product_id FROM rel_products_tab WHERE product_id = '$product_id')")->result();
 }
 
 public function inactive_product($id,$svadmin){
@@ -336,6 +330,7 @@ public function get_category_name_by_product_id($id='')
 	}
 	//get product rating...
 	public function get_product_rating(){
-		return $this->db->query('SELECT AVG(rate) AS rate,r.product_id AS product_id FROM rating_list AS r LEFT JOIN product_tab AS p ON r.product_id = p.product_id GROUP BY r.product_id')->result();
+		return $this->db->query('SELECT AVG(rate) AS rate,r.product_id AS product_id,count(user_id) AS users_count FROM rating_list AS r LEFT JOIN product_tab AS p ON r.product_id = p.product_id GROUP BY r.product_id')->result();
 	}
+
 }

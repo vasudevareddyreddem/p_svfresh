@@ -45,6 +45,7 @@ class Products extends CI_Controller
     $data['categories'] = $this->Category_model->get_all_category();
     $data['category_name'] = $this->Product_model->get_category_name_by_product_id($id);
     $data['product'] = $this->Product_model->get_product_by_id($id);
+    $data['rating'] = $this->Product_model->get_product_rating();
     $data['related_products'] = $this->Product_model->get_related_products_by_prdouct($id);
     $data['features'] = $this->Product_model->get_product_feature_by_product($id);
     $data['product_related_images'] = $this->Product_model->get_product_related_images($id);
