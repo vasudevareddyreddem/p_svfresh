@@ -41,16 +41,19 @@ class Mobile_model extends CI_Model
 		
 	}
 	//gettting from category and subcategory
-	public function product_list($subcat){
-			$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
+	public function product_list($subcat,$user_id){
+			$this->db->select("product_tab.product_id,product_tab.product_name,product_tab.product_img,
 			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
-			product_tab.guarantee_policy,product_tab.description,subcat_tab.subcat_name,wishlist_tab.id wishlist_id,
-			(select sum(rate)/count(product_id)   from rating_list where rating_list.product_id=product_tab.product_id group by product_id) AS rating ');
+			product_tab.guarantee_policy,product_tab.description,subcat_tab.subcat_name, IF(wishlist_tab.user_id='$user_id',wishlist_tab.id,null) wishlist_id,
+			(select sum(rate)/count(product_id)   from rating_list where rating_list.product_id=product_tab.product_id group by product_id) AS rating ");
 	  $this->db->from('product_tab');
 	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
-	   $this->db->join('wishlist_tab','wishlist_tab.product_id=product_tab.product_id','left');
+	   $this->db->join('wishlist_tab',"wishlist_tab.product_id=product_tab.product_id
+	    ",'left');
+	     
 	   $this->db->where('product_tab.status',1);
 	    $this->db->where('subcat_tab.status',1);
+		
 
 		$this->db->where('subcat_tab.subcat_id',$subcat);
 	   $this->db->order_by('product_tab.updated_at','desc');
