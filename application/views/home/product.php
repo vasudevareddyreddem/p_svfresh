@@ -41,8 +41,15 @@
                 <div class="col-left-slide left-module">
                   <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
                     <?php foreach($slider_images as $imgs){ ?>
-                      <li><a href="<?php echo base_url('category/'.$imgs['cat_id']); ?>"><img src="<?php echo base_url('assets/uploads/category_pics/'.$imgs['cat_dis_img']); ?>" alt="<?php echo $imgs['cat_dis_img']; ?>"></a></li>
-
+                      <li>
+                        <a href="<?php echo base_url('category/'.$imgs['cat_id']); ?>">
+                        <?php if (!empty($imgs['cat_dis_img']) && file_exists('assets/uploads/category_pics/'.$imgs['cat_dis_img'])){ ?>
+                          <img src="<?php echo base_url('assets/uploads/category_pics/'.$imgs['cat_dis_img']); ?>" alt="<?php echo $imgs['cat_dis_img']; ?>">
+                        <?php } else { ?>
+                          <img src="<?php echo base_url('assets/uploads/category_pics/no-image.png'); ?>" alt="no image">
+                        <?php } ?>
+                        </a>
+                      </li>
                     <?php } ?>
                   </ul>
                 </div>
