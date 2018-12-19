@@ -126,7 +126,7 @@
                   <div class="product-price-group">
                     <span class="price">₹ <?php echo $product->net_price; ?></span>
                     <span class="old-price">₹ <?php echo $product->actual_price; ?></span>
-                    <span class="discount"><?php echo $product->discount_percentage; ?></span>
+                    <span class="discount"><?php echo $product->discount_percentage.' %'; ?></span>
                   </div>
                   <div class="info-orther">
                     <p>Availability: <span class="label label-success">In stock</span></p>
