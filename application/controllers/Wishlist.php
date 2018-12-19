@@ -66,23 +66,23 @@ class Wishlist extends CI_Controller
 		 redirect('home/login');
     }
   }
-  
+
   public  function removewishlist(){
 	  if($this->session->userdata('logged_in') == TRUE){
 		  $wish_id=base64_decode($this->uri->segment(3));
 		  $delete=$this->Wishlist_Model->remove_wishlist_item($wish_id);
 		  if(count($delete)>0){
-			  $this->session->set_flashdata('success',"Item successfully removed to wishlist");
+			  $this->session->set_flashdata('success',"Item successfully removed from wishlist");
 			 redirect('wishlist');
 		  }else{
 			 $this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
-			 redirect('wishlist'); 
+			 redirect('wishlist');
 		  }
-		   
+
 	 }else{
        $this->session->set_flashdata('error',"Please log in or sign up to continue");
 		 redirect('home/login');
-    } 
+    }
   }
 }
 
