@@ -70,8 +70,8 @@
                 <form class="form-inline" method="post" action="<?php echo base_url('home/search'); ?>">
 
                       <div class="form-group input-serach">
-                        <input class="palce-hold-col"  id="search_value" name="search_value"  style="color:#fff" type="text"  placeholder="Keyword here...">
-						<input type="hidden" name="search_key" id="search_key" value="">
+                        <input class="palce-hold-col"  id="search_value" name="search_value"  style="color:#fff;line-height:40px;" type="text"  placeholder="Keyword here...">
+						<input  type="hidden" name="search_key" id="search_key" value="">
 					 </div>
                       <button type="submit" class="pull-right btn-search"></button>
                 </form>

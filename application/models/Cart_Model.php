@@ -56,6 +56,15 @@ class Cart_Model extends CI_Model
     }
     return $return;
   }
+
+  public function get_cart_quantity_for_product($user_id='',$product_id='')
+  {
+    $this->db->select('quantity');
+    $this->db->from($this->table);
+    $this->db->where('user_id',$user_id);
+    $this->db->where('product_id',$product_id);
+    return $this->db->get()->row();
+  }
 }
 
 ?>
