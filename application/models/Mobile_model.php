@@ -212,7 +212,7 @@ class Mobile_model extends CI_Model
 	return $this->db->affected_rows()?1:0;
 	}
 	public function check_loging($username){
-		$this->db->select('*')->from('users_tab')->
+		$this->db->select('id,email_id,phone_number,user_name,password')->from('users_tab')->
 		where('phone_number',$username)->or_where('email_id',$username);
 
 		return $this->db->get()->row_array();
@@ -220,7 +220,8 @@ class Mobile_model extends CI_Model
 	}
 	public function insert_user_reg($data){
 		$this->db->insert('users_tab',$data);
-	 return $this->db->affected_rows()?1:0;
+		$insert_id=$this->db->insert_id();
+	 return $insert_id?$insert_id:0;
 		
 	}
 	public function user_email_checking($email){

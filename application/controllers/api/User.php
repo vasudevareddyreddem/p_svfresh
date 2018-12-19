@@ -63,19 +63,22 @@ class User extends REST_Controller {
 		);
 		
 		$status=$this->Mobile_model->insert_user_reg($data);
-		if($status==1){
-			$message = array('status'=>1,'message'=>'user registered');
-			$this->response($message, REST_Controller::HTTP_OK);
+		if($status==0){
 			
-		}
-		$message = array('status'=>0,'message'=>'user not registered');
+				$message = array('status'=>0,'message'=>'user not registered');
 			$this->response($message, REST_Controller::HTTP_OK);
 		
+			
+		}
+		$message = array('status'=>1, 'id'=>$status,'message'=>'user registered');
+			$this->response($message, REST_Controller::HTTP_OK);
+	
 		
 	}
 
 	public function login_post(){
 		$email=$this->post('email');
+	
 		$password=$this->post('password');
 		
 		
@@ -95,8 +98,9 @@ class User extends REST_Controller {
 		
 		if(count($user)>0){
 			if(password_verify($this->post('password'),$user['password']))
-			{
-				$message = array('status'=>1,'message'=>$user);
+				{
+					unset($user['password']);
+				$message = array('status'=>1,'message'=>'login successful','user'=>$user);
 			$this->response($message, REST_Controller::HTTP_OK);
 				
 			}

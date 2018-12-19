@@ -25,7 +25,7 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
-                                            <th>Ordered Date & Time</th>
+                                            <th>Ordered/Delivered/Cancelled Date & Time</th>
                                         </tr>
                                     </thead>
                                     <tbody>
