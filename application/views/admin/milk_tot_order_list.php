@@ -68,11 +68,28 @@
 											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
 											</td>
                                             <td><?php if($order->delivery_status==1)
-												{echo $order->delivered_time;}
+												{	
+											if($order->delivered_time!=''){
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->delivered_time);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
+											}
+													
+													}
 											if($order->delivery_status==0)
-												{echo $order->cancelled_time;}
+												{	if($order->cancelled_time!=''){
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->cancelled_time);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
+											}
+													
+													}
 											if($order->delivery_status==2)
-												{echo $order->created_date;}
+												{
+													if($order->created_date!=''){
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
+											}
+													
+													}
 											?></td>
                                         </tr>
 										<?php }}?>

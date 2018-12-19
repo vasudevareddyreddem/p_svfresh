@@ -38,9 +38,9 @@ class User extends REST_Controller {
 		
     }
 	public function user_reg_post(){
-		$fname=$this->post('fname');
-		$lname=$this->post('lname');
-		$username=$fname." ".$lname;
+		$uname=$this->post('uname');
+		
+		$username=$uname;
 		$email=$this->post('email');
 		$mobile=$this->post('mobile');
 		$org_password=$this->post('password');
@@ -48,7 +48,14 @@ class User extends REST_Controller {
 		$flag=$this->Mobile_model->user_email_checking($email);
 		//echo $this->db->last_query();exit;
 		if($flag==1){
-			$message = array('status'=>0,'message'=>'emal already  existed');
+			$message = array('status'=>0,'message'=>'email already  existed');
+			$this->response($message, REST_Controller::HTTP_OK);
+		
+			
+		}
+		$flag=$this->Mobile_model->user_mobile_checking($mobile);
+		if($flag==1){
+			$message = array('status'=>0,'message'=>'phone number already  existed');
 			$this->response($message, REST_Controller::HTTP_OK);
 		
 			

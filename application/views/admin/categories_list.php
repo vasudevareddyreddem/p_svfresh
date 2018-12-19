@@ -59,7 +59,13 @@
 											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_dis_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
 												<?php }?>
 											</td>
-                                            <td><?php echo $cat->created_at; ?></td>
+                                            <td><?php 
+											if($cat->created_at!=''){
+												
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $cat->created_at);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');
+											echo $newDateString ;
+											} ?></td>
 											<td>
 											<?php if($cat->status==1){?>
 										        <div class="badge badge-success"><a href="<?php 

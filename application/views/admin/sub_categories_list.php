@@ -40,7 +40,12 @@
 												<?php }?>
 											</td>
                                             <td><?php echo $subcat->countproduct;?></td>
-                                            <td><?php echo $subcat->created_at;?></td>
+                                            <td><?php if($subcat->created_at!=''){
+												
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $subcat->created_at);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');
+											echo $newDateString ;
+											}?></td>
                                             <td>
 											<?php if($subcat->status==1){?>
 										        <div class="badge badge-success"><a href="<?php 

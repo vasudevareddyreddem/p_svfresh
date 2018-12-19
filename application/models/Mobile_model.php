@@ -240,4 +240,19 @@ class Mobile_model extends CI_Model
 		
 		
 	}
+	public function user_mobile_checking($mobile){
+	$this->db->select('*')->from('users_tab')->where('status','active')->
+		where('phone_number',$mobile);
+		$res=$this->db->get()->result();
+		if(count($res)>0)
+		{
+			return 1;
+			
+		}
+		else{
+			return 0;
+		}
+		
+		
+	}
 }

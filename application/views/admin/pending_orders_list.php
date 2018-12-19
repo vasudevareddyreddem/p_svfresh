@@ -71,9 +71,11 @@
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>
-                                            <td><?php 
-												echo $order->created_date;
-											?></td>
+                                            	<td><?php 
+												if($order->created_date!=''){
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
+           $newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
+												}		   ?></td>
                                         </tr>
 										<?php }}?>
                                        
