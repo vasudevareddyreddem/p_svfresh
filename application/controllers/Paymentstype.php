@@ -102,6 +102,7 @@ class Paymentstype extends CI_Controller
         $this->Order_Model->delete_cart_after_order($c->user_id);
       }
       $this->session->unset_userdata('billing_id');
+      $this->session->set_flashdata('success', 'Order has been placed');
       redirect('/order');
   }
 
