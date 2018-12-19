@@ -25,6 +25,7 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
+											<th>Ordered Date & Time</th>
                                             <th>Ordered/Delivered/Cancelled Date & Time</th>
                                         </tr>
                                     </thead>
@@ -62,6 +63,7 @@
 												{echo 'Pending';}
 											?></div>
                                             </td>
+											<td><?php echo $order->created_date; ?></td>
                                             <td><?php if($order->delivery_status==1)
 												{echo $order->delivered_time;}
 											if($order->delivery_status==0)

@@ -26,6 +26,7 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
+											<th>Ordered Date & Time</th>
                                             <th>Delivered Date & Time</th>
                                         </tr>
                                     </thead>
@@ -69,6 +70,7 @@
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>
+											<td><?php echo $order->created_date; ?></td>
                                             <td><?php 
 												echo $order->delivered_time;
 											?></td>

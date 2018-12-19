@@ -26,7 +26,8 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
-                                            <th>Ordered Date&Time</th>
+											<th>Ordered Date & Time</th>
+                                            <th>Cancelled Date&Time</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,8 +67,9 @@
 											 <?php echo 'Pending';?></i></a>
 											 </div>
                                             </td>
+											<td><?php echo $order->created_date; ?></td>
                                             <td><?php 
-												echo $order->created_date;
+												echo $order->cancelled_time;
 											?></td>
                                         </tr>
 										<?php }}?>
