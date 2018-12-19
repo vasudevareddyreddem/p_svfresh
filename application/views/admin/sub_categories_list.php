@@ -13,7 +13,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="bootstrap-data-table" class="table table-striped">
+                                <table id="example" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
@@ -68,6 +68,11 @@
         </div>
     </section>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('.confirmation').on('click', function () {
