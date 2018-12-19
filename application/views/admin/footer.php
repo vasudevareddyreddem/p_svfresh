@@ -95,9 +95,14 @@
         });
     </script>
     
+    
+   
     <script src="<?php echo base_url().'assets/js/summernote-lite.js';?>"></script>
     <script src="<?php echo base_url().'assets/js/scripts.js';?>"></script>
     <script src="<?php echo base_url().'assets/js/custom.js';?>"></script>
+	<script src="<?php echo base_url().'assets/js/datatables.min.js';?>"></script>
+    <script src="<?php echo base_url().'assets/js/dataTables.bootstrap.min.js';?>"></script>
+    <script src="<?php echo base_url().'assets/js/datatables-init.js';?>"></script>  
 
 </body>
 

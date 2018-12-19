@@ -690,11 +690,11 @@ else{
 			$status=$this->Product_model->active_product($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','product activated');
-			  redirect('category/sub_category_list');
+			  redirect('product/product_list');
 			}
 			else{
 				$this->session->set_flashdata('error','product not activated');
-			  redirect('category/sub_category_list');
+			  redirect('product/product_list');
 			}
 		}
 		else{redirect('login');}

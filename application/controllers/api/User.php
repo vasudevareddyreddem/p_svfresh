@@ -452,6 +452,7 @@ public function wishlist_post(){
  { 
  $message['wishlist_status']=1;
 	 $message['wishlist']=$wishlist;
+	 $message['image_path']=base_url().'assets/uploads/product_pics/';
 	
  }
  else{
