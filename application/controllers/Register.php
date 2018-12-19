@@ -40,7 +40,7 @@ class Register extends CI_controller
         unset($post_array['confirm_password']);
         $post_array = array_merge($post_array,$addl_array);
         if($this->Auth_Model->insert($post_array)){
-          $this->session->set_flashdata('success', 'Your registation successful.');
+          $this->session->set_flashdata('success', 'Your registration successful.');
           $post_phone_number = array('phone_number' => $this->input->post('phone_number'));
           $result = $this->Auth_Model->login($post_phone_number);
           if(count($result) > 0){
