@@ -115,7 +115,7 @@ function decreaseValue() {
 <script type="text/javascript" src="<?php echo base_url('assets/js/theme-script.js'); ?>"></script>
 
 <script type="text/javascript" src="<?php echo base_url('assets/js/sweetalert.min.js'); ?>"></script>
-<?php 
+<?php
 $servername = "166.62.26.2";
 $username = "sv_fresh_staging";
 $password = "sv_fresh_staging@123#@";
@@ -127,7 +127,7 @@ mysqli_query($conn, "SET NAMES 'utf8'");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "SELECT product_name,product_id FROM product_tab";
+$sql = "SELECT product_name,product_id FROM product_tab WHERE status = '1'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
@@ -156,14 +156,14 @@ if ($result->num_rows > 0) {
       select: function( event, ui ) {
         $( "#search_value" ).val( ui.item.value );
         $( "#search_key" ).val( ui.item.key );
- 
+
         return false;
-      } 
+      }
 	  });
   } );
 
   $(document).ready(function(){
-    
+
     $('.addtocart').click(function(e){
       e.preventDefault();
       <?php
