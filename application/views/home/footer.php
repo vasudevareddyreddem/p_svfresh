@@ -12,6 +12,7 @@ function decreaseValue() {
   value = isNaN(value) ? 0 : value;
   value < 1 ? value = 1 : '';
   value--;
+  value = (value <= 0) ? 1 : value;
   document.getElementById('number').value = value;
 }
 </script>
