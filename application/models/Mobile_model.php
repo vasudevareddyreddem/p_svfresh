@@ -122,7 +122,7 @@ class Mobile_model extends CI_Model
 	}
 	public function get_user_wishlist($id){
 		$this->db->select('product_tab.product_name,product_tab.product_id,
-		product_tab.product_img,product_tab.quantity,product_tab.net_price,product_tab.discount_price
+		product_tab.product_img,wishlist_tab.quantity,product_tab.actual_price,product_tab.net_price,product_tab.discount_price,(wishlist_tab.quantity)*(product_tab.net_price) whole_price
 		')->from('wishlist_tab')->join('product_tab','product_tab.product_id=wishlist_tab.product_id')->
 		where('wishlist_tab.user_id',$id);
 	

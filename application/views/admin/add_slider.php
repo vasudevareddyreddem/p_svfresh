@@ -106,7 +106,7 @@ $(document).ready(function() {
               s_name: {
                 validators: {
 					notEmpty: {
-						message: 'name is required'
+						message: 'Name is required'
 					}
 					
 				
