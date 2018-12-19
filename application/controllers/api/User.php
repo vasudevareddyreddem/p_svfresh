@@ -190,6 +190,7 @@ public function subcatgories_post(){
 	 $message = array('status'=>0,'message'=>'NO Subcategories for this Category');
 		    $this->response($message, REST_Controller::HTTP_OK);
 }
+//not needed
 public function products_post(){
 	
 	$userid=$this->post('user_id');
@@ -269,6 +270,14 @@ public function home_post(){
 	//$cat=$this->post('cat_id');
 	$subcat=$this->post('subcat_id');
 	
+	if($this->post('user_id')){
+	$user_id=$this->post('user_id');
+	} else{
+		$user_id='dummydata';
+	}
+	
+	
+	
 	// $slider=$this->Mobile_model->subcat_img_slider($subcat);
 	
 	// $message=array();
@@ -282,7 +291,8 @@ public function home_post(){
 		// $message['slider_status']=0;
 	// }
 	
-	$products=$this->Mobile_model->product_list($subcat);
+	$products=$this->Mobile_model->product_list($subcat,$user_id);
+	
 	if(count($products)>0){
 		$message['status']=1;
 		$message['products']=$products;
@@ -291,7 +301,7 @@ public function home_post(){
 		 }
 		 else{
 			 $message['status']=0;
-			 $message[]='No products available';
+			 $message['message']='No products available';
 		 }
 
 		    $this->response($message, REST_Controller::HTTP_OK);
