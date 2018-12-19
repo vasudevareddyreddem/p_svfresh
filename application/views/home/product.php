@@ -138,21 +138,23 @@
                           </div>
                         <?php } ?>
                         <?php if(isset($category_name->cat_name) && (strcasecmp($category_name->cat_name,'MILK') != 0)){ ?>
+                          <?php if(isset($product->product_id) && (!in_array($product->product_id,$cart_product_id))){ ?>
                           <div class="form-option">
-                            <div class="attributes">
-                              <div class="attribute-label">Qty:</div>
-                              <form class="" id="cart_form">
-                                <div style="padding:5px;" class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                <input type="number" name="quantity" id="number" value="<?php if(isset($cart_quantity->quantity)){ echo $cart_quantity->quantity; } else { echo '1'; } ?>" />
-                                <div style="padding:5px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-                                <input type="hidden" name="product_id" value="<?php if (isset($product->product_id)) { echo $product->product_id; } ?>"/>
-                                <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
-                                <input type="hidden" name="product_name" value="<?php if (isset($product->product_name)) { echo $product->product_name; } ?>"/>
-                                <input type="hidden" name="net_price" value="<?php if (isset($product->net_price)) { echo $product->net_price; } ?>"/>
-                                <input type="hidden" name="product_img" value="<?php if (isset($product->product_img)) { echo $product->product_img; } ?>"/>
-                              </form>
-                            </div>
+                              <div class="attributes">
+                                <div class="attribute-label">Qty:</div>
+                                <form class="" id="cart_form">
+                                  <div style="padding:5px;" class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                                  <input type="number" name="quantity" id="number" value="<?php if(isset($cart_quantity->quantity)){ echo $cart_quantity->quantity; } else { echo '1'; } ?>" />
+                                  <div style="padding:5px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                                  <input type="hidden" name="product_id" value="<?php if (isset($product->product_id)) { echo $product->product_id; } ?>"/>
+                                  <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
+                                  <input type="hidden" name="product_name" value="<?php if (isset($product->product_name)) { echo $product->product_name; } ?>"/>
+                                  <input type="hidden" name="net_price" value="<?php if (isset($product->net_price)) { echo $product->net_price; } ?>"/>
+                                  <input type="hidden" name="product_img" value="<?php if (isset($product->product_img)) { echo $product->product_img; } ?>"/>
+                                </form>
+                              </div>
                           </div>
+                        <?php } ?>
                         <?php } ?>
                         <div class="form-action">
                           <div class="button-group">
