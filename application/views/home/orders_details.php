@@ -7,7 +7,7 @@
     <div class="container" >
 
      <div class="page-content checkout-page col-md-6 col-md-offset-3">
-        <h3 class="checkout-sep">Rateing</h3>
+        <h3 class="checkout-sep">Rating</h3>
                               <div class="panel panel-default ">
 
               <div class="panel-heading bg-white">
@@ -25,7 +25,7 @@
 
 
 			  </div>
-                
+
               </div>
               <div class="panel-footer">
 				<form method="post" action="<?php echo base_url('order/update_review_ratings'); ?>">
@@ -175,13 +175,13 @@ $(function() {
 });
 
 $( document ).ready(function() {
-      
+
   $('#stars').on('starrr:change', function(e, value){
     $('#count').html(value);
     $('#rate').val(value);
-    
+
   });
-  
+
   $('#stars-existing').on('starrr:change', function(e, value){
     $('#count-existing').html(value);
   });
