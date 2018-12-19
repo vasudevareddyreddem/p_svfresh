@@ -106,6 +106,7 @@
         var value = parseInt($(this).closest('td.qty').find(".number").val(), 10);
         value = isNaN(value) ? 0 : value;
         value--;
+        value = (value <= 0) ? 1 : value;
         $(this).closest('td.qty').find(".number").val(value);
       });
       $('.increase,.decrease').click(function(){
