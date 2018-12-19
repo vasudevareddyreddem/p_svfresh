@@ -31,7 +31,13 @@
                                         <tr>
                                             <td><?php echo $count;?></td>
                                             <td><?php echo $slider->slider_name;?></td>
-                                            <td><?php echo $slider->created_at;?></td>
+                                            <td><?php	if($slider->created_at!=''){
+												
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $slider->created_at);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');
+											echo $newDateString ;
+											}
+											?></td>
                                             <td>
 											<?php if($slider->status==1){?>
 										        <div class="badge badge-success"><a href="<?php 

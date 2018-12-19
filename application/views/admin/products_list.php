@@ -49,7 +49,13 @@
                                             <td><?php echo $product->actual_price;?></td>
                                             <td><?php echo $product->discount_price;?></td>
                                             <td><?php echo $product->net_price;?></td>
-                                            <td><?php echo $product->created_at;?></td>
+                                            <td><?php if($product->created_at!=''){
+												
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $product->created_at);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');
+											echo $newDateString ;
+											}
+											echo $product->created_at;?></td>
 											<td><?php if($product->status==1){?>
 										        <div class="badge badge-success"><a href="<?php 
 												echo base_url('product/inactive_product/').base64_encode($product->product_id);?>">Active</a></div>

@@ -26,7 +26,8 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
-                                            <th>Ordered Date</th>
+											<th>Ordered Date & Time</th>
+                                            <th>Cancelled Date&Time</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,8 +67,18 @@
 											 <?php echo 'Pending';?></i></a>
 											 </div>
                                             </td>
+											<td><?php 
+											if($order->created_date!=''){
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
+											}
+											?></td>
                                             <td><?php 
-												echo $order->created_date;
+											if($order->cancelled_time!=''){
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->cancelled_time);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
+											}
+												
 											?></td>
                                         </tr>
 										<?php }}?>

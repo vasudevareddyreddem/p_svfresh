@@ -83,7 +83,7 @@ $this->load->model('Product_model');
 				$guaran=$this->input->post('guaran');
 				$status=$this->Product_model->check_unique_product($product_name,$cat_id,$subcat_id);
 				if($status==1){
-					$this->session->set_flashdata('error','product name  already existed');
+					$this->session->set_flashdata('error','Product name  already existed');
 					       redirect('product/add_product');
 
 				}
@@ -188,7 +188,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
                 {
                       
 						
-                          $this->session->set_flashdata('error',' slider image not uploaded'); 
+                          $this->session->set_flashdata('error',' Product image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -228,7 +228,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				if(!empty($features)){
 				$status=$this->Product_model->save_features($features);
 				}
-				 $this->session->set_flashdata('success','product addded  successfully');
+				 $this->session->set_flashdata('success','Product added  successfully');
 					      redirect('product/product_list');
 				
 
@@ -277,7 +277,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 			$data['product']=$this->Product_model->edit_product($pid);
 			
 			if(!$data['product']){
-				   $this->session->set_flashdata('error','this product deleted by another session');
+				   $this->session->set_flashdata('error','This Product deleted by another session');
 			         redirect('product/product_list');
 
 			}
@@ -355,7 +355,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				$status=$this->Product_model->check_unique_edit_product($pid,$product_name,$cat_id,$subcat_id);
 
 				if($status==1){
-					$this->session->set_flashdata('error','product name  already existed');
+					$this->session->set_flashdata('error','Product name  already existed');
 					       redirect($_SERVER['HTTP_REFERER']);
 
 				}
@@ -381,7 +381,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
                 {
                        
                          
-                          $this->session->set_flashdata('error','product image not uploaded'); 
+                          $this->session->set_flashdata('error','Product image not uploaded'); 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
 				else{
@@ -466,7 +466,7 @@ else{
                 {
                       
 						
-                          $this->session->set_flashdata('error',' product image not uploaded'); 
+                          $this->session->set_flashdata('error',' Product image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -512,7 +512,7 @@ else{
                 {
                       
 						
-                          $this->session->set_flashdata('error',' product image not uploaded'); 
+                          $this->session->set_flashdata('error',' Product image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -602,13 +602,13 @@ else{
 
 				// }
 				 if($status==1){
-				   $this->session->set_flashdata('success','product updated  successfully');
+				   $this->session->set_flashdata('success','Product updated  successfully');
 					      redirect('product/product_list');
 
 
 				}
 				 else{
-					 $this->session->set_flashdata('error','product updated');
+					 $this->session->set_flashdata('error','Product updated');
 					       redirect('product/product_list');
 				 }
 
@@ -626,11 +626,11 @@ else{
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Product_model->delete_product($id);
 			if($status==1){
-				$this->session->set_flashdata('success',' product deleted');
+				$this->session->set_flashdata('success',' Product deleted');
 			  redirect('product/product_list');
 			}
 			else{
-				$this->session->set_flashdata('error','product not deleted');
+				$this->session->set_flashdata('error','Product not deleted');
 			  redirect('product/product_list');
 			}
 		}
@@ -671,11 +671,11 @@ else{
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Product_model->inactive_product($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','product inactivated');
+				$this->session->set_flashdata('success','Product inactivated');
 			  redirect('product/product_list');
 			}
 			else{
-				$this->session->set_flashdata('error','subcategory not inactivated');
+				$this->session->set_flashdata('error','Product not inactivated');
 			  redirect('product/product_list');
 			}
 		}
@@ -689,11 +689,11 @@ else{
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Product_model->active_product($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','product activated');
+				$this->session->set_flashdata('success','Product activated');
 			  redirect('product/product_list');
 			}
 			else{
-				$this->session->set_flashdata('error','product not activated');
+				$this->session->set_flashdata('error','Product not activated');
 			  redirect('product/product_list');
 			}
 		}

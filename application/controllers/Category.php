@@ -84,7 +84,7 @@ $this->load->model('Product_model')	;
                }
 			   $status=$this->Category_model->category_name_check($this->input->post('cat_name'));
 			   if($status==1){
-				     $this->session->set_flashdata('error','category name already existed'); 
+				     $this->session->set_flashdata('error','Category name already existed'); 
 					   redirect('category/add_category');
 				   
 			   }
@@ -156,17 +156,17 @@ $this->load->model('Product_model')	;
 			   );
                
                
-            $insert_id=$this->Category_model->insert_category($data);
+            $flag=$this->Category_model->insert_category($data);
 			if(isset($_POST['slider_image'])){
 				
 			}
 			if($flag==1){
-				$this->session->set_flashdata('success','category added successfully');
+				$this->session->set_flashdata('success','Category added successfully');
 			     redirect('category/category_list');
 				
 			}
 			else{
-				$this->session->set_flashdata('error','category not added');
+				$this->session->set_flashdata('error','Category not added');
 				 redirect('category/add_category');
 			}
 			   
@@ -184,11 +184,11 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->inactive_category($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','category inactivated');
+				$this->session->set_flashdata('success','Category inactivated');
 			  redirect('category/category_list');
 			}
 			else{
-				$this->session->set_flashdata('error','category not inactivated');
+				$this->session->set_flashdata('error','Category not inactivated');
 			  redirect('category/category_list');
 			}
 		}
@@ -202,11 +202,11 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->active_category($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','category activated');
+				$this->session->set_flashdata('success','Category activated');
 			  redirect('category/category_list');
 			}
 			else{
-				$this->session->set_flashdata('error','category not activated');
+				$this->session->set_flashdata('error','Category not activated');
 			  redirect('category/category_list');
 			}
 		}
@@ -220,11 +220,11 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->delete_category($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','category deleted');
+				$this->session->set_flashdata('success','Category deleted');
 			  redirect('category/category_list');
 			}
 			else{
-				$this->session->set_flashdata('error','category not deleted');
+				$this->session->set_flashdata('error','Category not deleted');
 			  redirect('category/category_list');
 			}
 		}
@@ -237,7 +237,7 @@ $this->load->model('Product_model')	;
 			$data['cat']=$this->Category_model->get_category($id);
 			//print_r($data);exit;
 			if(empty($data['cat'])){
-				$this->session->set_flashdata('error','category not existed or deleted in antoher session');
+				$this->session->set_flashdata('error','Category not existed or deleted in antoher session');
 			  redirect('category/category_list');
 				}
 			$this->load->view('admin/edit_category',$data);
@@ -272,7 +272,7 @@ $this->load->model('Product_model')	;
 			  $status=$this->Category_model->category_edit_name_check($cid,$cname);
 			 
 			  if($status==1){
-				   $this->session->set_flashdata('error','category name already existed');
+				   $this->session->set_flashdata('error','Category name already existed');
 		 
                redirect($_SERVER['HTTP_REFERER']);
 				  
@@ -295,7 +295,7 @@ $this->load->model('Product_model')	;
                 {
                         //$error = array('error' => $this->upload->display_errors());
 						
-                          $this->session->set_flashdata('error','category image not uploaded'); 
+                          $this->session->set_flashdata('error','Category image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -310,7 +310,7 @@ $this->load->model('Product_model')	;
                 {
                         //$error = array('error' => $this->upload->display_errors());
 
-                          $this->session->set_flashdata('error','left header category image not uploaded'); 
+                          $this->session->set_flashdata('error','Left header category image not uploaded'); 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
 				else{
@@ -325,7 +325,7 @@ $this->load->model('Product_model')	;
                 {
                         //$error = array('error' => $this->upload->display_errors());
 
-                          $this->session->set_flashdata('error','right header category image not uploaded'); 
+                          $this->session->set_flashdata('error','Right header category image not uploaded'); 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
 				else{
@@ -374,7 +374,7 @@ $this->load->model('Product_model')	;
 			   
 			   $status=$this->Category_model->edit_category($cid,$data);
 			   if($status=1){
-				   $this->session->set_flashdata('success','category updated successfully');
+				   $this->session->set_flashdata('success','Category updated successfully');
 				   redirect('category/category_list');
 			   }
 			  
@@ -389,7 +389,7 @@ $this->load->model('Product_model')	;
 			$categ=base64_decode($this->input->post('c_name'));
 			$cstatus=$this->Category_model->subcategory_name_check($this->input->post('name'),$categ);
 			if($cstatus==1){
-				  $this->session->set_flashdata('error','subcategory name already exited');
+				  $this->session->set_flashdata('error','Subcategory name already existed');
 				  redirect('category/add_sub_category');
 				  
 			}
@@ -404,7 +404,7 @@ $this->load->model('Product_model')	;
                 {
                         //$error = array('error' => $this->upload->display_errors());
 						
-                          $this->session->set_flashdata('error','sub category image not uploaded'); 
+                          $this->session->set_flashdata('error','Sub category image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -420,13 +420,13 @@ $this->load->model('Product_model')	;
 				);
 				$status=$this->Category_model->save_sub_category($data);
 				if($status==1){
-					 $this->session->set_flashdata('success','sub category added successfully'); 
+					 $this->session->set_flashdata('success','Sub category added successfully'); 
 						 
 					      redirect('category/sub_category_list');
 					
 					
 				}else{
-					$this->session->set_flashdata('error','sub category not added'); 
+					$this->session->set_flashdata('error','Sub category not added'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -442,11 +442,11 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->inactive_subcategory($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','subcategory inactivated');
+				$this->session->set_flashdata('success','Subcategory inactivated');
 			  redirect('category/sub_category_list');
 			}
 			else{
-				$this->session->set_flashdata('error','subcategory not inactivated');
+				$this->session->set_flashdata('error','Subcategory not inactivated');
 			  redirect('category/sub_category_list');
 			}
 		}
@@ -460,11 +460,11 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->active_subcategory($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','subcategory activated');
+				$this->session->set_flashdata('success','Subcategory activated');
 			  redirect('category/sub_category_list');
 			}
 			else{
-				$this->session->set_flashdata('error','subcategory not activated');
+				$this->session->set_flashdata('error','Subcategory not activated');
 			  redirect('category/sub_category_list');
 			}
 		}
@@ -484,7 +484,7 @@ $this->load->model('Product_model')	;
 			
 		}
 		else{
-				$this->session->set_flashdata('error','subcategory deleted by another session');
+				$this->session->set_flashdata('error','Subcategory deleted by another session');
 			  redirect('category/sub_category_list');
 		}
 		}
@@ -499,7 +499,7 @@ $this->load->model('Product_model')	;
 		    $categ=base64_decode($this->input->post('c_name'));
 			$cstatus=$this->Category_model->subcategory_editname_check($this->input->post('name'),$categ,$scid);
 			if($cstatus==1){
-				  $this->session->set_flashdata('error','subcategory name already exited');
+				  $this->session->set_flashdata('error','Subcategory name already exited');
 				  redirect('category/add_sub_category');
 				  
 			}
@@ -513,7 +513,7 @@ $this->load->model('Product_model')	;
                 {
                        
 						
-                          $this->session->set_flashdata('error','sub category image not uploaded'); 
+                          $this->session->set_flashdata('error','Sub category image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -534,13 +534,13 @@ $this->load->model('Product_model')	;
 				$status=$this->Category_model->save_editsub_category($data,$scid);
 				
 				if($status==1){
-					 $this->session->set_flashdata('success','sub category updated successfully'); 
+					 $this->session->set_flashdata('success','Sub category updated successfully'); 
 						 
 					      redirect('category/sub_category_list');
 					
 					
 				}else{
-					$this->session->set_flashdata('error','sub category  updated sucessfully'); 
+					$this->session->set_flashdata('error','Sub category  updated sucessfully'); 
 						 
 					      redirect('category/sub_category_list');
 				}
@@ -556,11 +556,11 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->delete_subcategory($id,$svadmin);
 			if($status==1){
-				$this->session->set_flashdata('success','subcategory deleted');
+				$this->session->set_flashdata('success','Subcategory deleted');
 			  redirect('category/sub_category_list');
 			}
 			else{
-				$this->session->set_flashdata('error','subcategory not deleted');
+				$this->session->set_flashdata('error','Subcategory not deleted');
 			  redirect('category/sub_category_list');
 			}
 		}
@@ -597,7 +597,7 @@ $this->load->model('Product_model')	;
                 {
                         //$error = array('error' => $this->upload->display_errors());
 						
-                          $this->session->set_flashdata('error','discount image not uploaded'); 
+                          $this->session->set_flashdata('error','Discount image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -670,7 +670,7 @@ $this->load->model('Product_model')	;
                 {
                       
 						
-                          $this->session->set_flashdata('error',' slider image not uploaded'); 
+                          $this->session->set_flashdata('error',' Slider image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -784,7 +784,7 @@ $this->load->model('Product_model')	;
                 {
                       
 						
-                          $this->session->set_flashdata('error',' slider image not uploaded'); 
+                          $this->session->set_flashdata('error',' Slider image not uploaded'); 
 						 
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
@@ -803,14 +803,14 @@ $this->load->model('Product_model')	;
  
  if($flag==1){
 	 
-                          $this->session->set_flashdata('success','updated successfully'); 
+                          $this->session->set_flashdata('success','Updated successfully'); 
 						 
 					      redirect('category/subcat_slider_list');	 
 	 
 	 
  }
  else{
-	   $this->session->set_flashdata('success','updated fffsuccessfully'); 
+	   $this->session->set_flashdata('success','updated successfully'); 
 					 redirect('category/subcat_slider_list');	 
 					     
 	 

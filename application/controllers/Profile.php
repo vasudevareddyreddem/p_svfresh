@@ -51,7 +51,7 @@ if($this->session->userdata('svadmin_det')){
 				  if ( ! $this->upload->do_upload('image',time()))
                 {
                         //$error = array('error' => $this->upload->display_errors());
-
+ 
                           $this->session->set_flashdata('error','profile image not uploaded');
 					      redirect($_SERVER['HTTP_REFERER']);
                 }

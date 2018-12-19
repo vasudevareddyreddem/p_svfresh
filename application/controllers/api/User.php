@@ -38,9 +38,9 @@ class User extends REST_Controller {
 		
     }
 	public function user_reg_post(){
-		$fname=$this->post('fname');
-		$lname=$this->post('lname');
-		$username=$fname." ".$lname;
+		$uname=$this->post('uname');
+		
+		$username=$uname;
 		$email=$this->post('email');
 		$mobile=$this->post('mobile');
 		$org_password=$this->post('password');
@@ -48,7 +48,14 @@ class User extends REST_Controller {
 		$flag=$this->Mobile_model->user_email_checking($email);
 		//echo $this->db->last_query();exit;
 		if($flag==1){
-			$message = array('status'=>0,'message'=>'emal already  existed');
+			$message = array('status'=>0,'message'=>'email already  existed');
+			$this->response($message, REST_Controller::HTTP_OK);
+		
+			
+		}
+		$flag=$this->Mobile_model->user_mobile_checking($mobile);
+		if($flag==1){
+			$message = array('status'=>0,'message'=>'phone number already  existed');
 			$this->response($message, REST_Controller::HTTP_OK);
 		
 			
@@ -63,19 +70,22 @@ class User extends REST_Controller {
 		);
 		
 		$status=$this->Mobile_model->insert_user_reg($data);
-		if($status==1){
-			$message = array('status'=>1,'message'=>'user registered');
-			$this->response($message, REST_Controller::HTTP_OK);
+		if($status==0){
 			
-		}
-		$message = array('status'=>0,'message'=>'user not registered');
+				$message = array('status'=>0,'message'=>'user not registered');
 			$this->response($message, REST_Controller::HTTP_OK);
 		
+			
+		}
+		$message = array('status'=>1, 'id'=>$status,'message'=>'user registered');
+			$this->response($message, REST_Controller::HTTP_OK);
+	
 		
 	}
 
 	public function login_post(){
 		$email=$this->post('email');
+	
 		$password=$this->post('password');
 		
 		
@@ -95,8 +105,9 @@ class User extends REST_Controller {
 		
 		if(count($user)>0){
 			if(password_verify($this->post('password'),$user['password']))
-			{
-				$message = array('status'=>1,'message'=>$user);
+				{
+					unset($user['password']);
+				$message = array('status'=>1,'message'=>'login successful','user'=>$user);
 			$this->response($message, REST_Controller::HTTP_OK);
 				
 			}

@@ -40,7 +40,13 @@
 											
 											</td>
                                         
-                                            <td><?php echo $subcat->created_at;?></td>
+                                            <td><?php 
+											if($subcat->created_at!=''){
+												
+	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $subcat->created_at);
+											$newDateString = $myDateTime->format('d-m-Y H:i:s');
+											echo $newDateString ;
+											}?></td>
                                            
                                             <td>
                                                 <a href="<?php echo base_url('category/edit_subcat_slider/').base64_encode($subcat->id); ?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
