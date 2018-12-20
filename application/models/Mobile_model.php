@@ -44,14 +44,17 @@ class Mobile_model extends CI_Model
 	public function product_list($subcat,$user_id){
 			$this->db->select("product_tab.product_id,product_tab.product_name,product_tab.product_img,
 			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
-			product_tab.guarantee_policy,product_tab.description,subcat_tab.subcat_name, IF(wishlist_tab.user_id='$user_id',wishlist_tab.id,null) wishlist_id,
+			product_tab.guarantee_policy,product_tab.description,
+			product_tab.quantity,
+			subcat_tab.subcat_name, IF(wishlist_tab.user_id='$user_id',wishlist_tab.id,null) wishlist_id,
 			IF(cart_tab.user_id='$user_id',cart_tab.id,null) cart_id,
 			(select sum(rate)/count(product_id)   from rating_list where rating_list.product_id=product_tab.product_id group by product_id) AS rating ");
 	  $this->db->from('product_tab');
 	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
-	   $this->db->join('wishlist_tab',"wishlist_tab.product_id=product_tab.product_id
-	    ",'left');
-	     $this->db->join('cart_tab',"cart_tab.product_id=product_tab.product_id
+	   $this->db->join('wishlist_tab',"(wishlist_tab.product_id=product_tab.product_id)
+	   and (wishlist_tab.user_id='$user_id' )",'left');
+	     $this->db->join('cart_tab',"(cart_tab.product_id=product_tab.product_id)
+		and (cart_tab.user_id='$user_id' )
 	    ",'left');
 	   $this->db->where('product_tab.status',1);
 	    $this->db->where('subcat_tab.status',1);
@@ -259,5 +262,51 @@ class Mobile_model extends CI_Model
 		}
 		
 		
+	}
+	public function delete_wishlist_item($wishlist_id){
+		
+		$this->db->where('id',$wishlist_id);
+			$this->db->delete('wishlist_tab');
+			return $this->db->affected_rows()?1:0;
+	}
+	public function check_edit_email($email){
+		$this->db->select('*');
+	    $this->db->from('users_tab');
+		
+		$this->db->where('email_id!=',$email);
+		$this->db->where('status ','Active');
+		
+	   $res= $this->db->get()->result_array(); 
+
+			$email_list = array_column($res, 'email_id');
+			//echo $catname;exit;
+			//echo in_array($catname,$cat_names);exit;
+			if(in_array($email,$email_list)){
+
+			return 1;
+			}
+			else{
+				return 0;
+			}
+	}
+	public function check_edit_mobile($mobile){
+		$this->db->select('*');
+	    $this->db->from('users_tab');
+		
+		$this->db->where('phone_number!=',$mobile);
+		$this->db->where('status ','Active');
+		
+	   $res= $this->db->get()->result_array(); 
+
+			$number_list = array_column($res, 'phone_number');
+			//echo $catname;exit;
+			//echo in_array($catname,$cat_names);exit;
+			if(in_array($phone_number,$number_list)){
+
+			return 1;
+			}
+			else{
+				return 0;
+			}
 	}
 }

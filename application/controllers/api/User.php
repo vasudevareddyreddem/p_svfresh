@@ -210,6 +210,7 @@ public function products_post(){
 		    $this->response($message, REST_Controller::HTTP_OK);
 	
 }
+//not needed
 //home page
 public function home_post(){
 	$userid=$this->post('user_id');
@@ -292,6 +293,7 @@ public function home_post(){
 	// }
 	
 	$products=$this->Mobile_model->product_list($subcat,$user_id);
+
 	
 	if(count($products)>0){
 		$message['status']=1;
@@ -307,6 +309,7 @@ public function home_post(){
 		    $this->response($message, REST_Controller::HTTP_OK);
 	
 }
+//not needed
 //get products for single category
 	public function catproducts_post(){
 	
@@ -498,7 +501,7 @@ public function profile_post(){
 	$profile=$this->Mobile_model->get_user_profile($user_id);
 	if(count($profile)>0)
  { 
- $message['profile_status']=1;
+      $message['profile_status']=1;
 	 $message['profile']=$profile;
 	
  }
@@ -509,6 +512,14 @@ public function profile_post(){
    $this->response($message, REST_Controller::HTTP_OK);
 	
 	
+	
+}
+public function edit_profile(){
+	$user_id=$this->post('user_id');
+	$username=$this->post('username');
+	$email=$this->post('email');
+	$mobile=$this->post('mobile');
+	$status=$this->Mobile_model->check_edit_email($email);
 	
 }
 //add to cart
@@ -663,6 +674,12 @@ public function billing_address_post(){
 public function insert_billing_address_post(){
 	
 	$user_id=$this->post('user_id');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['status'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
 	$fname=$this->post('fname');
 	$lname=$this->post('lname');
 	$comp_name=$this->post('comp_name');
@@ -685,7 +702,8 @@ public function insert_billing_address_post(){
 	'zip'=>$pin,
 	'telephone'=>$mobile,
 	'fax'=>$fax,
-	'created_by'=>$user_id
+	'created_by'=>$user_id,
+	'status'=>'active'
 	);
     $insert_id=$this->Mobile_model->insert_billing_address($data);
 	if($insert_id==0){
@@ -702,11 +720,38 @@ public function insert_billing_address_post(){
 public function insert_order_post(){
 	$billing_id=$this->post('billing_id');
 	$user_id=$this->post('user_id');
-	$items=$this->post('order_ids');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['status'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$items=$this->post('cart_ids');
+	
 	$payment_type=$this->post('payment_type');
-    $razor_payment_id=$this->post('razor_payment_id');
-   $razor_order_id=$this->post('razor_order_id');
+	
+	if($this->post('razor_payment_id')){
+		 $razor_payment_id=$this->post('razor_payment_id');
+	
+	} 
+	else{
+		$razor_payment_id='';
+		
+	}
+	
+	if($this->post('razor_order_id')){
+		$razor_order_id=$this->post('razor_order_id');
+	}
+   
+	else{
+   $razor_order_id='';
+	}
+	if($this->post('razor_signature')){
    $razor_sig=$this->post('razor_signature');
+	} 
+	else{
+		$razor_sig='';
+	}
    $data=array('user_id'=>$user_id,
                'billing_id'=>$billing_id,
 			   'payment_type'=>$payment_type,
@@ -745,6 +790,25 @@ public function insert_order_post(){
 	}
 		$message=array('status'=>0,'message'=>'order_items not added');
 		 $this->response($message, REST_Controller::HTTP_OK);
+	
+}
+public function delete_wishlist_item(){
+	$user_id=$this->post('user_id');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['status'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$wishlist_id=$this->post('wishlist_id');
+	$status=$this->Mobile_model->delete_wishlist_item($wishlist_id);
+	if($status==1){
+		$message=array('status'=>1,'message'=>'wishlist item deleted');
+		 $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$message=array('status'=>0,'message'=>'wishlist item not deleted');
+		 $this->response($message, REST_Controller::HTTP_OK);
+	
 	
 }
 

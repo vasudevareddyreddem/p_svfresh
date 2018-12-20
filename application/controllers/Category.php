@@ -676,6 +676,7 @@ $this->load->model('Product_model')	;
                 }
 				else{
 					$upload_data = $this->upload->data(); 
+					$this->resize_image($upload_data, $config['upload_path'],454,125);
                     $slider_img =   $upload_data['file_name'];
 					$data=array('image_path'=>$slider_img,
 					'cat_id'=>$cat_id,
@@ -693,7 +694,7 @@ $this->load->model('Product_model')	;
  $flag=$this->Category_model->save_subcat_slider($data);
  if($flag==1){
 	 
-                          $this->session->set_flashdata('success','Subcategory slider image  uploaded successfully'); 
+                          $this->session->set_flashdata('success','Subcategory slider images  uploaded successfully'); 
 						 
 					      redirect('category/subcat_slider_list');
 	 
@@ -717,7 +718,7 @@ $this->load->model('Product_model')	;
 		if( $this->session->userdata('svadmin_det')){
 			$data['slider_list']=$this->Category_model->subcat_slider_list();
 			//echo $this->db->last_query();
-			//echo '<pre>';print_r($data);
+			//echo '<pre>';print_r($data); exit;
 		
 			if(count($data['slider_list'])>0)
 			{
@@ -791,6 +792,8 @@ $this->load->model('Product_model')	;
 				else{
 					 
 					$upload_data = $this->upload->data(); 
+					$this->resize_image($upload_data, $config['upload_path'],454,125);
+					
                     $slider_img =   $upload_data['file_name'];
 					$data['image_path']=$slider_img;
 				}

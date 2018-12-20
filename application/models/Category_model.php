@@ -259,7 +259,7 @@ class Category_model extends CI_Model
 	public function subcat_slider_list(){
 
 	$this->db->select('subcat_tab.*,subcat_slider.*')->from('subcat_slider')->join('subcat_tab','subcat_tab.subcat_id=subcat_slider.subcat_id')->where('subcat_slider.status',1)
-	->order_by('subcat_tab.updated_at,subcat_tab.subcat_id','desc');
+	->order_by('subcat_slider.updated_at,subcat_slider.subcat_id','desc');
 	return $this->db->get()->result();
 	}
 	public function get_slider_image($id){
