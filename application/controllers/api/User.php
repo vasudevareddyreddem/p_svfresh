@@ -113,7 +113,7 @@ class User extends REST_Controller {
 			}
 			else{
 				
-					$message = array('status'=>0,'message'=>'email is wrong');
+					$message = array('status'=>0,'message'=>'password is wrong');
 			 $this->response($message, REST_Controller::HTTP_OK);
 				
 			}
@@ -514,12 +514,40 @@ public function profile_post(){
 	
 	
 }
-public function edit_profile(){
+public function edit_profile_post(){
 	$user_id=$this->post('user_id');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
 	$username=$this->post('username');
 	$email=$this->post('email');
 	$mobile=$this->post('mobile');
-	$status=$this->Mobile_model->check_edit_email($email);
+	$status=$this->Mobile_model->check_edit_email($email,$user_id);
+	
+	
+	if($status==1){
+		 $message = array('status'=>0,'message'=>'email already existed');
+		  $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$status=$this->Mobile_model->check_edit_mobile($mobile,$user_id);
+	
+	if($status==1){
+		 $message = array('status'=>0,'message'=>'mobile number already existed');
+		  $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$data=array(
+	'email_id'=>$email,
+	'phone_number'=>$mobile,
+	'user_name'=>$username);
+	$status=$this->Mobile_model->update_profile($data,$user_id);
+	if($status==1){
+		 $message = array('status'=>1,'message'=>'Profile Updated Successfully');
+		 $this->response($message, REST_Controller::HTTP_OK);
+		
+	}
 	
 }
 //add to cart
@@ -792,7 +820,7 @@ public function insert_order_post(){
 		 $this->response($message, REST_Controller::HTTP_OK);
 	
 }
-public function delete_wishlist_item(){
+public function delete_wishlist_item_post(){
 	$user_id=$this->post('user_id');
 	$flag=$this->Mobile_model->user_checking($user_id);
 	if($flag==0){
@@ -810,8 +838,52 @@ public function delete_wishlist_item(){
 		 $this->response($message, REST_Controller::HTTP_OK);
 	
 	
+          }
+		  public function delete_wishlist_post(){
+			  	$user_id=$this->post('user_id');
+	      $flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['status'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$status=$this->Mobile_model->delete_wishlist($user_id);
+	if($status==1){
+		$message=array('status'=>1,'message'=>'wishlist  deleted');
+		 $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$message=array('status'=>0,'message'=>'wishlist not deleted');
+		 $this->response($message, REST_Controller::HTTP_OK);
+			  
+		  }
+public function change_password_post(){
+	$user_id=$this->post('user_id');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['status'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$password=$this->post('old_password');
+	$newpassword=$this->post('new_password');
+	
+	$user=$this->Mobile_model->get_user_details($user_id);
+	if(password_verify($this->post('old_password'),$user['password']))
+				{
+					
+					$hashpassword=password_hash($this->post('new_password'),PASSWORD_DEFAULT);
+					$this->Mobile_model->change_password($hashpassword,$newpassword,$user_id);
+				
+				$message = array('status'=>1,'message'=>'Password Changed Successfully');
+			$this->response($message, REST_Controller::HTTP_OK);
+				
+			}
+				$message = array('status'=>0,'message'=>'Old Password is Wrong');
+			$this->response($message, REST_Controller::HTTP_OK);
+				
+	
+	
 }
-
 
 
 }

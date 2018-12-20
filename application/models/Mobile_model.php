@@ -129,7 +129,7 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 	public function get_user_wishlist($id){
-		$this->db->select('product_tab.product_name,product_tab.product_id,
+		$this->db->select('wishlist_tab.id wishlistid,product_tab.product_name,product_tab.product_id,
 		product_tab.product_img,wishlist_tab.quantity,product_tab.actual_price,product_tab.net_price,product_tab.discount_price,(wishlist_tab.quantity)*(product_tab.net_price) whole_price
 		')->from('wishlist_tab')->join('product_tab','product_tab.product_id=wishlist_tab.product_id')->
 		where('wishlist_tab.user_id',$id);
@@ -138,7 +138,7 @@ class Mobile_model extends CI_Model
 	}
 		public function get_user_profile($id){
 		$this->db->select('email_id,phone_number,user_name')->from('users_tab')->
-		where('users_tab.id',$id);
+		where('users_tab.id',$id)->where('status','Active');
 	
 	  return $this->db->get()->row_array();
 	}
@@ -269,16 +269,17 @@ class Mobile_model extends CI_Model
 			$this->db->delete('wishlist_tab');
 			return $this->db->affected_rows()?1:0;
 	}
-	public function check_edit_email($email){
+	public function check_edit_email($email,$user_id){
 		$this->db->select('*');
 	    $this->db->from('users_tab');
 		
-		$this->db->where('email_id!=',$email);
+		$this->db->where('id!=',$user_id);
 		$this->db->where('status ','Active');
 		
 	   $res= $this->db->get()->result_array(); 
 
 			$email_list = array_column($res, 'email_id');
+			
 			//echo $catname;exit;
 			//echo in_array($catname,$cat_names);exit;
 			if(in_array($email,$email_list)){
@@ -289,11 +290,11 @@ class Mobile_model extends CI_Model
 				return 0;
 			}
 	}
-	public function check_edit_mobile($mobile){
+	public function check_edit_mobile($mobile,$user_id){
 		$this->db->select('*');
 	    $this->db->from('users_tab');
 		
-		$this->db->where('phone_number!=',$mobile);
+		$this->db->where('id!=',$user_id);
 		$this->db->where('status ','Active');
 		
 	   $res= $this->db->get()->result_array(); 
@@ -301,12 +302,38 @@ class Mobile_model extends CI_Model
 			$number_list = array_column($res, 'phone_number');
 			//echo $catname;exit;
 			//echo in_array($catname,$cat_names);exit;
-			if(in_array($phone_number,$number_list)){
+			if(in_array($mobile,$number_list)){
 
 			return 1;
 			}
 			else{
 				return 0;
 			}
+	}
+	public function update_profile($data,$user_id){
+		$this->db->where('id',$user_id);
+		$this->db->update('users_tab',$data);
+		return $this->db->affected_rows()?1:0;
+		
+	}
+	public function delete_wishlist($user_id){
+		$this->db->where('user_id',$user_id);
+			$this->db->delete('wishlist_tab');
+			return $this->db->affected_rows()?1:0;
+		
+		
+	}
+	public function get_user_details($user_id){
+		
+		$this->db->select('password')->from('users_tab')->where('id',$user_id);
+		return $this->db->get()->row_array();
+	}
+	public function change_password($hashpassword,$newpassword,$user_id){
+			$this->db->where('id',$user_id);
+			$this->db->set('password',$hashpassword);
+			$this->db->set('org_password',$newpassword);
+			$this->db->update('users_tab');
+			return $this->db->affected_rows()?1:0;
+		
 	}
 }
