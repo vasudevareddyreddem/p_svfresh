@@ -14,7 +14,7 @@
 
               <div class="panel-heading bg-white">
                 <span class="btn btn-success border-radius-none"><strong><?php echo $o->order_number; ?></strong></span>
-					<a href="<?php echo  base_url('order/details/'.base64_encode($o->order_items_id)); ?>"><span class="btn btn-warning border-radius-none pull-right"> <strong> <i class="fa fa-truck" style="font-size:20px;" aria-hidden="true"></i> Track</strong></span></a>
+					<a href="<?php echo  base_url('order/details/'.base64_encode($o->order_items_id)); ?>"><span class="btn btn-warning border-radius-none pull-right"> <strong>Rate Product</strong></span></a>
 
               </div>
               <div class="panel-body">
@@ -39,15 +39,34 @@
                         <h4 ><a href="#">₹ <?php echo $o->net_price; ?></a></h4>
                       </td>
                       <td style="border-top:0px solid #fff;">
-                        <h4 ><a href="#">Delivered on Sat, Nov 3rd 2018</a></h4>
+                        <h4 ><a href="#">
+                          <?php
+                          if($o->delivery_status == 0){
+                            echo 'Cancelled on '.date('D, M jS Y',strtotime($o->cancelled_time));
+                          } elseif ($o->delivery_status == 1) {
+                            echo 'Delivered on '.date('D, M jS Y',strtotime($o->delivered_time));
+                          } elseif ($o->delivery_status == 2) {
+                            echo 'Pending on '.date('D, M jS Y',strtotime($o->created_date));
+                          }
+                        ?>
+                      </a></h4>
                       </td>
                       <td style="border-top:0px solid #fff;" >
-                        <?php if($o->order_status == 0){ echo 'Cancelled'; } elseif ($o->order_status == 1) { echo 'Confirmed'; }?>
-                      </td>
-                      <td style="border-top:0px solid #fff;" >
-                        <h4 class="pull-right"><a <?php if ($o->order_status == 0) { ?> class="" <?php } else { ?> href="#" class="cancel_order" <?php } ?> data-order_items_id = "<?php echo $o->order_items_id; ?>"><span class="btn btn-danger btn-xs border-radius-none "> <strong><?php if ($o->order_status == 0) { ?>
-                          Cancelled
-                        <?php } else {  ?> Cancel Order <?php } ?></strong></span> </a></h4>
+                        <h4 class="pull-right">
+                          <a <?php if ($o->delivery_status == 0 || $o->delivery_status == 1) { ?> class="" <?php } else { ?> href="#" class="cancel_order" <?php } ?> data-order_items_id = "<?php echo $o->order_items_id; ?>">
+                            <span class="btn btn-danger btn-xs border-radius-none ">
+                              <strong>
+                                <?php if ($o->delivery_status == 0) { ?>
+                                  Cancelled
+                                <?php } elseif ($o->delivery_status == 1) { ?>
+                                  Delivered
+                                <?php } else {  ?>
+                                  Cancel Order
+                                <?php } ?>
+                              </strong>
+                          </span>
+                        </a>
+                      </h4>
                       </td>
                     </tr>
 

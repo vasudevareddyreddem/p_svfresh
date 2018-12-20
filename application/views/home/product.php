@@ -41,8 +41,15 @@
                 <div class="col-left-slide left-module">
                   <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
                     <?php foreach($slider_images as $imgs){ ?>
-                      <li><a href="<?php echo base_url('category/'.$imgs['cat_id']); ?>"><img src="<?php echo base_url('assets/uploads/category_pics/'.$imgs['cat_dis_img']); ?>" alt="<?php echo $imgs['cat_dis_img']; ?>"></a></li>
-
+                      <li>
+                        <a href="<?php echo base_url('category/'.$imgs['cat_id']); ?>">
+                        <?php if (!empty($imgs['cat_dis_img']) && file_exists('assets/uploads/category_pics/'.$imgs['cat_dis_img'])){ ?>
+                          <img src="<?php echo base_url('assets/uploads/category_pics/'.$imgs['cat_dis_img']); ?>" alt="<?php echo $imgs['cat_dis_img']; ?>">
+                        <?php } else { ?>
+                          <img src="<?php echo base_url('assets/uploads/category_pics/no-image.png'); ?>" alt="no image">
+                        <?php } ?>
+                        </a>
+                      </li>
                     <?php } ?>
                   </ul>
                 </div>
@@ -168,7 +175,9 @@
                           </div>
                           <div class="button-group">
                             <?php if (isset($product->product_id) && (in_array($product->product_id,$wishlist_product_id))){ ?>
-                              <a class="wishlist whishlist" href="#" title="Added to your wishlist"><i class="fa fa-heart-o" style="background:#57bb14"></i> Wishlist</a>
+                              <?php if(isset($category_name->cat_name) && (strcasecmp($category_name->cat_name,'MILK') != 0)){ ?>
+                                <a class="wishlist whishlist" href="#" title="Added to your wishlist"><i class="fa fa-heart-o" style="background:#57bb14"></i> Wishlist</a>
+                              <?php } ?>
                             <?php }else{ ?>
                               <?php if(isset($product)){ ?>
                                 <a class="wishlist whishlist" href="#" title="Add to my wishlist" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $product->product_id; ?>" data-product_img="<?php echo $product->product_img; ?>" data-product_name="<?php echo $product->product_name; ?>" data-net_price="<?php echo $product->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $product->discount_price; ?>><i class="fa fa-heart-o"></i> Wishlist</a>
