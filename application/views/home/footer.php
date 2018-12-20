@@ -48,8 +48,8 @@ function decreaseValue() {
                         <div class="col-sm-4">
                             <div class="introduce-title">My Account</div>
                             <ul id = "introduce-Account" class="introduce-list">
-                                <li><a href="#">My Order</a></li>
-                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="<?php echo base_url('/order'); ?>">My Order</a></li>
+                                <li><a href="<?php echo base_url('/wishlist'); ?>">My Wishlist</a></li>
                                 <li><a href="#">My Credit Slip</a></li>
                                 <li><a href="#">My Addresses</a></li>
                                 <li><a href="#">My Personal In</a></li>
