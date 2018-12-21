@@ -40,18 +40,20 @@
 											</div>
 				<div class="form-group col-md-6">
 				
-                           <label>Banner Left Image</label>
+                           <label>Banner Left Image (<span
+											class="text-warning">Best View 1000x1100</span>)</label>
                            <input id="" type="file" class="form-control" name="sl_image">
                             </div>
 							 <div class="form-group">
-                                            <label>Banner Right Old Image</label>
+                                            <label>Banner Right Old Image </label>
 											
                                         <img alt="image" 
 											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->r_pic; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
 											
 											</div>
 							<div class="form-group col-md-6">
-                                                <label>Banner Right Image</label>
+                                                <label>Banner Right Image (<span
+											class="text-warning">Best View 1000x1100</span>)</label>
                                                 <input id="n_price" type="file" class="form-control" name="sr_image">
                                             </div>
 											
@@ -65,7 +67,8 @@
                                         <table id="myTable1" class="table1 order-list1">
                                             <thead>
                                                 <tr>
-                                                    <th> Slider Images</th>
+                                                    <th> Slider Images (<span
+											class="text-warning">Best View 650x310</span>)</th>
                                                    
                                                     <th>&nbsp;</th>
                                                 </tr>

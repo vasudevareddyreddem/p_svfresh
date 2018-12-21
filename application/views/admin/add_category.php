@@ -30,15 +30,18 @@
                                             <input id="" type="file" class="form-control" name="cat_image">
                                         </div>
 										 <div class="form-group">
-                                            <label>Category Small Image</label>
+                                            <label>Category Small Image (<span
+											class="text-warning">Best View 32x32</span>)</label>
                                             <input id="" type="file" class="form-control" name="cat_s_image">
                                         </div>
 										 <div class="form-group">
-                                            <label>Category Left Header Image</label>
+                                            <label>Category Left Header Image (<span
+											class="text-warning">Best View 585x65</span>)</label>
                                             <input id="" type="file" class="form-control" name="cat_himage1">
                                         </div>
 										<div class="form-group">
-                                            <label>Category Right Header Image</label>
+                                            <label>Category Right Header Image (<span
+											class="text-warning">Best View 585x65</span>)</label>
                                             <input id="" type="file" class="form-control" name="cat_himage2">
                                         </div>
 									
