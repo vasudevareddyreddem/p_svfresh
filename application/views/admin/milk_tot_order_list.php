@@ -1,4 +1,10 @@
-
+<style>
+	.dt-buttons{
+		top:-55px;
+		left:180px;
+		margin-bottom:-25px;
+	}
+</style>
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
@@ -129,7 +135,7 @@
   $(document).ready(function() {
     var table = $('#example').DataTable( {
         lengthChange: true,
-        buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+        buttons: ['excel']
     } );
 
     table.buttons().container()
