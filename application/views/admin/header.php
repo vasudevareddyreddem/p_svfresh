@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
     <title>SV Fresh</title>
- <script src="<?php echo base_url().'assets/js/jquery.min.js';?>"></script>
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrap.min.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrapValidator.min.css';?>">
 	<link rel="stylesheet" href="<?php echo base_url().'assets/css/chosen.min.css';?>">
@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/summernote-lite.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/style.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/dataTables.bootstrap.min.css';?>">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	
+
 </head>
 
 <body>
@@ -33,7 +34,7 @@
 
                 </form>
                 <ul class="navbar-nav navbar-right">
-                 
+
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
                             <i class="ion ion-android-person d-lg-none"></i>
                             <div class="d-sm-none d-lg-inline-block">Hi, <?php $admin=$this->session->userdata('svadmin_det');
