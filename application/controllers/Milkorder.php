@@ -24,7 +24,7 @@ $this->load->model('Milkorders_model')	;
 					$data['tot_status']=0;
 				}
 			$this->load->view('admin/milk_tot_order_list',$data);
-		    $this->load->view('admin/footer');
+		    $this->load->view('admin/milk-footer');
 			
 		}
 		else{redirect('login');}

@@ -5,7 +5,7 @@
   <div class="columns-container">
     <div class="container" id="columns">
       <div class="row">
-        <h3 class="checkout-sep pd-tb20 h2"> Billing Infomation</h3>
+        <h3 class="checkout-sep pd-tb20 h2"> Billing Information</h3>
         <?php if(count($billing) > 0){ ?>
           <div class="">
             <div class="row">
@@ -26,7 +26,9 @@
                     <div class="clearfix">
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-success">Proceed For Payment</button>
+					<div class="col-md-12">
+                    <button type="submit" class="btn btn-success">Procdeed For Payment</button>
+					</div>
                   </form>
 
                 </div>

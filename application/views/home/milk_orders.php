@@ -56,7 +56,7 @@
               <tfoot>
               </tfoot>
             </table>
-              <a href="<?php echo base_url('/home'); ?>" class="button pull-right">Back to Home</a>
+              <a href="<?php echo base_url('/home'); ?>" class="button pull-right back-home-btn">Back to Home</a>
           </div>
         </div>
       </div>

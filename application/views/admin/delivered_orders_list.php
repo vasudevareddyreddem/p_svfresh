@@ -59,14 +59,15 @@
 											 
 											 <?php echo'Delivered';?>
 											 </div>
-                                                <div class="badge badge-info" >
+											 <br>
+                                                <div class="badge badge-warning" style="margin:4px 0">
 											 <a 
-							href="<?php echo base_url('orders/pending_order/').base64_encode($order->order_id) ;?>" class="btn btn-danger btn-action" ><i >
+							href="<?php echo base_url('orders/pending_order/').base64_encode($order->order_id) ;?>" class=" text-white " ><i >
 											 <?php echo'Pending';?></i></a>
 											 </div>
-											 
-											 <div class="badge badge-info" >
-								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class="btn btn-danger btn-action" ><i >
+										
+											 <div class="badge badge-danger"  >
+								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class=" text-white" ><i >
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>

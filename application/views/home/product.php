@@ -7,7 +7,7 @@
       <div class="container" id="columns">
         <!-- breadcrumb -->
         <div class="breadcrumb clearfix">
-          <a class="home" href="#" title="Return to Home">Home</a>
+          <a class="home" href="<?php echo base_url('home'); ?>" title="Return to Home">Home</a>
           <span class="navigation-pipe">&nbsp;</span>
           <a href="#" title="Return to Home">Fruits & Vegetables</a>
         </div>

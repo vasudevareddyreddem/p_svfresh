@@ -32,7 +32,7 @@
                                                 
                                             </select>
                                         </div>
-										  <div class="form-group col-md-6">
+										  <div class="form-group ">
                                                 <label>Sub-Category Name</label>
                                                 <select class="form-control  " name="sc_name" id="sc_name" >
                                                  
@@ -43,7 +43,7 @@
                                                    <?php endforeach;?>
                                                 </select>
                                             </div>
-											 <div class="form-group col-md-6">
+											 <div class="form-group ">
                                                 <label>Slider Image</label>
                                                  <input type="file" name="slider_image" placeholder="LastName" class="form-control"  required />
                                             </div>

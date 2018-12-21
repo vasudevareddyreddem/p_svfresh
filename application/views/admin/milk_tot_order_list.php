@@ -1,4 +1,10 @@
-
+<style>
+	.dt-buttons{
+		top:-55px;
+		left:180px;
+		margin-bottom:-25px;
+	}
+</style>
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
@@ -16,7 +22,7 @@
                                 <table id="example" class="table table-striped">
                                     <thead>
                                         <tr>
-                                           
+
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
@@ -25,7 +31,7 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
-											<th>Delivery Date</th> 
+											<th>Delivery Date</th>
                                             <th>Ordered/Delivered/Cancelled Date & Time</th>
                                         </tr>
                                     </thead>
@@ -33,7 +39,7 @@
 									<?php if($tot_status==1){
 										foreach($tot_list as $order){?>
                                         <tr>
-                                           
+
                                             <td><?php echo $order->product_name; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->price; ?></td>
@@ -68,19 +74,19 @@
 											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
 											</td>
                                             <td><?php if($order->delivery_status==1)
-												{	
+												{
 											if($order->delivered_time!=''){
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->delivered_time);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 											}
-													
+
 													}
 											if($order->delivery_status==0)
 												{	if($order->cancelled_time!=''){
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->cancelled_time);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 											}
-													
+
 													}
 											if($order->delivery_status==2)
 												{
@@ -88,13 +94,13 @@
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 											}
-													
+
 													}
 											?></td>
                                         </tr>
 										<?php }}?>
-                                        
-                                       
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -114,10 +120,19 @@ $(document).ready(function() {
         });
     });
 	</script>
+  <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.dataTables.min.js'); ?>"></script>
+  <script type="text/javascript" src="<?php echo base_url('assets/js/dataTables.bootstrap4.min.js'); ?>"></script>
+  <script type="text/javascript" src="<?php echo base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
+  <script type="text/javascript" src="<?php echo base_url('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
+  <script type="text/javascript" src="<?php echo base_url('assets/js/jszip.min.js'); ?>"></script>
+  <script type="text/javascript" src="<?php echo base_url('assets/js/buttons.html5.min.js'); ?>"></script>
 	<script type="text/javascript">
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
+  $(document).ready(function(){
+    var table = $('#example').DataTable({
+        lengthChange: true,
+        buttons: ['excel']
+    });
+		table.column(8).data().unique();
+    table.buttons().container().appendTo( '#example_wrapper .col-md-6:eq(0)' );
+	});
 </script>
-
-

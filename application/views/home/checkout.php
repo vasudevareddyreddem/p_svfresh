@@ -83,9 +83,9 @@
               </tfoot>
             </table>
             <?php if(count($cart) > 0){ ?>
-              <a href="<?php echo base_url('/billing'); ?>" class="button pull-right">Place Order</a>
+              <a href="<?php echo base_url('/billing'); ?>" class="button pull-right back-home-btn">Place Order</a>
             <?php }else{ ?>
-              <a href="<?php echo base_url('/home'); ?>" class="button pull-right">Back to Home</a>
+              <a href="<?php echo base_url('/home'); ?>" class="button pull-right back-home-btn">Back to Home</a>
             <?php } ?>
           </div>
         </div>
