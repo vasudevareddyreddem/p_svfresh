@@ -132,6 +132,7 @@ $(document).ready(function() {
         lengthChange: true,
         buttons: ['excel']
     });
+		table.column(8).data().unique();
     table.buttons().container().appendTo( '#example_wrapper .col-md-6:eq(0)' );
 	});
 </script>
