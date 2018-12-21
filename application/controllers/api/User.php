@@ -928,7 +928,7 @@ $months[]=$curmonth;
    $this->response($data, REST_Controller::HTTP_OK);
 
 }
-public function insert_milk_order_post(){
+ /*public function insert_milk_order_post(){
 	$product_id=$this->post('product_id');
 	$billing_id=$this->post('billing_id');
 	$user_id=$this->post('user_id');
@@ -945,7 +945,7 @@ public function insert_milk_order_post(){
 	$quantitys=$this->post('quantitys');
 	$prices=$this->post('prices');
 	
-	for($quantitys as $key=>$value ){
+	foreach($quantitys as $key=>$value ){
 	$data=array('product_id'=>$product_id,
 	'product_id'=>$product_id,
 	'billing_id'=>$billing_id,
@@ -968,8 +968,8 @@ public function insert_milk_order_post(){
 		 $message=array('status'=>0,'message'=>'Milk order  not added');
 		 $this->response($message, REST_Controller::HTTP_OK);
 	}
-}
-public function get_milk_order(){
+}*/
+/*public function get_milk_order(){
 	$product_id=$this->post('product_id');
 	$user_id=$this->post('user_id');
 	$month=$this->post('month');
@@ -986,7 +986,7 @@ public function get_milk_order(){
 		$day=date('d' ,strtotime($date));
 	}
 	else{
-		$day=cal_days_in_month(CAL_GREGORIAN,$month,$year]);
+		$day=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 		
 	}
 	$res=$this->Mobile_model->check_milk_order($user_id,$product_id,$month,$year);
@@ -999,7 +999,7 @@ public function get_milk_order(){
 	$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year,$day);
 	
 	
-}
+}*/
 
 
 }

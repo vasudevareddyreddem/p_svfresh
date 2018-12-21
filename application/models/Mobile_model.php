@@ -369,9 +369,9 @@ $result = $this->db->query($sql);
 return $this->db->affected_rows()?1:0;
 
 	}
-	public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
+	// public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
 		
-		$this->db->select("quantity,price,IF(date<'$day')")->from()
+		// $this->db->select(*)->from('calender_tab')->join('')
 		
-	}
+	// }
 }
