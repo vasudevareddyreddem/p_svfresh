@@ -412,6 +412,7 @@ public function orders_post(){
  }
  else{
 	  $message['orders_status']=0;
+	  $message['message']="NO orders";
  }
  
    $this->response($message, REST_Controller::HTTP_OK);
@@ -548,6 +549,8 @@ public function edit_profile_post(){
 		 $this->response($message, REST_Controller::HTTP_OK);
 		
 	}
+	 $message = array('status'=>1,'message'=>'Profile Updated Successfully');
+		 $this->response($message, REST_Controller::HTTP_OK);
 	
 }
 //add to cart
@@ -754,9 +757,7 @@ public function insert_order_post(){
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
-	$items=$this->post('cart_ids');
 	
-	$payment_type=$this->post('payment_type');
 	
 	if($this->post('razor_payment_id')){
 		 $razor_payment_id=$this->post('razor_payment_id');
@@ -780,32 +781,41 @@ public function insert_order_post(){
 	else{
 		$razor_sig='';
 	}
+	$items=$this->post('product_ids');
+	$payment_type=$this->post('payment_type');
+	$product_names=$this->post('product_names');
+	$product_imgs=$this->post('product_imgs');
+	$quantitys=$this->post('quantitys');
+	$prices=$this->post('prices');
    $data=array('user_id'=>$user_id,
                'billing_id'=>$billing_id,
 			   'payment_type'=>$payment_type,
 			    'created_by'=>$user_id,
 				'razorpay_payment_id'=>$razor_payment_id,
+				'razorpay_order_id'=>$razor_order_id,
+				'razorpay_signature'=>$razor_sig
 				
 				);
 	$insert_id=$this->Mobile_model->insert_order($data);
 	    $str = date('Ymd').$insert_id;
         $order_number =  'SV'.str_pad($str,10,'0',STR_PAD_LEFT);
-     foreach($items as $item)
+		$count=count($items);
+     for($i=0;$i<$count;$i++)
 	 {
-		 $cart_det=$this->Mobile_model->single_cart_item($item);
+		 //$cart_det=$this->Mobile_model->single_cart_item($item);
 		 
 		 
-		$product=$this->Mobile_model->single_product_details($cart_det['product_id']);
-		$net_price=$cart_det['quantity']*$product['net_price'];
+		//$product=$this->Mobile_model->single_product_details($cart_det['product_id']);
+		//$net_price=$cart_det['quantity']*$product['net_price'];
 		
 		 $itemdata[]=array('order_id'=>$insert_id,
 		                  'order_number'=>$order_number,
 						  'user_id'=>$user_id,
-						  'product_id'=>$product['product_id'],
-						  'product_name'=>$product['product_name'],
-						  'product_img'=>$product['product_img'],
-						  'quantity'=>$cart_det['quantity'],
-						  'net_price'=>$net_price,
+						  'product_id'=>$items[$i],
+						  'product_name'=>$product_names[$i],
+						  'product_img'=>$product_imgs[$i],
+						  'quantity'=>$quantitys[$i],
+						  'net_price'=>$prices[$i],
 						  );
 	 }
 	
@@ -883,6 +893,10 @@ public function change_password_post(){
 				
 	
 	
+} 
+public function get_current_month_post(){
+	echo date(' Y M+1 '); exit;
+
 }
 
 
