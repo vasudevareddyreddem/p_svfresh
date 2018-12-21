@@ -894,10 +894,65 @@ public function change_password_post(){
 	
 	
 } 
-public function get_current_month_post(){
-	echo date(' Y M+1 '); exit;
+public function get_months_post(){
+ $date = date('Y-m-d');
+
+
+$month=date('m' ,strtotime($date));//current month in number
+$year=date('Y' ,strtotime($date));// current year in number
+
+ $days=cal_days_in_month(CAL_GREGORIAN,$month,$year);//days in  a month
+ $curmonth['month_in_text']=date('F' ,strtotime($date));//month in text
+ $curmonth['month']=$month;
+  $curmonth['year']=$year;
+  $curmonth['days']=$days;
+   $curmonth['present_day']=date('d' ,strtotime($date)); // present day in number
+$months[]=$curmonth;  
+
+ for($i=1;$i<3;$i++)
+ {
+	$curmonth=array();
+
+	$date=date('Y-m-d', strtotime('+'.$i.' month'));
+	$curmonth['month_in_text']=date('F' ,strtotime($date));
+	$curmonth['month']=date('m' ,strtotime($date));
+    $curmonth['year']=date('Y' ,strtotime($date));
+    $curmonth['days']=cal_days_in_month(CAL_GREGORIAN,$curmonth['month'],$curmonth['year']);
+    $curmonth['present_day']=1; 
+	$months[]=$curmonth; 
+	
+	
+	 
+ }
+ $data['months']=$months;
+   $this->response($data, REST_Controller::HTTP_OK);
 
 }
+public function insert_milk_order_post(){
+	$product_id=$this->post('product_id');
+	$billing_id=$this->post('billing_id');
+	$user_id=$this->post('user_id');
+	$month=$this->post('month');
+	$year=$this->post('year');
+	$day=$this->post('day');
+	$quantity=$this->post('quantity');
+	$price=$this->post('price');
+	
+	$data=array('product_id'=>$product_id,
+	'product_id'=>$product_id,
+	'billing_id'=>$billing_id,
+	'user_id'=>$user_id,
+	'month'=>$month,
+    'year'=>$year,
+	'day'=>$day,
+	'price'=>$price,
+	'quantity'=>$quantity,
+	);
+	
+	$this->Mobile_model->milk_order($data);
+
+}
+
 
 
 }
