@@ -336,33 +336,42 @@ class Mobile_model extends CI_Model
 			return $this->db->affected_rows()?1:0;
 		
 	}
-	public function insert_milk_order($data){
-		$pid=$data['product_id'];
-		$uid=$data['user_id'];
-		$month=$data['month'];
-		$year=$data['year'];
-		$day=$data['day'];
-		$this->db->select('*')->from(calender_tab)->where('product_id',$pid)->
-		where('user_id',$uid)->where('month',$month)->where('year',$year)->
-		where('date',$day);
-		$res=$this->db->get()->row();
-		if(count($res)>0){
-			$this->db->where('calender_id',$res->calender_id);
-			$this->db->update('calender_tab',)
-		}
+	// public function insert_milk_order($data){
+		// $pid=$data['product_id'];
+		// $uid=$data['user_id'];
+		// $month=$data['month'];
+		// $year=$data['year'];
+		// $day=$data['day'];
+		// $this->db->select('*')->from(calender_tab)->where('product_id',$pid)->
+		// where('user_id',$uid)->where('month',$month)->where('year',$year)->
+		// where('date',$day);
+		// $res=$this->db->get()->row();
+		// if(count($res)>0){
+			// $this->db->where('calender_id',$res->calender_id);
+			// $this->db->update('calender_tab',)
+		// }
 		
-	}
+	// }
 	public function milk_order($data){
-		$sql = "insert into  calender_tab (product_id,billing_id,user_id,month,date,year,quantity,price) values("$data['product_id']","$data['billing_id']",
-		"$data['user_id']","$data['month']","$data['year']",
-		"$data['day']","$data['quantity']","$data['price']",) on duplicate key update 
-		quantity="$data['quantity']",
-		price="$data['price']" ";
-		echo $sql; exit;
-		//$query="insert into users values('','$name','$email','$mobile')";
+$sql="insert into  calender_tab(product_id,billing_id,user_id,month,date,year,quantity,price)
+  values('".$data['product_id']."','".$data['billing_id']."',
+		'".$data['user_id']."','".$data['month']."','".$data['year']."',
+		'".$data['day']."','".$data['quantity']."','".$data['price']."') 
+		
+		on duplicate key update 
+		quantity='".$data['quantity']."',
+		price='".$data['price']."' ";
+		
 	
-
+	
+	
 $result = $this->db->query($sql);
-//$this->db->query($sql, array($id, $name)); 
+return $this->db->affected_rows()?1:0;
+
+	}
+	public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
+		
+		$this->db->select("quantity,price,IF(date<'$day')")->from()
+		
 	}
 }

@@ -932,27 +932,74 @@ public function insert_milk_order_post(){
 	$product_id=$this->post('product_id');
 	$billing_id=$this->post('billing_id');
 	$user_id=$this->post('user_id');
-	$month=$this->post('month');
-	$year=$this->post('year');
-	$day=$this->post('day');
-	$quantity=$this->post('quantity');
-	$price=$this->post('price');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['status'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
 	
+	$months=$this->post('months');
+	$years=$this->post('years');
+	$days=$this->post('days');
+	$quantitys=$this->post('quantitys');
+	$prices=$this->post('prices');
+	
+	for($quantitys as $key=>$value ){
 	$data=array('product_id'=>$product_id,
 	'product_id'=>$product_id,
 	'billing_id'=>$billing_id,
 	'user_id'=>$user_id,
-	'month'=>$month,
-    'year'=>$year,
-	'day'=>$day,
-	'price'=>$price,
-	'quantity'=>$quantity,
+	'month'=>$months[$key],
+    'year'=>$years[$key],
+	'day'=>$days[$key],
+	'price'=>$price[$key],
+	'quantity'=>$value,
 	);
 	
-	$this->Mobile_model->milk_order($data);
-
+	$status=$this->Mobile_model->milk_order($data);
+	}
+	if($status==1){
+	$message=array('status'=>1,'message'=>'Milk order added');
+		 $this->response($message, REST_Controller::HTTP_OK);
+	
+	}
+	else{
+		 $message=array('status'=>0,'message'=>'Milk order  not added');
+		 $this->response($message, REST_Controller::HTTP_OK);
+	}
 }
-
+public function get_milk_order(){
+	$product_id=$this->post('product_id');
+	$user_id=$this->post('user_id');
+	$month=$this->post('month');
+	$year=$this->post('year');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['status'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$curmonth=date('m' ,strtotime($date));
+	if($curmonth==$month){
+		
+		$day=date('d' ,strtotime($date));
+	}
+	else{
+		$day=cal_days_in_month(CAL_GREGORIAN,$month,$year]);
+		
+	}
+	$res=$this->Mobile_model->check_milk_order($user_id,$product_id,$month,$year);
+	if(count($res)>0){
+		
+		$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
+		
+	}
+	
+	$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year,$day);
+	
+	
+}
 
 
 }
