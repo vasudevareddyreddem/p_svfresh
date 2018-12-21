@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
     <title>SV Fresh</title>
- 
+
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrap.min.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrapValidator.min.css';?>">
 	<link rel="stylesheet" href="<?php echo base_url().'assets/css/chosen.min.css';?>">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/summernote-lite.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/style.css';?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/dataTables.bootstrap.min.css';?>">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/buttons.bootstrap4.min.css'); ?>">
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.min.js';?>"></script>
 
