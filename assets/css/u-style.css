@@ -20,6 +20,9 @@ h3{
 a{
     color: #666;
 }
+.back-home-btn:hover{
+	color:#fff !important;
+}
 a:hover{
     color: #fd4f00;
     text-decoration: none;
@@ -36,6 +39,25 @@ a:focus{
 }
 .alignright{
   float: right;
+}
+.sub-list-view {
+	border:1px solid #ddd;
+	padding:10px 10px;
+	text-align:center;
+	width:24%;
+	margin:0px 2px;
+}
+.sub-list-view:hover{
+	border:1px solid #ddd;
+	background:#57bb14 ;
+	
+	padding:10px 10px;
+	text-align:center;
+	width:24%;
+	margin:0px 2px;
+}
+.sub-list-view:hover a{
+color:#fff;
 }
 .btn-fb-login{
   width: 65px;
@@ -5590,6 +5612,25 @@ margin:0 auto;
   font-size: 18px;
 }
 @media (max-width: 768px) {
+	.sub-list-view {
+	border:1px solid #ddd;
+	padding:10px 10px;
+	text-align:center;
+	width:100%;
+	margin:0px 2px;
+}
+.sub-list-view:hover{
+	border:1px solid #ddd;
+	background:#57bb14 ;
+	
+	padding:10px 10px;
+	text-align:center;
+	width:100%;
+	margin:0px 2px;
+}
+.sub-list-view:hover a{
+color:#fff;
+}
   .dropdown-menu-large {
     margin-left: 0 ;
     margin-right: 0 ;

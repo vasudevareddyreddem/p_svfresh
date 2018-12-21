@@ -83,17 +83,14 @@
 
 
                     <div class=" col-md-9" >
-                      <ul class="nav navbar-nav">
-
-                        <li><a href="#">
+						<div style="padding-top:14px;">
                           <marquee id="scroll_news" >
                             <div onmouseover="document.getElementById('scroll_news').stop();" onmouseout="document.getElementById('scroll_news').start();">
                               <h4 class="text-success"><?php echo $c->cat_scr_content; ?></h4>
                             </div>
                           </marquee>
-                        </a></li>
-
-                      </ul>
+						  </div>
+                    
                     </div><!-- /.navbar-collapse -->
                   </div><!-- /.container-fluid -->
 

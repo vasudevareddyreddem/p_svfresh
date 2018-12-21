@@ -17,7 +17,7 @@
             <ul class="list-group">
               <a href="<?php echo base_url('home/profile'); ?>"><li class="list-group-item">My profile</li></a>
               <a href="<?php echo base_url('order'); ?>"><li class="list-group-item">My orders</li></a>
-              <a href="<?php echo base_url('order/milk_orders'); ?>"><li class="list-group-item">My orders</li></a>
+              <a href="<?php echo base_url('order/milk_orders'); ?>"><li class="list-group-item">Milk Orders</li></a>
               <a href="<?php echo base_url('wishlist'); ?>"><li class="list-group-item">Wishlist</li></a>
               <a href="<?php echo base_url('checkout'); ?>"><li class="list-group-item">Checkout</li></a>
               <a href="<?php echo base_url('home/cpassword'); ?>"><li class="list-group-item">Change password</li></a>

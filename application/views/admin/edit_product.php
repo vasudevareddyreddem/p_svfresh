@@ -162,9 +162,10 @@
                                             </tbody>
                                         </table>
 									
-                                        <button type="button" class="btn btn-md btn-info" id="addrow">Add Feature</button>
+                                        <button type="button" class="btn btn-md btn-info " id="addrow">Add Feature</button>
                                     </div>
                                 </div>
+								<div calss="clearfix">&nbsp;</div>
                             
 					<?php }?>
 								
@@ -210,7 +211,7 @@
                                             </tbody>
                                         </table>
 										<br>
-										<div class="text-center">
+										<div class="">
                                         <button type="button" class="btn btn-md btn-info" id="addslider">Add Image</button>
 										</div>
                                     </div>

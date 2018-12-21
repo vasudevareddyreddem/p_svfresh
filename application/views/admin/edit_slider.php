@@ -24,36 +24,26 @@
             <div class="controls"> 
                 <form id="add_slider" action="<?php echo base_url('slider/save_edit_slider')?>" method="post"   enctype="multipart/form-data">
 				<div class="row">
-					<div class="form-group col-md-12">
+					<div class="form-group col-md-6">
                            <label>Banner Name</label>
 						    <input id="" type="hidden" class="form-control" name="sid"
 						   value="<?php echo $slider->slider_id;?>">
                            <input id="" type="text" class="form-control" name="s_name"
 						   value="<?php echo $slider->slider_name;?>">
                             </div>
-							 <div class="form-group">
-                                            <label>Banner Left Old Image</label>
-											
-                                        <img alt="image" 
-											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->l_pic; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
-											
-											</div>
+							
 				<div class="form-group col-md-6">
 				
                            <label>Banner Left Image (<span
-											class="text-warning">Best View 1000x1100</span>)</label>
+											class="text-warning">Best View 1000x1100</span>) <img alt="image" 
+											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->l_pic; ?>" class="rounded-circle dropdown-item-img" style="height:20px;width:auto"></label>
                            <input id="" type="file" class="form-control" name="sl_image">
                             </div>
-							 <div class="form-group">
-                                            <label>Banner Right Old Image </label>
-											
-                                        <img alt="image" 
-											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->r_pic; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
-											
-											</div>
+							 
 							<div class="form-group col-md-6">
                                                 <label>Banner Right Image (<span
-											class="text-warning">Best View 1000x1100</span>)</label>
+											class="text-warning">Best View 1000x1100</span>) <img alt="image" 
+											src="<?php echo base_url('assets/uploads/slider_pics/').$slider->r_pic; ?>" class="rounded-circle dropdown-item-img" style="height:20px;width:auto"> </label>
                                                 <input id="n_price" type="file" class="form-control" name="sr_image">
                                             </div>
 											
@@ -65,12 +55,12 @@
 									
 									 
                                         <table id="myTable1" class="table1 order-list1">
-                                            <thead>
+                                            <thead >
                                                 <tr>
-                                                    <th> Slider Images (<span
+                                                    <th colspan="2"> Slider Images (<span
 											class="text-warning">Best View 650x310</span>)</th>
                                                    
-                                                    <th>&nbsp;</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>

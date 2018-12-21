@@ -28,17 +28,14 @@
             </div>
             <div class="currency ">
                 <div class="dropdown">
-                      <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">USD</a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Dollar</a></li>
-                        <li><a href="#">Rupee</a></li>
-                      </ul>
+                      <a class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Rupee</a>
+                     
                 </div>
             </div>
-            <div class="support-link">
+           <!-- <div class="support-link">
                 <a href="#">Services</a>
                 <a href="#">Support</a>
-            </div>
+            </div>-->
 
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">

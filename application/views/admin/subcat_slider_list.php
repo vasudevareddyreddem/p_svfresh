@@ -36,7 +36,7 @@
                                             <td><?php echo $subcat->subcat_name;?></td>
 											<td>
 											<img alt="image" 
-											src="<?php echo base_url('assets/uploads/sub_category_pics/').$subcat->image_path; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+											src="<?php echo base_url('assets/uploads/sub_category_pics/').$subcat->image_path; ?>" class=" dropdown-item-img" style="height:40px;width:40px">
 											
 											</td>
                                         

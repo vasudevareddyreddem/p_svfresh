@@ -37,26 +37,26 @@
                                             <td><?php echo $count; ?></td>
                                             <td><?php echo $cat->cat_name; ?></td>
                                             <td><?php if($cat->cat_img==''){echo 'NO Image';}else{ ?><img alt="image" 
-											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_img; ?>" class=" dropdown-item-img" style="height:30px;width:30px">
 											<?php }?>
 											</td>
 											<td><?php if($cat->cat_small_img==''){echo 'NO Image';}else{ ?><img alt="image" 
-											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_small_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_small_img; ?>" class=" dropdown-item-img" style="height:30px;width:30px">
 											<?php }?>
 											</td>
 											 <td>
 											 <?php if($cat->cat_lh_img==''){echo 'NO Image';}else{ ?><img alt="image" 
-											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_lh_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_lh_img; ?>" class=" dropdown-item-img" style="height:30px;width:30px">
 												<?php }?>
 											</td>
 											 <td>
 											 <?php if($cat->cat_rh_img==''){echo 'NO Image';}else{ ?><img alt="image" 
-											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_rh_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_rh_img; ?>" class=" dropdown-item-img" style="height:30px;width:30px">
 												<?php }?>
 											</td>
 											 <td>
 											 <?php if($cat->cat_dis_img==''){echo 'NO Image';}else{ ?><img alt="image" 
-											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_dis_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
+											src="<?php echo base_url('assets/uploads/category_pics/').$cat->cat_dis_img; ?>" class=" dropdown-item-img" style="height:30px;width:30px">
 												<?php }?>
 											</td>
                                             <td><?php 
