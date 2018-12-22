@@ -928,7 +928,7 @@ $months[]=$curmonth;
    $this->response($data, REST_Controller::HTTP_OK);
 
 }
- /*public function insert_milk_order_post(){
+ public function insert_milk_order_post(){
 	$product_id=$this->post('product_id');
 	$billing_id=$this->post('billing_id');
 	$user_id=$this->post('user_id');
@@ -946,19 +946,19 @@ $months[]=$curmonth;
 	$prices=$this->post('prices');
 	
 	foreach($quantitys as $key=>$value ){
-	$data=array('product_id'=>$product_id,
-	'product_id'=>$product_id,
-	'billing_id'=>$billing_id,
-	'user_id'=>$user_id,
-	'month'=>$months[$key],
-    'year'=>$years[$key],
-	'day'=>$days[$key],
-	'price'=>$price[$key],
-	'quantity'=>$value,
-	);
+	$data[]="('$product_id',
+	         '$billing_id',
+	         '$user_id',
+	         '$months[$key]',
+              '$years[$key]',
+	          '$days[$key]',
+	'$prices[$key]',
+	'$value'
+	)";
 	
-	$status=$this->Mobile_model->milk_order($data);
+	
 	}
+	$status=$this->Mobile_model->milk_orders($data);
 	if($status==1){
 	$message=array('status'=>1,'message'=>'Milk order added');
 		 $this->response($message, REST_Controller::HTTP_OK);
@@ -968,8 +968,8 @@ $months[]=$curmonth;
 		 $message=array('status'=>0,'message'=>'Milk order  not added');
 		 $this->response($message, REST_Controller::HTTP_OK);
 	}
-}*/
-/*public function get_milk_order(){
+}
+public function get_milk_order_post(){
 	$product_id=$this->post('product_id');
 	$user_id=$this->post('user_id');
 	$month=$this->post('month');
@@ -980,26 +980,29 @@ $months[]=$curmonth;
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
-	$curmonth=date('m' ,strtotime($date));
+	$curmonth=date('m');
 	if($curmonth==$month){
 		
-		$day=date('d' ,strtotime($date));
+		$day=date('d');
 	}
 	else{
-		$day=cal_days_in_month(CAL_GREGORIAN,$month,$year);
+		$day=0;
 		
 	}
-	$res=$this->Mobile_model->check_milk_order($user_id,$product_id,$month,$year);
-	if(count($res)>0){
+	$result=$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
+	//echo $this->db->last_query();exit;
+	if(count($result)>0){
 		
-		$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
+		$message=array('status'=>1,'orders'=>$result,'curdate'=>$day);
+		 $this->response($message, REST_Controller::HTTP_OK);
 		
 	}
 	
-	$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year,$day);
+	$message=array('status'=>0,'message'=>'no orders for this month','curdate'=>$day);
+		 $this->response($message, REST_Controller::HTTP_OK);
 	
 	
-}*/
+}
 
 
 }

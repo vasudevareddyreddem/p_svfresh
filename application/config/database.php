@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '166.62.26.2',
-	'username' => 'sv_fresh_staging',
-	'password' => 'sv_fresh_staging@123#@',
-	'database' => 'sv_fresh_staging',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'svfresh_final',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

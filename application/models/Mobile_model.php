@@ -369,9 +369,23 @@ $result = $this->db->query($sql);
 return $this->db->affected_rows()?1:0;
 
 	}
+	public function milk_orders($data){
+		
+		$query = "INSERT INTO calender_tab(product_id,billing_id,user_id,month,year,date,price,quantity) VALUES " . implode(', ', $data) . " ON DUPLICATE KEY UPDATE quantity = VALUES(quantity),
+		price=VALUES(price)";
+		$this->db->query($query);
+   //$this->db->insert_on_duplicate_update_batch('calender_tab',$data);
+return $this->db->affected_rows()?1:0;
+	}
 	// public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
 		
 		// $this->db->select(*)->from('calender_tab')->join('')
 		
 	// }
+	public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
+		$this->db->select('*')->from('calender_tab')->where('product_id',$product_id)->where('user_id',$user_id)->
+		where('month',$month)->where('year',$year);
+	return	$this->db->get()->result_array();
+		
+	}
 }
