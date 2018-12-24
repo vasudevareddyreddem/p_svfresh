@@ -23,11 +23,11 @@
 						<div class="card-header  py-4 px-4 text-white" style="background:#57bb14;">
 							<div class="row">
 								<div class="col-md-9">
-									<strong class="h3">March (<span><?php echo ucwords($product_name->product_name); ?></span>)</strong>
+									<strong class="h3"><span><?php if (isset($product_name->product_name)) { echo ucwords($product_name->product_name); } ?></span></strong>
 								</div>
 								<div class="col-md-3">
 									<select class="form-control months">
-										<?php for ($i = 0; $i < 12; $i++) { ?>
+										<?php for ($i = 1; $i <= 12; $i++) { ?>
 											<option value="<?php echo date('n',mktime(0,0,0,$i,1)); ?>" <?php echo (date('n') == date('n',mktime(0,0,0,$i,1))) ? 'selected' : ''; ?>><?php echo date('F',mktime(0,0,0,$i,1)); ?></option>
 										<?php } ?>
 									</select>
