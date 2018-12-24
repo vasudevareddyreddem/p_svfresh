@@ -372,7 +372,7 @@ $this->load->model('Slider_model');
 				else{
 					$img_status=1;
 					$upload_data = $this->upload->data(); 
-					$this->resize_image($upload_data);
+					$this->resize_image($upload_data,650,310);
                     $slider_img =   $upload_data['file_name'];
 					$image_data[]=array('pic_name'=>$slider_img,
 					'slider_id'=>$slider_id,

@@ -60,14 +60,14 @@
 											 
 											 <?php echo'Pending';?>
 											 </div>
-                                                <div class="badge badge-info" >
+                                                <div class="badge badge-warning" >
 											 <a 
-							href="<?php echo base_url('orders/deliver_order/').base64_encode($order->order_id) ;?>" class="btn btn-danger btn-action" ><i >
+							href="<?php echo base_url('orders/deliver_order/').base64_encode($order->order_id) ;?>" class="text-white" ><i >
 											 <?php echo'Delivered';?></i></a>
 											 </div>
 											 
-											 <div class="badge badge-info" >
-								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class="btn btn-danger btn-action" ><i >
+											 <div class="badge badge-danger" >
+								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class="text-white" ><i >
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>

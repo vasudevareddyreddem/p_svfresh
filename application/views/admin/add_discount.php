@@ -32,7 +32,8 @@
                                            
                                         </div>
                                         <div class="form-group">
-                                            <label>Discount Image</label>
+                                            <label>Discount Image (<span
+											class="text-warning">Best View 700x700</span>)</label>
                                             <input id="image" type="file" class="form-control" name="image">
                                         </div>
 							

@@ -450,7 +450,7 @@ public function insert_wishlist_product_post(){
 			
 				);
 	
-		    
+
 	$flag=$this->Mobile_model->insert_wishlist_product($data);
 	if($flag==1) {
 		$message['status']=1;
@@ -939,20 +939,20 @@ $months[]=$curmonth;
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
 	
-	$months=$this->post('months');
-	$years=$this->post('years');
+	$month=$this->post('month');
+	$year=$this->post('year');
 	$days=$this->post('days');
 	$quantitys=$this->post('quantitys');
-	$prices=$this->post('prices');
+	$price=$this->post('price');
 	
 	foreach($quantitys as $key=>$value ){
 	$data[]="('$product_id',
 	         '$billing_id',
 	         '$user_id',
-	         '$months[$key]',
-              '$years[$key]',
+	         '$month',
+              '$year',
 	          '$days[$key]',
-	'$prices[$key]',
+	'$price',
 	'$value'
 	)";
 	
@@ -980,6 +980,7 @@ public function get_milk_order_post(){
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
+    $days_inmonth=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 	$curmonth=date('m');
 	if($curmonth==$month){
 		
@@ -992,17 +993,71 @@ public function get_milk_order_post(){
 	$result=$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
 	//echo $this->db->last_query();exit;
 	if(count($result)>0){
-		
-		$message=array('status'=>1,'orders'=>$result,'curdate'=>$day);
+      $order_days=array_column($result,'date');
+	 
+	  $quantity=array_column($result,'quantity');
+
+	    for($i=1;$i<=$days_inmonth;$i++){
+			if(in_array($i,$order_days)){
+				
+			
+			}
+			else{
+				$result[]=array('date'=>$i,'quantity'=>0);
+				
+				
+				
+			}
+			
+	        
+        }
+
+		$message=array('status'=>1,'orders'=>$result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
 		 $this->response($message, REST_Controller::HTTP_OK);
 		
 	}
+    for($i=1;$i<=$days_inmonth;$i++){
+
+            $empty_result[]=array('date'=>$i,'quantity'=>0);
+
+
+
+
+    }
+
 	
-	$message=array('status'=>0,'message'=>'no orders for this month','curdate'=>$day);
+	$message=array('status'=>0,'orders'=>$empty_result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
 		 $this->response($message, REST_Controller::HTTP_OK);
 	
 	
 }
+public  function  milk_orders_post(){
 
+        $user_id=$this->post('user_id');
+    $flag=$this->Mobile_model->user_checking($user_id);
+    if($flag==0){
+        $message['status'] =0;
+        $message['message']='unauthorized user';
+        $this->response($message, REST_Controller::HTTP_OK);
+    }
+       $result=$this->Mobile_model->get_milk_orders($user_id);
+    if(count($result)>0) {
+        $message = array('status' => 1, 'orders' => $result );
+        $this->response($message, REST_Controller::HTTP_OK);
+    }
+    $message = array('status' => 0, 'orders' => array() );
+    $this->response($message, REST_Controller::HTTP_OK);
+}
+
+    public function  cancel_milk_order(){
+        $user_id=$this->post('user_id');
+        $flag=$this->Mobile_model->user_checking($user_id);
+        if($flag==0){
+            $message['status'] =0;
+            $message['message']='unauthorized user';
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+
+    }
 
 }

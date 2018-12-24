@@ -383,9 +383,23 @@ return $this->db->affected_rows()?1:0;
 		
 	// }
 	public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
-		$this->db->select('*')->from('calender_tab')->where('product_id',$product_id)->where('user_id',$user_id)->
+		$this->db->select('date,quantity')->from('calender_tab')->where('product_id',$product_id)->where('user_id',$user_id)->
 		where('month',$month)->where('year',$year);
 	return	$this->db->get()->result_array();
 		
 	}
+	public  function  get_milk_orders($user_id){
+
+	    $this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.month,calender_tab.date,calender_tab.quantity,
+	    calender_tab.price,product_tab.product_name,product_tab.product_img,
+	    billing_tab.first_name,billing_tab.last_name,billing_tab.email_address,billing_tab.address,billing_tab.city,
+	    billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone')
+            ->from('calender_tab')->join('product_tab','product_tab.product_id=calender_tab.product_id')->
+        join('users_tab','calender_tab.user_id=users_tab.id')->
+            join('billing_tab','billing_tab.user_id=users_tab.id')->
+        where('calender_tab.user_id',$user_id)->where('calender_tab.order_status !=',0);
+        ;
+	 return   $this->db->get()->result_array();
+    }
+
 }
