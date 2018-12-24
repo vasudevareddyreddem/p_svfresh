@@ -23,7 +23,7 @@
 						<div class="card-header  py-4 px-4 text-white" style="background:#57bb14;">
 							<div class="row">
 								<div class="col-md-9">
-									<strong class="h3">March (<span><?php echo ucwords($product_name->product_name); ?></span>)</strong>
+									<strong class="h3"><span><?php if (isset($product_name->product_name)) { echo ucwords($product_name->product_name); } ?></span></strong>
 								</div>
 								<div class="col-md-3">
 									<select class="form-control months">
