@@ -27,7 +27,7 @@
 								</div>
 								<div class="col-md-3">
 									<select class="form-control months">
-										<?php for ($i = 0; $i < 12; $i++) { ?>
+										<?php for ($i = 1; $i <= 12; $i++) { ?>
 											<option value="<?php echo date('n',mktime(0,0,0,$i,1)); ?>" <?php echo (date('n') == date('n',mktime(0,0,0,$i,1))) ? 'selected' : ''; ?>><?php echo date('F',mktime(0,0,0,$i,1)); ?></option>
 										<?php } ?>
 									</select>

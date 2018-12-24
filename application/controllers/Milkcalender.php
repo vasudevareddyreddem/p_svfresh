@@ -49,7 +49,15 @@ class Milkcalender extends CI_Controller
     }
     $data['days'] = array_chunk($days_array,5);
     $data['month'] = $month;
-    $data['year'] = date('Y');
+    $year = '';
+    $current_month_year = date('Y-m');
+    $selected_month_year = date('Y-m',mktime(0,0,0,$month,1));
+    if ($current_month_year > $selected_month_year) {
+      $year .= date('Y', strtotime('+1 years'));
+    } else {
+      $year .= date('Y');
+    }
+    $data['year'] = $year;
     $data['product_id'] = $product_id;
     $data['product_price'] = $this->Product_model->get_product_price_by_product_id($product_id);
     $user_id = $this->session->userdata('id');
