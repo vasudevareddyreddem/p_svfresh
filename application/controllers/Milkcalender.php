@@ -46,7 +46,7 @@ class Milkcalender extends CI_Controller
     $product_id = $this->input->post('product_id');
     $days = cal_days_in_month(CAL_GREGORIAN,$month,$c_year);
     $current_month = date('n');
-    $current_day = date('j');
+    $current_day = date('j',strtotime('+1day'));
     if($current_month == $month){
       for($d = $current_day;$d <= $days; $d++){
             $days_array[] = $d;
@@ -71,7 +71,7 @@ class Milkcalender extends CI_Controller
     $data['product_price'] = $this->Product_model->get_product_price_by_product_id($product_id);
     $user_id = $this->session->userdata('id');
     $data['user_id'] = $user_id;
-    //$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id);
+    $data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id_and_month($user_id,$month);
     $return['calender_template'] = $this->load->view('home/calender_template',$data,TRUE);
     echo json_encode($return);
   }
@@ -81,10 +81,18 @@ class Milkcalender extends CI_Controller
     $post = $this->input->post();
     if(!empty($post)){
       $calender_id = array();
-      for($i = 1;$i <= count($post['quant']);$i++){
-        if(($post['quant'][$i]) != 0 ){
-          $this->Calender_Model->insert(array('price' => $post['product_price'][$i],'product_id' => $post['product_id'][$i],'user_id' => $post['user_id'][$i],'year' => $post['year'][$i],'month' => $post['month'][$i],'date' => $post['date'][$i],'quantity' => $post['quant'][$i],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
-          $calender_id[] = $this->db->insert_id();
+      foreach ($post['quant'] as $key => $value) {
+        $id = $this->Calender_Model->check_unique_order($post['product_id'][$key],$post['user_id'][$key],$post['date'][$key],$post['month'][$key],$post['year'][$key]);
+        if ($id) {
+          if(($post['quant'][$key]) != 0 ){
+            $this->Calender_Model->update(array('price' => $post['product_price'][$key],'product_id' => $post['product_id'][$key],'user_id' => $post['user_id'][$key],'year' => $post['year'][$key],'month' => $post['month'][$key],'date' => $post['date'][$key],'quantity' => $post['quant'][$key],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')),$id->calender_id);
+            $calender_id[] = $id->calender_id;
+          }
+        } else {
+          if(($post['quant'][$key]) != 0 ){
+            $this->Calender_Model->insert(array('price' => $post['product_price'][$key],'product_id' => $post['product_id'][$key],'user_id' => $post['user_id'][$key],'year' => $post['year'][$key],'month' => $post['month'][$key],'date' => $post['date'][$key],'quantity' => $post['quant'][$key],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
+            $calender_id[] = $this->db->insert_id();
+          }
         }
       }
       $this->session->set_userdata('calender_id',$calender_id);
