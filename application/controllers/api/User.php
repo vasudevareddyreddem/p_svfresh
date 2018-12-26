@@ -942,8 +942,11 @@ $months[]=$curmonth;
 	
 	$month=$this->post('month');
 	$year=$this->post('year');
-	$days=$this->post('days');
-	$quantitys=$this->post('quantitys');
+	$day=$this->post('days');
+	$days=json_decode($day);
+
+	$quantity=$this->post('quantitys');
+     $quantitys=json_decode($quantity);
 	$price=$this->post('price');
 	
 	foreach($quantitys as $key=>$value ){

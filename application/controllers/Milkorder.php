@@ -17,7 +17,7 @@ $this->load->model('Milkorders_model')	;
 			if($this->session->userdata('svadmin_det')){
 				$data['tot_list']=$this->Milkorders_model->total_order_list();
 				
-				if(count($data['tot_list']>0)){
+				if(count($data['tot_list'])>0){
 					$data['tot_status']=1;
 				}
 				else{
@@ -33,7 +33,7 @@ $this->load->model('Milkorders_model')	;
 		public function pending_order_list(){
 			if($this->session->userdata('svadmin_det')){
 				$data['pending_list']=$this->Milkorders_model->pending_order_list();
-				if(count($data['pending_list']>0)){
+				if(count($data['pending_list'])>0){
 					$data['pending_status']=1;
 				}
 				else{
@@ -51,7 +51,7 @@ $this->load->model('Milkorders_model')	;
 			if($this->session->userdata('svadmin_det')){
 				$data['delivered_list']=$this->Milkorders_model->delivered_order_list();
 			
-				if(count($data['delivered_list']>0)){
+				if(count($data['delivered_list'])>0){
 					$data['delivered_status']=1;
 				}
 				else{
@@ -66,7 +66,7 @@ $this->load->model('Milkorders_model')	;
 		public function cancel_order_list(){
 			if($this->session->userdata('svadmin_det')){
 				$data['cancel_list']=$this->Milkorders_model->cancel_order_list();
-				if(count($data['cancel_list']>0)){
+				if(count($data['cancel_list'])>0){
 					$data['cancel_status']=1;
 				}
 				else{
