@@ -90,7 +90,7 @@
                             </div>
                           </marquee>
 						  </div>
-                    
+
                     </div><!-- /.navbar-collapse -->
                   </div><!-- /.container-fluid -->
 
@@ -133,15 +133,14 @@
                                       <?php } ?>
                                     </a>
                                     <div class="quick-view">
-                                      <?php if (in_array($p->product_id,$wishlist_product_id)){ ?>
-                                        <?php if(strcasecmp($c->cat_name,'MILK') != 0){ ?>
+                                      <?php if(strcasecmp($c->cat_name,'MILK') != 0){ ?>
+                                        <?php if (in_array($p->product_id,$wishlist_product_id)){ ?>
                                           <a title="Added to your wishlist" class="heart whishlist" style="background:#57bb14" href="#"></a>
+                                        <?php } else { ?>
+                                          <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $p->discount_price; ?>></a>
                                         <?php } ?>
-                                      <?php } else { ?>
-                                        <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $p->discount_price; ?>></a>
                                       <?php } ?>
                                       <!-- <a title="Add to compare" class="compare" href="#"></a> -->
-
                                     </div>
                                     <div class="add-to-cart">
                                       <?php if(strcasecmp($c->cat_name,'MILK') == 0){ ?>

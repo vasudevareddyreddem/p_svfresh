@@ -16,7 +16,23 @@
             <input type="hidden" name="year[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" value="<?php echo $year; ?>">
             <input type="hidden" name="month[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" value="<?php echo $month; ?>">
             <input type="hidden" name="date[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" value="<?php echo isset($list[0]) ? $list[0] : ''; ?>">
-            <input type="text" name="quant[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" class="form-control input-number" value="0" min="0" max="100">
+            <input type="text" name="quant[<?php echo isset($list[0]) ? $list[0] : ''; ?>]" class="form-control input-number" value="<?php if(count($calender_orders) > 0){
+              $s = 0;
+              foreach($calender_orders as $co){
+                if($co->date == $list[0]){
+
+                  $s = 1;
+                  break;
+                }
+              }
+              if ($s == 1) {
+                  echo $co->quantity;
+              } else {
+                 echo '0';
+              }
+              } else {
+                echo '0';
+               } ?>" min="0" max="100">
             <span class="input-group-btn">
               <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[<?php echo isset($list[0]) ? $list[0] : ''; ?>]">
                 <span class="glyphicon glyphicon-plus"></span>
@@ -40,7 +56,23 @@
             <input type="hidden" name="year[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" value="<?php echo $year; ?>">
             <input type="hidden" name="month[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" value="<?php echo $month; ?>">
             <input type="hidden" name="date[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" value="<?php echo isset($list[1]) ? $list[1] : ''; ?>">
-            <input type="text" name="quant[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" class="form-control input-number" value="0" min="0" max="100">
+            <input type="text" name="quant[<?php echo isset($list[1]) ? $list[1] : ''; ?>]" class="form-control input-number" value="<?php if(count($calender_orders) > 0){
+              $s = 0;
+              foreach($calender_orders as $co){
+                if($co->date == $list[1]){
+
+                  $s = 1;
+                  break;
+                }
+              }
+              if ($s == 1) {
+                  echo $co->quantity;
+              } else {
+                 echo '0';
+              }
+              } else {
+                echo '0';
+               } ?>" min="0" max="100">
             <span class="input-group-btn">
               <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[<?php echo isset($list[1]) ? $list[1] : ''; ?>]">
                 <span class="glyphicon glyphicon-plus"></span>
@@ -64,7 +96,23 @@
             <input type="hidden" name="year[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" value="<?php echo $year; ?>">
             <input type="hidden" name="month[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" value="<?php echo $month; ?>">
             <input type="hidden" name="date[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" value="<?php echo isset($list[2]) ? $list[2] : ''; ?>">
-            <input type="text" name="quant[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" class="form-control input-number" value="0" min="0" max="100">
+            <input type="text" name="quant[<?php echo isset($list[2]) ? $list[2] : ''; ?>]" class="form-control input-number" value="<?php if(count($calender_orders) > 0){
+              $s = 0;
+              foreach($calender_orders as $co){
+                if($co->date == $list[2]){
+
+                  $s = 1;
+                  break;
+                }
+              }
+              if ($s == 1) {
+                  echo $co->quantity;
+              } else {
+                 echo '0';
+              }
+              } else {
+                echo '0';
+               } ?>" min="0" max="100">
             <span class="input-group-btn">
               <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[<?php echo isset($list[2]) ? $list[2] : ''; ?>]">
                 <span class="glyphicon glyphicon-plus"></span>
@@ -88,7 +136,23 @@
             <input type="hidden" name="year[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" value="<?php echo $year; ?>">
             <input type="hidden" name="month[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" value="<?php echo $month; ?>">
             <input type="hidden" name="date[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" value="<?php echo isset($list[3]) ? $list[3] : ''; ?>">
-            <input type="text" name="quant[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" class="form-control input-number" value="0" min="0" max="100">
+            <input type="text" name="quant[<?php echo isset($list[3]) ? $list[3] : ''; ?>]" class="form-control input-number" value="<?php if(count($calender_orders) > 0){
+              $s = 0;
+              foreach($calender_orders as $co){
+                if($co->date == $list[3]){
+
+                  $s = 1;
+                  break;
+                }
+              }
+              if ($s == 1) {
+                  echo $co->quantity;
+              } else {
+                 echo '0';
+              }
+              } else {
+                echo '0';
+               } ?>" min="0" max="100">
             <span class="input-group-btn">
               <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[<?php echo isset($list[3]) ? $list[3] : ''; ?>]">
                 <span class="glyphicon glyphicon-plus"></span>
@@ -112,7 +176,23 @@
             <input type="hidden" name="year[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" value="<?php echo $year; ?>">
             <input type="hidden" name="month[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" value="<?php echo $month; ?>">
             <input type="hidden" name="date[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" value="<?php echo isset($list[4]) ? $list[4] : ''; ?>">
-            <input type="text" name="quant[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" class="form-control input-number" value="0" min="0" max="100">
+            <input type="text" name="quant[<?php echo isset($list[4]) ? $list[4] : ''; ?>]" class="form-control input-number" value="<?php if(count($calender_orders) > 0){
+              $s = 0;
+              foreach($calender_orders as $co){
+                if($co->date == $list[4]){
+
+                  $s = 1;
+                  break;
+                }
+              }
+              if ($s == 1) {
+                  echo $co->quantity;
+              } else {
+                 echo '0';
+              }
+              } else {
+                echo '0';
+               } ?>" min="0" max="100">
             <span class="input-group-btn">
               <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[<?php echo isset($list[4]) ? $list[4] : ''; ?>]">
                 <span class="glyphicon glyphicon-plus"></span>
