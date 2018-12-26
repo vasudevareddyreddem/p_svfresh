@@ -33,6 +33,8 @@ class Milkcalender extends CI_Controller
       $data['pageTitle'] = 'Milk Calender';
       $data['product_id'] = $id;
       $data['product_name'] = $this->Product_model->get_product_name_by_product_id($id);
+      $cat_id = $this->Product_model->get_cat_id_from_product_id($id);
+      $data['id'] = (isset($cat_id) && !empty($cat_id)) ? $cat_id : '';
       $this->load->view('home/milk_calendar',$data);
     }else{
       redirect('home/login');
