@@ -14,7 +14,7 @@ class Calender_Model extends CI_Model
 
   public function get_all_calender_items_by_user_id($user_id='')
   {
-    $this->db->select('p.product_name AS product_name,c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price');
+    $this->db->select('p.product_name AS product_name,c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price,c.delivery_status,c.calender_id');
     $this->db->from('calender_tab AS c');
     $this->db->join('product_tab AS p','c.product_id = p.product_id','left');
     $this->db->where('p.status','1');
@@ -56,6 +56,13 @@ class Calender_Model extends CI_Model
     $this->db->where('month',$month);
     $this->db->where('date',$date);
     return $this->db->get()->row();
+  }
+
+  public function cancel_order($calender_id='')
+  {
+    $this->db->set('delivery_status','3');
+    $this->db->where('calender_id',$calender_id);
+    return $this->db->update($this->table);
   }
 
 }

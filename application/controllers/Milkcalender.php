@@ -102,6 +102,17 @@ class Milkcalender extends CI_Controller
     }
   }
 
+  public function cancel_order()
+  {
+    $calendar_id = $this->input->post('calendar_id');
+    if($this->Calender_Model->cancel_order($calendar_id)){
+      $return['success'] = 'Order cancelled successfully';
+    }else{
+      $return['error'] = 'Please try again';
+    }
+    echo json_encode($return);exit(0);
+  }
+
 }
 
 ?>
