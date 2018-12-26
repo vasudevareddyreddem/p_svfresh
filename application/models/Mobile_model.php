@@ -120,11 +120,11 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 	public function get_user_orders($id){
-		$this->db->select('order_items_tab.order_items_id,order_items_tab.order_number,order_items_tab.product_name,order_items_tab.product_id,
+		$this->db->select('order_items_tab.order_items_id,order_tab.order_id,order_items_tab.order_number,order_items_tab.product_name,order_items_tab.product_id,
 		order_items_tab.product_img,order_items_tab.quantity,order_items_tab.net_price,
 		order_items_tab.delivery_status')->from('order_tab')->
 		join('order_items_tab','order_tab.order_id=order_items_tab.order_id')
-		->where('order_tab.user_id',$id)->order_by('order_items_tab.created_date','desc');
+		->where('order_tab.user_id',$id)->order_by('order_items_tab.created_date,order_tab.order_id','desc');
 	
 	  return $this->db->get()->result_array();
 	}
