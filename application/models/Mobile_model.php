@@ -120,7 +120,7 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 	public function get_user_orders($id){
-		$this->db->select('order_items_tab.order_number,order_items_tab.product_name,order_items_tab.product_id,
+		$this->db->select('order_items_tab.order_items_id,order_items_tab.order_number,order_items_tab.product_name,order_items_tab.product_id,
 		order_items_tab.product_img,order_items_tab.quantity,order_items_tab.net_price,
 		order_items_tab.delivery_status')->from('order_tab')->
 		join('order_items_tab','order_tab.order_id=order_items_tab.order_id')
@@ -391,15 +391,39 @@ return $this->db->affected_rows()?1:0;
 	public  function  get_milk_orders($user_id){
 
 	    $this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.month,calender_tab.date,calender_tab.quantity,
-	    calender_tab.price,product_tab.product_name,product_tab.product_img,
+	    calender_tab.price,calender_tab.delivery_status,product_tab.product_name,product_tab.product_img,
 	    billing_tab.first_name,billing_tab.last_name,billing_tab.email_address,billing_tab.address,billing_tab.city,
 	    billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone')
             ->from('calender_tab')->join('product_tab','product_tab.product_id=calender_tab.product_id')->
         join('users_tab','calender_tab.user_id=users_tab.id')->
             join('billing_tab','billing_tab.user_id=users_tab.id')->
-        where('calender_tab.user_id',$user_id)->where('calender_tab.order_status !=',0);
+        where('calender_tab.user_id',$user_id);
         ;
 	 return   $this->db->get()->result_array();
     }
+public function cancel_milk_order($cal_id,$user_id)
+{
+    $this->db->where('calender_id',$cal_id);
+    $this->db->where('user_id',$user_id);
+    $this->db->set('cancelled_time','now()',FALSE);
 
+    $this->db->set('delivery_status',0);
+    $this->db->set('updated_by_user',$user_id);
+    $this->db->update('calender_tab');
+    return $this->db->affected_rows()?1:0;
+
+
+
+}
+public function cancel_order($item_id,$user_id){
+    $this->db->where('order_items_id',$item_id);
+    $this->db->where('user_id',$user_id);
+    $this->db->set('delivery_status',0);
+    $this->db->set('cancelled_time','now()',FALSE);
+    $this->db->set('updated_by_user',$user_id);
+    $this->db->update('order_items_tab');
+    return $this->db->affected_rows()?1:0;
+
+
+}
 }

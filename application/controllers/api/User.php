@@ -408,6 +408,7 @@ public function orders_post(){
  { 
  $message['orders_status']=1;
 	 $message['orders']=$orders;
+     $message['product_image_path']=base_url().'assets/uploads/product_pics/';
 	
  }
  else{
@@ -969,6 +970,7 @@ $months[]=$curmonth;
 		 $this->response($message, REST_Controller::HTTP_OK);
 	}
 }
+//this is calender display
 public function get_milk_order_post(){
 	$product_id=$this->post('product_id');
 	$user_id=$this->post('user_id');
@@ -991,7 +993,7 @@ public function get_milk_order_post(){
 		
 	}
 	$result=$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
-	//echo $this->db->last_query();exit;
+
 	if(count($result)>0){
       $order_days=array_column($result,'date');
 	 
@@ -1042,14 +1044,16 @@ public  function  milk_orders_post(){
     }
        $result=$this->Mobile_model->get_milk_orders($user_id);
     if(count($result)>0) {
+
         $message = array('status' => 1, 'orders' => $result );
+        $message['product_image_path']=base_url().'assets/uploads/product_pics/';
         $this->response($message, REST_Controller::HTTP_OK);
     }
     $message = array('status' => 0, 'orders' => array() );
     $this->response($message, REST_Controller::HTTP_OK);
 }
 
-    public function  cancel_milk_order(){
+    public function  cancel_milk_order_post(){
         $user_id=$this->post('user_id');
         $flag=$this->Mobile_model->user_checking($user_id);
         if($flag==0){
@@ -1057,6 +1061,36 @@ public  function  milk_orders_post(){
             $message['message']='unauthorized user';
             $this->response($message, REST_Controller::HTTP_OK);
         }
+            $cal_id=$this->post('milk_id');
+        $status=$this->Mobile_model->cancel_milk_order($cal_id,$user_id);
+
+        if($status==1){
+            $message = array('status' => 1, 'message' => 'Milk order Cancelled' );
+            $this->response($message, REST_Controller::HTTP_OK);
+
+        }
+        $message = array('status' => 0, 'message' => 'Milk order not  Cancelled' );
+        $this->response($message, REST_Controller::HTTP_OK);
+
+    }
+    public function  cancel_order_post(){
+        $user_id=$this->post('user_id');
+        $flag=$this->Mobile_model->user_checking($user_id);
+        if($flag==0){
+            $message['status'] =0;
+            $message['message']='unauthorized user';
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+        $item_id=$this->post('item_id');
+        $status=$this->Mobile_model->cancel_order($item_id,$user_id);
+       // echo $this->db->last_query();exit;
+        if($status==1){
+            $message = array('status' => 1, 'message' => 'Order Item  Cancelled' );
+            $this->response($message, REST_Controller::HTTP_OK);
+
+        }
+        $message = array('status' => 0, 'message' => 'Order Item not  Cancelled' );
+        $this->response($message, REST_Controller::HTTP_OK);
 
     }
 
