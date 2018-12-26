@@ -2,4 +2,5 @@ ALTER TABLE `sv_fresh_staging`.`calender_tab`
   CHANGE `updated_by_user` `updated_by_user` INT(11) NULL;
 ALTER TABLE `sv_fresh_staging`.`order_items_tab`   
   CHANGE `updated_by_user` `updated_by_user` INT(11) NULL;
-
+ALTER TABLE `svfresh_final`.`calender_tab`   
+  CHANGE `updated_at` `updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP   NULL
