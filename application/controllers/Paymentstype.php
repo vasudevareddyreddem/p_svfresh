@@ -52,10 +52,10 @@ class Paymentstype extends CI_Controller
         "prefill"           => [
           "name"              => $billing_details['first_name'].$billing_details['last_name'],
           "email"             => $billing_details['email_address'],
-          "contact"           => $billing_details['telephone'],
+          "contact"           => $billing_details['mobile_number'],
         ],
         "notes"             => [
-          "address"           => $billing_details['address'].$billing_details['city'],
+          "address"           => $billing_details['appartment'].$billing_details['block'].$billing_details['flat_door_no'],
           "merchant_order_id" => $user_id.$billing_details['id'],
         ],
         "theme"             => [
