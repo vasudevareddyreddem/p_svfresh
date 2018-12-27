@@ -184,7 +184,7 @@ class Category_model extends CI_Model
 	//getting sub categories for database based on category id -- Rana
 	public function get_sub_category($id='')
 	{
-		$this->db->select('subcat_id,subcat_name');
+		$this->db->select('subcat_id,subcat_name,subcat_img');
 		$this->db->from('subcat_tab');
 		$this->db->where('cat_id',$id);
 		$this->db->where('status','1');
