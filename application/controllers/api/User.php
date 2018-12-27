@@ -805,7 +805,7 @@ public function insert_order_post(){
 
 	$ps=$this->post('prices');
     $ps = str_replace(array('[',']') ,'' , $ps);
-    $quantitys = explode(',' , $ps);
+    $prices = explode(',' , $ps);
 
 
    $data=array('user_id'=>$user_id,
@@ -988,7 +988,7 @@ $months[]=$curmonth;
 	}
 
 	$status=$this->Mobile_model->milk_orders($data);
-	
+
 	if($status==1){
 	$message=array('status'=>1,'message'=>'Milk order added');
 		 $this->response($message, REST_Controller::HTTP_OK);
