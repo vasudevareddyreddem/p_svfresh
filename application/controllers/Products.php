@@ -35,7 +35,8 @@ class Products extends CI_Controller
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
     $data['pageTitle'] = 'Products';
-
+    $cat_id = $this->Category_model->get_cat_id_from_sub_cat_id($id);
+    $data['id'] = (isset($cat_id) && !empty($cat_id)) ? $cat_id : '';
 	//echo "<pre>";print_r( $data['slider_images']);exit;
     $this->load->view('home/products',$data);
   }
@@ -56,11 +57,12 @@ class Products extends CI_Controller
     $data['wishlist_product_id'] = $this->Wishlist_Model->get_product_ids_in_wishlist($user_id);
     $data['count'] = count($data['cart']);
     $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
-	$data['slider_images'] = $this->Product_model->get_all_slider_images_by_ategory();
-	$data['reviewandrating_lists'] = $this->Product_model->get_product_reviewandrating_list($id);
-
+	  $data['slider_images'] = $this->Product_model->get_all_slider_images_by_ategory();
+	  $data['reviewandrating_lists'] = $this->Product_model->get_product_reviewandrating_list($id);
     $data['pageTitle'] = 'Product';
-	//echo "<pre>";print_r($data['reviewandrating_lists']);exit;
+	  //echo "<pre>";print_r($data['reviewandrating_lists']);exit;
+    $cat_id = $this->Product_model->get_cat_id_from_product_id($id);
+    $data['id'] = (isset($cat_id) && !empty($cat_id)) ? $cat_id : '';
     $this->load->view('home/product',$data);
   }
 

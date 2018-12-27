@@ -9,6 +9,7 @@ class Milkcalender extends CI_Controller
   function __construct()
   {
     parent::__construct();
+    $this->load->library('user_agent');
     $this->load->model('Category_model');
     $this->load->model('Cart_Model');
     $this->load->model('Calender_Model');
@@ -32,6 +33,8 @@ class Milkcalender extends CI_Controller
       $data['pageTitle'] = 'Milk Calender';
       $data['product_id'] = $id;
       $data['product_name'] = $this->Product_model->get_product_name_by_product_id($id);
+      $cat_id = $this->Product_model->get_cat_id_from_product_id($id);
+      $data['id'] = (isset($cat_id) && !empty($cat_id)) ? $cat_id : '';
       $this->load->view('home/milk_calendar',$data);
     }else{
       redirect('home/login');
@@ -87,11 +90,17 @@ class Milkcalender extends CI_Controller
           if(($post['quant'][$key]) != 0 ){
             $this->Calender_Model->update(array('price' => $post['product_price'][$key],'product_id' => $post['product_id'][$key],'user_id' => $post['user_id'][$key],'year' => $post['year'][$key],'month' => $post['month'][$key],'date' => $post['date'][$key],'quantity' => $post['quant'][$key],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')),$id->calender_id);
             $calender_id[] = $id->calender_id;
+          } else {
+            $this->session->set_flashdata('error','Calendar date quantity should not be empty');
+            redirect($this->agent->referrer());
           }
         } else {
           if(($post['quant'][$key]) != 0 ){
             $this->Calender_Model->insert(array('price' => $post['product_price'][$key],'product_id' => $post['product_id'][$key],'user_id' => $post['user_id'][$key],'year' => $post['year'][$key],'month' => $post['month'][$key],'date' => $post['date'][$key],'quantity' => $post['quant'][$key],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
             $calender_id[] = $this->db->insert_id();
+          } else {
+            $this->session->set_flashdata('error','Calendar date quantity should not be empty');
+            redirect($this->agent->referrer());
           }
         }
       }
@@ -100,6 +109,17 @@ class Milkcalender extends CI_Controller
       redirect('/billing');
 
     }
+  }
+
+  public function cancel_order()
+  {
+    $calendar_id = $this->input->post('calendar_id');
+    if($this->Calender_Model->cancel_order($calendar_id)){
+      $return['success'] = 'Order cancelled successfully';
+    }else{
+      $return['error'] = 'Please try again';
+    }
+    echo json_encode($return);exit(0);
   }
 
 }

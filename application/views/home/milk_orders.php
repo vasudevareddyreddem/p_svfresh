@@ -27,6 +27,7 @@
                   <th class="text-center">Date</th>
                   <th class="text-center">Quantity</th>
                   <th class="text-center">Price</th>
+                  <th class="text-center">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -44,6 +45,9 @@
                   </td>
                   <td class="text-center">
                     <?php  echo ($co->price) ? '₹ '.$co->price : ''; ?>
+                  </td>
+                  <td class="text-center">
+                    <?php  if ($co->delivery_status && $co->delivery_status == 1) { echo 'Delivered'; } else if ($co->delivery_status && $co->delivery_status == 2) { echo 'Pending'.' | '.'<a href="#" class="text-danger cancel_order" data-id='.$co->calender_id.'>Cancel</a>'; } else { echo 'Cancelled'; } ?>
                   </td>
                 </tr>
               <?php } ?>
@@ -94,17 +98,25 @@
         });
       });
 
-      $('.remove').click(function(e){
+      $('.cancel_order').click(function(e){
         e.preventDefault();
-        var id = $(this).data('id');
+        var calendar_id = $(this).data('id');
         $.ajax({
-          url:'<?php echo base_url('checkout/delete_cart_item'); ?>',
+          url:'<?php echo base_url('Milkcalender/cancel_order'); ?>',
           type:'POST',
-          data:{'id':id},
+          data:{'calendar_id':calendar_id},
           dataType:'JSON',
           success:function(data){
             if(data.success){
-              window.location.reload();
+              $('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">'+data.success+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+              setTimeout(function(){
+                 window.location.reload();
+              },2000);
+            } else if (data.error) {
+              $('#message').html('<div class="alert_msg1 animated slideInUp bg-del">'+data.error+'<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+              setTimeout(function(){
+                 window.location.reload();
+              },2000);
             }
           }
         });

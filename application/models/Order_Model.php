@@ -36,7 +36,7 @@ class Order_Model extends CI_Model
   public function cancel_order($order_items_id='')
   {
     $this->db->where('order_items_id',$order_items_id);
-    $this->db->set(array('delivery_status'=>'0'));
+    $this->db->set(array('delivery_status'=>'0','cancelled_time'=>date('Y-m-d H:i:s')));
     return $this->db->update($this->table_order_items);
   }
 

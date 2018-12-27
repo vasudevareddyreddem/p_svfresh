@@ -285,4 +285,9 @@ class Category_model extends CI_Model
 	{
 		return $this->db->query("SELECT cat_name FROM category_tab WHERE status = '1' AND cat_id IN (SELECT cat_id FROM subcat_tab WHERE subcat_id = $id)")->row();
 	}
+
+	public function get_cat_id_from_sub_cat_id($id='')
+	{
+		return $this->db->select('cat_id')->get_where('subcat_tab',array('subcat_id' => $id))->row()->cat_id;
+	}
 	}
