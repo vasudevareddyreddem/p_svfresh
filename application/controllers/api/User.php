@@ -782,12 +782,32 @@ public function insert_order_post(){
 	else{
 		$razor_sig='';
 	}
-	$items=$this->post('product_ids');
+	$ite=$this->post('product_ids');
+    $ite = str_replace(array('[',']') ,'' , $ite);
+    $items = explode(',' , $ite);
+
+
 	$payment_type=$this->post('payment_type');
-	$product_names=$this->post('product_names');
-	$product_imgs=$this->post('product_imgs');
-	$quantitys=$this->post('quantitys');
-	$prices=$this->post('prices');
+	$pnames=$this->post('product_names');
+
+    $pnames = str_replace(array('[',']') ,'' , $pnames);
+    $product_names = explode(',' , $pnames);
+
+    $imgs=$this->post('product_imgs');
+    $imgs = str_replace(array('[',']') ,'' , $imgs);
+    $product_imgs = explode(',' ,$imgs);
+    $quans=$this->post('quantitys');
+    $quans = str_replace(array('[',']') ,'' , $quans);
+    $quantitys = explode(',' , $quans);
+
+
+
+
+	$ps=$this->post('prices');
+    $ps = str_replace(array('[',']') ,'' , $ps);
+    $prices = explode(',' , $ps);
+
+
    $data=array('user_id'=>$user_id,
                'billing_id'=>$billing_id,
 			   'payment_type'=>$payment_type,
@@ -942,11 +962,15 @@ $months[]=$curmonth;
 	
 	$month=$this->post('month');
 	$year=$this->post('year');
-	$day=$this->post('days');
-	$days=json_decode($day);
+	$d=$this->post('days');
+     $d = str_replace(array('[',']') ,'' , $d);
+     $days = explode(',' , $d);
 
-	$quantity=$this->post('quantitys');
-     $quantitys=json_decode($quantity);
+	$quans=$this->post('quantitys');
+     $quans= str_replace(array('[',']') ,'' , $quans);
+     $quantitys = explode(',' , $quans);
+
+
 	$price=$this->post('price');
 	
 	foreach($quantitys as $key=>$value ){
@@ -962,7 +986,9 @@ $months[]=$curmonth;
 	
 	
 	}
+
 	$status=$this->Mobile_model->milk_orders($data);
+
 	if($status==1){
 	$message=array('status'=>1,'message'=>'Milk order added');
 		 $this->response($message, REST_Controller::HTTP_OK);

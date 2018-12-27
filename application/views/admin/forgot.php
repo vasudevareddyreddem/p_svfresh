@@ -19,7 +19,7 @@
 <?php endif; ?>
 <?php if($this->session->flashdata('error')): ?>
     <div class="alert_msg1 animated slideInUp bg-warn">
-        <?php echo $this->session->flashdata('error');?> &nbsp; <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+        <?php echo $this->session->flashdata('error');?> &nbsp; <i class="fas fa-exclamation-triangle"></i>
     </div>
 <?php endif; ?>
     <div id="app">
