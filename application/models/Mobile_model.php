@@ -129,9 +129,24 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 	public function get_user_wishlist($id){
-		$this->db->select('wishlist_tab.id wishlistid,product_tab.product_name,product_tab.product_id,
-		product_tab.product_img,wishlist_tab.quantity,product_tab.actual_price,product_tab.net_price,product_tab.discount_price,(wishlist_tab.quantity)*(product_tab.net_price) whole_price
-		')->from('wishlist_tab')->join('product_tab','product_tab.product_id=wishlist_tab.product_id')->
+//        $this->db->select('id_cer');
+//        $this->db->from('revokace');
+//        $where_clause = $this->db->get_compiled_select();
+//        $this->db->query("select wishlist_tab.id wishlistid,product_tab.product_name,product_tab.product_id,
+//		product_tab.product_img,wishlist_tab.quantity,product_tab.actual_price,
+//		product_tab.net_price,product_tab.discount_price,
+//		(wishlist_tab.quantity)*(product_tab.net_price) whole_price  from wishlist_tab
+//		join  product_tab on(product_tab.product_id=wishlist_tab.product_id where wishlit_tab.user_id=$id
+//		and exis");
+
+        $this->db->select("wishlist_tab.id wishlistid,product_tab.product_name,product_tab.product_id,
+		product_tab.product_img,wishlist_tab.quantity,product_tab.actual_price,
+		product_tab.net_price,product_tab.discount_price,
+		IF( ISNULL(cart_tab.user_id),0,1) cart_status,
+		(wishlist_tab.quantity)*(product_tab.net_price) whole_price
+		")->from('wishlist_tab')->join('product_tab','product_tab.product_id=wishlist_tab.product_id')->
+            join('cart_tab','cart_tab.user_id=wishlist_tab.user_id and 
+            cart_tab.product_id=wishlist_tab.product_id','left')->
 		where('wishlist_tab.user_id',$id);
 	
 	  return $this->db->get()->result_array();

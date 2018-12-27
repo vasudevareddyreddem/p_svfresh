@@ -72,6 +72,13 @@
 					<li><a href="<?php echo base_url('milkorder/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="#" class="has-dropdown"><i class="ion ion-pricetags"></i><span>Apartments</span></a>
+                <ul class="menu-dropdown">
+                    <li><a href="<?php  echo base_url('apartment/add_apartment'); ?>"><i class="ion ion-ios-circle-outline"></i>Add Apartment</a></li>
+                    <li><a href="<?php  echo base_url('apartment/apartment_list'); ?>"><i class="ion ion-ios-circle-outline"></i>Apartment List</a></li>
+                </ul>
+            </li>
           
         </ul>
     </aside>
