@@ -299,6 +299,7 @@ public function home_post(){
 		$message['status']=1;
 		$message['products']=$products;
 		$message['product_image_path']=base_url().'assets/uploads/product_pics/';
+		$message['message']='products available';
 	
 		 }
 		 else{
