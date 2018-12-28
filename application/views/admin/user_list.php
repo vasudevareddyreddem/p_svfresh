@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Block List</h4>
+                            <h4>User List</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -18,10 +18,12 @@
                                     <thead>
                                     <tr>
                                         <th>S.No</th>
-                                        <th>Apartment Name</th>
-                                        <th>Block Name</th>
+                                        <th>User Name</th>
+                                        <th>User Email</th>
+                                        <th>User Mobile Number</th>
 
                                         <th>Created At</th>
+                                        <th>Change Password</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -32,8 +34,9 @@
                                         foreach($list as $li):?>
                                             <tr>
                                                 <td><?php echo $count; ?></td>
-                                                <td><?php echo $li->apartment_name; ?></td>
-                                                <td><?php echo $li->block_name; ?></td>
+                                                <td><?php echo $li->user_name; ?></td>
+                                                <td><?php echo $li->email_id; ?></td>
+                                                <td><?php echo $li->phone_number; ?></td>
 
 
                                                 <td><?php
@@ -44,20 +47,26 @@
                                                         echo $newDateString ;
                                                     } ?></td>
                                                 <td>
+
+                                                        <div class="badge badge-danger"><a href="<?php
+                                                            echo base_url('user/change_password/').base64_encode($li->id);?>">Change Password</a></div>
+
+                                                </td>
+                                                <td>
                                                     <?php if($li->status==1){?>
                                                         <div class="badge badge-success"><a href="<?php
-                                                            echo base_url('apartment/inactive_block/').base64_encode($li->block_id);?>">Active</a></div>
+                                                            echo base_url('user/inactive_user/').base64_encode($li->id);?>">Active</a></div>
                                                     <?php }else{?>
                                                         <div class="badge badge-danger"><a href="<?php
-                                                            echo base_url('apartment/active_block/').base64_encode($li->block_id);?>">InActive</a></div>
+                                                            echo base_url('user/active_user/').base64_encode($li->id);?>">InActive</a></div>
                                                     <?php }?>
 
                                                 </td>
                                                 <td>
                                                     <a href="<?php
-                                                    echo base_url('apartment/edit_block/').base64_encode($li->block_id);?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
+                                                    echo base_url('user/edit_user/').base64_encode($li->id);?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
                                                     <a href="<?php
-                                                    echo base_url('apartment/delete_block/').base64_encode($li->block_id);?>" class="btn btn-danger btn-action confirmation" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b "></i></a>
+                                                    echo base_url('user/delete_user/').base64_encode($li->id);?>" class="btn btn-danger btn-action confirmation" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b "></i></a>
                                                 </td>
                                             </tr>
                                             <?php $count++;
@@ -76,7 +85,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('.confirmation').on('click', function () {
-            return confirm('Are you sure of deleting category?');
+            return confirm('Are you sure of deleting user?');
         });
     });
 </script>

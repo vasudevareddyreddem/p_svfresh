@@ -262,5 +262,167 @@ public  function save_block(){
     else{redirect('login');}
 
 }
+public  function block_list(){
+    if ($this->session->userdata('svadmin_det')) {
+        $res=$this->Apartment_model->get_block_list();
+        if(count($res)>0){
+            $data['status']=1;
+            $data['list']=$res;
+        }
+        else{
+            $data['status']=0;
+        }
+        $this->load->view('admin/block_list',$data);
+        $this->load->view('admin/footer');
+    }
+    else{redirect('login');}
+
+
+}
+    public function edit_block()
+    {
+        if ($this->session->userdata('svadmin_det')) {
+            $id = base64_decode($this->uri->segment(3));
+
+            $row=$this->Apartment_model->get_block_by_id($id);
+            $data['ap_list']=$this->Apartment_model->get_all_apartments();
+            if(count($row)>0){
+                $data['status']=1;
+                $data['row']=$row;
+            }
+            else{
+                $this->session->set_flashdata('error','This Block name deleted by another session');
+                redirect('apartment/block_list');
+            }
+            $this->load->view('admin/edit_block',$data);
+            $this->load->view('admin/footer');
+
+        }
+        else{redirect('login');}
+    }
+    public function save_edit_block(){
+        if ($this->session->userdata('svadmin_det')) {
+            $admin=$this->session->userdata('svadmin_det');
+            $svadmin=$admin['admin_id'];
+            $bid=base64_decode($this->input->post('bid'));
+
+            $this->form_validation->set_rules('bname', 'name', 'required');
+            $this->form_validation->set_rules('aname', 'name', 'required');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $this->session->set_flashdata('error',validation_errors());
+                redirect($_SERVER['HTTP_REFERER']);
+
+            }
+            $aid=base64_decode($this->input->post('aname'));
+
+            $bname=$this->input->post('bname');
+
+            $flag=$this->Apartment_model->check_edit_block_name($aid,$bname,$bid);
+            if($flag==1){
+                $this->session->set_flashdata('error','Block Name Existed');
+                redirect($_SERVER['HTTP_REFERER']);
+
+            }
+            $date=date('Y-m-d');
+            $data=array('block_name'=>$bname,
+                'apartment_id'=>$aid,
+                'updated_date'=>$date,
+                'updated_by'=>$svadmin);
+
+            $status=$this->Apartment_model->save_edit_block($data,$bid);
+
+            if($status==1){
+                $this->session->set_flashdata('success','Block Name Updated Successfully');
+                redirect('apartment/block_list');
+
+            }
+            $this->session->set_flashdata('success','Block Name  Not Updated ');
+            redirect('apartment/block_list');
+
+
+
+
+        }
+        else{redirect('login');}
+
+
+    }
+    public function inactive_block(){
+        if ($this->session->userdata('svadmin_det')) {
+            $admin=$this->session->userdata('svadmin_det');
+            $svadmin=$admin['admin_id'];
+            $id=base64_decode($this->uri->segment(3));
+            $date=date('Y-m-d');
+            $data=array('status'=>2,
+                'updated_date'=>$date,
+                'updated_by'=>$svadmin);
+            $status= $this->Apartment_model->inactive_block($data,$id);
+            if($status==1){
+                $this->session->set_flashdata('success','Inactivated successfully');
+                redirect('apartment/block_list');
+
+
+            }
+            $this->session->set_flashdata('error','Not Inactivated ');
+            redirect('apartment/block_list');
+
+
+
+        }
+        else{redirect('login');}
+
+    }
+    public function active_block(){
+        if ($this->session->userdata('svadmin_det')) {
+            $admin=$this->session->userdata('svadmin_det');
+            $svadmin=$admin['admin_id'];
+            $id=base64_decode($this->uri->segment(3));
+            $date=date('Y-m-d');
+            $data=array('status'=>1,
+                'updated_date'=>$date,
+                'updated_by'=>$svadmin);
+            $status=$this->Apartment_model->active_block($data,$id);
+            if($status==1){
+                $this->session->set_flashdata('success','Activated successfully');
+                redirect('apartment/block_list');
+
+
+            }
+            $this->session->set_flashdata('error','Not Activated ');
+            redirect('apartment/block_list');
+
+
+
+        }
+        else{redirect('login');}
+
+    }
+    public function delete_block(){
+        if ($this->session->userdata('svadmin_det')) {
+            $admin=$this->session->userdata('svadmin_det');
+            $svadmin=$admin['admin_id'];
+            $id=base64_decode($this->uri->segment(3));
+            $date=date('Y-m-d');
+            $data=array('status'=>0,
+                'updated_date'=>$date,
+                'updated_by'=>$svadmin);
+            $status=$this->Apartment_model->delete_block($data,$id);
+            if($status==1){
+                $this->session->set_flashdata('success','Deleted successfully');
+                redirect('apartment/block_list');
+
+
+            }
+            $this->session->set_flashdata('error','Not Deleted ');
+            redirect('apartment/block_list');
+
+
+
+        }
+        else{redirect('login');}
+
+    }
 
 }

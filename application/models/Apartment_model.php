@@ -87,4 +87,63 @@ class Apartment_model extends CI_Model
         return $this->db->affected_rows()?1:0;
 
     }
+    public function get_block_list(){
+        $this->db->select('a.apartment_name,b.block_name,b.created_date,b.status,b.block_id')->
+            from('apartment_tab a')->join('block_tab b','a.apartment_id=b.apartment_id')->where('b.status !=',0)
+        ->order_by('b.updated_date','desc');
+        return $this->db->get()->result();
+    }
+    public function get_block_by_id($id){
+        $this->db->select('a.apartment_id,a.apartment_name,b.block_id,b.block_name')->from('block_tab b')->
+        join('apartment_tab a','a.apartment_id=b.apartment_id')->where('b.block_id',$id);
+        return $this->db->get()->row();
+    }
+    public function check_edit_block_name($aid,$bname,$bid){
+        $this->db->select('*');
+        $this->db->from('block_tab');
+
+        $this->db->where('apartment_id!=',$aid);
+        $this->db->where('block_name!=',$bname);
+        $this->db->where('block_id!=',$bid);
+        $this->db->where('status !=',0);
+
+        $res= $this->db->get()->result_array();
+
+        $list = array_column($res, 'block_name');
+
+        //echo $catname;exit;
+        //echo in_array($catname,$cat_names);exit;
+        if(in_array($bname,$list)){
+
+            return 1;
+        }
+        else{
+            return 0;
+        }
+
+
+    }
+    public function save_edit_block($data,$bid){
+        $this->db->where('block_id',$bid);
+        $this->db->update('block_tab',$data);
+        return $this->db->affected_rows()?1:0;
+
+    }
+    public function inactive_block($data,$id){
+        $this->db->where('block_id',$id);
+        $this->db->update('block_tab',$data);
+        return $this->db->affected_rows()?1:0;
+    }
+    public function active_block($data,$id){
+        $this->db->where('block_id',$id);
+        $this->db->update('block_tab',$data);
+        return $this->db->affected_rows()?1:0;
+
+    }
+    public  function delete_block($data,$id){
+        $this->db->where('block_id',$id);
+        $this->db->update('block_tab',$data);
+        return $this->db->affected_rows()?1:0;
+
+    }
 }
