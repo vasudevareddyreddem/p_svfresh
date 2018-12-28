@@ -78,8 +78,9 @@ class Apartment_model extends CI_Model
         return $this->db->affected_rows()?1:0;
 
     }
-    public function check_block_name($name){
-        $this->db->select('1')->from('block_tab')->where('block_name',$name)->where('status !=',0);
+    public function check_block_name($name,$apt_id){
+        $this->db->select('1')->from('block_tab')->where('block_name',$name)->
+        ->where('aprartment_id',$apt_id)->where('status !=',0);
         return $this->db->get()->result();
     }
     public function save_block_name($data){

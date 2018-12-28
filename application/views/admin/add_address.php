@@ -10,28 +10,45 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add User</h4>
+                            <h4>Add Address</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mx-auto">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
-                                    <form method="post" id="add_user" action="<?php echo base_url('user/save_user');?>"  enctype="multipart/form-data">
+                                    <form method="post" id="add_user" action="<?php echo base_url('user/save_address');?>"  enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <label>User Name</label>
-                                            <input id="name" type="text" class="form-control" name="uname">
+                                            <label>User Phone numbers</label>
+                                            <select class="form-control" name="aname">
+                                                <option disabled selected>Select</option>
+                                                <?php foreach($phone_list as $lis){?>
+                                                    <option value="<?php echo $lis->phone_number;?>">
+                                                        <?php echo $lis->phone_number;?></option>
+                                                <?php }?>
+
+                                            </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Email</label>
-                                            <input id="email" type="text" class="form-control" name="email">
+                                            <label>Apartments</label>
+                                            <select class="form-control" name="aname">
+                                                <option disabled selected>Select</option>
+                                                <?php foreach($list as $lis){?>
+                                                    <option value="<?php echo base64_encode($lis->apartment_id);?>">
+                                                        <?php echo $lis->apartment_name;?></option>
+                                                <?php }?>
+
+                                            </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Phone Number</label>
-                                            <input id="phone" type="text" class="form-control" name="phone">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input id="password" type="text" class="form-control" name="password">
+                                            <label>Blocks</label>
+                                            <select class="form-control" name="aname">
+                                                <option disabled selected>Select</option>
+                                                <?php foreach($list as $lis){?>
+                                                    <option value="<?php echo base64_encode($lis->apartment_id);?>">
+                                                        <?php echo $lis->apartment_name;?></option>
+                                                <?php }?>
+
+                                            </select>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">

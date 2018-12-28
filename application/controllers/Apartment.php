@@ -238,7 +238,7 @@ public  function save_block(){
         }
         $name=$this->input->post('bname');
         $apt_id=base64_decode($this->input->post('aname'));
-        $res=$this->Apartment_model->check_block_name($name);
+        $res=$this->Apartment_model->check_block_name($name,$apt_id);
         if(count($res)>0){
             $this->session->set_flashdata('error','Block Name Existed');
             redirect($_SERVER['HTTP_REFERER']);

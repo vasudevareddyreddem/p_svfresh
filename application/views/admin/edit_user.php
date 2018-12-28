@@ -10,29 +10,30 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add User</h4>
+                            <h4>Edit User</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mx-auto">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
-                                    <form method="post" id="add_user" action="<?php echo base_url('user/save_user');?>"  enctype="multipart/form-data">
+                                    <form method="post" id="add_user" action="<?php echo base_url('user/save_edit_user');?>"  enctype="multipart/form-data">
+                                       <input type="hidden" value="<?php echo base64_encode($user->id); ?>" name="uid"?>
                                         <div class="form-group">
                                             <label>User Name</label>
-                                            <input id="name" type="text" class="form-control" name="uname">
+                                            <input id="name" type="text" class="form-control" name="uname"
+                                            value="<?php echo $user->user_name;?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input id="email" type="text" class="form-control" name="email">
+                                            <input id="email" type="text" class="form-control" name="email"
+                                                   value="<?php echo $user->email_id;?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input id="phone" type="text" class="form-control" name="phone">
+                                            <input id="phone" type="text" class="form-control" name="phone"
+                                                   value="<?php echo $user->phone_number;?>">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input id="password" type="text" class="form-control" name="password">
-                                        </div>
+
 
                                         <button type="submit" class="btn btn-primary">
                                             Add
@@ -69,10 +70,6 @@
                     validators: {
                         notEmpty: {
                             message: 'Phone Number is required'
-                        },
-                        regexp: {
-                            regexp: /^[0-9]+$/,
-                            message: 'The username can only have numbers'
                         }
 
                     }
@@ -83,18 +80,12 @@
                             message: 'Email is required'
                         }
 
-
                     }
                 },
                 password: {
                     validators: {
                         notEmpty: {
                             message: 'Password is required'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 30,
-                            message: 'Password must be more than 6 and less than 30 characters long'
                         }
 
                     }
