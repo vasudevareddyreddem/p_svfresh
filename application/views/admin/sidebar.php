@@ -77,6 +77,8 @@
                 <ul class="menu-dropdown">
                     <li><a href="<?php  echo base_url('apartment/add_apartment'); ?>"><i class="ion ion-ios-circle-outline"></i>Add Apartment</a></li>
                     <li><a href="<?php  echo base_url('apartment/apartment_list'); ?>"><i class="ion ion-ios-circle-outline"></i>Apartment List</a></li>
+                    <li><a href="<?php  echo base_url('apartment/add_block'); ?>"><i class="ion ion-ios-circle-outline"></i>Add Block</a></li>
+                    <li><a href="<?php  echo base_url('apartment/block_list'); ?>"><i class="ion ion-ios-circle-outline"></i>Block List</a></li>
                 </ul>
             </li>
           
