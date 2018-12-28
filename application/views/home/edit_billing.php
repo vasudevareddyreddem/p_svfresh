@@ -36,7 +36,7 @@
               <li class="row">
                 <div class="col-xs-4">
                   <label for="address" class="required">Appartment <span class="text-danger">*</span></label>
-                  <select class="input form-control" name="appartment" id="apartment">
+                  <select class="input form-control" name="appartment" id="apartment" data-block="<?php echo (isset($billing->block)) ? $billing->block :''; ?>">
                     <option value="">--Select Appartment--</option>
                     <?php if(count($apartment) > 0) { ?>
                       <?php foreach($apartment as $a) { ?>
@@ -74,10 +74,11 @@
         $('#apartment').on('change',function(){
             $('#block').html('<option value="">loading....</option>');
           var apartment_id = $(this).val();
+          var block = $(this).data('block');
           $.ajax({
             url:'<?php echo base_url('billing/get_blocks_by_apartment_id'); ?>',
             type:'POST',
-            data:{'apartment_id':apartment_id},
+            data:{'apartment_id':apartment_id,'block':block},
             success:function(data){
               $('#block').html(data);
             }
