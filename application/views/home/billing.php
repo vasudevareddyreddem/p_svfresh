@@ -16,7 +16,7 @@
                     <div class="box-shadow-site modal-body">
                       <input type="radio" name="billing_id" value="<?php echo $b->id; ?>" <?php echo ($i == 1) ? 'checked':''; ?>>
                       <p><?php echo $b->first_name.' '.$b->last_name; ?>, <?php echo $b->email_address; ?>,
-                        <?php echo $b->mobile_number; ?>, <?php echo $b->appartment; ?>, <?php echo $b->block; ?>, <?php echo $b->flat_door_no; ?>.</p>
+                        <?php echo $b->mobile_number; ?>, <?php echo $b->apartment_name; ?>, <?php echo $b->block_name; ?>, <?php echo $b->flat_door_no; ?>.</p>
                         <a href="<?php echo base_url('billing/edit/'.$b->id); ?>" name="edit_billing" class="btn btn-success">Edit</a>
                         <a href="<?php echo base_url('billing/delete/'.$b->id); ?>" name="delete_billing" class="btn btn-danger">Delete</a>
                       </div>
@@ -64,17 +64,20 @@
                   <li class="row">
                     <div class="col-xs-4">
                       <label for="address" class="required">Appartment <span class="text-danger">*</span></label>
-                      <select class="input form-control" name="appartment">
+                      <select class="input form-control" name="appartment" id="apartment">
                         <option value="">--Select Appartment--</option>
-                        <option value="1">1</option>
+                        <?php if(count($apartment) > 0) { ?>
+                          <?php foreach($apartment as $a) { ?>
+                            <option value="<?php echo $a->apartment_id; ?>"><?php echo $a->apartment_name; ?></option>
+                          <?php } ?>
+                        <?php } ?>
                       </select>
                       <?php echo form_error('appartment','<div class="text-danger">', '</div>'); ?>
                     </div>
                     <div class="col-xs-4">
                       <label for="address" class="required">Block <span class="text-danger">*</span></label>
-                      <select class="input form-control" name="block">
+                      <select class="input form-control" name="block" id="block">
                         <option value="">--Select Block--</option>
-                        <option value="1">A</option>
                       </select>
                       <?php echo form_error('block','<div class="text-danger">', '</div>'); ?>
                     </div>
@@ -96,5 +99,21 @@
       </div>
     </div>
     <?php include("footer.php"); ?>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('#apartment').on('change',function(){
+            $('#block').html('<option value="">loading....</option>');
+            var apartment_id = $(this).val();
+            $.ajax({
+              url:'<?php echo base_url('billing/get_blocks_by_apartment_id'); ?>',
+              type:'POST',
+              data:{'apartment_id':apartment_id},
+              success:function(data){
+                $('#block').html(data);
+              }
+            });
+          });
+      });
+    </script>
   </body>
   </html>

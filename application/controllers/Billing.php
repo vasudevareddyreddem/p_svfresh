@@ -15,6 +15,7 @@ class Billing extends CI_Controller
     $this->load->model('Billing_Model');
     $this->load->model('Order_Model');
     $this->load->model('Calender_Model');
+    $this->load->model('Apartment_model');
   }
 
   public function index()
@@ -32,6 +33,7 @@ class Billing extends CI_Controller
           $data['categories'] = $this->Category_model->get_all_category();
           $user_id = $this->session->userdata('id');
           $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
+          $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
@@ -65,6 +67,7 @@ class Billing extends CI_Controller
         $data['categories'] = $this->Category_model->get_all_category();
         $user_id = $this->session->userdata('id');
         $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
+        $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
         $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
         $data['count'] = count($data['cart']);
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
@@ -111,6 +114,7 @@ class Billing extends CI_Controller
             $data['categories'] = $this->Category_model->get_all_category();
             $user_id = $this->session->userdata('id');
             $data['billing'] = $this->Billing_Model->get_billing_details_by_id($id);
+            $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
             $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
             $data['count'] = count($data['cart']);
             $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
@@ -134,6 +138,7 @@ class Billing extends CI_Controller
           $user_id = $this->session->userdata('id');
           //$data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
           $data['billing'] = $this->Billing_Model->get_billing_details_by_id($id);
+          $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
@@ -164,6 +169,7 @@ class Billing extends CI_Controller
         }
       } else {
         $this->session->set_flashdata('error','Sorry, there is a problem in deleting record');
+        redirect('/billing');
       }
     } else {
       $this->session->set_flashdata('error','Please login to continue');
@@ -171,13 +177,39 @@ class Billing extends CI_Controller
     }
   }
   //For validations
-  function alpha_dash_space($str){
+  public function alpha_dash_space($str){
       if (! preg_match('/^[a-zA-Z\s]+$/', $str)) {
           $this->form_validation->set_message('alpha_dash_space', 'The %s field may only contain alpha characters & White spaces');
           return FALSE;
       } else {
           return TRUE;
       }
+  }
+  //getting blocks by apartment id
+  public function get_blocks_by_apartment_id()
+  {
+    if ($this->session->userdata('logged_in') == TRUE) {
+      $apartment_id = $this->input->post('apartment_id');
+      if ($apartment_id) {
+        $blocks = $this->Apartment_model->get_blocks_by_apartment_id($apartment_id);
+        if(count($blocks) > 0){
+          $result = '<option value="">--Select Block--</option>';
+          foreach ($blocks as $b) {
+            $result .= '<option value='.$b->block_id.'>'.$b->block_name.'</option>';
+          }
+          echo $result;exit();
+        } else {
+          $result = '<option value="">--No Block found--</option>';
+          echo $result;exit();
+        }
+      } else {
+        $this->session->set_flashdata('error','Sorry, there is a problem in getting blocks');
+        redirect('/billing');
+      }
+    } else {
+      $this->session->set_flashdata('error','Please login to continue');
+      redirect('home/login');
+    }
   }
 
 }

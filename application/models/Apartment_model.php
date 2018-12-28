@@ -87,4 +87,14 @@ class Apartment_model extends CI_Model
         return $this->db->affected_rows()?1:0;
 
     }
+    //get all apartments where status active -- Rana
+    public function get_all_active_apartments()
+    {
+      return $this->db->get_where('apartment_tab',array('status'=>'1'))->result();
+    }
+    //get all blocks where status active and apartment id -- Rana
+    public function get_blocks_by_apartment_id($apartment_id='')
+    {
+      return $this->db->get_where('block_tab',array('apartment_id' => $apartment_id,'status' => '1'))->result();
+    }
 }
