@@ -53,7 +53,7 @@
 
                                                 </td>
                                                 <td>
-                                                    <?php if($li->status==1){?>
+                                                    <?php if($li->status=='Active'){?>
                                                         <div class="badge badge-success"><a href="<?php
                                                             echo base_url('user/inactive_user/').base64_encode($li->id);?>">Active</a></div>
                                                     <?php }else{?>

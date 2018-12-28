@@ -85,6 +85,8 @@ class User extends In_frontend
             else{
                 $data['status']=0;
             }
+            $this->load->view('admin/user_list',$data);
+            $this->load->view('admin/footer');
 
 
         }
@@ -92,4 +94,5 @@ class User extends In_frontend
 
 
     }
+
 }
