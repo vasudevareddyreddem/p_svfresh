@@ -8,30 +8,55 @@ class Milkorders_model extends CI_Model
 		parent::__construct();
 		$this->load->database("default");
 	}
-	public function total_order_list()
+	public function total_order_list($apartment='',$block='',$date='')
 	{
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
-calender_tab.payment_type,
-product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
-billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
-users_tab.phone_number,calender_tab.delivered_time,calender_tab.cancelled_time')->from('calender_tab')->
-		join('billing_tab','calender_tab.billing_id=billing_tab.id')
-		->join('product_tab','product_tab.product_id=calender_tab.product_id')
-		->join('users_tab','users_tab.id=calender_tab.user_id')
-		->order_by('calender_tab.created_date,users_tab.id','desc');
-		
+		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
+		calender_tab.payment_type,
+		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
+		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,apartment_tab.apartment_name,block_tab.block_name,billing_tab.flat_door_no,
+		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
+		users_tab.phone_number,calender_tab.delivered_time,calender_tab.cancelled_time');
+		$this->db->from('calender_tab');
+		$this->db->join('billing_tab','calender_tab.billing_id=billing_tab.id');
+		$this->db->join('product_tab','product_tab.product_id=calender_tab.product_id');
+		$this->db->join('users_tab','users_tab.id=calender_tab.user_id');
+		$this->db->join('apartment_tab','apartment_tab.apartment_id=billing_tab.appartment','left');
+		$this->db->join('block_tab','block_tab.block_id=billing_tab.block','left');
+		if (isset($apartment) && !empty($apartment)) {
+			$this->db->where('billing_tab.appartment',$apartment);
+		}
+		if (isset($block) && !empty($block)) {
+			$this->db->where('billing_tab.block',$block);
+		}
+		if (isset($date) && !empty($date)) {
+			$date_fragment = explode('/',$date);
+			if(is_array($date_fragment)){
+				$day = $date_fragment[0];
+				if(isset($day) && !empty($day)){
+					$this->db->where('calender_tab.date',$day);
+				}
+				$month = $date_fragment[1];
+				if(isset($month) && !empty($month)){
+					$this->db->where('calender_tab.month',$month);
+				}
+				$year = $date_fragment[2];
+				if(isset($year) && !empty($year)){
+					$this->db->where('calender_tab.year',$year);
+				}
+			}
+		}
+		$this->db->order_by('calender_tab.created_date,users_tab.id','desc');
 		return $this->db->get()->result();
 	}
 	public function pending_order_list(){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
-calender_tab.payment_type,
-product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
-billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
-users_tab.phone_number')->from('calender_tab')->
+		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
+		calender_tab.payment_type,
+		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
+		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
+		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
+		users_tab.phone_number')->from('calender_tab')->
 		join('billing_tab','calender_tab.billing_id=billing_tab.id')
 		->join('product_tab','product_tab.product_id=calender_tab.product_id')
 		->join('users_tab','users_tab.id=calender_tab.user_id')->where('calender_tab.delivery_status',2)
@@ -40,12 +65,12 @@ users_tab.phone_number')->from('calender_tab')->
 	}
 	public function delivered_order_list(){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
-calender_tab.payment_type,
-product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
-billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
-users_tab.phone_number,calender_tab.delivered_time')->from('calender_tab')->
+		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
+		calender_tab.payment_type,
+		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
+		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
+		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
+		users_tab.phone_number,calender_tab.delivered_time')->from('calender_tab')->
 		join('billing_tab','calender_tab.billing_id=billing_tab.id')
 		->join('product_tab','product_tab.product_id=calender_tab.product_id')
 		->join('users_tab','users_tab.id=calender_tab.user_id')->where('calender_tab.delivery_status',1)
@@ -54,12 +79,12 @@ users_tab.phone_number,calender_tab.delivered_time')->from('calender_tab')->
 	}
 	public function cancel_order_list(){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
-calender_tab.payment_type,
-product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
-billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
-users_tab.phone_number,calender_tab.cancelled_time')->from('calender_tab')->
+		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
+		calender_tab.payment_type,
+		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
+		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
+		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
+		users_tab.phone_number,calender_tab.cancelled_time')->from('calender_tab')->
 		join('billing_tab','calender_tab.billing_id=billing_tab.id')
 		->join('product_tab','product_tab.product_id=calender_tab.product_id')
 		->join('users_tab','users_tab.id=calender_tab.user_id')->where('calender_tab.delivery_status',0)
@@ -72,27 +97,26 @@ users_tab.phone_number,calender_tab.cancelled_time')->from('calender_tab')->
 		$this->db->set('delivered_time','now()',FALSE);
 		$this->db->where('calender_id',$id);
 		$this->db->update('calender_tab');
-		
+
 		return $this->db->affected_rows()?1:0;
 	}
-	public function change_to_cancel_status($id,$svadmin){	
+	public function change_to_cancel_status($id,$svadmin){
 		$this->db->set('delivery_status',0);
 		$this->db->set('updated_by',$svadmin);
 		$this->db->set('cancelled_time','now()',FALSE);
 		$this->db->where('calender_id',$id);
 		$this->db->update('calender_tab');
-		
+
 		return $this->db->affected_rows()?1:0;
 	}
-	public function change_to_pending_status($id,$svadmin){	
+	public function change_to_pending_status($id,$svadmin){
 		$this->db->set('delivery_status',2);
 		$this->db->set('updated_by',$svadmin);
-		
+
 		$this->db->where('calender_id',$id);
 		$this->db->update('calender_tab');
-		
+
 		return $this->db->affected_rows()?1:0;
 	}
-	
-	}
-	
+
+}
