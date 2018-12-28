@@ -90,17 +90,11 @@ class Milkcalender extends CI_Controller
           if(($post['quant'][$key]) != 0 ){
             $this->Calender_Model->update(array('price' => $post['product_price'][$key],'product_id' => $post['product_id'][$key],'user_id' => $post['user_id'][$key],'year' => $post['year'][$key],'month' => $post['month'][$key],'date' => $post['date'][$key],'quantity' => $post['quant'][$key],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')),$id->calender_id);
             $calender_id[] = $id->calender_id;
-          } else {
-            $this->session->set_flashdata('error','Calendar date quantity should not be empty');
-            redirect($this->agent->referrer());
           }
         } else {
           if(($post['quant'][$key]) != 0 ){
             $this->Calender_Model->insert(array('price' => $post['product_price'][$key],'product_id' => $post['product_id'][$key],'user_id' => $post['user_id'][$key],'year' => $post['year'][$key],'month' => $post['month'][$key],'date' => $post['date'][$key],'quantity' => $post['quant'][$key],'created_date' =>date('Y-m-d H:i:s'),'created_by'=>$this->session->userdata('id')));
             $calender_id[] = $this->db->insert_id();
-          } else {
-            $this->session->set_flashdata('error','Calendar date quantity should not be empty');
-            redirect($this->agent->referrer());
           }
         }
       }

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/dataTables.bootstrap.min.css';?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/buttons.bootstrap4.min.css'); ?>">
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-datepicker.css'); ?>">
 	  <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.min.js';?>"></script>
 
 </head>

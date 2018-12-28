@@ -200,7 +200,7 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
 	left: 250px;
 	right: 5px;
 	position: absolute;
-	z-index: 890;
+	z-index: 10;
 	background-color: transparent;
 }
 .navbar.active {
@@ -1485,7 +1485,7 @@ table tr:hover .table-links {
 	width: auto;
 	display: inline-block;
 	font-size: 12px;
-}	
+}
 .card-chat .chat-content .chat-item .chat-details .chat-text img {
 	max-width: 100%;
 	margin-bottom: 10px;
@@ -2161,7 +2161,7 @@ table tr:hover .table-links {
 	.weather .weather-desc {
 		margin-left: 0;
 	}
-	
+
 	.statistic-details {
 		-ms-flex-wrap: wrap;
 		    flex-wrap: wrap;
@@ -2357,7 +2357,7 @@ table tr:hover .table-links {
 		padding:8px;
 	}
 	.alert_msg1 {
-		
+
 		position:fixed;
 		bottom:80px;
 		color:#fff;
