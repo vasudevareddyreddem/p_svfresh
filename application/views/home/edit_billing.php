@@ -36,17 +36,20 @@
               <li class="row">
                 <div class="col-xs-4">
                   <label for="address" class="required">Appartment <span class="text-danger">*</span></label>
-                  <select class="input form-control" name="appartment">
+                  <select class="input form-control" name="appartment" id="apartment">
                     <option value="">--Select Appartment--</option>
-                    <option value="1" <?php echo (isset($billing->appartment) && ($billing->appartment == 1)) ? 'selected' : ''; ?>>1</option>
+                    <?php if(count($apartment) > 0) { ?>
+                      <?php foreach($apartment as $a) { ?>
+                        <option value="<?php echo $a->apartment_id; ?>" <?php echo (isset($billing->appartment) && ($billing->appartment == $a->apartment_id)) ? 'selected' : ''; ?>><?php echo $a->apartment_name; ?></option>
+                      <?php } ?>
+                    <?php } ?>
                   </select>
                   <?php echo form_error('appartment','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
                 <div class="col-xs-4">
                   <label for="address" class="required">Block <span class="text-danger">*</span></label>
-                  <select class="input form-control" name="block">
+                  <select class="input form-control" name="block" id="block">
                     <option value="">--Select Block--</option>
-                    <option value="1" <?php echo (isset($billing->block) && ($billing->block == 1)) ? 'selected' : ''; ?>>A</option>
                   </select>
                   <?php echo form_error('block','<div class="text-danger">', '</div>'); ?>
                 </div>
@@ -66,5 +69,21 @@
     </div>
   </div>
   <?php include("footer.php"); ?>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#apartment').on('change',function(){
+            $('#block').html('<option value="">loading....</option>');
+          var apartment_id = $(this).val();
+          $.ajax({
+            url:'<?php echo base_url('billing/get_blocks_by_apartment_id'); ?>',
+            type:'POST',
+            data:{'apartment_id':apartment_id},
+            success:function(data){
+              $('#block').html(data);
+            }
+          });
+        }).trigger('change');
+    });
+  </script>
 </body>
 </html>

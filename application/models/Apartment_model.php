@@ -87,6 +87,7 @@ class Apartment_model extends CI_Model
         return $this->db->affected_rows()?1:0;
 
     }
+
     public function get_block_list(){
         $this->db->select('a.apartment_name,b.block_name,b.created_date,b.status,b.block_id')->
             from('apartment_tab a')->join('block_tab b','a.apartment_id=b.apartment_id')->where('b.status !=',0)
@@ -146,4 +147,17 @@ class Apartment_model extends CI_Model
         return $this->db->affected_rows()?1:0;
 
     }
+
+
+    //get all apartments where status active -- Rana
+    public function get_all_active_apartments()
+    {
+      return $this->db->get_where('apartment_tab',array('status'=>'1'))->result();
+    }
+    //get all blocks where status active and apartment id -- Rana
+    public function get_blocks_by_apartment_id($apartment_id='')
+    {
+      return $this->db->get_where('block_tab',array('apartment_id' => $apartment_id,'status' => '1'))->result();
+    }
 }
+
