@@ -21,17 +21,13 @@ class Billing extends CI_Controller
   {
     if($this->session->userdata('logged_in') == TRUE){
       if($this->input->post()){
-        $this->form_validation->set_rules('first_name', 'First Name', 'required');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
-        $this->form_validation->set_rules('company_name', 'Company Name', 'required');
-        $this->form_validation->set_rules('email_address', 'Email Address', 'required');
-        $this->form_validation->set_rules('address', 'Address', 'required');
-        $this->form_validation->set_rules('city', 'City', 'required');
-        $this->form_validation->set_rules('state', 'State', 'required');
-        $this->form_validation->set_rules('zip', 'Zip/Postal Code', 'required');
-        $this->form_validation->set_rules('country', 'Country', 'required');
-        $this->form_validation->set_rules('telephone', 'Telephone', 'required');
-        $this->form_validation->set_rules('fax', 'Fax', 'required');
+        $this->form_validation->set_rules('first_name', 'First Name', 'required|callback_alpha_dash_space');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required|callback_alpha_dash_space');
+        $this->form_validation->set_rules('email_address', 'Email Address', 'required|valid_email');
+        $this->form_validation->set_rules('mobile_number', 'Moblie Number', 'required|regex_match[/^[0-9]{10}$/]');
+        $this->form_validation->set_rules('appartment', 'Appartment', 'required');
+        $this->form_validation->set_rules('block', 'Block', 'required');
+        $this->form_validation->set_rules('flat_door_no', 'Flat/Door no', 'required');
         if ($this->form_validation->run() == FALSE){
           $data['categories'] = $this->Category_model->get_all_category();
           $user_id = $this->session->userdata('id');
@@ -104,17 +100,13 @@ class Billing extends CI_Controller
     if($this->session->userdata('logged_in') == TRUE){
       if ($id) {
         if($this->input->post()){
-          $this->form_validation->set_rules('first_name', 'First Name', 'required');
-          $this->form_validation->set_rules('last_name', 'Last Name', 'required');
-          $this->form_validation->set_rules('company_name', 'Company Name', 'required');
-          $this->form_validation->set_rules('email_address', 'Email Address', 'required');
-          $this->form_validation->set_rules('address', 'Address', 'required');
-          $this->form_validation->set_rules('city', 'City', 'required');
-          $this->form_validation->set_rules('state', 'State', 'required');
-          $this->form_validation->set_rules('zip', 'Zip/Postal Code', 'required');
-          $this->form_validation->set_rules('country', 'Country', 'required');
-          $this->form_validation->set_rules('telephone', 'Telephone', 'required');
-          $this->form_validation->set_rules('fax', 'Fax', 'required');
+          $this->form_validation->set_rules('first_name', 'First Name', 'required|callback_alpha_dash_space');
+          $this->form_validation->set_rules('last_name', 'Last Name', 'required|callback_alpha_dash_space');
+          $this->form_validation->set_rules('email_address', 'Email Address', 'required|valid_email');
+          $this->form_validation->set_rules('mobile_number', 'Moblie Number', 'required|regex_match[/^[0-9]{10}$/]');
+          $this->form_validation->set_rules('appartment', 'Appartment', 'required');
+          $this->form_validation->set_rules('block', 'Block', 'required');
+          $this->form_validation->set_rules('flat_door_no', 'Flat/Door no', 'required');
           if ($this->form_validation->run() == FALSE){
             $data['categories'] = $this->Category_model->get_all_category();
             $user_id = $this->session->userdata('id');
@@ -177,6 +169,15 @@ class Billing extends CI_Controller
       $this->session->set_flashdata('error','Please login to continue');
       redirect('home/login');
     }
+  }
+  //For validations
+  function alpha_dash_space($str){
+      if (! preg_match('/^[a-zA-Z\s]+$/', $str)) {
+          $this->form_validation->set_message('alpha_dash_space', 'The %s field may only contain alpha characters & White spaces');
+          return FALSE;
+      } else {
+          return TRUE;
+      }
   }
 
 }

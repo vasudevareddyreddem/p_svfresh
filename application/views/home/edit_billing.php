@@ -11,78 +11,51 @@
             <ul>
               <li class="row">
                 <div class="col-sm-6">
-                  <label for="first_name" class="required">First Name</label>
+                  <label for="first_name" class="required">First Name <span class="text-danger">*</span></label>
                   <input type="text" class="input form-control" name="first_name" id="first_name" value="<?php if (isset($billing->first_name)) { echo $billing->first_name; } ?>">
                   <?php echo form_error('first_name','<div class="text-danger">', '</div>'); ?>
                 </div>
                 <div class="col-sm-6">
-                  <label for="last_name" class="required">Last Name</label>
+                  <label for="last_name" class="required">Last Name <span class="text-danger">*</span></label>
                   <input type="text" name="last_name" class="input form-control" id="last_name" value="<?php if (isset($billing->last_name)) { echo $billing->last_name; } ?>">
                   <?php echo form_error('last_name','<div class="text-danger">', '</div>'); ?>
                 </div>
               </li>
               <li class="row">
                 <div class="col-sm-6">
-                  <label for="company_name">Company Name</label>
-                  <input type="text" name="company_name" class="input form-control" id="company_name" value="<?php if (isset($billing->company_name)) { echo $billing->company_name; } ?>">
-                  <?php echo form_error('company_name','<div class="text-danger">', '</div>'); ?>
-                </div><!--/ [col] -->
-                <div class="col-sm-6">
-                  <label for="email_address" class="required">Email Address</label>
+                  <label for="email_address" class="required">Email Address <span class="text-danger">*</span></label>
                   <input type="text" class="input form-control" name="email_address" id="email_address" value="<?php if (isset($billing->email_address)) { echo $billing->email_address; } ?>">
                   <?php echo form_error('email_address','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
+                <div class="col-sm-6">
+                  <label for="mobile_number" class="required">Mobile Number <span class="text-danger">*</span></label>
+                  <input class="input form-control" type="text" name="mobile_number" id="mobile_number" value="<?php if (isset($billing->mobile_number)) { echo $billing->mobile_number; } ?>">
+                  <?php echo form_error('mobile_number','<div class="text-danger">', '</div>'); ?>
+                </div><!--/ [col] -->
               </li><!--/ .row -->
               <li class="row">
-                <div class="col-xs-12">
-                  <label for="address" class="required">Address</label>
-                  <input type="text" class="input form-control" name="address" id="address" value="<?php if (isset($billing->address)) { echo $billing->address; } ?>">
-                  <?php echo form_error('address','<div class="text-danger">', '</div>'); ?>
+                <div class="col-xs-4">
+                  <label for="address" class="required">Appartment <span class="text-danger">*</span></label>
+                  <select class="input form-control" name="appartment">
+                    <option value="">--Select Appartment--</option>
+                    <option value="1" <?php echo (isset($billing->appartment) && ($billing->appartment == 1)) ? 'selected' : ''; ?>>1</option>
+                  </select>
+                  <?php echo form_error('appartment','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
+                <div class="col-xs-4">
+                  <label for="address" class="required">Block <span class="text-danger">*</span></label>
+                  <select class="input form-control" name="block">
+                    <option value="">--Select Block--</option>
+                    <option value="1" <?php echo (isset($billing->block) && ($billing->block == 1)) ? 'selected' : ''; ?>>A</option>
+                  </select>
+                  <?php echo form_error('block','<div class="text-danger">', '</div>'); ?>
+                </div>
+                <div class="col-xs-4">
+                  <label for="address" class="required">Flat/Door no <span class="text-danger">*</span></label>
+                  <input type="text" class="input form-control" name="flat_door_no" id="address" value="<?php echo (isset($billing->flat_door_no)) ? $billing->flat_door_no : ''; ?>">
+                  <?php echo form_error('flat_door_no','<div class="text-danger">', '</div>'); ?>
+                </div>
               </li><!-- / .row -->
-              <li class="row">
-                <div class="col-sm-6">
-                  <label for="city" class="required">City</label>
-                  <input class="input form-control" type="text" name="city" id="city" value="<?php if (isset($billing->city)) { echo $billing->city; } ?>">
-                  <?php echo form_error('city','<div class="text-danger">', '</div>'); ?>
-                </div><!--/ [col] -->
-                <div class="col-sm-6">
-                  <label class="required">State/Province</label>
-                  <select class="input form-control" name="state">
-                    <option value="">--Select State--</option>
-                    <option value="Telangana" <?php if (isset($billing->state) && ($billing->state == "Telangana")) { echo 'selected'; } else { echo ''; } ?>>Telangana</option>
-                  </select>
-                  <?php echo form_error('state','<div class="text-danger">', '</div>'); ?>
-                </div><!--/ [col] -->
-              </li><!--/ .row -->
-              <li class="row">
-                <div class="col-sm-6">
-                  <label for="postal_code" class="required">Zip/Postal Code</label>
-                  <input class="input form-control" type="text" name="zip" id="postal_code" value="<?php if (isset($billing->zip)) { echo $billing->zip; } ?>">
-                  <?php echo form_error('zip','<div class="text-danger">', '</div>'); ?>
-                </div><!--/ [col] -->
-                <div  class="col-sm-6">
-                  <label class="required">Country</label>
-                  <select class="input form-control" name="country">
-                    <option value="">--Select Country--</option>
-                    <option value="India" <?php if (isset($billing->country) && ($billing->country == "India")) { echo 'selected'; } else { echo '';
-                    } ?>>India</option>
-                  </select>
-                  <?php echo form_error('country','<div class="text-danger">', '</div>'); ?>
-                </div><!--/ [col] -->
-              </li><!--/ .row -->
-              <li class="row">
-                <div class="col-sm-6">
-                  <label for="telephone" class="required">Telephone</label>
-                  <input class="input form-control" type="text" name="telephone" id="telephone" value="<?php if (isset($billing->telephone)) { echo $billing->telephone; } ?>">
-                  <?php echo form_error('telephone','<div class="text-danger">', '</div>'); ?>
-                </div><!--/ [col] -->
-                <div class="col-sm-6">
-                  <label for="fax">Fax</label>
-                  <input class="input form-control" type="text" name="fax" id="fax" value="<?php if (isset($billing->fax)) { echo $billing->fax; } ?>">
-                  <?php echo form_error('fax','<div class="text-danger">', '</div>'); ?>
-                </div><!--/ [col] -->
-              </li><!--/ .row -->
             </ul>
           </div>
           <br>

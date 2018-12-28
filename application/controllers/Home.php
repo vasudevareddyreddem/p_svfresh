@@ -96,8 +96,8 @@ class Home extends CI_controller
   public function profile(){
     if ($this->session->userdata('logged_in') == TRUE) {
       if($this->input->post()){
-        $this->form_validation->set_rules('email_id', 'Email id', 'required|callback_is_unique_email');
-        $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|callback_is_unique_phone_number');
+        $this->form_validation->set_rules('email_id', 'Email id', 'required|valid_email|callback_is_unique_email');
+        $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|regex_match[/^[0-9]{10}$/]|callback_is_unique_phone_number');
         $this->form_validation->set_rules('user_name', 'User Name', 'required|callback_is_unique_username');
         if($this->form_validation->run() == FALSE){
           $data['pageTitle'] = 'Profile';

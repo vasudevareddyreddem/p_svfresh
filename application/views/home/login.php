@@ -26,13 +26,13 @@
                       <div class="well">
                           <form id="loginForm" method="POST" action="<?php echo base_url('home/login'); ?>" novalidate="novalidate">
                               <div class="form-group">
-                                  <label for="username" class="control-label">Phone number</label>
+                                  <label for="username" class="control-label">Phone number <span class="text-danger">*</span></label>
                                   <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo set_value('phone_number'); ?>" required="" placeholder="Enter phone number">
                                   <?php echo form_error('phone_number','<div class="text-danger">', '</div>'); ?>
                                   <span class="help-block"></span>
                               </div>
                               <div class="form-group">
-                                  <label for="password" class="control-label">Password</label>
+                                  <label for="password" class="control-label">Password <span class="text-danger">*</span></label>
                                   <input type="password" class="form-control" id="password" name="password" value="<?php echo set_value('phone_number'); ?>" required="" placeholder="Enter password">
                                   <?php echo form_error('password','<div class="text-danger">', '</div>'); ?>
                                   <span class="help-block"></span>

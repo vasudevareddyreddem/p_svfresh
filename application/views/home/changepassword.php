@@ -24,12 +24,12 @@
                     <?php endif; ?>
                     <form id="loginForm" method="POST" action="<?php echo base_url('/home/cpassword'); ?>" novalidate="novalidate">
                       <div class="form-group">
-                        <label for="username" class="control-label">New Password</label>
+                        <label for="username" class="control-label">New Password <span class="text-danger">*</span></label>
                         <input type="password" class="form-control"  name="password" value="" placeholder="New Password">
                         <?php echo form_error('password','<div class="text-danger">', '</div>'); ?>
                       </div>
                       <div class="form-group">
-                        <label for="username" class="control-label">Confirm Password</label>
+                        <label for="username" class="control-label">Confirm Password <span class="text-danger">*</span></label>
                         <input type="password" class="form-control"  name="confirm_password" value="" required="" placeholder="Confirm Password">
                         <?php echo form_error('confirm_password','<div class="text-danger">', '</div>'); ?>
                       </div>
