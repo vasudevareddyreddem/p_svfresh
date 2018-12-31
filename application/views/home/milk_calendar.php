@@ -28,7 +28,7 @@
 								<div class="col-md-3">
 									<select class="form-control months">
 										<?php for ($i = 1; $i <= 12; $i++) { ?>
-											<option value="<?php echo date('n',mktime(0,0,0,$i,1)); ?>" <?php echo (date('n') == date('n',mktime(0,0,0,$i,1))) ? 'selected' : ''; ?>><?php echo date('F',mktime(0,0,0,$i,1)); ?></option>
+											<option value="<?php echo date('n',mktime(0,0,0,$i,1)); ?>" <?php echo (date('n',strtotime('+1day')) == date('n',mktime(0,0,0,$i,date("j",strtotime('+1day'))))) ? 'selected' : ''; ?>><?php echo date('F',mktime(0,0,0,$i,1)); ?></option>
 										<?php } ?>
 									</select>
 									<input type="hidden" name="product_id" id="product_id" value="<?php echo $product_id; ?>">
