@@ -34,7 +34,7 @@ class Calender_Model extends CI_Model
     return $this->db->update($this->table,$post_data);
   }
 
-  public function get_all_calender_items_by_user_id_and_month($user_id='',$month='')
+  public function get_all_calender_items_by_user_id_and_month($user_id='',$month='',$year='',$product_id='')
   {
     $this->db->select('p.product_name AS product_name,c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price');
     $this->db->from('calender_tab AS c');
@@ -42,6 +42,8 @@ class Calender_Model extends CI_Model
     $this->db->where('p.status','1');
     $this->db->where('c.user_id',$user_id);
     $this->db->where('c.month',$month);
+    $this->db->where('c.year',$year);
+    $this->db->where('c.product_id',$product_id);
     $this->db->order_by('c.created_date','desc');
     return $this->db->get()->result();
   }

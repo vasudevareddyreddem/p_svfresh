@@ -48,7 +48,7 @@ class Milkcalender extends CI_Controller
     $c_year = date('Y');
     $product_id = $this->input->post('product_id');
     $days = cal_days_in_month(CAL_GREGORIAN,$month,$c_year);
-    $current_month = date('n');
+    $current_month = date('n',strtotime('+1day'));
     $current_day = date('j',strtotime('+1day'));
     if($current_month == $month){
       for($d = $current_day;$d <= $days; $d++){
@@ -62,7 +62,7 @@ class Milkcalender extends CI_Controller
     $data['days'] = array_chunk($days_array,5);
     $data['month'] = $month;
     $year = '';
-    $current_month_year = date('Y-m');
+    $current_month_year = date('Y-m',strtotime('+1day'));
     $selected_month_year = date('Y-m',mktime(0,0,0,$month,1));
     if ($current_month_year > $selected_month_year) {
       $year .= date('Y', strtotime('+1 years'));
@@ -74,7 +74,7 @@ class Milkcalender extends CI_Controller
     $data['product_price'] = $this->Product_model->get_product_price_by_product_id($product_id);
     $user_id = $this->session->userdata('id');
     $data['user_id'] = $user_id;
-    $data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id_and_month($user_id,$month);
+    $data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id_and_month($user_id,$month,$year,$product_id);
     $return['calender_template'] = $this->load->view('home/calender_template',$data,TRUE);
     echo json_encode($return);
   }
