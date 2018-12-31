@@ -60,23 +60,29 @@
 
                                         <div class="form-group">
                                             <label>Flat Address</label>
-                                            <input id="flat" type="text" class="form-control" name="flat">
+                                            <input id="flat" type="text" class="form-control"
+                                                   value="<?php echo $lis->flat_door_no; ?>" name="flat">
+
                                         </div>
                                         <div class="form-group">
                                             <label>First Name</label>
-                                            <input id="fname" type="text" class="form-control" name="fname">
+                                            <input id="fname" type="text" class="form-control" name="fname"
+                                            value="<?php echo $lis->first_name; ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Last Name</label>
-                                            <input id="lname" type="text" class="form-control" name="lname">
+                                            <input id="lname" type="text" class="form-control" name="lname"
+                                                   value="<?php echo $lis->last_name; ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Email Address</label>
-                                            <input id="email" type="text" class="form-control" name="email">
+                                            <input id="email" type="text" class="form-control" name="email"
+                                                   value="<?php echo $lis->email_address; ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Mobile Number</label>
-                                            <input id="mob" type="text" class="form-control" name="mob">
+                                            <input id="mob" type="text" class="form-control" name="mob"
+                                                   value="<?php echo $lis->mobile_number; ?>">
                                         </div>
 
 

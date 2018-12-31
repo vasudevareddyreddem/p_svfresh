@@ -249,7 +249,7 @@ class Mobile_model extends CI_Model
 	}
 	public function user_email_checking($email){
 		
-		$this->db->select('*')->from('users_tab')->where('status','active')->
+		$this->db->select('*')->from('users_tab')->where('status','Active')->
 		where('email_id',$email);
 		$res=$this->db->get()->result();
 		if(count($res)>0)

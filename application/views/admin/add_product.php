@@ -455,6 +455,6 @@ $('#a_price').on('keyup',function(){
 	<script>
 	$('#n_price').on('click',function(){
 		ff=$('#rel_products').val();
-		alert(ff);
+
 	});
 	</script>

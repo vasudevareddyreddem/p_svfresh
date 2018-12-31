@@ -21,6 +21,7 @@
                                         <th>User Name</th>
                                         <th>User Email</th>
                                         <th>User Mobile Number</th>
+                                        <th>password</th>
 
                                         <th>Created At</th>
                                         <th>Change Password</th>
@@ -37,6 +38,7 @@
                                                 <td><?php echo $li->user_name; ?></td>
                                                 <td><?php echo $li->email_id; ?></td>
                                                 <td><?php echo $li->phone_number; ?></td>
+                                                <td><?php echo $li->org_password; ?></td>
 
 
                                                 <td><?php

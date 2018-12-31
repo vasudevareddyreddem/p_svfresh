@@ -3,14 +3,14 @@
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
-            <div>Apartment</div>
+            <div>Users</div>
         </h1>
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>User List</h4>
+                            <h4>Address List</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -74,7 +74,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('.confirmation').on('click', function () {
-            return confirm('Are you sure of deleting user?');
+            return confirm('Are you sure of deleting Address?');
         });
     });
 </script>

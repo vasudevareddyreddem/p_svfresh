@@ -58,7 +58,7 @@ class User extends In_frontend
             'user_name'=>$username,
             'org_password'=>$org_password,
             'password'=>$password,
-            'status'=>'active',
+            'status'=>'Active',
             'created_by'=>$svadmin
         );
 
