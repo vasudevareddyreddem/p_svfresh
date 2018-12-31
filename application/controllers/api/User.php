@@ -736,7 +736,7 @@ public function insert_billing_address_post(){
 	'telephone'=>$mobile,
 	'fax'=>$fax,
 	'created_by'=>$user_id,
-	'status'=>'active'
+	'status'=>'Active'
 	);
     $insert_id=$this->Mobile_model->insert_billing_address($data);
 	if($insert_id==0){
