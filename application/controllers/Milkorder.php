@@ -152,12 +152,14 @@ class Milkorder extends In_frontend{
   {
     if ($this->session->userdata('svadmin_det')) {
       $apartment_id = $this->input->post('apartment_id');
+			$block = $this->input->post('block');
       if ($apartment_id) {
         $blocks = $this->Apartment_model->get_blocks_by_apartment_id($apartment_id);
         if(count($blocks) > 0){
           $result = '<option value="">--Select Block--</option>';
           foreach ($blocks as $b) {
-            $result .= '<option value='.$b->block_id.'>'.$b->block_name.'</option>';
+						$selected = (isset($block) && ($block == $b->block_id)) ? "selected":"";
+            $result .= '<option value='.$b->block_id.' '.$selected.'>'.$b->block_name.'</option>';
           }
           echo $result;exit();
         } else {

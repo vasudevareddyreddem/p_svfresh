@@ -161,4 +161,3 @@ class Apartment_model extends CI_Model
       return $this->db->get_where('block_tab',array('apartment_id' => $apartment_id,'status' => '1'))->result();
     }
 }
-
