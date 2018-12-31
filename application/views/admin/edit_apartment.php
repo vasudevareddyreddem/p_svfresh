@@ -42,7 +42,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#add_category').bootstrapValidator({
+        $('#edit_apartment').bootstrapValidator({
 
             fields: {
                 apartment_name: {

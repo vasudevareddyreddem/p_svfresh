@@ -52,18 +52,23 @@
         $('#add_user').bootstrapValidator({
 
             fields: {
-                uname: {
+                opassword: {
                     validators: {
                         notEmpty: {
-                            message: 'Name is required'
+                            message: 'Old password is required'
                         }
 
                     }
                 },
-                phone: {
+                npassword: {
                     validators: {
                         notEmpty: {
-                            message: 'Phone Number is required'
+                            message: 'New Password is required'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'Password must be more than 6 and less than 30 characters long'
                         }
 
                     }
