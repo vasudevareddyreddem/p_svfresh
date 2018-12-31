@@ -156,7 +156,9 @@
                                     <h5 class="product-name"><a href="#"><?php echo $p->product_name; ?></a></h5>
                                     <div class="content_price">
                                       <span class="price product-price">₹ <?php echo $p->net_price; ?></span>
-                                      <span class="price old-price"> ₹ <?php echo $p->actual_price; ?></span>
+                                      <?php if ($p->net_price != $p->actual_price) { ?>
+                                        <span class="price old-price"> ₹ <?php echo $p->actual_price; ?></span>
+                                      <?php } ?>
                                     </div>
                                     <div class="product-star">
                                       <?php if (count($rating) > 0) { ?>

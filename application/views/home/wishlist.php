@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-md-9">
                       <h3 class="text-success"><?php echo $w->product_name; ?></h3>
-                      <div class="h4">₹ <?php echo $w->net_price; ?> &nbsp; <span  style="text-decoration: line-through;color:#aaa">₹ <?php echo $w->discount_price; ?></span></div>
+                      <div class="h4">₹ <?php echo $w->net_price; ?> &nbsp; <?php if ($w->discount_price) { ?><span  style="text-decoration: line-through;color:#aaa">₹ <?php echo $w->discount_price; ?></span><?php } ?></div>
                     </div>
                     <div class="col-md-1">
                       <a href="#" class="btn-add-cart addtocart_w" data-id="<?php echo $w->id; ?>" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $w->product_id; ?>" data-product_img="<?php echo $w->product_img; ?>" data-product_name="<?php echo $w->product_name; ?>" data-net_price="<?php echo $w->net_price; ?>" data-quantity="1">Add to cart</a>
