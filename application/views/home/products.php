@@ -32,15 +32,15 @@
               <span class="page-heading-title"><?php echo ucwords($sub_category->subcat_name); ?></span>
             </h2>
             <ul class="display-product-option">
-              <li class="view-as-grid selected">
+              <li class="view-as-grid">
                 <span>grid</span>
               </li>
-              <li class="view-as-list">
+              <li class="view-as-list selected">
                 <span>list</span>
               </li>
             </ul>
             <!-- PRODUCT LIST -->
-            <ul class="row product-list grid">
+            <ul class="row product-list list">
               <?php //print_r($category_name->cat_name); ?>
               <?php if(count($product) > 0){ ?>
                 <?php foreach ($product as $p) { ?>
@@ -76,7 +76,7 @@
                         </div>
                       </div>
                       <div class="right-block">
-                        <h5 class="product-name"><a href="#"><?php echo $p->product_name;  ?></a></h5>
+                        <h5 class="product-name"><a href="<?php echo base_url('product/'.$p->product_id); ?>"><?php echo $p->product_name;  ?></a></h5>
                         <div class="product-star">
                           <?php if (count($rating) > 0) { ?>
                             <?php foreach ($rating as $r) { ?>
@@ -96,7 +96,9 @@
                         </div>
                         <div class="content_price">
                           <span class="price product-price">₹ <?php echo $p->net_price; ?></span>
-                          <span class="price old-price">₹ <?php echo $p->actual_price; ?></span>
+                          <?php if($p->net_price != $p->actual_price){ ?>
+                            <span class="price old-price">₹ <?php echo $p->actual_price; ?></span>
+                          <?php } ?>
                         </div>
                         <div class="info-orther">
                           <!-- <p>Item Code: #453217907</p> -->
