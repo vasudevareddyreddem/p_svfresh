@@ -66,7 +66,7 @@ class User extends REST_Controller {
 		'user_name'=>$username,
 		'org_password'=>$org_password,
 		'password'=>$password,
-		'status'=>'active'
+		'status'=>'Active'
 		);
 		
 		$status=$this->Mobile_model->insert_user_reg($data);
