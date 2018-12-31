@@ -133,7 +133,9 @@
                         </div>
                         <div class="product-price-group">
                           <span class="price">₹ <?php if (isset($product->net_price)) {echo $product->net_price;} ?></span>
-                          <span class="old-price">₹ <?php if (isset($product->actual_price)) { echo $product->actual_price; } ?></span>
+                          <?php if ((isset($product->net_price) && isset($product->actual_price)) && ($product->net_price != $product->actual_price)) { ?>
+                            <span class="old-price">₹ <?php if (isset($product->actual_price)) { echo $product->actual_price; } ?></span>
+                          <?php } ?>
                           <span class="discount"><?php if (isset($product->discount_percentage)) { echo $product->discount_percentage.' %'; } ?></span>
                         </div>
                         <div class="info-orther">
