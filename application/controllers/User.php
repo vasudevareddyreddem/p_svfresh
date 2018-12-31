@@ -317,13 +317,77 @@ class User extends In_frontend
         echo json_encode($data);exit;
 
     }
-    public function save_address(){
-        $aname=$this->input->post('aname');
-        $bname=$this->input->post('bname');
-        $mobile=$this->input->post('mobile');
-        $this->Adminuser_model->get_user_id($mobile);
+    public function save_address()
+    {
+        if ($this->session->userdata('svadmin_det')) {
+            $admin = $this->session->userdata('svadmin_det');
+            $svadmin = $admin['admin_id'];
+            $aname = base64_decode($this->input->post('aname'));
+            $bname = $this->input->post('bname');
+            $mobile = $this->input->post('mobile');
+            $fname=$this->input->post('fname');
+            $lname = $this->input->post('lname');
+              $email = $this->input->post('email');
+                $phone = $this->input->post('mob');
+                $flat= $this->input->post('flat');
+
+            $user = $this->Adminuser_model->get_user_id($mobile);
+            if (count($user) > 0) {
+                $user_id = $user->id;
+
+            } else {
+                $this->session->set_flashdata('error', 'Phone Number Deleted by another session');
+                redirect($_SERVER['HTTP_REFERER']);
+
+            }
+            $date = date('Y-m-d H:i:s');
+            $data = array('user_id' => $user_id,
+                'appartment' => $aname,
+                'block' => $bname,
+                'created_date' => $date,
+                'created_by_admin'=>$svadmin,
+                'first_name'=>$fname,
+                'last_name'=>$lname,
+                'email_address'=>$email,
+                 'mobile_number'=>$phone,
+                'status'=>'Active',
+                'flat_door_no'=>$flat
+            );
+          $flag= $this->Adminuser_model->save_blling_address($data);
+          if($flag==1){
+              $this->session->set_flashdata('success', 'Address Added Successfully');
+              redirect('user/address_list');
+
+          }
+          else{
+              $this->session->set_flashdata('error', 'Address Not Added ');
+              redirect($_SERVER['HTTP_REFERER']);
+
+          }
+        }
+        else{redirect('login');}
 
     }
+    public function address_list(){
+        if ($this->session->userdata('svadmin_det')) {
+
+            $res=$this->Adminuser_model->get_address_list();
+            if(count($res)>0){
+                $data['alist']=$res;
+            $data['status']=1;
+
+            }
+            else{
+                $data['status']=0;
+            }
+            $this->load->view('admin/address_list',$data);
+            $this->load->view('admin/footer');
+
+        }
+        else{redirect('login');}
+
+    }
+
 
 
 

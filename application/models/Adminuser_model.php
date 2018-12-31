@@ -116,6 +116,23 @@ class Adminuser_model extends CI_Model
         return $this->db->get()->result();
     }
     public function get_user_id($mobile){
+        $this->db->select('*')->from('users_tab')->where('phone_number',$mobile);
+
+       return  $this->db->get()->row();
+
+
+    }
+    public function save_blling_address($data){
+        $this->db->insert('billing_tab',$data);
+        return $this->db->affected_rows()?1:0;
+
+    }
+    public function get_address_list(){
+        $this->db->select('b.*,a.user_name,a.phone_number,a.email_id,ap.apartment_name,bl.block_name')->from('users_tab a')->
+            join('billing_tab b','a.id=b.user_id','left')->
+        join('apartment_tab ap','ap.apartment_id=b.appartment','left')->join('block_tab bl','bl.block_id=b.block','left')
+            ->where('b.status !=','Deleted')->order_by('b.updated_date','desc');
+        return $this->db->get()->result();
 
 
     }

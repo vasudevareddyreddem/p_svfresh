@@ -51,6 +51,28 @@
                                             </select>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>Flat Address</label>
+                                            <input id="flat" type="text" class="form-control" name="flat">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input id="fname" type="text" class="form-control" name="fname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input id="lname" type="text" class="form-control" name="lname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email Address</label>
+                                            <input id="email" type="text" class="form-control" name="email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Mobile Number</label>
+                                            <input id="mob" type="text" class="form-control" name="mob">
+                                        </div>
+
+
                                         <button type="submit" class="btn btn-primary">
                                             Add
                                         </button>
@@ -99,8 +121,32 @@
 
 
                     }
-                }
+                },
 
+                flat: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Flat Name is required'
+                        }
+
+
+                    }
+                },
+                mob: {
+                    validators: {
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: 'The username can only have numbers'
+                        },
+                        stringLength: {
+                            min: 10,
+                            max: 10,
+                            message: 'Mobile Number Must  be Ten digit Number'
+                        }
+
+
+                    }
+                }
 
             }
         })
