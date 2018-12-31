@@ -184,7 +184,7 @@
 		}).trigger('change');
 
 		$('#datepicker').datepicker({
-			format: 'dd/mm/yyyy'
+			format: 'd/m/yyyy'
 		});
 	});
 </script>
