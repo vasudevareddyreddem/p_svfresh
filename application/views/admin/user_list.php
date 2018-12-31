@@ -48,7 +48,7 @@
                                                     } ?></td>
                                                 <td>
 
-                                                        <div class="badge badge-danger"><a href="<?php
+                                                        <div class="badge badge-success"><a href="<?php
                                                             echo base_url('user/change_password/').base64_encode($li->id);?>">Change Password</a></div>
 
                                                 </td>
