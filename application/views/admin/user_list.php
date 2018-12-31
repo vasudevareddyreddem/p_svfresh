@@ -50,16 +50,16 @@
                                                     } ?></td>
                                                 <td>
 
-                                                        <div class="badge badge-success"><a href="<?php
+                                                        <div class="badge badge-success"><a class='text-white' href="<?php
                                                             echo base_url('user/change_password/').base64_encode($li->id);?>">Change Password</a></div>
 
                                                 </td>
                                                 <td>
                                                     <?php if($li->status=='Active'){?>
-                                                        <div class="badge badge-success"><a href="<?php
+                                                        <div class="badge badge-success"><a class='text-white' href="<?php
                                                             echo base_url('user/inactive_user/').base64_encode($li->id);?>">Active</a></div>
                                                     <?php }else{?>
-                                                        <div class="badge badge-danger"><a href="<?php
+                                                        <div class="badge badge-danger"><a class='text-white'  href="<?php
                                                             echo base_url('user/active_user/').base64_encode($li->id);?>">InActive</a></div>
                                                     <?php }?>
 

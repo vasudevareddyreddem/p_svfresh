@@ -48,10 +48,10 @@
 											}?></td>
                                             <td>
 											<?php if($subcat->status==1){?>
-										        <div class="badge badge-success"><a href="<?php 
+										        <div class="badge badge-success"><a  class='text-white' href="<?php
 												echo base_url('category/inactive_subcategory/').base64_encode($subcat->subcat_id);?>">Active</a></div>
 											<?php }else{?>
-											<div class="badge badge-danger"><a href="<?php 
+											<div class="badge badge-danger"><a  class='text-white' href="<?php
 												echo base_url('category/active_subcategory/').base64_encode($subcat->subcat_id);?>">InActive</a></div>
 											<?php }?>
                                             </td>

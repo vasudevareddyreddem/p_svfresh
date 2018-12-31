@@ -61,28 +61,28 @@
                                         <div class="form-group">
                                             <label>Flat Address</label>
                                             <input id="flat" type="text" class="form-control"
-                                                   value="<?php echo $lis->flat_door_no; ?>" name="flat">
+                                                   value="<?php echo $address->flat_door_no; ?>" name="flat">
 
                                         </div>
                                         <div class="form-group">
                                             <label>First Name</label>
                                             <input id="fname" type="text" class="form-control" name="fname"
-                                            value="<?php echo $lis->first_name; ?>">
+                                            value="<?php echo $address->first_name; ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Last Name</label>
                                             <input id="lname" type="text" class="form-control" name="lname"
-                                                   value="<?php echo $lis->last_name; ?>">
+                                                   value="<?php echo $address->last_name; ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Email Address</label>
                                             <input id="email" type="text" class="form-control" name="email"
-                                                   value="<?php echo $lis->email_address; ?>">
+                                                   value="<?php echo $address->email_address; ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Mobile Number</label>
                                             <input id="mob" type="text" class="form-control" name="mob"
-                                                   value="<?php echo $lis->mobile_number; ?>">
+                                                   value="<?php echo $address->mobile_number; ?>">
                                         </div>
 
 

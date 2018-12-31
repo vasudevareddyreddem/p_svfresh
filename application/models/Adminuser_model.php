@@ -133,7 +133,7 @@ class Adminuser_model extends CI_Model
         join('apartment_tab ap','ap.apartment_id=b.appartment','left')->join('block_tab bl','bl.block_id=b.block','left')
             ->where('b.status !=','Deleted')
             ->where('a.status !=','Deleted')->where('a.created_by is NOT NULL', NULL, FALSE)->
-            order_by('b.updated_date_by_admin,a.id','desc');
+          order_by('a.id')->order_by('b.updated_date_by_admin','desc');
         return $this->db->get()->result();
 
 

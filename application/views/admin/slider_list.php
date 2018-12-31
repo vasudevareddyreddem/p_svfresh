@@ -40,10 +40,10 @@
 											?></td>
                                             <td>
 											<?php if($slider->status==1){?>
-										        <div class="badge badge-success"><a href="<?php 
+										        <div class="badge badge-success"><a  class='text-white' href="<?php
 												echo base_url('slider/inactive_slider/').base64_encode($slider->slider_id);?>">Active</a></div>
 											<?php }if($slider->status==2){?>
-											<div class="badge badge-danger"><a href="<?php 
+											<div class="badge badge-danger"><a  class='text-white' href="<?php
 												echo base_url('slider/active_slider/').base64_encode($slider->slider_id);?>">InActive</a></div>
 											<?php }?>
                                             </td>

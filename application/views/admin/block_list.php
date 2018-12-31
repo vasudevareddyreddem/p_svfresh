@@ -45,10 +45,10 @@
                                                     } ?></td>
                                                 <td>
                                                     <?php if($li->status==1){?>
-                                                        <div class="badge badge-success"><a href="<?php
+                                                        <div class="badge badge-success"><a class='text-white' href="<?php
                                                             echo base_url('apartment/inactive_block/').base64_encode($li->block_id);?>">Active</a></div>
                                                     <?php }else{?>
-                                                        <div class="badge badge-danger"><a href="<?php
+                                                        <div class="badge badge-danger"><a class='text-white' href="<?php
                                                             echo base_url('apartment/active_block/').base64_encode($li->block_id);?>">InActive</a></div>
                                                     <?php }?>
 
