@@ -292,7 +292,7 @@ class User extends In_frontend
     public function add_address(){
         if ($this->session->userdata('svadmin_det')) {
              $data['phone_list']=$this->Adminuser_model->get_user_list();
-           $data['ap_list']=$this->Apartment_mode->get_all_apartments();
+           $data['ap_list']=$this->Apartment_model->get_all_apartments();
             $this->load->view('admin/add_address',$data);
             $this->load->view('admin/footer');
 
@@ -302,6 +302,28 @@ class User extends In_frontend
 
     }
 
+    public function get_blocks_by_apt(){
+
+        $apt_id= base64_decode($this->uri->segment(3));
+        //echo $apt_id;exit;
+        $res=$this->Adminuser_model->get_blocks_by_apt($apt_id);
+        if(count($res)>0){
+            $data['status']=1;
+            $data['block_list']=$res;
+        }
+        else{
+            $data['status']=0;
+        }
+        echo json_encode($data);exit;
+
+    }
+    public function save_address(){
+        $aname=$this->input->post('aname');
+        $bname=$this->input->post('bname');
+        $mobile=$this->input->post('mobile');
+        $this->Adminuser_model->get_user_id($mobile);
+
+    }
 
 
 

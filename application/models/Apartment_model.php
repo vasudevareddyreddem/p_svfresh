@@ -79,7 +79,7 @@ class Apartment_model extends CI_Model
 
     }
     public function check_block_name($name,$apt_id){
-        $this->db->select('1')->from('block_tab')->where('block_name',$name)->
+        $this->db->select('1')->from('block_tab')->where('block_name',$name)
         ->where('aprartment_id',$apt_id)->where('status !=',0);
         return $this->db->get()->result();
     }
@@ -104,8 +104,8 @@ class Apartment_model extends CI_Model
         $this->db->select('*');
         $this->db->from('block_tab');
 
-        $this->db->where('apartment_id!=',$aid);
-        $this->db->where('block_name!=',$bname);
+        $this->db->where('apartment_id=',$aid);
+        $this->db->where('block_name=',$bname);
         $this->db->where('block_id!=',$bid);
         $this->db->where('status !=',0);
 

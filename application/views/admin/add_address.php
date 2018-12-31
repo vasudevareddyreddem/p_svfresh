@@ -19,7 +19,7 @@
                                     <form method="post" id="add_user" action="<?php echo base_url('user/save_address');?>"  enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label>User Phone numbers</label>
-                                            <select class="form-control" name="aname">
+                                            <select  id="mobile" class="form-control" name="mobile">
                                                 <option disabled selected>Select</option>
                                                 <?php foreach($phone_list as $lis){?>
                                                     <option value="<?php echo $lis->phone_number;?>">
@@ -30,9 +30,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Apartments</label>
-                                            <select class="form-control" name="aname">
+                                            <select  id="aname" class="form-control" name="aname" onchange="get_blocks(this.value)">
                                                 <option disabled selected>Select</option>
-                                                <?php foreach($list as $lis){?>
+                                                <?php foreach($ap_list as $lis){?>
                                                     <option value="<?php echo base64_encode($lis->apartment_id);?>">
                                                         <?php echo $lis->apartment_name;?></option>
                                                 <?php }?>
@@ -41,7 +41,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Blocks</label>
-                                            <select class="form-control" name="aname">
+                                            <select id="bname" class="form-control" name="bname">
                                                 <option disabled selected>Select</option>
                                                 <?php foreach($list as $lis){?>
                                                     <option value="<?php echo base64_encode($lis->apartment_id);?>">
@@ -74,52 +74,80 @@
         $('#add_user').bootstrapValidator({
 
             fields: {
-                uname: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Name is required'
-                        }
-
-                    }
-                },
-                phone: {
+                mobile: {
                     validators: {
                         notEmpty: {
                             message: 'Phone Number is required'
-                        },
-                        regexp: {
-                            regexp: /^[0-9]+$/,
-                            message: 'The username can only have numbers'
                         }
 
                     }
                 },
-                email: {
+                aname: {
                     validators: {
                         notEmpty: {
-                            message: 'Email is required'
+                            message: 'Apartment Name is required'
                         }
 
 
                     }
                 },
-                password: {
+                bname: {
                     validators: {
                         notEmpty: {
-                            message: 'Password is required'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 30,
-                            message: 'Password must be more than 6 and less than 30 characters long'
+                            message: 'Block Name is required'
                         }
+
 
                     }
                 }
+
 
             }
         })
 
     });
+
+</script>
+<script>
+    function get_blocks(value){
+        $('#bname').empty();
+        sel='<option value="">select</option>';
+        $('#bname').append(sel);
+
+        $.ajax({
+            type: "GET",
+            url: '<?php echo base_url('user/get_blocks_by_apt/'); ?>'+value,
+            data: '',
+            dataType: "json",
+
+            success: function (result) {
+
+
+                if(result.status==1){
+                    $.each(result.block_list, function(i, block) {
+                        temp='<option value="'+block.block_id+'">'+block.block_name+'</option>';
+
+                        $('#bname').append(temp);
+
+
+                    });
+                }
+                else{
+                    temp='<option value="">NO Blocks Available</option>';
+
+                    $('#bname').append(temp);
+
+                }
+
+
+            }
+            ,
+            error: function() {
+                //alert('error from server side');
+
+            }
+        });
+    }
+
 
 </script>

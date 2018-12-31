@@ -110,5 +110,14 @@ class Adminuser_model extends CI_Model
         return $this->db->affected_rows()?1:0;
 
     }
+    public function get_blocks_by_apt($apt_id){
+        $this->db->select('block_id,block_name')->from('block_tab')->where('apartment_id',$apt_id)->
+        where('status !=',0);
+        return $this->db->get()->result();
+    }
+    public function get_user_id($mobile){
+
+
+    }
 
 }
