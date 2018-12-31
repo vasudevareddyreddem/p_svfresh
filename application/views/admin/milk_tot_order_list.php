@@ -54,17 +54,17 @@
 									<thead>
 										<tr>
 
-											<th>Product Name</th>
-											<th>Quantity</th>
-											<th>Price</th>
-											<th>Customer Name</th>
-											<th>Mobile Number</th>
 											<th>Apartment</th>
 											<th>Block</th>
 											<th>Flat/Door number</th>
+											<th>Product Name</th>
+											<th>Quantity</th>
+											<th>Price</th>
+											<th>Delivery Date</th>
+											<th>Customer Name</th>
+											<th>Mobile Number</th>
 											<th>Payment Type</th>
 											<th>Status</th>
-											<th>Delivery Date</th>
 											<th>Ordered/Delivered/Cancelled Date & Time</th>
 										</tr>
 									</thead>
@@ -73,14 +73,15 @@
 											foreach($tot_list as $order){?>
 												<tr>
 
-													<td><?php echo $order->product_name; ?></td>
-													<td><?php echo $order->quantity; ?> </td>
-													<td><?php echo $order->price; ?></td>
-													<td><?php echo $order->email_id; ?></td>
-													<td><?php echo $order->phone_number; ?></td>
 													<td><?php echo $order->apartment_name; ?></td>
 													<td><?php echo $order->block_name; ?></td>
 													<td><?php echo $order->flat_door_no; ?></td>
+													<td><?php echo $order->product_name; ?></td>
+													<td><?php echo $order->quantity; ?> </td>
+													<td><?php echo $order->price; ?></td>
+													<td><?php echo $order->date.'-'.$order->month.'-'.$order->year; ?></td>
+													<td><?php echo $order->email_id; ?></td>
+													<td><?php echo $order->phone_number; ?></td>
 													<td><?php if($order->payment_type==1){
 														echo 'online payment';
 													}
@@ -99,9 +100,6 @@
 															if($order->delivery_status==2)
 															{echo 'Pending';}
 															?></div>
-														</td>
-														<td>
-															<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
 														</td>
 														<td><?php if($order->delivery_status==1)
 														{
