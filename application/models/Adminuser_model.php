@@ -10,7 +10,7 @@ class Adminuser_model extends CI_Model
     }
 
     public function get_user_list(){
-        $this->db->select('*')->from('users_tab')->where('created_by is NOT NULL', NULL, FALSE)->where('status !=',0);
+        $this->db->select('*')->from('users_tab')->where('created_by is NOT NULL', NULL, FALSE)->where('status !=','Deleted');
       return  $this->db->get()->result();
 
     }
@@ -131,10 +131,30 @@ class Adminuser_model extends CI_Model
         $this->db->select('b.*,a.user_name,a.phone_number,a.email_id,ap.apartment_name,bl.block_name')->from('users_tab a')->
             join('billing_tab b','a.id=b.user_id','left')->
         join('apartment_tab ap','ap.apartment_id=b.appartment','left')->join('block_tab bl','bl.block_id=b.block','left')
-            ->where('b.status !=','Deleted')->order_by('b.updated_date','desc');
+            ->where('b.status !=','Deleted')
+            ->where('a.status !=','Deleted')->where('a.created_by is NOT NULL', NULL, FALSE)->order_by('b.updated_date_by_admin','desc');
         return $this->db->get()->result();
 
 
     }
+    public function get_address_by_id($id){
+        $this->db->select('bil.*,u.phone_number')->from('billing_tab bil')->join('users_tab u','u.id=bil.user_id')->
+        join('apartment_tab ap','ap.apartment_id=bil.appartment')->join('block_tab bl','bl.block_id=bil.block')
+            ->where('bil.id',$id);
+        return $this->db->get()->row();
+
+    }
+    public function update_blling_address($data,$bill_id){
+        $this->db->where('id',$bill_id);
+        $this->db->update('billing_tab',$data);
+        return $this->db->affected_rows()?1:0;
+
+    }
+public function delete_address($data,$id){
+    $this->db->where('id',$id);
+    $this->db->update('billing_tab',$data);
+    return $this->db->affected_rows()?1:0;
+
+}
 
 }

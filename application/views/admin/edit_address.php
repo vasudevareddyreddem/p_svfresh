@@ -10,19 +10,21 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add Address</h4>
+                            <h4>Edit Address</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mx-auto">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
-                                    <form method="post" id="add_user" action="<?php echo base_url('user/save_address');?>"  enctype="multipart/form-data">
+                                    <form method="post" id="add_user" action="<?php echo base_url('user/save_edit_address');?>"  enctype="multipart/form-data">
+                                       <input type="hidden" value="<?php echo base64_encode($address->id);?>" name="bill_id" ?>
                                         <div class="form-group">
                                             <label>User Phone numbers</label>
                                             <select  id="mobile" class="form-control" name="mobile">
-                                                <option disabled selected>Select</option>
+
                                                 <?php foreach($phone_list as $lis){?>
-                                                    <option value="<?php echo $lis->phone_number;?>">
+                                                    <option value="<?php echo $lis->phone_number;?>
+<?php if($address->phone_number==$lis->phone_number){echo "selected";}?>">
                                                         <?php echo $lis->phone_number;?></option>
                                                 <?php }?>
 
@@ -31,9 +33,12 @@
                                         <div class="form-group">
                                             <label>Apartments</label>
                                             <select  id="aname" class="form-control" name="aname" onchange="get_blocks(this.value)">
-                                                <option disabled selected>Select</option>
+
                                                 <?php foreach($ap_list as $lis){?>
-                                                    <option value="<?php echo base64_encode($lis->apartment_id);?>">
+                                                    <option value="<?php echo base64_encode($lis->apartment_id);?>"
+                                                    <?php if($address->appartment==$lis->apartment_id) {
+                                                        echo "selected";
+                                                    }?>>
                                                         <?php echo $lis->apartment_name;?></option>
                                                 <?php }?>
 
@@ -42,8 +47,13 @@
                                         <div class="form-group">
                                             <label>Blocks</label>
                                             <select id="bname" class="form-control" name="bname">
-                                                <option disabled selected>Select</option>
-
+                                                <?php foreach($blocks as $lis){?>
+                                                    <option value="<?php echo $lis->block_id;?>"
+                                                        <?php if($address->block==$lis->block_id) {
+                                                            echo "selected";
+                                                        }?>>
+                                                        <?php echo $lis->block_name;?></option>
+                                                <?php }?>
 
                                             </select>
                                         </div>
