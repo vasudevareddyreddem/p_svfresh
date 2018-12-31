@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#add_category').bootstrapValidator({
+        $('#add_apartment').bootstrapValidator({
 
             fields: {
                 apartment_name: {
