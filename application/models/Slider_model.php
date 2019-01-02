@@ -7,6 +7,7 @@ class Slider_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database("default");
+
 	}
 	public function save_slider($data){
 		$this->db->insert('slider_tab',$data);

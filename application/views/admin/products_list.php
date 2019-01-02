@@ -55,7 +55,7 @@
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');
 											echo $newDateString ;
 											}
-											echo $product->created_at;?></td>
+											?></td>
 											<td><?php if($product->status==1){?>
 										        <div class="badge badge-success"><a href="<?php 
 												echo base_url('product/inactive_product/').base64_encode($product->product_id);?>">Active</a></div>
