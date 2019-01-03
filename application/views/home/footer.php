@@ -40,7 +40,7 @@ function decreaseValue() {
                             <ul id="introduce-company"  class="introduce-list">
                                 <li><a href="#">About Us</a></li>
                                 <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Affiliate Program</a></li>
+                                <li><a href="<?php echo base_url('privacy_policy'); ?>">Privacy policy</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
                                 <li><a href="#">Contact Us</a></li>
                             </ul>
@@ -60,7 +60,7 @@ function decreaseValue() {
                             <ul id = "introduce-support"  class="introduce-list">
                                 <li><a href="#">About Us</a></li>
                                 <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Affiliate Program</a></li>
+                                <li><a href="<?php echo base_url('privacy_policy'); ?>">Privacy policy</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
                                 <li><a href="<?php echo base_url('home/contactus'); ?>">Contact Us</a></li>
                             </ul>
