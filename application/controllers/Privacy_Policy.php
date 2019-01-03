@@ -2,7 +2,7 @@
 /**
  *
  */
-class Privacy_Policy extends CI_Controller
+class Privacy_policy extends CI_Controller
 {
 
   function __construct()
@@ -12,7 +12,8 @@ class Privacy_Policy extends CI_Controller
 
   public function index()
   {
-    $this->load->view('home/privacy_policy');
+	$data['pageTitle'] = 'privacy policy';
+    $this->load->view('home/privacy_policy',$data);
   }
 }
 
