@@ -35,17 +35,8 @@ function decreaseValue() {
                 </div>
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <div class="introduce-title">Company</div>
-                            <ul id="introduce-company"  class="introduce-list">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Affiliate Program</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-4">
+                       
+                        <div class="col-sm-6">
                             <div class="introduce-title">My Account</div>
                             <ul id = "introduce-Account" class="introduce-list">
                                 <li><a href="<?php echo base_url('/order'); ?>">My Order</a></li>
@@ -55,12 +46,12 @@ function decreaseValue() {
                                 <li><a href="#">My Personal In</a></li>
                             </ul>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="introduce-title">Support</div>
                             <ul id = "introduce-support"  class="introduce-list">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Affiliate Program</a></li>
+                               <!-- <li><a href="#">About Us</a></li>
+                                <li><a href="#">Testimonials</a></li>-->
+                                <li><a href="<?php echo base_url('privacy_policy'); ?>">Privacy policy</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
                                 <li><a href="<?php echo base_url('home/contactus'); ?>">Contact Us</a></li>
                             </ul>
