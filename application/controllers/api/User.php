@@ -112,8 +112,8 @@ class User extends REST_Controller {
 				
 			}
 			else{
-				
-					$message = array('status'=>0,'message'=>'password is wrong');
+				        $u= new stdClass();
+					$message = array('status'=>0,'message'=>'password is wrong','user'=>$u);
 			 $this->response($message, REST_Controller::HTTP_OK);
 				
 			}
@@ -121,7 +121,8 @@ class User extends REST_Controller {
 		
 	               }
 				   else{
-					   $message = array('status'=>0,'message'=>'email or password is wrong');
+                       $u= new stdClass();
+					   $message = array('status'=>0,'message'=>'email is wrong','user'=>$u);
 			     $this->response($message, REST_Controller::HTTP_OK);
 					   
 					   

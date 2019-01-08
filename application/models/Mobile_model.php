@@ -47,7 +47,7 @@ class Mobile_model extends CI_Model
 			product_tab.guarantee_policy,product_tab.description,
 			product_tab.quantity,
 			subcat_tab.subcat_name, IF(wishlist_tab.user_id='$user_id',wishlist_tab.id,null) wishlist_id,
-			IF(cart_tab.user_id='$user_id',cart_tab.id,null) cart_id,
+			IF(cart_tab.user_id='$user_id',cart_tab.id,'') cart_id,
 			(select sum(rate)/count(product_id)   from rating_list where rating_list.product_id=product_tab.product_id group by product_id) AS rating ");
 	  $this->db->from('product_tab');
 	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
