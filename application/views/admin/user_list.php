@@ -3,7 +3,7 @@
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
-            <div>Apartment</div>
+            <div>Users</div>
         </h1>
         <div class="section-body">
             <div class="row">

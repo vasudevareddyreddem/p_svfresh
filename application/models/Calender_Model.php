@@ -10,6 +10,7 @@ class Calender_Model extends CI_Model
   function __construct()
   {
     parent::__construct();
+    $this->db->query("SET time_zone='+5:30'");
   }
 
   public function get_all_calender_items_by_user_id($user_id='')

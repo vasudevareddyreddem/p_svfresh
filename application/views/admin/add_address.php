@@ -176,7 +176,7 @@
                     });
                 }
                 else{
-                    temp='<option value="">NO Blocks Available</option>';
+                    temp='<option value="">No Blocks Available</option>';
 
                     $('#bname').append(temp);
 

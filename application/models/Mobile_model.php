@@ -7,6 +7,7 @@ class Mobile_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database("default");
+        $this->db->query("SET time_zone='+5:30'");
 	}
 	public function category_list(){
        $this->db->select('category_tab.cat_id,category_tab.cat_name,category_tab.cat_img');

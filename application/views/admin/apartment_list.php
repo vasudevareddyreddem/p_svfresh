@@ -74,7 +74,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('.confirmation').on('click', function () {
-            return confirm('Are you sure of deleting category?');
+            return confirm('Are you sure of deleting Apartment?');
         });
     });
 </script>

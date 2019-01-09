@@ -7,6 +7,7 @@ class Category_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database("default");
+        $this->db->query("SET time_zone='+5:30'");
 	}
 	public function category_name_check($name){
      $this->db->select('1');

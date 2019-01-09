@@ -7,7 +7,6 @@ class Apartment_model extends CI_Model
     {
         parent::__construct();
         $this->load->database("default");
-        $this->db->query("SET time_zone='+5:30'");
     }
     public function check_apartment_name($name){
         $this->db->select('1')->from('apartment_tab')->where('apartment_name',$name)->where('status !=',0);
@@ -81,7 +80,7 @@ class Apartment_model extends CI_Model
     }
     public function check_block_name($name,$apt_id){
         $this->db->select('1')->from('block_tab')->where('block_name',$name)
-        ->where('apartment_id',$apt_id)->where('status !=',0);
+        ->where('aprartment_id',$apt_id)->where('status !=',0);
         return $this->db->get()->result();
     }
     public function save_block_name($data){

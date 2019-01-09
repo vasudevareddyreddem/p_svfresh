@@ -7,6 +7,7 @@ class Adminuser_model extends CI_Model
     {
         parent::__construct();
         $this->load->database("default");
+        $this->db->query("SET time_zone='+5:30'");
     }
 
     public function get_user_list(){
