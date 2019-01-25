@@ -5,7 +5,8 @@
   <div class="columns-container">
     <div class="container" id="columns">
       <div class="row">
-        <h3 class="checkout-sep pd-tb20 h2"> Billing Information</h3> Total Amount(Milk + Cart) = <?php echo isset($cart_total_amt)?$cart_total_amt:''; ?>(<?php echo isset($withmilk_total_amt['m_amt'])?$withmilk_total_amt['m_amt']:''; ?> + <?php echo isset($without_total_amt['c_amt'])?$without_total_amt['c_amt']:''; ?>)
+        <h3 class="checkout-sep pd-tb20 h2"> Billing Information</h3>
+		<h3 class="card py-4 px-4 " style="font-size:22px">Total Amount(Milk + Cart) = <?php echo isset($cart_total_amt)?$cart_total_amt:''; ?>(<?php echo isset($withmilk_total_amt['m_amt'])?$withmilk_total_amt['m_amt']:''; ?> + <?php echo isset($without_total_amt['c_amt'])?$without_total_amt['c_amt']:''; ?>)</h3>
         <?php if(count($billing) > 0){ ?>
           <div class="">
             <div class="row">
@@ -35,7 +36,7 @@
             <?php } ?>
             <br>
             <form method="POST" action="<?php echo base_url('/billing'); ?>">
-              <div class="box-border">
+              <div class="container">
                 <ul>
                   <li class="row">
                     <div class="col-sm-6">
@@ -49,6 +50,7 @@
                       <?php echo form_error('last_name','<div class="text-danger">', '</div>'); ?>
                     </div><!--/ [col] -->
                   </li><!--/ .row -->
+				  <br>
                   <li class="row">
                     <div class="col-sm-6">
                       <label for="email_address" class="required">Email Address <span class="text-danger">*</span></label>
@@ -61,6 +63,7 @@
                       <?php echo form_error('mobile_number','<div class="text-danger">', '</div>'); ?>
                     </div><!--/ [col] -->
                   </li><!--/ .row -->
+				  <br>
                   <li class="row">
                     <div class="col-xs-4">
                       <label for="address" class="required">Appartment <span class="text-danger">*</span></label>
