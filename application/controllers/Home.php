@@ -100,17 +100,21 @@ class Home extends CI_controller
         $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|regex_match[/^[0-9]{10}$/]|callback_is_unique_phone_number');
         $this->form_validation->set_rules('user_name', 'User Name', 'required|callback_is_unique_username');
         if($this->form_validation->run() == FALSE){
-          $data['pageTitle'] = 'Profile';
+		  $data['pageTitle'] = 'Profile';
           $data['categories'] = $this->Category_model->get_all_category();
           $user_id = $this->session->userdata('id');
           $data['user'] = $this->Auth_Model->get_user_details($user_id);
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
+		  $this->load->model('Apartment_model');
+	      $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
           $this->load->view('home/profile',$data);
         }else{
           $post_data = $this->input->post();
           $id = $this->input->post('id');
+		  //echo '<pre>';print_r($post_data);exit;
+          
           unset($post_data['submit']);
           if($this->Auth_Model->update($post_data,$id)){
             $this->session->set_flashdata('success', 'Profile updated successfully.');
@@ -127,7 +131,13 @@ class Home extends CI_controller
         $data['user'] = $this->Auth_Model->get_user_details($user_id);
         $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
         $data['count'] = count($data['cart']);
+		$this->load->model('Apartment_model');
+	    $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+	    $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
+		//echo $this->db->last_query();
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
+	    //echo '<pre>';print_r($data);exit;
+
         $this->load->view('home/profile',$data);
       }
     }else{

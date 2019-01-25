@@ -39,11 +39,41 @@
                                   <label for="password" class="control-label">Confirm Password <span class="text-danger">*</span></label>
                                   <input type="password" class="form-control"  name="confirm_password" value="<?php echo set_value('confirm_password'); ?>" title="Confirm your password">
                               </div>
+							  
+							  <!-- apartment-->
+							   <div class="form-group">
+								  <label for="address" class="required">Appartment <span class="text-danger">*</span></label>
+								  <select class="input form-control" name="appartment" id="apartment">
+									<option value="">--Select Appartment--</option>
+									<?php if(count($apartment) > 0) { ?>
+									  <?php foreach($apartment as $a) { ?>
+										<option value="<?php echo $a->apartment_id; ?>"><?php echo $a->apartment_name; ?></option>
+									  <?php } ?>
+									<?php } ?>
+								  </select>
+								  <?php echo form_error('appartment','<div class="text-danger">', '</div>'); ?>
+								</div>
+								<div class="form-group">
+								  <label for="address" class="required">Block <span class="text-danger">*</span></label>
+								  <select class="input form-control" name="block" id="block">
+									<option value="">--Select Block--</option>
+								  </select>
+								  <?php echo form_error('block','<div class="text-danger">', '</div>'); ?>
+								</div>
+								<div class="form-group">
+								  <label for="address" class="required">Flat/Door no <span class="text-danger">*</span></label>
+								  <input type="text" class="input form-control" name="flat_door_no" id="address" value="<?php echo set_value('address'); ?>">
+								  <?php echo form_error('flat_door_no','<div class="text-danger">', '</div>'); ?>
+								</div>
+							  <!-- apartment-->
                               <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>
             							  <div class="">
             							     <button type="submit" id="submit" name="submit" class="btn btn-success"  value="submit">Signup</button>
             							     <a href="<?php echo base_url('home/login'); ?>" type="submit" class="btn btn-warning  ">Login if you already Account</a>
             							  </div>
+										 
+                    
+                    
                           </form>
                       </div>
                   </div>
@@ -57,5 +87,21 @@
     </div> -->
 </div>
 <?php include("footer.php"); ?>
+<script type="text/javascript">
+      $(document).ready(function(){
+          $('#apartment').on('change',function(){
+            $('#block').html('<option value="">loading....</option>');
+            var apartment_id = $(this).val();
+            $.ajax({
+              url:'<?php echo base_url('billing/get_blocks_by_apartment_id'); ?>',
+              type:'POST',
+              data:{'apartment_id':apartment_id},
+              success:function(data){
+                $('#block').html(data);
+              }
+            });
+          });
+      });
+    </script>
 </body>
 </html>

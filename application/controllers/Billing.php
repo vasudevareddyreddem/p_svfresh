@@ -33,7 +33,10 @@ class Billing extends CI_Controller
           $data['categories'] = $this->Category_model->get_all_category();
           $user_id = $this->session->userdata('id');
           $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
-          $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+		  $this->load->model('Auth_Model');
+          $data['user'] =$this->Auth_Model->get_user_details($user_id);
+		  $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+		  $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
@@ -67,7 +70,10 @@ class Billing extends CI_Controller
         $data['categories'] = $this->Category_model->get_all_category();
         $user_id = $this->session->userdata('id');
         $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
-        $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+		$this->load->model('Auth_Model');
+        $data['user'] =$this->Auth_Model->get_user_details($user_id);
+		$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+		$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
         $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
         $data['count'] = count($data['cart']);
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
@@ -114,7 +120,10 @@ class Billing extends CI_Controller
             $data['categories'] = $this->Category_model->get_all_category();
             $user_id = $this->session->userdata('id');
             $data['billing'] = $this->Billing_Model->get_billing_details_by_id($id);
-            $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+            $this->load->model('Auth_Model');
+			$data['user'] =$this->Auth_Model->get_user_details($user_id);
+			$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+			$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
             $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
             $data['count'] = count($data['cart']);
             $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
@@ -138,12 +147,14 @@ class Billing extends CI_Controller
           $user_id = $this->session->userdata('id');
           //$data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
           $data['billing'] = $this->Billing_Model->get_billing_details_by_id($id);
-          $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+		  $this->load->model('Auth_Model');
+		  $data['user'] =$this->Auth_Model->get_user_details($user_id);
+		  $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+		  $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
           $data['pageTitle'] = 'Billing';
-
           $this->load->view('home/edit_billing',$data);
         }
       } else {

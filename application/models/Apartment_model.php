@@ -161,4 +161,12 @@ class Apartment_model extends CI_Model
     {
       return $this->db->get_where('block_tab',array('apartment_id' => $apartment_id,'status' => '1'))->result();
     }
+	
+	public function  get_balocks_by_apts($apts){
+		$this->db->select('*')->from('block_tab');
+		$this->db->where('apartment_id',$apts);
+		$this->db->where('status',1);
+		return $this->db->get()->result_array();
+		
+	}
 }

@@ -68,7 +68,11 @@
                         <option value="">--Select Appartment--</option>
                         <?php if(count($apartment) > 0) { ?>
                           <?php foreach($apartment as $a) { ?>
-                            <option value="<?php echo $a->apartment_id; ?>"><?php echo $a->apartment_name; ?></option>
+										<?php if($user->appartment == $a->apartment_id){ ?>
+												<option selected value="<?php echo $a->apartment_id; ?>"><?php echo $a->apartment_name; ?></option>
+										  <?php }else{ ?>
+												<option value="<?php echo $a->apartment_id; ?>"><?php echo $a->apartment_name; ?></option>
+										  <?php } ?>
                           <?php } ?>
                         <?php } ?>
                       </select>
@@ -76,14 +80,24 @@
                     </div>
                     <div class="col-xs-4">
                       <label for="address" class="required">Block <span class="text-danger">*</span></label>
-                      <select class="input form-control" name="block" id="block">
-                        <option value="">--Select Block--</option>
-                      </select>
+                       <select class="input form-control" name="block" id="block">
+								  <?php if(isset($blocks_list) && count($blocks_list)>0){ ?>
+								  <option value="">--Select Block--</option>
+									  <?php foreach($blocks_list as $lis){ ?>
+										 		 <?php if($user->block == $lis['block_id']){ ?>
+												<option selected value="<?php echo $lis['block_id']; ?>"><?php echo $lis['block_name']; ?></option>
+										      <?php }else{ ?>
+												<option value="<?php echo $lis['block_id']; ?>"><?php echo $lis['block_name']; ?></option>
+										     <?php } ?>							
+									  <?php } ?>
+								  <?php } ?>
+									
+								  </select>
                       <?php echo form_error('block','<div class="text-danger">', '</div>'); ?>
                     </div>
                     <div class="col-xs-4">
                       <label for="address" class="required">Flat/Door no <span class="text-danger">*</span></label>
-                      <input type="text" class="input form-control" name="flat_door_no" id="address" value="<?php echo set_value('address'); ?>">
+                      <input type="text" class="input form-control" name="flat_door_no" id="address" value="<?php echo $user->flat_door_no; ?>">
                       <?php echo form_error('flat_door_no','<div class="text-danger">', '</div>'); ?>
                     </div>
                   </li><!-- / .row -->

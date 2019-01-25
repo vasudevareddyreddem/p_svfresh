@@ -18,7 +18,6 @@ $this->load->model('Login_model');
 public function index(){
 if($this->session->userdata('svadmin_det')){
 	$data['admin']=$this->session->userdata('svadmin_det');
-	
           $this->load->view('admin/profile',$data);
 		    $this->load->view('admin/footer');
 }
