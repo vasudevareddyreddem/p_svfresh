@@ -79,8 +79,8 @@ class Billing extends CI_Controller
 		$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
         $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
         $data['without_total_amt ']= $this->Cart_Model->normal_cart_amount($user_id);
-			$data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
-			$data['cart_total_amt']=(($data['without_total_amt']['c_amt'])+($data['withmilk_total_amt']['m_amt']));
+		$data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
+		$data['cart_total_amt']=((isset($data['without_total_amt']['c_amt'])?$data['without_total_amt']['c_amt']:'0')+(isset($data['withmilk_total_amt']['m_amt'])?$data['withmilk_total_amt']['m_amt']:'0'));
         $data['count'] = count($data['cart']);
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
         $data['pageTitle'] = 'Billing';
