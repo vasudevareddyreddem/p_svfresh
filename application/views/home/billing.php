@@ -6,7 +6,7 @@
     <div class="container" id="columns">
       <div class="row">
         <h3 class="checkout-sep pd-tb20 h2"> Billing Information</h3>
-		<h3 class="card py-4 px-4 " style="font-size:22px">Total Amount(Milk + Cart) = <?php echo isset($cart_total_amt)?$cart_total_amt:'0'; ?>(<?php echo isset($withmilk_total_amt['m_amt'])?$withmilk_total_amt['m_amt']:'0'; ?> + <?php echo isset($without_total_amt['c_amt'])?$without_total_amt['c_amt']:'0'; ?>)</h3>
+		<h3 class="card py-4 px-4 " style="font-size:22px">Total Amount(Milk + Cart) = <?php echo isset($cart_total_amt)?$cart_total_amt:''; ?>(<?php echo isset($withmilk_total_amt['m_amt'])?$withmilk_total_amt['m_amt']:''; ?> + <?php echo isset($without_total_amt['c_amt'])?$without_total_amt['c_amt']:''; ?>)</h3>
         <?php if(count($billing) > 0){ ?>
           <div class="">
             <div class="row">
