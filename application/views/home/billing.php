@@ -5,7 +5,7 @@
   <div class="columns-container">
     <div class="container" id="columns">
       <div class="row">
-        <h3 class="checkout-sep pd-tb20 h2"> Billing Information</h3>
+        <h3 class="checkout-sep pd-tb20 h2"> Billing Information</h3> Total Amount(Milk + Cart) = <?php echo isset($cart_total_amt)?$cart_total_amt:''; ?>(<?php echo isset($withmilk_total_amt['m_amt'])?$withmilk_total_amt['m_amt']:''; ?> + <?php echo isset($without_total_amt['c_amt'])?$without_total_amt['c_amt']:''; ?>)
         <?php if(count($billing) > 0){ ?>
           <div class="">
             <div class="row">

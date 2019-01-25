@@ -66,6 +66,24 @@ class Cart_Model extends CI_Model
     $this->db->where('product_id',$product_id);
     return $this->db->get()->row();
   }
+  
+  /* cart amountpurpose */
+  public  function normal_cart_amount($user_id){
+	  $this->db->select('SUM(cart_tab.net_price) as c_amt')->from('cart_tab');
+      $this->db->where('user_id',$user_id);
+      return $this->db->get()->row_array(); 
+  }
+ 
+  public  function special_cart_amount($user_id,$date){
+	  //echo $date;
+	  $this->db->select('SUM((calender_tab.quantity)*(price)) as m_amt')->from('calender_tab');
+      $this->db->where('user_id',$user_id);
+      $this->db->where('date >=',date('d'));
+      $this->db->where('month >=',date('m'));
+      $this->db->where('year >=',date('Y'));
+      return $this->db->get()->row_array(); 
+  }
+  /* cart amountpurpose */
 }
 
 ?>

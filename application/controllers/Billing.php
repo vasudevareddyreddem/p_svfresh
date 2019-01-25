@@ -39,6 +39,9 @@ class Billing extends CI_Controller
 		  $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
+			$data['without_total_amt ']= $this->Cart_Model->normal_cart_amount($user_id);
+			$data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
+			$data['cart_total_amt']=(($data['without_total_amt']['c_amt'])+($data['withmilk_total_amt']['m_amt']));
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
           $data['pageTitle'] = 'Billing';
           $this->load->view('home/billing',$data);
@@ -75,6 +78,9 @@ class Billing extends CI_Controller
 		$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
 		$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
         $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+        $data['without_total_amt ']= $this->Cart_Model->normal_cart_amount($user_id);
+			$data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
+			$data['cart_total_amt']=(($data['without_total_amt']['c_amt'])+($data['withmilk_total_amt']['m_amt']));
         $data['count'] = count($data['cart']);
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
         $data['pageTitle'] = 'Billing';
@@ -199,7 +205,6 @@ class Billing extends CI_Controller
   //getting blocks by apartment id
   public function get_blocks_by_apartment_id()
   {
-    if ($this->session->userdata('logged_in') == TRUE) {
       $apartment_id = $this->input->post('apartment_id');
       $block = $this->input->post('block');
       if ($apartment_id) {
@@ -219,10 +224,7 @@ class Billing extends CI_Controller
         $this->session->set_flashdata('error','Sorry, there is a problem in getting blocks');
         redirect('/billing');
       }
-    } else {
-      $this->session->set_flashdata('error','Please login to continue');
-      redirect('home/login');
-    }
+    
   }
 
 }
