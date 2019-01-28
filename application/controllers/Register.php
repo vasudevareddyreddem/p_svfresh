@@ -18,6 +18,8 @@ class Register extends CI_controller
   {
     if($this->input->post()){
       //validations
+      $this->form_validation->set_rules('first_name', 'First Name', 'required');
+      $this->form_validation->set_rules('last_name', 'Last Name', 'required');
       $this->form_validation->set_rules('email_id', 'Email id', 'required|valid_email|is_unique[users_tab.email_id]');
       $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|regex_match[/^[0-9]{10}$/]|is_unique[users_tab.phone_number]');
       $this->form_validation->set_rules('user_name', 'User Name', 'required|is_unique[users_tab.user_name]');
@@ -38,7 +40,7 @@ class Register extends CI_controller
         $this->load->view('home/register',$data);
       }else{
         //posting formdata and inserting into database
-		
+
         $post_array = $this->input->post();
         $post_password = $this->input->post('password');
         $addl_array = array('created_date' => date('Y-m-d H:i:s'),'status'=>'Active','password' => password_hash($post_password,PASSWORD_DEFAULT),'role'=>'User');

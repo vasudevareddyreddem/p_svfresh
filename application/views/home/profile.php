@@ -24,6 +24,16 @@
                     <?php endif; ?>
                     <form id="loginForm" method="POST" action="<?php echo base_url('/home/profile'); ?>" novalidate="novalidate">
                       <div class="form-group">
+                        <label for="" class="control-label">First Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  name="first_name" value="<?php echo $user->first_name; ?>" title="Please enter you first name" placeholder="Enter first name">
+                        <?php echo form_error('first_name','<div class="text-danger">', '</div>'); ?>
+                      </div>
+                      <div class="form-group">
+                        <label for="" class="control-label">Last Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  name="last_name" value="<?php echo $user->last_name; ?>" title="Please enter you last name" placeholder="Enter last name">
+                        <?php echo form_error('last_name','<div class="text-danger">', '</div>'); ?>
+                      </div>
+                      <div class="form-group">
                         <label for="username" class="control-label">Email Id <span class="text-danger">*</span></label>
                         <input type="email" class="form-control"  name="email_id" value="<?php echo $user->email_id; ?>" title="Please enter you email" placeholder="example@gmail.com">
                         <?php echo form_error('email_id','<div class="text-danger">', '</div>'); ?>
@@ -49,7 +59,7 @@
 												<option selected value="<?php echo $a->apartment_id; ?>"><?php echo $a->apartment_name; ?></option>
 										  <?php }else{ ?>
 												<option value="<?php echo $a->apartment_id; ?>"><?php echo $a->apartment_name; ?></option>
-										  <?php } ?>										
+										  <?php } ?>
 									  <?php } ?>
 									<?php } ?>
 								  </select>
@@ -65,10 +75,10 @@
 												<option selected value="<?php echo $lis['block_id']; ?>"><?php echo $lis['block_name']; ?></option>
 										      <?php }else{ ?>
 												<option value="<?php echo $lis['block_id']; ?>"><?php echo $lis['block_name']; ?></option>
-										     <?php } ?>							
+										     <?php } ?>
 									  <?php } ?>
 								  <?php } ?>
-									
+
 								  </select>
 								  <?php echo form_error('block','<div class="text-danger">', '</div>'); ?>
 								</div>

@@ -96,9 +96,14 @@ class Home extends CI_controller
   public function profile(){
     if ($this->session->userdata('logged_in') == TRUE) {
       if($this->input->post()){
+        $this->form_validation->set_rules('first_name', 'First Name', 'required');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
         $this->form_validation->set_rules('email_id', 'Email id', 'required|valid_email|callback_is_unique_email');
         $this->form_validation->set_rules('phone_number', 'Phone Number', 'required|regex_match[/^[0-9]{10}$/]|callback_is_unique_phone_number');
         $this->form_validation->set_rules('user_name', 'User Name', 'required|callback_is_unique_username');
+        $this->form_validation->set_rules('appartment', 'Apartment', 'required');
+        $this->form_validation->set_rules('block', 'Block', 'required');
+        $this->form_validation->set_rules('flat_door_no', 'Flat/Door Number', 'required');
         if($this->form_validation->run() == FALSE){
 		  $data['pageTitle'] = 'Profile';
           $data['categories'] = $this->Category_model->get_all_category();
@@ -114,7 +119,7 @@ class Home extends CI_controller
           $post_data = $this->input->post();
           $id = $this->input->post('id');
 		  //echo '<pre>';print_r($post_data);exit;
-          
+
           unset($post_data['submit']);
           if($this->Auth_Model->update($post_data,$id)){
             $this->session->set_flashdata('success', 'Profile updated successfully.');
