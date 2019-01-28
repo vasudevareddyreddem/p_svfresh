@@ -73,27 +73,37 @@ class Auth_Model extends CI_Model
 	  return $this->db->get()->row_array();
 
   }
-  
+
   public function get_cart_item_qty($user_id){
 	  $this->db->select('count(cart_tab.id) as cnt')->from('cart_tab');
 	  $this->db->where('user_id',$user_id);
 	  return $this->db->get()->row_array();
-	  
+
   }
   public  function get_all_products_lists(){
 	  $this->db->select('product_tab.product_name,product_tab.product_id')->from('product_tab');
 	  $this->db->where('status',1);
 	  return $this->db->get()->result_array();
   }
-  
+
   public  function delete_cart_item($id){
 	   $this->db->where('id',$id);
 	   return $this->db->delete('cart_tab');
   }
-  
+
   public  function save_contactus($data){
 	   $this->db->insert('contactus_list',$data);
 	  return $this->db->insert_id();
+  }
+
+  public function get_user_details_for_billing($user_id='')
+  {
+    $this->db->select('u.*,a.apartment_name as appartment,bl.block_name as block');
+    $this->db->from($this->table.' u');
+    $this->db->join('apartment_tab  a','u.appartment = a.apartment_id','left');
+    $this->db->join('block_tab  bl','u.block = bl.block_id','left');
+    $this->db->where('id',$user_id);
+    return $this->db->get()->row();
   }
 
 }

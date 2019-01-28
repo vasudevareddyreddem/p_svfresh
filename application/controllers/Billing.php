@@ -75,7 +75,7 @@ class Billing extends CI_Controller
         $user_id = $this->session->userdata('id');
         $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
 		$this->load->model('Auth_Model');
-        $data['user'] =$this->Auth_Model->get_user_details($user_id);
+        $data['user'] =$this->Auth_Model->get_user_details_for_billing($user_id);
 		$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
 		$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
         $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
@@ -95,20 +95,22 @@ class Billing extends CI_Controller
   public function old_delivery_address()
   {
     if($this->input->post()){
-      $billing_id = $this->input->post('billing_id');
-      if($this->session->userdata('milk_order') == 'MILK'){
-        $calender_id = $this->session->userdata('calender_id');
-        foreach ($calender_id as $key => $cid) {
-          $this->Calender_Model->update(array('billing_id'=>$billing_id),$cid);
-          $this->session->unset_userdata($calender_id[$key]);
-        }
-        $this->session->unset_userdata('milk_order');
-        redirect('order/milk_orders');
-      }else{
-        $this->session->set_userdata('billing_id',$billing_id);
-        redirect('/Paymentstype');
-      }
-
+      // $billing_id = $this->input->post('billing_id');
+      // if($this->session->userdata('milk_order') == 'MILK'){
+      //   $calender_id = $this->session->userdata('calender_id');
+      //   foreach ($calender_id as $key => $cid) {
+      //     $this->Calender_Model->update(array('billing_id'=>$billing_id),$cid);
+      //     $this->session->unset_userdata($calender_id[$key]);
+      //   }
+      //   $this->session->unset_userdata('milk_order');
+      //   redirect('order/milk_orders');
+      // }else{
+      //   $this->session->set_userdata('billing_id',$billing_id);
+      //   redirect('/Paymentstype');
+      // }
+      /* billing modification on 28-01-2019*/
+      redirect('/Paymentstype');
+      /*--ends here--*/
     }
   }
   //edit billing address
@@ -226,7 +228,7 @@ class Billing extends CI_Controller
         $this->session->set_flashdata('error','Sorry, there is a problem in getting blocks');
         redirect('/billing');
       }
-    
+
   }
 
 }
