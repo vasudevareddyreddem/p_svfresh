@@ -1124,5 +1124,34 @@ public  function  milk_orders_post(){
         $this->response($message, REST_Controller::HTTP_OK);
 
     }
-
+public function get_apartments_post(){
+	 $res=$this->Mobile_model->get_apartments();
+	 if(count($res)>0){
+		  $message = array('status' => 1, 'apartment_list' => $res );
+            $this->response($message, REST_Controller::HTTP_OK);
+		 
+	 }
+	  $message = array('status' => 0, 'message' => 'No Apartments Available' );
+        $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+	
+}
+public function get_blocks_by_apt_post(){
+	$apt_id=$this->post('apt_id');
+	 $res=$this->Mobile_model->get_blocks($apt_id);
+	 if(count($res)>0){
+		  $message = array('status' => 1, 'block_list' => $res );
+            $this->response($message, REST_Controller::HTTP_OK);
+		 
+	 }
+	  $message = array('status' => 0, 'message' => 'No Blocks Available' );
+        $this->response($message, REST_Controller::HTTP_OK);
+	
+	
+	
+	
+	
+}
 }

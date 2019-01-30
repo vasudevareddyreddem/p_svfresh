@@ -442,4 +442,17 @@ public function cancel_order($item_id,$user_id){
 
 
 }
+public function get_apartments(){
+	$this->db->select('apartment_id,apartment_name')->from('apartment_tab')->where('status',1);
+		return $this->db->get()->result_array();
+	
+	
+}
+public function get_blocks($apt_id){
+	$this->db->select('block_id,block_name')->from('block_tab')->where('status',1)->where('apartment_id',$apt_id);
+		return $this->db->get()->result_array();
+	
+	
+}
+
 }
