@@ -80,6 +80,7 @@ class User extends In_frontend
     public function user_list(){
         if( $this->session->userdata('svadmin_det')){
             $res=$this->Adminuser_model->get_user_list();
+			//echo '<pre>';print_r($res);exit;
             if(count($res)>0){
                 $data['status']=1;
                 $data['list']=$res;

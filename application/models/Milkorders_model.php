@@ -14,21 +14,21 @@ class Milkorders_model extends CI_Model
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,apartment_tab.apartment_name,block_tab.block_name,billing_tab.flat_door_no,
-		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
-		users_tab.phone_number,calender_tab.delivered_time,calender_tab.cancelled_time');
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		users_tab.last_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+	users_tab.phone_number,
+		calender_tab.delivered_time,calender_tab.cancelled_time');
 		$this->db->from('calender_tab');
-		$this->db->join('billing_tab','calender_tab.billing_id=billing_tab.id');
+		//$this->db->join('billing_tab','calender_tab.billing_id=billing_tab.id');
 		$this->db->join('product_tab','product_tab.product_id=calender_tab.product_id');
 		$this->db->join('users_tab','users_tab.id=calender_tab.user_id');
-		$this->db->join('apartment_tab','apartment_tab.apartment_id=billing_tab.appartment','left');
-		$this->db->join('block_tab','block_tab.block_id=billing_tab.block','left');
+		$this->db->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left');
+		$this->db->join('block_tab','block_tab.block_id=users_tab.block','left');
 		if (isset($apartment) && !empty($apartment)) {
-			$this->db->where('billing_tab.appartment',$apartment);
+			$this->db->where('users_tab.appartment',$apartment);
 		}
 		if (isset($block) && !empty($block)) {
-			$this->db->where('billing_tab.block',$block);
+			$this->db->where('users_tab.block',$block);
 		}
 		if (isset($date) && !empty($date)) {
 			$date_fragment = explode('/',$date);
@@ -54,27 +54,32 @@ class Milkorders_model extends CI_Model
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
-		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		users_tab.last_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+		
 		users_tab.phone_number')->from('calender_tab')->
-		join('billing_tab','calender_tab.billing_id=billing_tab.id')
-		->join('product_tab','product_tab.product_id=calender_tab.product_id')
-		->join('users_tab','users_tab.id=calender_tab.user_id')->where('calender_tab.delivery_status',2)
-		->order_by('calender_tab.created_date,users_tab.id','desc');;
+		//join('billing_tab','calender_tab.billing_id=billing_tab.id')
+		join('product_tab','product_tab.product_id=calender_tab.product_id')
+		->join('users_tab','users_tab.id=calender_tab.user_id')
+		->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
+		->join('block_tab','block_tab.block_id=users_tab.block','left')
+		->where('calender_tab.delivery_status',2)
+		
+		->order_by('calender_tab.created_date,users_tab.id','desc');
 		return $this->db->get()->result();
 	}
 	public function delivered_order_list(){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
-		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+		users_tab.last_name,
 		users_tab.phone_number,calender_tab.delivered_time')->from('calender_tab')->
-		join('billing_tab','calender_tab.billing_id=billing_tab.id')
-		->join('product_tab','product_tab.product_id=calender_tab.product_id')
+		//join('billing_tab','calender_tab.billing_id=billing_tab.id')
+		join('product_tab','product_tab.product_id=calender_tab.product_id')
 		->join('users_tab','users_tab.id=calender_tab.user_id')->where('calender_tab.delivery_status',1)
+		->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
+		->join('block_tab','block_tab.block_id=users_tab.block','left')
 		->order_by('calender_tab.created_date,users_tab.id','desc');
 		return $this->db->get()->result();
 	}
@@ -82,13 +87,14 @@ class Milkorders_model extends CI_Model
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,billing_tab.first_name,
-		billing_tab.last_name,billing_tab.company_name,billing_tab.email_address,billing_tab.address,
-		billing_tab.city,billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone,
-		users_tab.phone_number,calender_tab.cancelled_time')->from('calender_tab')->
-		join('billing_tab','calender_tab.billing_id=billing_tab.id')
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		users_tab.last_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+		users_tab.phone_number,calender_tab.cancelled_time')->from('calender_tab')
+		//join('billing_tab','calender_tab.billing_id=billing_tab.id')
 		->join('product_tab','product_tab.product_id=calender_tab.product_id')
 		->join('users_tab','users_tab.id=calender_tab.user_id')->where('calender_tab.delivery_status',0)
+		->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
+		->join('block_tab','block_tab.block_id=users_tab.block','left')
 		->order_by('calender_tab.created_date,users_tab.id');;
 		return $this->db->get()->result();
 	}

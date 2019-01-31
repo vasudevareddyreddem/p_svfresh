@@ -11,7 +11,9 @@ class Adminuser_model extends CI_Model
     }
 
     public function get_user_list(){
-        $this->db->select('*')->from('users_tab')->where('created_by is NOT NULL', NULL, FALSE)->where('status !=','Deleted');
+        $this->db->select('*')->from('users_tab')->
+		//where('created_by is NOT NULL', NULL, FALSE)->
+		where('status !=','Deleted')->order_by('created_date','desc');
       return  $this->db->get()->result();
 
     }

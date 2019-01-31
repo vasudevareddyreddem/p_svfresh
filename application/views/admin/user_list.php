@@ -48,12 +48,15 @@
                                                         $newDateString = $myDateTime->format('d-m-Y H:i:s');
                                                         echo $newDateString ;
                                                     } ?></td>
+													
+													<?php if($li->created_by!=''){?>
                                                 <td>
 
                                                         <div class="badge badge-success"><a class='text-white' href="<?php
                                                             echo base_url('user/change_password/').base64_encode($li->id);?>">Change Password</a></div>
 
                                                 </td>
+													
                                                 <td>
                                                     <?php if($li->status=='Active'){?>
                                                         <div class="badge badge-success"><a class='text-white' href="<?php
@@ -70,6 +73,15 @@
                                                     <a href="<?php
                                                     echo base_url('user/delete_user/').base64_encode($li->id);?>" class="btn btn-danger btn-action confirmation" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b "></i></a>
                                                 </td>
+												<?php }else{?>
+														 <td>
+														  </td>
+														   <td>
+														  </td>
+														   <td>
+														  </td>
+														
+													<?php }?>
                                             </tr>
                                             <?php $count++;
                                         endforeach;}?>

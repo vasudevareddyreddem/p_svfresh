@@ -16,13 +16,15 @@
                                 <table id="example" class="table table-striped">
                                     <thead>
                                         <tr>
-                                           
+                                           <th>Apartment</th>
+											<th>Block</th>
+											<th>Flat/Door number</th>
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
                                             <th>Customer Name</th>
                                             <th>Mobile Number</th>
-                                            <th>Address</th>
+                                           
                                             <th>Payment Type</th>
                                             <th>Status</th>
 											<th>Delivery Date</th> 
@@ -33,18 +35,15 @@
 									<?php if($delivered_status==1){
 										foreach($delivered_list as $order){?>
                                         <tr>
-                                           
+                                            <td><?php echo $order->apartment_name; ?></td>
+											 <td><?php echo $order->block_name; ?></td>
+											  <td><?php echo $order->flat_door_no; ?></td>
                                             <td><?php echo $order->product_name; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->price; ?></td>
                                             <td><?php echo $order->email_id; ?></td>
                                             <td><?php echo $order->phone_number; ?></td>
-                                            <td><span><?php echo $order->address; ?></span>
-											<span><?php echo $order->city; ?></span>
-											<span><?php echo $order->state; ?></span>
-											<span><?php echo $order->zip; ?></span>
-											<span><?php echo $order->country; ?></span>
-											<span><?php echo $order->telephone; ?></span></td>
+                                          
                                             <td><?php if($order->payment_type==1){
 												echo 'online payment';
 											}

@@ -39,11 +39,16 @@ class User extends REST_Controller {
     }
 	public function user_reg_post(){
 		$uname=$this->post('uname');
+		$fname=$this->post('fname');
+		$lname=$this->post('lname');
 		
 		$username=$uname;
 		$email=$this->post('email');
 		$mobile=$this->post('mobile');
 		$org_password=$this->post('password');
+		$apt=$this->post('apt');
+		$block=$this->post('block');
+		$flat=$this->post('flat');
 	    $password=password_hash($this->post('password'),PASSWORD_DEFAULT);
 		$flag=$this->Mobile_model->user_email_checking($email);
 		//echo $this->db->last_query();exit;
@@ -63,10 +68,16 @@ class User extends REST_Controller {
 		
 		$data=array('email_id'=>$email,
 		'phone_number'=>$mobile,
+		'first_name'=>$fname,
+		'last_name'=>$lname,
 		'user_name'=>$username,
 		'org_password'=>$org_password,
 		'password'=>$password,
-		'status'=>'Active'
+		'status'=>'Active',
+		'appartment'=>$apt,
+		'block'=>$block,
+		'flat_door_no'=>$flat
+		
 		);
 		
 		$status=$this->Mobile_model->insert_user_reg($data);
@@ -752,7 +763,7 @@ public function insert_billing_address_post(){
 	
 }
 public function insert_order_post(){
-	$billing_id=$this->post('billing_id');
+	//$billing_id=$this->post('billing_id');
 	$user_id=$this->post('user_id');
 	$flag=$this->Mobile_model->user_checking($user_id);
 	if($flag==0){
@@ -811,7 +822,7 @@ public function insert_order_post(){
 
 
    $data=array('user_id'=>$user_id,
-               'billing_id'=>$billing_id,
+               //'billing_id'=>$billing_id,
 			   'payment_type'=>$payment_type,
 			    'created_by'=>$user_id,
 				'razorpay_payment_id'=>$razor_payment_id,
@@ -930,13 +941,18 @@ $year=date('Y' ,strtotime($date));// current year in number
   $curmonth['year']=$year;
   $curmonth['days']=$days;
    $curmonth['present_day']=date('d' ,strtotime($date)); // present day in number
-$months[]=$curmonth;  
+$months[]=$curmonth; 
+
 
  for($i=1;$i<3;$i++)
  {
 	$curmonth=array();
+	
+ 
+	//$date=date('Y-m-d', strtotime('+'.$i.' month',strtotime(date('Y-m-d'))));
+	$date= date('Y-m-d', strtotime('first day of +'.$i.' month'));
 
-	$date=date('Y-m-d', strtotime('+'.$i.' month'));
+
 	$curmonth['month_in_text']=date('F' ,strtotime($date));
 	$curmonth['month']=date('m' ,strtotime($date));
     $curmonth['year']=date('Y' ,strtotime($date));
@@ -948,12 +964,13 @@ $months[]=$curmonth;
 	 
  }
  $data['months']=$months;
+ //print_r($months);exit;
    $this->response($data, REST_Controller::HTTP_OK);
 
 }
  public function insert_milk_order_post(){
 	$product_id=$this->post('product_id');
-	$billing_id=$this->post('billing_id');
+	//$billing_id=$this->post('billing_id');
 	$user_id=$this->post('user_id');
 	$flag=$this->Mobile_model->user_checking($user_id);
 	if($flag==0){
@@ -965,7 +982,9 @@ $months[]=$curmonth;
 	$month=$this->post('month');
 	$year=$this->post('year');
 	$d=$this->post('days');
+	//print_r( $d); exit;
      $d = str_replace(array('[',']') ,'' , $d);
+	
      $days = explode(',' , $d);
 
 	$quans=$this->post('quantitys');
@@ -977,7 +996,7 @@ $months[]=$curmonth;
 	
 	foreach($quantitys as $key=>$value ){
 	$data[]="('$product_id',
-	         '$billing_id',
+	        
 	         '$user_id',
 	         '$month',
               '$year',
@@ -1152,6 +1171,70 @@ public function get_blocks_by_apt_post(){
 	
 	
 	
+	
+}
+public function get_user_address_post(){
+	 $user_id=$this->post('user_id');
+        $flag=$this->Mobile_model->user_checking($user_id);
+        if($flag==0){
+            $message['status'] =0;
+            $message['message']='unauthorized user';
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+		$res=$this->Mobile_model->get_user_address($user_id);
+		 $message = array('status' => 1, 'user_address' => $res );
+        $this->response($message, REST_Controller::HTTP_OK);
+	
+}
+public function edit_user_address_post(){
+	$user_id=$this->post('user_id');
+	$flag=$this->Mobile_model->user_checking($user_id);
+	if($flag==0){
+		 $message['check_staus'] =0;
+		 $message['message']='unauthorized user';
+		    $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$username=$this->post('username');
+	$fname=$this->post('fname');
+	$lname=$this->post('lname');
+	$apt=$this->post('apt');
+	$block=$this->post('block');
+	$flat=$this->post('flat');
+	$email=$this->post('email');
+	$mobile=$this->post('mobile');
+	$status=$this->Mobile_model->check_edit_email($email,$user_id);
+	
+	
+	if($status==1){
+		 $message = array('status'=>0,'message'=>'email already existed');
+		  $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$status=$this->Mobile_model->check_edit_mobile($mobile,$user_id);
+	
+	if($status==1){
+		 $message = array('status'=>0,'message'=>'mobile number already existed');
+		  $this->response($message, REST_Controller::HTTP_OK);
+	}
+	$data=array(
+	'email_id'=>$email,
+	'phone_number'=>$mobile,
+	'user_name'=>$username,
+	'first_name'=>$fname,
+	'last_name'=>$lname,
+	'appartment'=>$apt,
+	'block'=>$block,
+	'flat_door_no'=>$flat,
+	);
+	$status=$this->Mobile_model->update_address($data,$user_id);
+	if($status==1){
+		 $message = array('status'=>1,'message'=>'Address Updated Successfully');
+		 $this->response($message, REST_Controller::HTTP_OK);
+		
+	}
+	 $message = array('status'=>1,'message'=>'Address Updated Successfully');
+		 $this->response($message, REST_Controller::HTTP_OK);
+		
+
 	
 }
 }

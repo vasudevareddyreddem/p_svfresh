@@ -387,7 +387,7 @@ return $this->db->affected_rows()?1:0;
 	}
 	public function milk_orders($data){
 		
-		$query = "INSERT INTO calender_tab(product_id,billing_id,user_id,month,year,date,price,quantity) VALUES " . implode(', ', $data) . " ON DUPLICATE KEY UPDATE quantity = VALUES(quantity),
+		$query = "INSERT INTO calender_tab(product_id,user_id,month,year,date,price,quantity) VALUES " . implode(', ', $data) . " ON DUPLICATE KEY UPDATE quantity = VALUES(quantity),
 		price=VALUES(price)";
 		$this->db->query($query);
    //$this->db->insert_on_duplicate_update_batch('calender_tab',$data);
@@ -454,5 +454,22 @@ public function get_blocks($apt_id){
 	
 	
 }
+public function get_user_address($userid){
+	$this->db->select('u.email_id,u.phone_number,u.user_name,ap.apartment_name,ap.apartment_id,bl.block_id,bl.block_name
+	,u.flat_door_no,u.first_name,u.last_name')
+	->from('users_tab u')->join('apartment_tab ap','ap.apartment_id=u.appartment')
+	->join('block_tab bl','bl.block_id=u.block')
+	->where('id',$userid);
+	
+	return $this->db->get()->row_array();
+	
+	
+}
+public function update_address($data,$user_id){
+		$this->db->where('id',$user_id);
+		$this->db->update('users_tab',$data);
+		return $this->db->affected_rows()?1:0;
+		
+	}
 
 }

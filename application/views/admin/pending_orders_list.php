@@ -38,13 +38,12 @@
                                             <td><?php echo $order->product_name; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>
-                                            <td><?php echo $order->first_name; ?></td>
+                                            <td><?php echo $order->user_name; ?></td>
                                             <td><?php echo $order->phone_number; ?></td>
-                                            <td><span><?php echo $order->address; ?></span>
-											<span><?php echo $order->city; ?></span>
-											<span><?php echo $order->state; ?></span>
-											<span><?php echo $order->zip; ?></span>
-											<span><?php echo $order->country; ?></span></td>
+                                             <td><span>Apartment Name:<?php echo $order->apartment_name; ?></span>
+											<span> Block_name:<?php echo $order->block_name; ?></span>
+											<span>Flat Number:<?php echo $order->flat_door_no; ?></span>
+											</td>
                                             <td><?php if($order->payment_type==1){
 												echo 'Online Payment';
 											}
