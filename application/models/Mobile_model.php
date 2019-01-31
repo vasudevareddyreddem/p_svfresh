@@ -161,7 +161,7 @@ class Mobile_model extends CI_Model
 		public function get_user_cart($id){
 		$this->db->select('cart_tab.id,product_tab.product_id,product_tab.product_name,product_tab.product_img,
 		cart_tab.quantity,product_tab.net_price,
-		product_tab.discount_price,
+		product_tab.discount_price,product_tab.quantity stock_quantity,
 			product_tab.guarantee_policy,product_tab.description')->from('cart_tab')->
 		join('product_tab','product_tab.product_id=cart_tab.product_id')->
 		where('cart_tab.user_id',$id)->order_by('created_date','desc');
@@ -408,12 +408,14 @@ return $this->db->affected_rows()?1:0;
 
 	    $this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.month,calender_tab.date,calender_tab.quantity,
 	    calender_tab.price,calender_tab.delivery_status,product_tab.product_name,product_tab.product_img,
-	    billing_tab.first_name,billing_tab.last_name,billing_tab.email_address,billing_tab.address,billing_tab.city,
-	    billing_tab.state,billing_tab.zip,billing_tab.country,billing_tab.telephone')
+	    users_tab.first_name,users_tab.last_name,users_tab.email_id,users_tab.phone_number,users_tab.user_name,
+		apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no')
             ->from('calender_tab')->join('product_tab','product_tab.product_id=calender_tab.product_id')->
         join('users_tab','calender_tab.user_id=users_tab.id')->
-            join('billing_tab','billing_tab.id=calender_tab.billing_id')->
-        where('calender_tab.user_id',$user_id);
+		join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')->
+		join('block_tab','block_tab.block_id=users_tab.block','left')->
+            //join('billing_tab','billing_tab.id=calender_tab.billing_id')->
+        where('calender_tab.user_id',$user_id)
         ;
 	 return   $this->db->get()->result_array();
     }

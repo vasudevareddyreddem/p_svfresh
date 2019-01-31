@@ -1037,19 +1037,22 @@ public function get_milk_order_post(){
 	if($curmonth==$month){
 		
 		$day=date('d');
+        $start_date=$day;
 	}
 	else{
 		$day=0;
-		
+		$start_date=1;
 	}
 	$result=$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
+
 
 	if(count($result)>0){
       $order_days=array_column($result,'date');
 	 
 	  $quantity=array_column($result,'quantity');
 
-	    for($i=1;$i<=$days_inmonth;$i++){
+
+	    for($i=$start_date;$i<=$days_inmonth;$i++){
 			if(in_array($i,$order_days)){
 				
 			
@@ -1068,7 +1071,7 @@ public function get_milk_order_post(){
 		 $this->response($message, REST_Controller::HTTP_OK);
 		
 	}
-    for($i=1;$i<=$days_inmonth;$i++){
+    for($i=$start_date;$i<=$days_inmonth;$i++){
 
             $empty_result[]=array('date'=>$i,'quantity'=>0);
 

@@ -15,7 +15,7 @@ class Milkorders_model extends CI_Model
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
 		product_tab.product_name,users_tab.email_id,users_tab.first_name,
-		users_tab.last_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 	users_tab.phone_number,
 		calender_tab.delivered_time,calender_tab.cancelled_time');
 		$this->db->from('calender_tab');
