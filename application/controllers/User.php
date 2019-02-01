@@ -59,7 +59,9 @@ class User extends In_frontend
             'org_password'=>$org_password,
             'password'=>$password,
             'status'=>'Active',
-            'created_by'=>$svadmin
+            'created_by'=>$svadmin,
+			'created_date'=>date('Y-m-d H:i:s'),
+			'updated_date_by_admin'=>date('Y-m-d H:i:s')
         );
 
         $status=$this->Mobile_model->insert_user_reg($data);
@@ -292,7 +294,7 @@ class User extends In_frontend
     }
     public function add_address(){
         if ($this->session->userdata('svadmin_det')) {
-             $data['phone_list']=$this->Adminuser_model->get_user_list();
+             $data['phone_list']=$this->Adminuser_model->get_adminuser_list();
            $data['ap_list']=$this->Apartment_model->get_all_apartments();
             $this->load->view('admin/add_address',$data);
             $this->load->view('admin/footer');
@@ -326,10 +328,10 @@ class User extends In_frontend
             $aname = base64_decode($this->input->post('aname'));
             $bname = $this->input->post('bname');
             $mobile = $this->input->post('mobile');
-            $fname=$this->input->post('fname');
-            $lname = $this->input->post('lname');
-              $email = $this->input->post('email');
-                $phone = $this->input->post('mob');
+           // $fname=$this->input->post('fname');
+            //$lname = $this->input->post('lname');
+             // $email = $this->input->post('email');
+                //$phone = $this->input->post('mob');
                 $flat= $this->input->post('flat');
 
             $user = $this->Adminuser_model->get_user_id($mobile);
@@ -342,19 +344,20 @@ class User extends In_frontend
 
             }
             $date = date('Y-m-d H:i:s');
-            $data = array('user_id' => $user_id,
+            $data = array(
                 'appartment' => $aname,
                 'block' => $bname,
-                'created_date' => $date,
-                'created_by_admin'=>$svadmin,
-                'first_name'=>$fname,
-                'last_name'=>$lname,
-                'email_address'=>$email,
-                 'mobile_number'=>$phone,
-                'status'=>'Active',
+                'updated_date_by_admin' => $date,
+                'updated_by_admin'=>$svadmin,
+                
+                
+                
+               
                 'flat_door_no'=>$flat
             );
-          $flag= $this->Adminuser_model->save_blling_address($data);
+          //$flag= $this->Adminuser_model->save_blling_address($data);
+		 $flag=$this->Adminuser_model->save_user_address($data,$mobile);
+		  
           if($flag==1){
               $this->session->set_flashdata('success', 'Address Added Successfully');
               redirect('user/address_list');

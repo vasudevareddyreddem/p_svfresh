@@ -52,7 +52,7 @@
                                             <label>Flat Address</label>
                                             <input id="flat" type="text" class="form-control" name="flat">
                                         </div>
-                                        <div class="form-group">
+                                       <!-- <div class="form-group">
                                             <label>First Name</label>
                                             <input id="fname" type="text" class="form-control" name="fname">
                                         </div>
@@ -64,10 +64,10 @@
                                             <label>Email Address</label>
                                             <input id="email" type="text" class="form-control" name="email">
                                         </div>
-                                        <div class="form-group">
+                                       <div class="form-group">
                                             <label>Mobile Number</label>
                                             <input id="mob" type="text" class="form-control" name="mob">
-                                        </div>
+                                        </div>-->
 
 
                                         <button type="submit" class="btn btn-primary">

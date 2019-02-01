@@ -39,7 +39,7 @@
                                                 <td><?php echo $li->phone_number; ?></td>
                                                 <td>
                                                    <?php echo $li->apartment_name.'<br>'.$li->block_name.
-'<br>'.$li->flat_door_no.'<br>'.$li->mobile_number; ?>
+'<br>'.$li->flat_door_no.'<br>'.$li->phone_number; ?>
                                                 </td>
 
 

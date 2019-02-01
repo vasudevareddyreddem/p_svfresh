@@ -46,6 +46,10 @@
 									</div>
 							</div>
 							</form>
+							<!--<div>
+							<label>Enter Phone Number</label><input type='text' id='phn_num'>
+							<button>Enter</button>
+							</div> -->
 							<div class="clearfix">
 								&nbsp;
 							</div>

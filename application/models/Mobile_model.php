@@ -389,6 +389,7 @@ return $this->db->affected_rows()?1:0;
 		
 		$query = "INSERT INTO calender_tab(product_id,user_id,month,year,date,price,quantity) VALUES " . implode(', ', $data) . " ON DUPLICATE KEY UPDATE quantity = VALUES(quantity),
 		price=VALUES(price)";
+		//echo $query;exit;
 		$this->db->query($query);
    //$this->db->insert_on_duplicate_update_batch('calender_tab',$data);
 return $this->db->affected_rows()?1:0;
@@ -471,6 +472,17 @@ public function update_address($data,$user_id){
 		$this->db->where('id',$user_id);
 		$this->db->update('users_tab',$data);
 		return $this->db->affected_rows()?1:0;
+		
+	}
+	public function get_ordered_milk_orders($data){
+		$count = count($data);
+		$first_id = $this->db->insert_id();
+		$last_id = $first_id + ($count-1);
+		$this->db->select('cal.product_id,cal.year,cal.month,cal.date,cal.quantity,cal.price,prod.product_name')->from('calender_tab cal')
+		->join('product_tab prod','prod.product_id=cal.product_id')->
+		where('calender_id >=', $first_id)->
+		where('calender_id <=', $last_id);
+return $this->db->get()->result_array();
 		
 	}
 

@@ -19,7 +19,7 @@
                                             <th>Order Id</th>
                                             <th>Product Name</th>
                                             <th>Quantity</th>
-                                            <th>Price</th>
+                                            <th>Single Product Price</th>
                                             <th>Customer Name</th>
                                             <th>Mobile Number</th>
                                             <th>Address</th>
