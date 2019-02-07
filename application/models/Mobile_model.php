@@ -485,5 +485,43 @@ public function update_address($data,$user_id){
 return $this->db->get()->result_array();
 		
 	}
+	public function check_user_mail($email){
+		$this->db->select('1')->from('users_tab')->group_start()->where('email_id',$email)->or_where('phone_number',$email)->group_end()->
+		where('status','Active');
+		return $this->db->get()->result_array();
+
+	}
+	public function check_space($email,$num){
+		$this->db->select('1')->from('otp_tab')->where('user_id',$email)->where('otp',$num);
+		$count=count($this->db->get()->result());
+		if($count>1){
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
+	public function save_otp($data){
+		$this->db->insert('otp_tab',$data);
+		return $this->db->affected_rows()?1:0;
+
+	}
+	public function otp_data($otp,$user_id){
+		$this->db->select('*')->from('otp_tab')->where('otp',$otp)->where('user_id',$user_id)->where('expiry_status',1);
+                $res=$this->db->get()->result();
+      if(count($res)>1){
+      	$start_date = new DateTime('Y-m-d H:i:s');
+       $since_start = $start_date->diff(new DateTime('2012-09-11 10:25:00'));
+
+$secs= $since_start->s;
+if($secs>0){
+	
+}
+
+              
+
+
+      }
+	}
 
 }

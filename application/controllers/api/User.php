@@ -1242,4 +1242,50 @@ public function edit_user_address_post(){
 
 	
 }
+public function send_email_post(){
+	$email=$this->post('email');
+	$res=$this->Mobile_model->check_user_mail($email);
+	if(count($res)>0){
+
+                
+	}
+	else{
+		$message = array('status'=>0,'message'=>'Email Not Existed');
+		 $this->response($message, REST_Controller::HTTP_OK);
+
+	}
+	
+	$s=0;
+ while($s==0){
+ 	$num=str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+$flag=$this->Mobile_model->check_space($email,$num);
+if($flag==0){
+	$s=1;
+}
+
+
+}
+$data=array('otp'=>$num,
+'user_id'=>$email,
+'created_date'=>date('Y-m-d H:i:s'),
+'expiry_status'=>1);
+ $r=$this->Mobile_model->save_otp($data);
+ if($r==1){
+ 	$message = array('status'=>1,'message'=>'otp sent to your registered mobile number,it will expire after 5 minutes ');
+		 $this->response($message, REST_Controller::HTTP_OK);
+
+ }
+ $message = array('status'=>1,'message'=>'otp not sent , try again ');
+		 $this->response($message, REST_Controller::HTTP_OK);
+
+
+
+}
+public function otp_checking_post(){
+	$otp=$this->post('otp');
+	$user_id=$this->post('email');
+	$r=$this->Mobile_model->otp_data($otp,$user_id);
+	
+
+}
 }

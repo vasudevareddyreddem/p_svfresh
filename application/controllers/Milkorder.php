@@ -219,7 +219,7 @@ class Milkorder extends In_frontend{
 
 public function update_delv_sta_auto(){
 	$this->Milkorders_model->auto_update_sataus();
-echo $this->db->last_query();exit;
+exit;
 
 }
 
