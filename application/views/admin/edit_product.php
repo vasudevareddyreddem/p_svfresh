@@ -25,7 +25,7 @@
                                                     <option disabled>Select</option>
 													<?php if($status==1){
 														 foreach($cat_list as $cat):?>
-                                                    <option value="<?php echo base64_encode($cat->cat_id);?>"  
+                                                    <option value="<?php echo base64_encode($cat->cat_id);?>"   
 													<?php if($cat->cat_id==$product->cat_id){
 														echo "selected";} ?>><?php echo $cat->cat_name;?></option>
 													<?php endforeach;}?>

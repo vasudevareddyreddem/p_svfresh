@@ -242,7 +242,7 @@ class User extends In_frontend
         else{redirect('login');}
 
     }
-    public function active_user(){
+ public function active_user(){
         if ($this->session->userdata('svadmin_det')) {
             $admin=$this->session->userdata('svadmin_det');
             $svadmin=$admin['admin_id'];
@@ -395,12 +395,12 @@ class User extends In_frontend
 public  function edit_address(){
     if ($this->session->userdata('svadmin_det')) {
         $id=base64_decode($this->uri->segment(3));
-        $data['phone_list']=$this->Adminuser_model->get_user_list();
+     
         $data['ap_list']=$this->Apartment_model->get_all_apartments();
         $user=$this->Adminuser_model->get_address_by_id($id);
         $data['blocks']=$this->Adminuser_model->get_blocks_by_apt($user->appartment);
 
-
+         $data['phone_list']=$this->Adminuser_model->get_edit_adminuser_list($user->phone_number);
         if(count($user)>0) {
             $data['status']=1;
             $data['address']=$user;
@@ -427,36 +427,37 @@ public  function save_edit_address(){
         $aname = base64_decode($this->input->post('aname'));
         $bname = $this->input->post('bname');
         $mobile = $this->input->post('mobile');
-        $fname=$this->input->post('fname');
-        $lname = $this->input->post('lname');
+        $uname=$this->input->post('uname');
+      
         $email = $this->input->post('email');
-        $phone = $this->input->post('mob');
+     
         $flat= $this->input->post('flat');
 
-        $user = $this->Adminuser_model->get_user_id($mobile);
-        if (count($user) > 0) {
-            $user_id = $user->id;
+        // $user = $this->Adminuser_model->get_user_id($mobile);
+        // if (count($user) > 0) {
+        //     $user_id = $user->id;
 
-        } else {
-            $this->session->set_flashdata('error', 'Phone Number Deleted by another session');
-            redirect($_SERVER['HTTP_REFERER']);
+        // } else {
+        //     $this->session->set_flashdata('error', 'Phone Number Deleted by another session');
+        //     redirect($_SERVER['HTTP_REFERER']);
 
-        }
+        // }
         $date = date('Y-m-d H:i:s');
-        $data = array('user_id' => $user_id,
+        $data = array(
             'appartment' => $aname,
             'block' => $bname,
             'updated_date_by_admin' => $date,
             'updated_by_admin'=>$svadmin,
-            'first_name'=>$fname,
-            'last_name'=>$lname,
-            'email_address'=>$email,
-            'mobile_number'=>$phone,
+            'user_name'=>$uname,
+          
+            'email_id'=>$email,
+            'phone_number'=>$mobile,
 
             'flat_door_no'=>$flat
         );
-        $bill_id= base64_decode($this->input->post('bill_id'));
-        $flag= $this->Adminuser_model->update_blling_address($data,$bill_id);
+        $user_id= base64_decode($this->input->post('user_id'));
+        $flag= $this->Adminuser_model->update_user_address($data,$user_id);
+       
         if($flag==1){
             $this->session->set_flashdata('success', 'Address Updated Successfully');
             redirect('user/address_list');
@@ -479,9 +480,13 @@ public function delete_address(){
         $svadmin=$admin['admin_id'];
         $id=base64_decode($this->uri->segment(3));
         $date=date('Y-m-d H:i:s');
-        $data=array('status'=>'Deleted',
-            'updated_date_by_admin'=>$date,
-            'updated_by_admin'=>$svadmin);
+        $data=array(
+            'updated_by_admin'=>null,
+            'appartment'=>null,
+            'block'=>null,
+            'flat_door_no'=>null,
+                  'address_deleted_by'=>$svadmin,
+                  'updated_date_by_admin'=>$date);
         $status=$this->Adminuser_model->delete_address($data,$id);
         if($status==1){
             $this->session->set_flashdata('success',' Address Deleted successfully');

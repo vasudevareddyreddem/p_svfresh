@@ -38,8 +38,10 @@
                                                 <td><?php echo $li->email_id; ?></td>
                                                 <td><?php echo $li->phone_number; ?></td>
                                                 <td>
-                                                   <?php echo $li->apartment_name.'<br>'.$li->block_name.
-'<br>'.$li->flat_door_no.'<br>'.$li->phone_number; ?>
+                                                  Apartment Name: <?php echo $li->apartment_name; ?>
+                                                  <br>Block:<?php echo $li->block_name;?>
+                                             <br>Flat No:<?php echo $li->flat_door_no;?><br>
+                                            
                                                 </td>
 
 

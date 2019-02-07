@@ -150,15 +150,15 @@ class Adminuser_model extends CI_Model
         return $this->db->get()->row();
 
     }
-    public function update_blling_address($data,$bill_id){
-        $this->db->where('id',$bill_id);
-        $this->db->update('billing_tab',$data);
+    public function update_user_address($data,$user_id){
+        $this->db->where('id',$user_id);
+        $this->db->update('users_tab',$data);
         return $this->db->affected_rows()?1:0;
 
     }
 public function delete_address($data,$id){
     $this->db->where('id',$id);
-    $this->db->update('billing_tab',$data);
+    $this->db->update('users_tab',$data);
     return $this->db->affected_rows()?1:0;
 
 }
@@ -177,5 +177,17 @@ public function get_adminuser_list(){
       return  $this->db->get()->result();
 	
 }
+public function get_edit_adminuser_list($phone){
+     $this->db->select('*')->from('users_tab')->
+     group_start()->
+        where('created_by is NOT NULL', NULL, FALSE)->
+        where('updated_by_admin is  NULL', NULL, FALSE)->
+        where('status !=','Deleted')->order_by('created_date','desc')->group_end()
+        ->or_where('phone_number',$phone);
+
+      return  $this->db->get()->result();
+    
+}
+
 
 }

@@ -17,14 +17,14 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
                                     <form method="post" id="add_user" action="<?php echo base_url('user/save_edit_address');?>"  enctype="multipart/form-data">
-                                       <input type="hidden" value="<?php echo base64_encode($address->id);?>" name="bill_id" ?>
+                                       <input type="hidden" value="<?php echo base64_encode($address->id);?>" name="user_id" ?>
                                         <div class="form-group">
                                             <label>User Phone numbers</label>
                                             <select  id="mobile" class="form-control" name="mobile">
 
                                                 <?php foreach($phone_list as $lis){?>
-                                                    <option value="<?php echo $lis->phone_number;?>
-<?php if($address->phone_number==$lis->phone_number){echo "selected";}?>">
+                                                    <option value="<?php echo $lis->phone_number;?>"
+                      <?php if($address->phone_number==$lis->phone_number){echo "selected";}?>">
                                                         <?php echo $lis->phone_number;?></option>
                                                 <?php }?>
 
@@ -65,25 +65,17 @@
 
                                         </div>
                                         <div class="form-group">
-                                            <label>First Name</label>
-                                            <input id="fname" type="text" class="form-control" name="fname"
-                                            value="<?php echo $address->first_name; ?>">
+                                            <label>User Name</label>
+                                            <input id="fname" type="text" class="form-control" name="uname"
+                                            value="<?php echo $address->user_name; ?>">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Last Name</label>
-                                            <input id="lname" type="text" class="form-control" name="lname"
-                                                   value="<?php echo $address->last_name; ?>">
-                                        </div>
+                                       
                                         <div class="form-group">
                                             <label>Email Address</label>
                                             <input id="email" type="text" class="form-control" name="email"
-                                                   value="<?php echo $address->email_address; ?>">
+                                                   value="<?php echo $address->email_id; ?>">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Mobile Number</label>
-                                            <input id="mob" type="text" class="form-control" name="mob"
-                                                   value="<?php echo $address->mobile_number; ?>">
-                                        </div>
+                                       
 
 
                                         <button type="submit" class="btn btn-primary">

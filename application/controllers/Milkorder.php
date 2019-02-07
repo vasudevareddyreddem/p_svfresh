@@ -24,8 +24,9 @@ class Milkorder extends In_frontend{
 				$apartment = $this->input->post('apartment');
 				$block = $this->input->post('block');
 				$date = $this->input->post('date');
+				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['tot_list']=$this->Milkorders_model->total_order_list($apartment,$block,$date);
+				$data['tot_list']=$this->Milkorders_model->total_order_list($apartment,$block,$date,$mobile);
 			} else {
 				$data['tot_list']=$this->Milkorders_model->total_order_list();
 			}
@@ -36,6 +37,7 @@ class Milkorder extends In_frontend{
 			else{
 				$data['tot_status']=0;
 			}
+			//echo '<pre>';print_r($data);exit;
 			$this->load->view('admin/milk_tot_order_list',$data);
 			$this->load->view('admin/milk-footer');
 
@@ -45,7 +47,20 @@ class Milkorder extends In_frontend{
 
 	public function pending_order_list(){
 		if($this->session->userdata('svadmin_det')){
+			$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+			$post = $this->input->post();
+			if ($post) {
+				unset($post['button']);
+				$apartment = $this->input->post('apartment');
+				$block = $this->input->post('block');
+				$date = $this->input->post('date');
+				$mobile=$this->input->post('phonenum');
+				$data['filter'] = $post;
+				$data['tot_list']=$this->Milkorders_model->pending_order_list($apartment,$block,$date,$mobile);
+			}
+			else{
 			$data['pending_list']=$this->Milkorders_model->pending_order_list();
+		}
 			if(count($data['pending_list'])>0){
 				$data['pending_status']=1;
 			}
@@ -55,14 +70,27 @@ class Milkorder extends In_frontend{
 
 			//echo '<pre>'	;print_r($data);exit;
 			$this->load->view('admin/milk_pending_order_list',$data);
-			$this->load->view('admin/footer');
+			$this->load->view('admin/milk-footer');
 
 		}
 		else{redirect('login');}
 	}
 	public function delivered_order_list(){
 		if($this->session->userdata('svadmin_det')){
+				$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+			$post = $this->input->post();
+			if ($post) {
+				unset($post['button']);
+				$apartment = $this->input->post('apartment');
+				$block = $this->input->post('block');
+				$date = $this->input->post('date');
+				$mobile=$this->input->post('phonenum');
+				$data['filter'] = $post;
+				$data['tot_list']=$this->Milkorders_model->delivered_order_list($apartment,$block,$date,$mobile);
+			}
+			else{
 			$data['delivered_list']=$this->Milkorders_model->delivered_order_list();
+		}
 
 			if(count($data['delivered_list'])>0){
 				$data['delivered_status']=1;
@@ -71,14 +99,27 @@ class Milkorder extends In_frontend{
 				$data['delivered_status']=0;
 			}
 			$this->load->view('admin/milk_delivered_order_list',$data);
-			$this->load->view('admin/footer');
+		$this->load->view('admin/milk-footer');
 
 		}
 		else{redirect('login');}
 	}
 	public function cancel_order_list(){
 		if($this->session->userdata('svadmin_det')){
+				$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+			$post = $this->input->post();
+			if ($post) {
+				unset($post['button']);
+				$apartment = $this->input->post('apartment');
+				$block = $this->input->post('block');
+				$date = $this->input->post('date');
+				$mobile=$this->input->post('phonenum');
+				$data['filter'] = $post;
+				$data['tot_list']=$this->Milkorders_model->cancel_order_list($apartment,$block,$date,$mobile);
+			}
+			else{
 			$data['cancel_list']=$this->Milkorders_model->cancel_order_list();
+		}
 			if(count($data['cancel_list'])>0){
 				$data['cancel_status']=1;
 			}
@@ -88,7 +129,7 @@ class Milkorder extends In_frontend{
 
 			//echo '<pre>'	;print_r($data);exit;
 			$this->load->view('admin/milk_cancel_order_list',$data);
-			$this->load->view('admin/footer');
+			$this->load->view('admin/milk-footer');
 
 		}
 		else{redirect('login');}
@@ -176,5 +217,10 @@ class Milkorder extends In_frontend{
     }
   }
 
+public function update_delv_sta_auto(){
+	$this->Milkorders_model->auto_update_sataus();
+echo $this->db->last_query();exit;
+
+}
 
 }
