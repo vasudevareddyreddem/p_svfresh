@@ -1245,19 +1245,21 @@ public function edit_user_address_post(){
 public function send_email_post(){
 	$email=$this->post('email');
 	$res=$this->Mobile_model->check_user_mail($email);
+	//echo $this->db->last_query();exit;
 	if(count($res)>0){
 
                 
 	}
 	else{
-		$message = array('status'=>0,'message'=>'Email Not Existed');
+		$message = array('status'=>0,'message'=>'Phone Number Not Existed');
 		 $this->response($message, REST_Controller::HTTP_OK);
 
 	}
 	
 	$s=0;
  while($s==0){
- 	$num=str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+ 	$num=str_pad(mt_rand(0, 999999), 6,'0', STR_PAD_LEFT);
+ 
 $flag=$this->Mobile_model->check_space($email,$num);
 if($flag==0){
 	$s=1;
@@ -1284,8 +1286,72 @@ $data=array('otp'=>$num,
 public function otp_checking_post(){
 	$otp=$this->post('otp');
 	$user_id=$this->post('email');
-	$r=$this->Mobile_model->otp_data($otp,$user_id);
+	$res=$this->Mobile_model->otp_data($otp,$user_id);
+	//echo $this->db->last_query();exit;
+	if(count($res)>0){
+      	$start_date = new DateTime(date('Y-m-d  H:i:s'));
+       $since_start = $start_date->diff(new DateTime($res->created_date));
+
+$secs= $since_start->s;
+if($secs>300){
+$this->Mobile_model->update_otp_data($res->id);	
+
+	$message = array('status'=>0,'message'=>'otp is expired ');
+		 $this->response($message, REST_Controller::HTTP_OK);
+  
+	
+}
+else{
+	$this->Mobile_model->update_otp_data($res->id);	
+
+	 $message = array('status'=>1,'res'=>$res);
+		 $this->response($message, REST_Controller::HTTP_OK);
+}
+
+   
+
+
 	
 
 }
+
+		 $message = array('status'=>0,'message'=>'otp is wrong ');
+		 $this->response($message, REST_Controller::HTTP_OK);
+}
+public function password_reset_post(){
+	
+	$user_id=$this->post('user_id');
+	$check_id=$this->post('id');
+
+	$flag=$this->Mobile_model->chcek_otp_id($check_id,$user_id);
+	if($flag==1){
+
+
+	}
+	else{
+		 $message = array('status'=>0,'message'=>'Wrong User');
+		 $this->response($message, REST_Controller::HTTP_OK);
+
+	}
+
+	 $password=password_hash($this->post('password'),PASSWORD_DEFAULT);
+	
+	$data=array('password'=>$password,
+'org_password'=>$this->post('password'),
+'updated_date'=>date('Y-m-d H:i:s')
+);
+
+	$flag=$this->Mobile_model->update_password($data,$user_id);
+	
+	if($flag==1){
+          $message = array('status'=>1,'message'=>'Password Reset Successfully ');
+		 $this->response($message, REST_Controller::HTTP_OK);
+
+	}
+	 $message = array('status'=>0,'message'=>'Password not reset ,try again');
+		 $this->response($message, REST_Controller::HTTP_OK);
+
+
+}
+
 }
