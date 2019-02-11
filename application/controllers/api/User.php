@@ -34,14 +34,14 @@ class User extends REST_Controller {
 		$this->load->library('session');
 		$this->load->helper('security');
 		$this->load->model('Mobile_model');
-		
-		
+
+
     }
 	public function user_reg_post(){
 		$uname=$this->post('uname');
 		$fname=$this->post('fname');
 		$lname=$this->post('lname');
-		
+
 		$username=$uname;
 		$email=$this->post('email');
 		$mobile=$this->post('mobile');
@@ -55,17 +55,17 @@ class User extends REST_Controller {
 		if($flag==1){
 			$message = array('status'=>0,'message'=>'email already  existed');
 			$this->response($message, REST_Controller::HTTP_OK);
-		
-			
+
+
 		}
 		$flag=$this->Mobile_model->user_mobile_checking($mobile);
 		if($flag==1){
 			$message = array('status'=>0,'message'=>'phone number already  existed');
 			$this->response($message, REST_Controller::HTTP_OK);
-		
-			
+
+
 		}
-		
+
 		$data=array('email_id'=>$email,
 		'phone_number'=>$mobile,
 		'first_name'=>$fname,
@@ -77,29 +77,29 @@ class User extends REST_Controller {
 		'appartment'=>$apt,
 		'block'=>$block,
 		'flat_door_no'=>$flat
-		
+
 		);
-		
+
 		$status=$this->Mobile_model->insert_user_reg($data);
 		if($status==0){
-			
+
 				$message = array('status'=>0,'message'=>'user not registered');
 			$this->response($message, REST_Controller::HTTP_OK);
-		
-			
+
+
 		}
 		$message = array('status'=>1, 'id'=>$status,'message'=>'user registered');
 			$this->response($message, REST_Controller::HTTP_OK);
-	
-		
+
+
 	}
 
 	public function login_post(){
 		$email=$this->post('email');
-	
+
 		$password=$this->post('password');
-		
-		
+
+
 		if($email==''){
 			$message = array('status'=>0,'message'=>'Email Id is required');
 			$this->response($message, REST_Controller::HTTP_OK);
@@ -108,52 +108,52 @@ class User extends REST_Controller {
 			$message = array('status'=>0,'message'=>'Password is required');
 			$this->response($message, REST_Controller::HTTP_OK);
 		}
-	
-		
+
+
 		$user=$this->Mobile_model->check_loging($email);
 		//echo $this->db->last_query();exit;
-		
-		
+
+
 		if(count($user)>0){
 			if(password_verify($this->post('password'),$user['password']))
 				{
 					unset($user['password']);
 				$message = array('status'=>1,'message'=>'login successful','user'=>$user);
 			$this->response($message, REST_Controller::HTTP_OK);
-				
+
 			}
 			else{
 				        $u= new stdClass();
 					$message = array('status'=>0,'message'=>'password is wrong','user'=>$u);
 			 $this->response($message, REST_Controller::HTTP_OK);
-				
+
 			}
-		
-		
+
+
 	               }
 				   else{
                        $u= new stdClass();
 					   $message = array('status'=>0,'message'=>'email is wrong','user'=>$u);
 			     $this->response($message, REST_Controller::HTTP_OK);
-					   
-					   
+
+
 				   }
-	
-	
-	
+
+
+
 
 }
 //categories
 public function categories_post(){
-	
+
 	// $userid=$this->post('user_id');
-	
+
 	// $flag=$this->Mobile_model->user_checking($userid);
 	// if($flag==0){
 		 // $message = array('status'=>0,'message'=>' unauthorized user');
 		    // $this->response($message, REST_Controller::HTTP_OK);
 	// }
-	
+
 	$cat=$this->Mobile_model->category_list();
 	if(count($cat)>0){
 	       $message = array('status'=>1,'message'=>$cat);
@@ -175,25 +175,25 @@ public function home_slider_post(){
 			}
 			else{
 					$message['status']=0;
-					
+
 			}
-			
+
 			 }
 		 else{
 			 $message['status']=0;
 			 $message['message']='no slider Images';
-			 
+
 		 }
 		  $this->response($message, REST_Controller::HTTP_OK);
-	
+
 }
 public function subcatgories_post(){
-	
-	
+
+
 	$cat=$this->post('cat_id');
-	
+
 	$subcat=$this->Mobile_model->subcategory_list($cat);
-	
+
 	if(count($subcat)>0){
 	 $message = array('status'=>1,'message'=>$subcat);
 	 $message['subcat_img_path']=base_url().'assets/uploads/sub_category_pics/';
@@ -204,7 +204,7 @@ public function subcatgories_post(){
 }
 //not needed
 public function products_post(){
-	
+
 	$userid=$this->post('user_id');
 	$cat=$this->post('cat_id');
 	$subcat=$this->post('subcat_id');
@@ -220,7 +220,7 @@ public function products_post(){
 	}
 	 $message = array('status'=>0,'message'=>'NO Products for this subcategory');
 		    $this->response($message, REST_Controller::HTTP_OK);
-	
+
 }
 //not needed
 //home page
@@ -236,8 +236,8 @@ public function home_post(){
 	// if(count($products)>0){
 		// $message['prodcut_status']=1;
 		// $message['prodcuts']=$products;
-		   
-		
+
+
 	// }
 	// else{
 		// $message['prodcut_status']=0;
@@ -253,66 +253,66 @@ public function home_post(){
 			else{
 					$message['slider_staus']=0;
 			}
-			
+
 			  //$message['simg_staus']=1;
 			  //$message['simages']=$images;
-		   
-			
+
+
 		 }
 		 else{
 			 // $message['simg_staus']=0;
-			 
+
 		 }
-		
+
 		$cat=$this->Mobile_model->category_list();
 		if(count($cat)>0){
 			$message['cat_status']=1;
 			$message['cat_list']=$cat;
-			
+
 		}
 		else{
 			$message['cat_status']=0;
 		}
 		 $this->response($message, REST_Controller::HTTP_OK)  ;
-		
+
 	}
 	//get product for single category
 	public function subcatproducts_post(){
-	
-	
+
+
 	//$cat=$this->post('cat_id');
 	$subcat=$this->post('subcat_id');
-	
+
 	if($this->post('user_id')){
 	$user_id=$this->post('user_id');
 	} else{
 		$user_id='dummydata';
 	}
-	
-	
-	
+
+
+
 	// $slider=$this->Mobile_model->subcat_img_slider($subcat);
-	
+
 	// $message=array();
 
 	// if(count($slider)>0){
 		// $message['status']=1;
 		// $message['subcat_slider']=$slider;
-		
+
 	// }
 	// else{
 		// $message['slider_status']=0;
 	// }
-	
+
 	$products=$this->Mobile_model->product_list($subcat,$user_id);
 
-	
+
 	if(count($products)>0){
 		$message['status']=1;
 		$message['products']=$products;
 		$message['product_image_path']=base_url().'assets/uploads/product_pics/';
 		$message['message']='products available';
-	
+
 		 }
 		 else{
 			 $message['status']=0;
@@ -320,23 +320,23 @@ public function home_post(){
 		 }
 
 		    $this->response($message, REST_Controller::HTTP_OK);
-	
+
 }
 //not needed
 //get products for single category
 	public function catproducts_post(){
-	
+
 	$userid=$this->post('user_id');
 	$cat=$this->post('cat_id');
-	
-	
-	
+
+
+
 	$products=$this->Mobile_model->product_list_by_cat($cat);
 	if(count($products)>0){
 		$message['status']=1;
 		$message['products']=$products;
 		 $message['image_path']=base_url().'assets/uploads/product_pics/';
-	
+
 		 }
 		 else{
 			 $message['status']=0;
@@ -344,7 +344,7 @@ public function home_post(){
 		 }
 
 		    $this->response($message, REST_Controller::HTTP_OK);
-	
+
 }
 //get single product
 public function singleproduct_post(){
@@ -357,8 +357,8 @@ $message=array();
  //$dis_imgs=$this->Mobile_model->cat_dis_imgs();
     // $cat_list=$this->Mobile_model->category_list();
 // if(count($cat_list)>0)
- // { 
-	
+ // {
+
 	 // $message['cat_list_status']=1;
 	  // $message['cat_list']=$cat_list;
  // }
@@ -366,8 +366,8 @@ $message=array();
 	  // $message['cat_list_status']=0;
  // }
  if(count($prod_det)>0)
- { 
-	
+ {
+
 	 $message['prod_det_status']=1;
 	  $message['prod_det']=$prod_det;
  }
@@ -375,8 +375,8 @@ $message=array();
 	  $message['prod_det_status']=0;
  }
  // if(count($prod_imgs)>0)
- // { 
-	
+ // {
+
 	 // $message['prod_imgs_status']=1;
 	  // $message['prod_imgs']=$prod_imgs;
  // }
@@ -384,27 +384,27 @@ $message=array();
 	  // $message['prod_imgs_status']=0;
  // }
  if(count($prod_fet)>0)
- { 
-	 
-	
+ {
+
+
 	 $message['prod_fet']=$prod_fet;
  }
  else{
 	  $message['prod_fet']='No Product Features';
  }
  if(count($prod_rel)>0)
- { 
- 
+ {
+
 	 $message['prod_rel']=$prod_rel;
-	
+
  }
  else{
 	  $message['prod_rel']='No related Products';
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
+
+
 }
 //get user orders
 public function orders_post(){
@@ -418,21 +418,21 @@ public function orders_post(){
 	}
 	$orders=$this->Mobile_model->get_user_orders($user_id);
 	if(count($orders)>0)
- { 
+ {
  $message['orders_status']=1;
 	 $message['orders']=$orders;
      $message['product_image_path']=base_url().'assets/uploads/product_pics/';
-	
+
  }
  else{
 	  $message['orders_status']=0;
 	  $message['message']="NO orders";
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
+
+
+
 }
 //insert wishlist
 public function insert_wishlist_product_post(){
@@ -444,12 +444,12 @@ public function insert_wishlist_product_post(){
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
-	
+
 	$pid=$this->post('product_id');
 	$quan=$this->post('quantity');
 	$prod_det=$this->Mobile_model->single_product_details($pid);
-	
-	
+
+
 	if(!count($prod_det)>0){
 		 $message = array('status'=>0,'message'=>'Product Not available');
 		    $this->response($message, REST_Controller::HTTP_OK);
@@ -461,9 +461,9 @@ public function insert_wishlist_product_post(){
 				'quantity'=>$quan,
 				'net_price'=>$prod_det['net_price'],
 				'discount_price'=>$prod_det['discount_price'],
-			
+
 				);
-	
+
 
 	$flag=$this->Mobile_model->insert_wishlist_product($data);
 	if($flag==1) {
@@ -473,8 +473,8 @@ public function insert_wishlist_product_post(){
 	}
 	$message = array('status'=>0,'message'=>'product not added  to whishlist');
 		    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
+
+
 }
 //get wishlist
 public function wishlist_post(){
@@ -488,20 +488,20 @@ public function wishlist_post(){
 	}
 	$wishlist=$this->Mobile_model->get_user_wishlist($user_id);
 	if(count($wishlist)>0)
- { 
+ {
  $message['wishlist_status']=1;
 	 $message['wishlist']=$wishlist;
 	 $message['image_path']=base_url().'assets/uploads/product_pics/';
-	
+
  }
  else{
 	  $message['wishlist_status']=0;
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
+
+
+
 }
 //getting user profile
 public function profile_post(){
@@ -515,19 +515,19 @@ public function profile_post(){
 	}
 	$profile=$this->Mobile_model->get_user_profile($user_id);
 	if(count($profile)>0)
- { 
+ {
       $message['profile_status']=1;
 	 $message['profile']=$profile;
-	
+
  }
  else{
 	  $message['profile_status']=0;
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
+
+
+
 }
 public function edit_profile_post(){
 	$user_id=$this->post('user_id');
@@ -541,14 +541,14 @@ public function edit_profile_post(){
 	$email=$this->post('email');
 	$mobile=$this->post('mobile');
 	$status=$this->Mobile_model->check_edit_email($email,$user_id);
-	
-	
+
+
 	if($status==1){
 		 $message = array('status'=>0,'message'=>'email already existed');
 		  $this->response($message, REST_Controller::HTTP_OK);
 	}
 	$status=$this->Mobile_model->check_edit_mobile($mobile,$user_id);
-	
+
 	if($status==1){
 		 $message = array('status'=>0,'message'=>'mobile number already existed');
 		  $this->response($message, REST_Controller::HTTP_OK);
@@ -561,11 +561,11 @@ public function edit_profile_post(){
 	if($status==1){
 		 $message = array('status'=>1,'message'=>'Profile Updated Successfully');
 		 $this->response($message, REST_Controller::HTTP_OK);
-		
+
 	}
 	 $message = array('status'=>1,'message'=>'Profile Updated Successfully');
 		 $this->response($message, REST_Controller::HTTP_OK);
-	
+
 }
 //add to cart
 public function add_to_cart_post(){
@@ -579,8 +579,8 @@ public function add_to_cart_post(){
 		    $this->response($message, REST_Controller::HTTP_OK);
 	 }
 	$prod_det=$this->Mobile_model->single_product_details($product_id);
-	
-	
+
+
 	if(!count($prod_det)>0){
 		 $message = array('status'=>0,'message'=>'Product Not available');
 		    $this->response($message, REST_Controller::HTTP_OK);
@@ -591,13 +591,13 @@ public function add_to_cart_post(){
 	 'product_name'=>$prod_det['product_name'],
 	  'net_price'=>$net_price,
 	 'quantity'=>$quan,
-	 
+
 	 );
 	$flag= $this->Mobile_model->insert_cart_product($data);
 	if($flag==1){
 	 $message = array('status'=>1,'message'=>'Add to cart Successfully');
 		    $this->response($message, REST_Controller::HTTP_OK);
-		
+
 	}
 	 $message = array('status'=>1,'message'=>'Product not added to cart');
 		    $this->response($message, REST_Controller::HTTP_OK);
@@ -616,54 +616,54 @@ public function get_cart_post(){
 	}
 	$cart=$this->Mobile_model->get_user_cart($user_id);
 	if(count($cart)>0)
- { 
+ {
  $message['status']=1;
 	 $message['cart_list']=$cart;
 	  $message['image_path']=base_url().'assets/uploads/product_pics/';
-	
+
  }
  else{
 	  $message['status']=0;
 	   $message['message']='No cart products Available';
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
+
+
+
 }
 // delete the cart product
 public function delete_cart_product_post(){
-	
+
 	$user_id=$this->post('user_id');
 	$cart_id=$this->post('cart_id');
 	$message=array();
-	
-	
+
+
 	$flag=$this->Mobile_model->user_checking($user_id);
-	
+
 	if($flag==0){
 		 $message['status'] =0;
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
-	
+
 	$cart=$this->Mobile_model->delete_cart_product($cart_id);
 	if($cart==1)
- { 
+ {
  $message['status']=1;
 	 $message['message']='product deleted from cart';
-	
+
  }
  else{
 	  $message['status']=0;
 	   $message['message']='product not deleted from cart';
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
+
+
+
 }
 //get the checkout products
 public function checkout_post(){
@@ -677,19 +677,19 @@ public function checkout_post(){
 	}
 	$checkout=$this->Mobile_model->get_user_checkout($user_id);
 	if(count($checkout)>0)
- { 
+ {
  $message['checkout_status']=1;
 	 $message['checkout']=$checkout;
-	
+
  }
  else{
 	  $message['checkout_status']=0;
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
+
+
+
 }
 public function billing_address_post(){
 	$user_id=$this->post('user_id');
@@ -702,22 +702,22 @@ public function billing_address_post(){
 	}
 	$address=$this->Mobile_model->get_user_billing_address($user_id);
 	if(count($address)>0)
- { 
+ {
  $message['status']=1;
 	 $message['address']=$address;
-	
+
  }
  else{
 	  $message['status']=0;
  }
- 
+
    $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
+
+
+
 }
 public function insert_billing_address_post(){
-	
+
 	$user_id=$this->post('user_id');
 	$flag=$this->Mobile_model->user_checking($user_id);
 	if($flag==0){
@@ -735,7 +735,7 @@ public function insert_billing_address_post(){
 	$pin=$this->post('pin');
 	$mobile=$this->post('mobile');
 	$fax=$this->post('fax');
-	
+
 	$data=array('user_id'=>$user_id,
 	'first_name'=>$fname,
 	'last_name'=>$lname,
@@ -754,13 +754,13 @@ public function insert_billing_address_post(){
 	if($insert_id==0){
 		$message=array('status'=>0,'message'=>'Billing address not added ');
 	 $this->response($message, REST_Controller::HTTP_OK);
-		
+
 	}
-	
+
 		$message=array('status'=>1,'billing_id'=>$insert_id);
 		 $this->response($message, REST_Controller::HTTP_OK);
-	
-	
+
+
 }
 public function insert_order_post(){
 	//$billing_id=$this->post('billing_id');
@@ -771,27 +771,27 @@ public function insert_order_post(){
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
-	
-	
+
+
 	if($this->post('razor_payment_id')){
 		 $razor_payment_id=$this->post('razor_payment_id');
-	
-	} 
+
+	}
 	else{
 		$razor_payment_id='';
-		
+
 	}
-	
+
 	if($this->post('razor_order_id')){
 		$razor_order_id=$this->post('razor_order_id');
 	}
-   
+
 	else{
    $razor_order_id='';
 	}
 	if($this->post('razor_signature')){
    $razor_sig=$this->post('razor_signature');
-	} 
+	}
 	else{
 		$razor_sig='';
 	}
@@ -828,7 +828,7 @@ public function insert_order_post(){
 				'razorpay_payment_id'=>$razor_payment_id,
 				'razorpay_order_id'=>$razor_order_id,
 				'razorpay_signature'=>$razor_sig
-				
+
 				);
 	$insert_id=$this->Mobile_model->insert_order($data);
 	    $str = date('Ymd').$insert_id;
@@ -837,11 +837,11 @@ public function insert_order_post(){
      for($i=0;$i<$count;$i++)
 	 {
 		 //$cart_det=$this->Mobile_model->single_cart_item($item);
-		 
-		 
+
+
 		//$product=$this->Mobile_model->single_product_details($cart_det['product_id']);
 		//$net_price=$cart_det['quantity']*$product['net_price'];
-		
+
 		 $itemdata[]=array('order_id'=>$insert_id,
 		                  'order_number'=>$order_number,
 						  'user_id'=>$user_id,
@@ -852,17 +852,17 @@ public function insert_order_post(){
 						  'net_price'=>$prices[$i],
 						  );
 	 }
-	
+
 	$status=$this->Mobile_model->insert_order_items($itemdata);
 	if($status==1){
 		$this->Mobile_model->delete_cart_items($user_id);
 	$message=array('status'=>1,'order_id'=>$insert_id);
 		 $this->response($message, REST_Controller::HTTP_OK);
-		 
+
 	}
 		$message=array('status'=>0,'message'=>'order_items not added');
 		 $this->response($message, REST_Controller::HTTP_OK);
-	
+
 }
 public function delete_wishlist_item_post(){
 	$user_id=$this->post('user_id');
@@ -880,8 +880,8 @@ public function delete_wishlist_item_post(){
 	}
 	$message=array('status'=>0,'message'=>'wishlist item not deleted');
 		 $this->response($message, REST_Controller::HTTP_OK);
-	
-	
+
+
           }
 		  public function delete_wishlist_post(){
 			  	$user_id=$this->post('user_id');
@@ -898,7 +898,7 @@ public function delete_wishlist_item_post(){
 	}
 	$message=array('status'=>0,'message'=>'wishlist not deleted');
 		 $this->response($message, REST_Controller::HTTP_OK);
-			  
+
 		  }
 public function change_password_post(){
 	$user_id=$this->post('user_id');
@@ -910,24 +910,24 @@ public function change_password_post(){
 	}
 	$password=$this->post('old_password');
 	$newpassword=$this->post('new_password');
-	
+
 	$user=$this->Mobile_model->get_user_details($user_id);
 	if(password_verify($this->post('old_password'),$user['password']))
 				{
-					
+
 					$hashpassword=password_hash($this->post('new_password'),PASSWORD_DEFAULT);
 					$this->Mobile_model->change_password($hashpassword,$newpassword,$user_id);
-				
+
 				$message = array('status'=>1,'message'=>'Password Changed Successfully');
 			$this->response($message, REST_Controller::HTTP_OK);
-				
+
 			}
 				$message = array('status'=>0,'message'=>'Old Password is Wrong');
 			$this->response($message, REST_Controller::HTTP_OK);
-				
-	
-	
-} 
+
+
+
+}
 public function get_months_post(){
  $date = date('Y-m-d');
 
@@ -941,14 +941,14 @@ $year=date('Y' ,strtotime($date));// current year in number
   $curmonth['year']=$year;
   $curmonth['days']=$days;
    $curmonth['present_day']=date('d' ,strtotime($date)); // present day in number
-$months[]=$curmonth; 
+$months[]=$curmonth;
 
 
  for($i=1;$i<3;$i++)
  {
 	$curmonth=array();
-	
- 
+
+
 	//$date=date('Y-m-d', strtotime('+'.$i.' month',strtotime(date('Y-m-d'))));
 	$date= date('Y-m-d', strtotime('first day of +'.$i.' month'));
 
@@ -957,11 +957,11 @@ $months[]=$curmonth;
 	$curmonth['month']=date('m' ,strtotime($date));
     $curmonth['year']=date('Y' ,strtotime($date));
     $curmonth['days']=cal_days_in_month(CAL_GREGORIAN,$curmonth['month'],$curmonth['year']);
-    $curmonth['present_day']=1; 
-	$months[]=$curmonth; 
-	
-	
-	 
+    $curmonth['present_day']=1;
+	$months[]=$curmonth;
+
+
+
  }
  $data['months']=$months;
  //print_r($months);exit;
@@ -978,13 +978,13 @@ $months[]=$curmonth;
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
-	
+
 	$month=$this->post('month');
 	$year=$this->post('year');
 	$d=$this->post('days');
 	//print_r( $d); exit;
      $d = str_replace(array('[',']') ,'' , $d);
-	
+
      $days = explode(',' , $d);
 
 	$quans=$this->post('quantitys');
@@ -993,10 +993,10 @@ $months[]=$curmonth;
 
 
 	$price=$this->post('price');
-	
+
 	foreach($quantitys as $key=>$value ){
 	$data[]="('$product_id',
-	        
+
 	         '$user_id',
 	         '$month',
               '$year',
@@ -1004,18 +1004,18 @@ $months[]=$curmonth;
 	'$price',
 	'$value'
 	)";
-	
-	
+
+
 	}
 
 	$status=$this->Mobile_model->milk_orders($data);
 
 	if($status==1){
-		
-		
+
+
 	$message=array('status'=>1,'message'=>'Milk order added');
 		 $this->response($message, REST_Controller::HTTP_OK);
-	
+
 	}
 	else{
 		 $message=array('status'=>0,'message'=>'Milk order  not added');
@@ -1037,7 +1037,7 @@ public function get_milk_order_post(){
     $days_inmonth=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 	$curmonth=date('m');
 	if($curmonth==$month){
-		
+
 		$day=date('d');
         $start_date=$day;
 	}
@@ -1050,28 +1050,28 @@ public function get_milk_order_post(){
 
 	if(count($result)>0){
       $order_days=array_column($result,'date');
-	 
+
 	  $quantity=array_column($result,'quantity');
 
 
 	    for($i=$start_date;$i<=$days_inmonth;$i++){
 			if(in_array($i,$order_days)){
-				
-			
+
+
 			}
 			else{
 				$result[]=array('date'=>$i,'quantity'=>0);
-				
-				
-				
+
+
+
 			}
-			
-	        
+
+
         }
 
 		$message=array('status'=>1,'orders'=>$result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
 		 $this->response($message, REST_Controller::HTTP_OK);
-		
+
 	}
     for($i=$start_date;$i<=$days_inmonth;$i++){
 
@@ -1082,11 +1082,11 @@ public function get_milk_order_post(){
 
     }
 
-	
+
 	$message=array('status'=>0,'orders'=>$empty_result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
 		 $this->response($message, REST_Controller::HTTP_OK);
-	
-	
+
+
 }
 public  function  milk_orders_post(){
 
@@ -1140,6 +1140,37 @@ public  function  milk_orders_post(){
         $status=$this->Mobile_model->cancel_order($item_id,$user_id);
        // echo $this->db->last_query();exit;
         if($status==1){
+          	 /* seller purpose*/
+             $dat=$this->Mobile_model->user_det($user_id);
+
+
+              $mobile=$dat['phone_number'];
+              $username=$this->config->item('smsusername');
+              $pass=$this->config->item('smspassword');
+              $sender=$this->config->item('sender');
+              $msg = "Dear Customer Your Order is Cancelled  ";
+
+            $ch2 = curl_init();
+            curl_setopt($ch2, CURLOPT_URL,"http://trans.smsfresh.co/api/sendmsg.php");
+            curl_setopt($ch2, CURLOPT_POST, 1);
+            curl_setopt($ch2, CURLOPT_POSTFIELDS,'user='.$username.'&pass='.$pass.'&sender='.$sender.'&phone='.$mobile.'&text='.$msg.'&priority=ndnd&stype=normal');
+            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+
+            $server_output = curl_exec ($ch2);
+            //echo '<pre>' ;print_r($server_output);exit;
+            curl_close ($ch2);
+      /* accept message */
+      /* seller purpose*/
+     $ch2 = curl_init();
+     curl_setopt($ch2, CURLOPT_URL,"http://trans.smsfresh.co/api/sendmsg.php");
+     curl_setopt($ch2, CURLOPT_POST, 1);
+     curl_setopt($ch2, CURLOPT_POSTFIELDS,'user='.$username.'&pass='.$pass.'&sender='.$sender.'&phone='.$mobile.'&text='.$msg.'&priority=ndnd&stype=normal');
+     curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+
+     $server_output = curl_exec ($ch2);
+     //echo '<pre>' ;print_r($server_output);exit;
+     curl_close ($ch2);
+/* accept message */
             $message = array('status' => 1, 'message' => 'Order Item  Cancelled' );
             $this->response($message, REST_Controller::HTTP_OK);
 
@@ -1153,14 +1184,14 @@ public function get_apartments_post(){
 	 if(count($res)>0){
 		  $message = array('status' => 1, 'apartment_list' => $res );
             $this->response($message, REST_Controller::HTTP_OK);
-		 
+
 	 }
 	  $message = array('status' => 0, 'message' => 'No Apartments Available' );
         $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
-	
+
+
+
+
 }
 public function get_blocks_by_apt_post(){
 	$apt_id=$this->post('apt_id');
@@ -1168,15 +1199,15 @@ public function get_blocks_by_apt_post(){
 	 if(count($res)>0){
 		  $message = array('status' => 1, 'block_list' => $res );
             $this->response($message, REST_Controller::HTTP_OK);
-		 
+
 	 }
 	  $message = array('status' => 0, 'message' => 'No Blocks Available' );
         $this->response($message, REST_Controller::HTTP_OK);
-	
-	
-	
-	
-	
+
+
+
+
+
 }
 public function get_user_address_post(){
 	 $user_id=$this->post('user_id');
@@ -1189,7 +1220,7 @@ public function get_user_address_post(){
 		$res=$this->Mobile_model->get_user_address($user_id);
 		 $message = array('status' => 1, 'user_address' => $res );
         $this->response($message, REST_Controller::HTTP_OK);
-	
+
 }
 public function edit_user_address_post(){
 	$user_id=$this->post('user_id');
@@ -1208,14 +1239,14 @@ public function edit_user_address_post(){
 	$email=$this->post('email');
 	$mobile=$this->post('mobile');
 	$status=$this->Mobile_model->check_edit_email($email,$user_id);
-	
-	
+
+
 	if($status==1){
 		 $message = array('status'=>0,'message'=>'email already existed');
 		  $this->response($message, REST_Controller::HTTP_OK);
 	}
 	$status=$this->Mobile_model->check_edit_mobile($mobile,$user_id);
-	
+
 	if($status==1){
 		 $message = array('status'=>0,'message'=>'mobile number already existed');
 		  $this->response($message, REST_Controller::HTTP_OK);
@@ -1234,13 +1265,13 @@ public function edit_user_address_post(){
 	if($status==1){
 		 $message = array('status'=>1,'message'=>'Address Updated Successfully');
 		 $this->response($message, REST_Controller::HTTP_OK);
-		
+
 	}
 	 $message = array('status'=>1,'message'=>'Address Updated Successfully');
 		 $this->response($message, REST_Controller::HTTP_OK);
-		
 
-	
+
+
 }
 public function send_email_post(){
 	$email=$this->post('email');
@@ -1248,18 +1279,18 @@ public function send_email_post(){
 	//echo $this->db->last_query();exit;
 	if(count($res)>0){
 
-                
+
 	}
 	else{
 		$message = array('status'=>0,'message'=>'Phone Number Not Existed');
 		 $this->response($message, REST_Controller::HTTP_OK);
 
 	}
-	
+
 	$s=0;
  while($s==0){
  	$num=str_pad(mt_rand(0, 999999), 6,'0', STR_PAD_LEFT);
- 
+
 $flag=$this->Mobile_model->check_space($email,$num);
 if($flag==0){
 	$s=1;
@@ -1274,8 +1305,8 @@ $data=array('otp'=>$num,
  $r=$this->Mobile_model->save_otp($data);
  if($r==1){
  	/* accept message */
-							
-							
+
+
 							$mobile=$email;
 							$username=$this->config->item('smsusername');
 							$pass=$this->config->item('smspassword');
@@ -1287,7 +1318,7 @@ $data=array('otp'=>$num,
 							curl_setopt($ch2, CURLOPT_POST, 1);
 							curl_setopt($ch2, CURLOPT_POSTFIELDS,'user='.$username.'&pass='.$pass.'&sender='.$sender.'&phone='.$mobile.'&text='.$msg.'&priority=ndnd&stype=normal');
 							curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-							
+
 							$server_output = curl_exec ($ch2);
 							//echo '<pre>' ;print_r($server_output);exit;
 							curl_close ($ch2);
@@ -1313,24 +1344,24 @@ public function otp_checking_post(){
 
 $secs= $since_start->s;
 if($secs>300){
-$this->Mobile_model->update_otp_data($res->id);	
+$this->Mobile_model->update_otp_data($res->id);
 
 	$message = array('status'=>0,'message'=>'otp is expired ');
 		 $this->response($message, REST_Controller::HTTP_OK);
-  
-	
+
+
 }
 else{
-	$this->Mobile_model->update_otp_data($res->id);	
+	$this->Mobile_model->update_otp_data($res->id);
 
 	 $message = array('status'=>1,'res'=>$res);
 		 $this->response($message, REST_Controller::HTTP_OK);
 }
 
-   
 
 
-	
+
+
 
 }
 
@@ -1338,7 +1369,7 @@ else{
 		 $this->response($message, REST_Controller::HTTP_OK);
 }
 public function password_reset_post(){
-	
+
 	$user_id=$this->post('user_id');
 	$check_id=$this->post('id');
 
@@ -1354,14 +1385,14 @@ public function password_reset_post(){
 	}
 
 	 $password=password_hash($this->post('password'),PASSWORD_DEFAULT);
-	
+
 	$data=array('password'=>$password,
 'org_password'=>$this->post('password'),
 'updated_date'=>date('Y-m-d H:i:s')
 );
 
 	$flag=$this->Mobile_model->update_password($data,$user_id);
-	
+
 	if($flag==1){
           $message = array('status'=>1,'message'=>'Password Reset Successfully ');
 		 $this->response($message, REST_Controller::HTTP_OK);

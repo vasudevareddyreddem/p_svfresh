@@ -44,6 +44,12 @@ class Apartment extends In_frontend
         }
         $data=array('apartment_name'=>$name,
             'created_by'=>$svadmin);
+            if($this->input->post('acc')==null or $this->input->post('acc')==''){
+
+            }
+            else{
+              $data['account_number']=$this->input->post('acc');
+            }
         $flag=$this->Apartment_model->save_apartment($data);
         if($flag==1){
             $this->session->set_flashdata('success','Apartment Added successfully');

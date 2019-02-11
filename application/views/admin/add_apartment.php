@@ -22,6 +22,11 @@
                                             <input id="name" type="text" class="form-control" name="apartment_name">
                                         </div>
 
+
+                                        <div class="form-group">
+                                            <label>Add Account Number</label>
+                                            <input id="acc" type="text" class="form-control" name="acc">
+                                        </div>
                                         <button type="submit" class="btn btn-primary">
                                             Add
                                         </button>

@@ -24,10 +24,10 @@ class Mobile_model extends CI_Model
 
 	}
 	public function user_checking($userid){
-		
-		$this->db->select('*')->from('users_tab')->where('id',$userid);
+
+		$this->db->select('*')->from('users_tab')->where('id',$userid)->where('status','Active');
 		return $this->db->get()->result()?1:0;
-		
+
 	}
 	public function subcategory_list($cat){
 			$this->db->select('category_tab.cat_id,category_tab.cat_name,subcat_tab.subcat_id,subcat_tab.subcat_name
@@ -38,8 +38,8 @@ class Mobile_model extends CI_Model
 	    $this->db->where('category_tab.cat_id',$cat);
 	   $this->db->order_by('subcat_tab.updated_at','desc');
 	   return $this->db->get()->result_array();
-		
-		
+
+
 	}
 	//gettting from category and subcategory
 	public function product_list($subcat,$user_id){
@@ -59,28 +59,28 @@ class Mobile_model extends CI_Model
 	    ",'left');
 	   $this->db->where('product_tab.status',1);
 	    $this->db->where('subcat_tab.status',1);
-		
+
 
 		$this->db->where('subcat_tab.subcat_id',$subcat);
 	   $this->db->order_by('product_tab.updated_at','desc');
-	  
-	   
+
+
 	   return $this->db->get()->result_array();
-		
-		
+
+
 	}
-	
+
 	public function home_slider_two_images(){
 		$this->db->select('*')->from('slider_tab')->where('status',1);
 	return	$this->db->get()->row_array();
-		
-		
+
+
 	}
 	public function home_sliders($id){
 			$this->db->select('pic_name')->from('slider_pic_tab')->where('status',1)->where('slider_id',$id);
 	return	$this->db->get()->result_array();
-		
-		
+
+
 	}
 	public function get_all_products(){
 		$this->db->select('product_tab.*,category_tab.cat_id catid,category_tab.cat_name ,category_tab.cat_scr_content,category_tab.cat_id catid,category_tab.cat_id catidcatid,category_tab.cat_id catid,category_tab.cat_id catid')->from('product_tab')->
@@ -89,7 +89,7 @@ class Mobile_model extends CI_Model
 		return $this->db->get()->result_array();
 	}
 	public function subcat_img_slider($subcat){
-		
+
 		$this->db->select('image_path')->from('subcat_slider')->where('subcat_id',$subcat)
 		->where('status',1);
 		return $this->db->get()->result_array();
@@ -126,7 +126,7 @@ class Mobile_model extends CI_Model
 		order_items_tab.delivery_status')->from('order_tab')->
 		join('order_items_tab','order_tab.order_id=order_items_tab.order_id')
 		->where('order_tab.user_id',$id)->order_by('order_items_tab.created_date,order_tab.order_id','desc');
-	
+
 	  return $this->db->get()->result_array();
 	}
 	public function get_user_wishlist($id){
@@ -146,16 +146,16 @@ class Mobile_model extends CI_Model
 		IF( ISNULL(cart_tab.user_id),0,1) cart_status,
 		(wishlist_tab.quantity)*(product_tab.net_price) whole_price
 		")->from('wishlist_tab')->join('product_tab','product_tab.product_id=wishlist_tab.product_id')->
-            join('cart_tab','cart_tab.user_id=wishlist_tab.user_id and 
+            join('cart_tab','cart_tab.user_id=wishlist_tab.user_id and
             cart_tab.product_id=wishlist_tab.product_id','left')->
 		where('wishlist_tab.user_id',$id);
-	
+
 	  return $this->db->get()->result_array();
 	}
 		public function get_user_profile($id){
 		$this->db->select('email_id,phone_number,user_name')->from('users_tab')->
 		where('users_tab.id',$id)->where('status','Active');
-	
+
 	  return $this->db->get()->row_array();
 	}
 		public function get_user_cart($id){
@@ -165,15 +165,15 @@ class Mobile_model extends CI_Model
 			product_tab.guarantee_policy,product_tab.description')->from('cart_tab')->
 		join('product_tab','product_tab.product_id=cart_tab.product_id')->
 		where('cart_tab.user_id',$id)->order_by('created_date','desc');
-	
+
 	  return $this->db->get()->result_array();
 	}
-		
+
 		public function delete_cart_product($id){
 			$this->db->where('id',$id);
 			$this->db->delete('cart_tab');
 			return $this->db->affected_rows()?1:0;
-			
+
 		}
 		public function get_user_checkout($id){
 		$this->db->select('product_tab.product_id,product_tab.product_name,product_tab.product_img,
@@ -185,7 +185,7 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 	public function get_user_billing_address($user_id){
-		
+
 		$this->db->select('*')->from('billing_tab')->where('user_id',$user_id)
 		->where('status','Active');
 		  return $this->db->get()->result_array();
@@ -196,9 +196,9 @@ class Mobile_model extends CI_Model
 			product_tab.guarantee_policy,product_tab.description')->from('product_tab')->
 			join('category_tab','category_tab.cat_id=product_tab.cat_id')->where('product_tab.cat_id',$cat)->where('product_tab.status',1)->
 			order_by('product_tab.updated_at','desc');
-			
+
 			return $this->db->get()->result_array();
-		
+
 	}
 	public function insert_cart_product($data)
     {
@@ -209,18 +209,18 @@ class Mobile_model extends CI_Model
 		$this->db->insert('billing_tab',$data);
 		$insert_id=$this->db->insert_id();
 		return $insert_id?$insert_id:0;
-		
+
 	}
 	public function insert_order($data){
 		$this->db->insert('order_tab',$data);
 		$insert_id=$this->db->insert_id();
 		return $insert_id;
-	
+
 	}
 	public function insert_wishlist_product($data){
 		$this->db->insert('wishlist_tab',$data);
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 	public function single_cart_item($item){
 		$this->db->select('*')->from('cart_tab')->where('id',$item);
@@ -240,29 +240,29 @@ class Mobile_model extends CI_Model
 		where('phone_number',$username)->or_where('email_id',$username);
 
 		return $this->db->get()->row_array();
-		
+
 	}
 	public function insert_user_reg($data){
 		$this->db->insert('users_tab',$data);
 		$insert_id=$this->db->insert_id();
 	 return $insert_id?$insert_id:0;
-		
+
 	}
 	public function user_email_checking($email){
-		
+
 		$this->db->select('*')->from('users_tab')->where('status','Active')->
 		where('email_id',$email);
 		$res=$this->db->get()->result();
 		if(count($res)>0)
 		{
 			return 1;
-			
+
 		}
 		else{
 			return 0;
 		}
-		
-		
+
+
 	}
 	public function user_mobile_checking($mobile){
 	$this->db->select('*')->from('users_tab')->where('status','active')->
@@ -271,16 +271,16 @@ class Mobile_model extends CI_Model
 		if(count($res)>0)
 		{
 			return 1;
-			
+
 		}
 		else{
 			return 0;
 		}
-		
-		
+
+
 	}
 	public function delete_wishlist_item($wishlist_id){
-		
+
 		$this->db->where('id',$wishlist_id);
 			$this->db->delete('wishlist_tab');
 			return $this->db->affected_rows()?1:0;
@@ -288,14 +288,14 @@ class Mobile_model extends CI_Model
 	public function check_edit_email($email,$user_id){
 		$this->db->select('*');
 	    $this->db->from('users_tab');
-		
+
 		$this->db->where('id!=',$user_id);
 		$this->db->where('status ','Active');
-		
-	   $res= $this->db->get()->result_array(); 
+
+	   $res= $this->db->get()->result_array();
 
 			$email_list = array_column($res, 'email_id');
-			
+
 			//echo $catname;exit;
 			//echo in_array($catname,$cat_names);exit;
 			if(in_array($email,$email_list)){
@@ -309,11 +309,11 @@ class Mobile_model extends CI_Model
 	public function check_edit_mobile($mobile,$user_id){
 		$this->db->select('*');
 	    $this->db->from('users_tab');
-		
+
 		$this->db->where('id!=',$user_id);
 		$this->db->where('status ','Active');
-		
-	   $res= $this->db->get()->result_array(); 
+
+	   $res= $this->db->get()->result_array();
 
 			$number_list = array_column($res, 'phone_number');
 			//echo $catname;exit;
@@ -330,17 +330,17 @@ class Mobile_model extends CI_Model
 		$this->db->where('id',$user_id);
 		$this->db->update('users_tab',$data);
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 	public function delete_wishlist($user_id){
 		$this->db->where('user_id',$user_id);
 			$this->db->delete('wishlist_tab');
 			return $this->db->affected_rows()?1:0;
-		
-		
+
+
 	}
 	public function get_user_details($user_id){
-		
+
 		$this->db->select('password')->from('users_tab')->where('id',$user_id);
 		return $this->db->get()->row_array();
 	}
@@ -350,7 +350,7 @@ class Mobile_model extends CI_Model
 			$this->db->set('org_password',$newpassword);
 			$this->db->update('users_tab');
 			return $this->db->affected_rows()?1:0;
-		
+
 	}
 	// public function insert_milk_order($data){
 		// $pid=$data['product_id'];
@@ -366,27 +366,27 @@ class Mobile_model extends CI_Model
 			// $this->db->where('calender_id',$res->calender_id);
 			// $this->db->update('calender_tab',)
 		// }
-		
+
 	// }
 	public function milk_order($data){
 $sql="insert into  calender_tab(product_id,billing_id,user_id,month,date,year,quantity,price)
   values('".$data['product_id']."','".$data['billing_id']."',
 		'".$data['user_id']."','".$data['month']."','".$data['year']."',
-		'".$data['day']."','".$data['quantity']."','".$data['price']."') 
-		
-		on duplicate key update 
+		'".$data['day']."','".$data['quantity']."','".$data['price']."')
+
+		on duplicate key update
 		quantity='".$data['quantity']."',
 		price='".$data['price']."' ";
-		
-	
-	
-	
+
+
+
+
 $result = $this->db->query($sql);
 return $this->db->affected_rows()?1:0;
 
 	}
 	public function milk_orders($data){
-		
+
 		$query = "INSERT INTO calender_tab(product_id,user_id,month,year,date,price,quantity) VALUES " . implode(', ', $data) . " ON DUPLICATE KEY UPDATE quantity = VALUES(quantity),
 		price=VALUES(price)";
 		//echo $query;exit;
@@ -395,15 +395,15 @@ return $this->db->affected_rows()?1:0;
 return $this->db->affected_rows()?1:0;
 	}
 	// public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
-		
+
 		// $this->db->select(*)->from('calender_tab')->join('')
-		
+
 	// }
 	public function get_milk_orders_by_user($user_id,$product_id,$month,$year){
 		$this->db->select('date,quantity')->from('calender_tab')->where('product_id',$product_id)->where('user_id',$user_id)->
 		where('month',$month)->where('year',$year);
 	return	$this->db->get()->result_array();
-		
+
 	}
 	public  function  get_milk_orders($user_id){
 
@@ -448,14 +448,14 @@ public function cancel_order($item_id,$user_id){
 public function get_apartments(){
 	$this->db->select('apartment_id,apartment_name')->from('apartment_tab')->where('status',1);
 		return $this->db->get()->result_array();
-	
-	
+
+
 }
 public function get_blocks($apt_id){
 	$this->db->select('block_id,block_name')->from('block_tab')->where('status',1)->where('apartment_id',$apt_id);
 		return $this->db->get()->result_array();
-	
-	
+
+
 }
 public function get_user_address($userid){
 	$this->db->select('u.email_id,u.phone_number,u.user_name,ap.apartment_name,ap.apartment_id,bl.block_id,bl.block_name
@@ -463,16 +463,16 @@ public function get_user_address($userid){
 	->from('users_tab u')->join('apartment_tab ap','ap.apartment_id=u.appartment')
 	->join('block_tab bl','bl.block_id=u.block')
 	->where('id',$userid);
-	
+
 	return $this->db->get()->row_array();
-	
-	
+
+
 }
 public function update_address($data,$user_id){
 		$this->db->where('id',$user_id);
 		$this->db->update('users_tab',$data);
 		return $this->db->affected_rows()?1:0;
-		
+
 	}
 	public function get_ordered_milk_orders($data){
 		$count = count($data);
@@ -483,7 +483,7 @@ public function update_address($data,$user_id){
 		where('calender_id >=', $first_id)->
 		where('calender_id <=', $last_id);
 return $this->db->get()->result_array();
-		
+
 	}
 	public function check_user_mail($email){
 		$this->db->select('1')->from('users_tab')->where('phone_number',$email)->
@@ -508,22 +508,22 @@ return $this->db->get()->result_array();
 	}
 	public function otp_data($otp,$user_id){
 		$this->db->select('*')->from('otp_tab')->where('otp',$otp)->where('user_id',$user_id)->where('expiry_status',1);
-          
+
                 return $this->db->get()->row();
-      
-              
+
+
 	}
 	public function update_otp_data($id){
 	$this->db->where('id',$id);
 	$this->db->set('expiry_status',0);
 	$this->db->update('otp_tab');
-	return $this->db->affected_rows()?1:0; 
-         } 
+	return $this->db->affected_rows()?1:0;
+         }
 
          public function  update_password($data,$user_id){
          	$this->db->where('phone_number',$user_id);
          	$this->db->update('users_tab',$data);
-         	return $this->db->affected_rows()?1:0; 
+         	return $this->db->affected_rows()?1:0;
 
          }
          public function chcek_otp_id($check_id,$num){
@@ -531,5 +531,11 @@ return $this->db->get()->result_array();
          	return $this->db->get()->result()?1:0;
 
          }
+				 public function user_det($userid){
+
+					 $this->db->select('*')->from('users_tab')->where('id',$userid)->where('status','Active');
+					 return $this->db->get()->row_array();
+
+				 }
 
 }
