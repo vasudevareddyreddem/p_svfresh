@@ -1273,6 +1273,25 @@ $data=array('otp'=>$num,
 'expiry_status'=>1);
  $r=$this->Mobile_model->save_otp($data);
  if($r==1){
+ 	/* accept message */
+							
+							
+							$mobile=$email;
+							$username=$this->config->item('smsusername');
+							$pass=$this->config->item('smspassword');
+							$sender=$this->config->item('sender');
+							$msg = "Dear Customer Your otp  is ".$num;
+							 /* seller purpose*/
+							$ch2 = curl_init();
+							curl_setopt($ch2, CURLOPT_URL,"http://trans.smsfresh.co/api/sendmsg.php");
+							curl_setopt($ch2, CURLOPT_POST, 1);
+							curl_setopt($ch2, CURLOPT_POSTFIELDS,'user='.$username.'&pass='.$pass.'&sender='.$sender.'&phone='.$mobile.'&text='.$msg.'&priority=ndnd&stype=normal');
+							curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+							
+							$server_output = curl_exec ($ch2);
+							//echo '<pre>' ;print_r($server_output);exit;
+							curl_close ($ch2);
+				/* accept message */
  	$message = array('status'=>1,'message'=>'otp sent to your registered mobile number,it will expire after 5 minutes ');
 		 $this->response($message, REST_Controller::HTTP_OK);
 
@@ -1353,5 +1372,6 @@ public function password_reset_post(){
 
 
 }
+
 
 }
