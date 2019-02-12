@@ -28,6 +28,7 @@ class Apartment extends In_frontend
         $admin=$this->session->userdata('svadmin_det');
         $svadmin=$admin['admin_id'];
         $name=$this->input->post('apartment_name');
+
         $this->form_validation->set_rules('apartment_name', 'name', 'required');
 
         if ($this->form_validation->run() == FALSE)
@@ -42,13 +43,25 @@ class Apartment extends In_frontend
             redirect('apartment/add_apartment');
 
         }
+
         $data=array('apartment_name'=>$name,
             'created_by'=>$svadmin);
             if($this->input->post('acc')==null or $this->input->post('acc')==''){
 
             }
             else{
+                  $ifsc=$this->input->post('ifsc');
+                  if($ifsc=='' or $ifsc==null){
+                        $this->session->set_flashdata('error','IFSC code is required');
+                        redirect('apartment/add_apartment');
+
+
+                  }
+                  else{
+                      $data['ifsc']=$ifsc;
+                  }
               $data['account_number']=$this->input->post('acc');
+
             }
         $flag=$this->Apartment_model->save_apartment($data);
         if($flag==1){
@@ -121,6 +134,24 @@ public function save_edit_apartment(){
         $data=array('apartment_name'=>$name,
             'updated_date'=>$date,
             'updated_by'=>$svadmin);
+            if($this->input->post('acc')==null or $this->input->post('acc')==''){
+                     $data['account_number']=$this->input->post('acc');
+                      $data['ifsc']=null;
+            }
+            else{
+                  $ifsc=$this->input->post('ifsc');
+                  if($ifsc=='' or $ifsc==null){
+                        $this->session->set_flashdata('error','IFSC code is required');
+                        redirect($_SERVER['HTTP_REFERER']);
+
+
+                  }
+                  else{
+                      $data['ifsc']=$ifsc;
+                  }
+              $data['account_number']=$this->input->post('acc');
+
+            }
        $status=$this->Apartment_model->save_edit_apartment($data,$id);
        if($status==1){
         $this->session->set_flashdata('success','Apartment Name Updated Successfully');

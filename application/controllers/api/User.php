@@ -1302,8 +1302,10 @@ $data=array('otp'=>$num,
 'user_id'=>$email,
 'created_date'=>date('Y-m-d H:i:s'),
 'expiry_status'=>1);
+$this->Mobile_model->change_otp_status($email);
  $r=$this->Mobile_model->save_otp($data);
  if($r==1){
+
  	/* accept message */
 
 
@@ -1400,6 +1402,30 @@ public function password_reset_post(){
 	}
 	 $message = array('status'=>0,'message'=>'Password not reset ,try again');
 		 $this->response($message, REST_Controller::HTTP_OK);
+
+
+}
+public function get_date_wise_milk_orders_post(){
+  $user_id=$this->post('user_id');
+  $flag=$this->Mobile_model->user_checking($user_id);
+  if($flag==0){
+     $message['check_staus'] =0;
+     $message['message']='unauthorized user';
+        $this->response($message, REST_Controller::HTTP_OK);
+  }
+  $date=$this->post('sdate');
+   $month=date('m' ,strtotime($date));
+    $year=date('Y' ,strtotime($date));
+      $day=date('d' ,strtotime($date));
+      $res=$this->Mobile_model->get_day_milk_orders($year,$month,$day,$user_id);
+      if(count($res)>0){
+        $message = array('status'=>1,'message'=>$res);
+          $this->response($message, REST_Controller::HTTP_OK);
+
+
+      }
+      $message = array('status'=>0,'message'=>$res);
+        $this->response($message, REST_Controller::HTTP_OK);
 
 
 }
