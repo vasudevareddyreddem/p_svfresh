@@ -13,11 +13,28 @@ class Calender_Model extends CI_Model
     $this->db->query("SET time_zone='+5:30'");
   }
 
-  public function get_all_calender_items_by_user_id($user_id='')
+  public function get_all_calender_items_by_user_id($user_id='',$date='')
   {
     $this->db->select('p.product_name AS product_name,c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price,c.delivery_status,c.calender_id');
     $this->db->from('calender_tab AS c');
     $this->db->join('product_tab AS p','c.product_id = p.product_id','left');
+    if (isset($date) && !empty($date)) {
+			$date_fragment = explode('/',$date);
+			if(is_array($date_fragment)){
+				$day = $date_fragment[0];
+				if(isset($day) && !empty($day)){
+					$this->db->where('c.date',$day);
+				}
+				$month = $date_fragment[1];
+				if(isset($month) && !empty($month)){
+					$this->db->where('c.month',$month);
+				}
+				$year = $date_fragment[2];
+				if(isset($year) && !empty($year)){
+					$this->db->where('c.year',$year);
+				}
+			}
+		}
     $this->db->where('p.status','1');
     $this->db->where('c.user_id',$user_id);
     $this->db->order_by('c.created_date','desc');
