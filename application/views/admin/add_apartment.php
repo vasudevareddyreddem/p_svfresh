@@ -27,6 +27,10 @@
                                             <label>Add Account Number</label>
                                             <input id="acc" type="text" class="form-control" name="acc">
                                         </div>
+                                        <div class="form-group">
+                                            <label>Add IFSC Code</label>
+                                            <input id="ifsc" type="text" class="form-control" name="ifsc">
+                                        </div>
                                         <button type="submit" class="btn btn-primary">
                                             Add
                                         </button>
@@ -57,6 +61,15 @@
                             regexp:/^[ A-Za-z0-9_@.,/!;:}{@#&`~"\\|^?$*)(_+-]*$/,
                             message:'Question wont allow <> [] = % '
                         }
+                    }
+                },
+                acc: {
+                    validators: {
+
+                      regexp: {
+                          regexp: /^[0-9]+$/,
+                          message: 'Account Number have only numbers'
+                      }
                     }
                 },
 

@@ -19,7 +19,8 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Apartment Name</th>
-
+                                        <th>Account Number</th>
+                                          <th>IFSC Code</th>
                                         <th>Created At</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -32,7 +33,24 @@
                                             <tr>
                                                 <td><?php echo $count; ?></td>
                                                 <td><?php echo $li->apartment_name; ?></td>
-
+                                                <td><?php
+                                                if($li->account_number=="" or $li->account_number==null){
+                                              echo "No Account Number";
+                                              }
+                                              else{
+                                                  echo $li->account_number;
+                                              } ?>
+                                            </td>
+                                            <td>
+                                              <?php
+                                              if($li->account_number=="" or $li->account_number==null){
+                                            echo "No IFSC Code";
+                                          }
+                                          else{
+                                              echo $li->ifsc;
+                                          }
+                                           ?>
+                                            </td>
 
                                                 <td><?php
                                                     if($li->created_date!=''){
@@ -83,5 +101,3 @@
         $('#example').DataTable();
     } );
 </script>
-
-

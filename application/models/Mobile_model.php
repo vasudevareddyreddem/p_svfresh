@@ -486,7 +486,7 @@ return $this->db->get()->result_array();
 
 	}
 	public function check_user_mail($email){
-		$this->db->select('1')->from('users_tab')->where('phone_number',$email)->
+		$this->db->select('*')->from('users_tab')->where('phone_number',$email)->
 		where('status','Active');
 		return $this->db->get()->result_array();
 
@@ -535,6 +535,20 @@ return $this->db->get()->result_array();
 
 					 $this->db->select('*')->from('users_tab')->where('id',$userid)->where('status','Active');
 					 return $this->db->get()->row_array();
+
+				 }
+				 public function get_day_milk_orders($year,$month,$day,$user_id){
+					 $this->db->select('*')->from('calender_tab')->where('user_id',$userid)
+					 ->where('year',$year)->where('month',$month)->where('date',$day);
+
+					 return $this->db->get()->result_array();
+
+				 }
+				 public function change_otp_status($email){
+					 $this->db->where('user_id',$email);
+					 $this->db->set('expiry_status',0);
+					 $this->db->update('otp_tab');
+					 return $this->db->affected_rows();
 
 				 }
 
