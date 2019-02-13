@@ -24,8 +24,7 @@
           <div class="modal-dialog">
             <div class="modal-content box-shadow-site">
               <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Forgot password</h4>
-                <a href="<?php echo base_url('home'); ?>">Back to home</a>
+                <h4 class="modal-title" id="myModalLabel">Forgot password <a href="<?php echo base_url('home'); ?>" class="pull-right btn btn-xs btn-primary">Back to home</a></h4>
               </div>
               <div class="modal-body">
                 <div class="row">

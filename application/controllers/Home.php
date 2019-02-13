@@ -273,55 +273,75 @@ class Home extends CI_controller
       $this->load->view('home/forgotpassword',$data);
     }
   }
+  //enter otp
   public function otp()
   {
-    if ($this->input->post()) {
-      $this->form_validation->set_rules('otp', 'otp', 'required');
-      if ($this->form_validation->run() == FALSE) {
-        $data['pageTitle'] = 'Forgot password';
-        $this->load->view('home/otp',$data);
-      } else {
-        $phone_number = $this->input->post('phone_number');
-        $otp = $this->input->post('otp');
-        $user_data = $this->Auth_Model->get_user_details_by_otp_phone_number($phone_number,$otp);
-        if ($user_data) {
-          $this->session->unset_userdata('phone_number');
-          $start_date = new DateTime(date('Y-m-d  H:i:s'));
-          $since_start = $start_date->diff(new DateTime($user_data->otp_created_on));
-          $time = $since_start->s;
-          if ($time > 300) {
-            $this->session->set_flashdata('error','Otp entered is invalid');
-            redirect('home/fpassword');
-          } else {
-            $this->session->set_userdata('userid',$user_data->id);
-            $this->session->set_flashdata('success','Reset your new password');
-            redirect('home/rpassword');
-          }
+    if($this->session->userdata('phone_number')) {
+      if ($this->input->post()) {
+        $this->form_validation->set_rules('otp', 'otp', 'required');
+        if ($this->form_validation->run() == FALSE) {
+          $data['pageTitle'] = 'Forgot password';
+          $this->load->view('home/otp',$data);
         } else {
-          $this->session->set_flashdata('error','Otp entered is invalid');
-          redirect($this->agent->referrer());
+          $phone_number = $this->input->post('phone_number');
+          $otp = $this->input->post('otp');
+          $user_data = $this->Auth_Model->get_user_details_by_otp_phone_number($phone_number,$otp);
+          if ($user_data) {
+            $this->session->unset_userdata('phone_number');
+            $start_date = new DateTime(date('Y-m-d  H:i:s'));
+            $since_start = $start_date->diff(new DateTime($user_data->otp_created_on));
+            $time = $since_start->s;
+            if ($time > 300) {
+              $this->session->set_flashdata('error','Otp entered is invalid');
+              redirect('home/fpassword');
+            } else {
+              $this->session->set_userdata('userid',$user_data->id);
+              $this->session->set_flashdata('success','Reset your new password');
+              redirect('home/rpassword');
+            }
+          } else {
+            $this->session->set_flashdata('error','Otp entered is invalid');
+            redirect($this->agent->referrer());
+          }
         }
+      } else {
+        $data['pageTitle'] = 'Otp';
+        $this->load->view('home/otp',$data);
       }
     } else {
-      $data['pageTitle'] = 'Otp';
-      $this->load->view('home/otp',$data);
+      $this->session->set_flashdata('error','No direct access allowed');
+      redirect('home/fpassword');
     }
   }
   //reset password
   public function rpassword()
   {
-    if ($this->input->post()) {
-      $this->form_validation->set_rules('password', 'Password', 'required');
-      $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required');
-      if ($this->form_validation->run() == FALSE) {
+    if ($this->session->userdata('userid')) {
+      if ($this->input->post()) {
+        $this->form_validation->set_rules('password', 'New Password', 'required|required|matches[confirm_password]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required');
+        if ($this->form_validation->run() == FALSE) {
+          $data['pageTitle'] = 'Reset password';
+          $this->load->view('home/resetpassword',$data);
+        } else {
+          $user_id = $this->input->post('id');
+          $password = password_hash($this->input->post('password'),PASSWORD_DEFAULT);
+          if ($this->Auth_Model->change_password($user_id,array('password' => $password,'status' => 'Active'))) {
+            $this->session->unset_userdata('userid');
+            $this->session->set_flashdata('success', 'Password changed successfully.');
+            redirect('home/login');
+          } else {
+            $this->session->set_flashdata('error', 'Please try again.');
+            redirect($this->agent->referrer());
+          }
+        }
+      } else {
         $data['pageTitle'] = 'Reset password';
         $this->load->view('home/resetpassword',$data);
-      } else {
-        
       }
     } else {
-      $data['pageTitle'] = 'Reset password';
-      $this->load->view('home/resetpassword',$data);
+      $this->session->set_flashdata('error','No direct access allowed');
+      redirect('home/fpassword');
     }
   }
   //generate otp
