@@ -49,7 +49,11 @@ class Milkcalender extends CI_Controller
     $product_id = $this->input->post('product_id');
     $days = cal_days_in_month(CAL_GREGORIAN,$month,$c_year);
     $current_month = date('n',strtotime('+1day'));
-    $current_day = date('j',strtotime('+1day'));
+    if (date('H') < 02) {
+      $current_day = date('j');
+    } else {
+      $current_day = date('j',strtotime('+1day'));
+    }
     if($current_month == $month){
       for($d = $current_day;$d <= $days; $d++){
             $days_array[] = $d;
