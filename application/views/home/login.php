@@ -38,11 +38,14 @@
                                   <span class="help-block"></span>
                               </div>
                               <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>
-                              <div class="checkbox">
+                              <!-- <div class="checkbox">
                                   <label>
                                       <input type="checkbox" name="remember" id="remember"> Remember login
                                   </label>
 
+                              </div> -->
+                              <div class="">
+                                <a href="<?php echo base_url('home/fpassword'); ?>">Forgot password ?</a>
                               </div>
                               <button type="submit" class="btn btn-success btn-block">Login</button>
 
