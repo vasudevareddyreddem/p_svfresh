@@ -16,6 +16,7 @@ class Billing extends CI_Controller
     $this->load->model('Order_Model');
     $this->load->model('Calender_Model');
     $this->load->model('Apartment_model');
+    $this->load->model('Auth_Model');
   }
 
   public function index()
@@ -33,15 +34,15 @@ class Billing extends CI_Controller
           $data['categories'] = $this->Category_model->get_all_category();
           $user_id = $this->session->userdata('id');
           $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
-		  $this->load->model('Auth_Model');
+          //$this->load->model('Auth_Model');
           $data['user'] =$this->Auth_Model->get_user_details($user_id);
-		  $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
-		  $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
+          $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+          $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
-			$data['without_total_amt']= $this->Cart_Model->normal_cart_amount($user_id);
-			$data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
-					$data['cart_total_amt']=((isset($data['without_total_amt']['c_amt'])?$data['without_total_amt']['c_amt']:'0')+(isset($data['withmilk_total_amt']['m_amt'])?$data['withmilk_total_amt']['m_amt']:'0'));
+          $data['without_total_amt']= $this->Cart_Model->normal_cart_amount($user_id);
+          $data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
+          $data['cart_total_amt']=((isset($data['without_total_amt']['c_amt'])?$data['without_total_amt']['c_amt']:'0')+(isset($data['withmilk_total_amt']['m_amt'])?$data['withmilk_total_amt']['m_amt']:'0'));
 
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
           $data['pageTitle'] = 'Billing';
@@ -74,16 +75,16 @@ class Billing extends CI_Controller
         $data['categories'] = $this->Category_model->get_all_category();
         $user_id = $this->session->userdata('id');
         $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
-		$this->load->model('Auth_Model');
+        //$this->load->model('Auth_Model');
         $data['user'] =$this->Auth_Model->get_user_details_for_billing($user_id);
-		$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
-		$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
+        $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+        $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
         $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
         $data['without_total_amt']= $this->Cart_Model->normal_cart_amount($user_id);
-		$data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
-		$data['cart_total_amt']=(($data['without_total_amt']['c_amt'])+($data['withmilk_total_amt']['m_amt']));
+        $data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
+        $data['cart_total_amt']=(($data['without_total_amt']['c_amt'])+($data['withmilk_total_amt']['m_amt']));
         //echo '<pre>';print_r($data);exit;
-		$data['count'] = count($data['cart']);
+        $data['count'] = count($data['cart']);
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
         $data['pageTitle'] = 'Billing';
         $this->load->view('home/billing',$data);
@@ -114,64 +115,56 @@ class Billing extends CI_Controller
     }
   }
   //edit billing address
-  public function edit($id='')
+  public function edit()
   {
     if($this->session->userdata('logged_in') == TRUE){
-      if ($id) {
-        if($this->input->post()){
+        if($this->input->post()) {
           $this->form_validation->set_rules('first_name', 'First Name', 'required|callback_alpha_dash_space');
           $this->form_validation->set_rules('last_name', 'Last Name', 'required|callback_alpha_dash_space');
-          $this->form_validation->set_rules('email_address', 'Email Address', 'required|valid_email');
-          $this->form_validation->set_rules('mobile_number', 'Moblie Number', 'required|regex_match[/^[0-9]{10}$/]');
+          $this->form_validation->set_rules('email_id', 'Email Address', 'required|valid_email');
+          $this->form_validation->set_rules('phone_number', 'Moblie Number', 'required|regex_match[/^[0-9]{10}$/]');
           $this->form_validation->set_rules('appartment', 'Appartment', 'required');
           $this->form_validation->set_rules('block', 'Block', 'required');
           $this->form_validation->set_rules('flat_door_no', 'Flat/Door no', 'required');
-          if ($this->form_validation->run() == FALSE){
+          if ($this->form_validation->run() == FALSE) {
             $data['categories'] = $this->Category_model->get_all_category();
             $user_id = $this->session->userdata('id');
-            $data['billing'] = $this->Billing_Model->get_billing_details_by_id($id);
-            $this->load->model('Auth_Model');
-			$data['user'] =$this->Auth_Model->get_user_details($user_id);
-			$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
-			$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
+            //$this->load->model('Auth_Model');
+      			$data['user'] =$this->Auth_Model->get_user_details($user_id);
+      			$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+      			$data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
             $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
             $data['count'] = count($data['cart']);
             $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
             $data['pageTitle'] = 'Billing';
             $this->load->view('home/edit_billing',$data);
-          }else{
+          } else {
             $post_data = $this->input->post();
-            $addl_data = array('user_id' => $this->session->userdata('id'),'updated_date' => date('Y-m-d H:i:s'),'updated_by' => $this->session->userdata('id'),'status' => 'Active');
+            $addl_data = array('updated_date' => date('Y-m-d H:i:s'),'updated_by' => $this->session->userdata('id'),'status' => 'Active');
             $post_data = array_merge($post_data,$addl_data);
             $post_id = $this->input->post('id');
-            if($this->Billing_Model->Update($post_data,$post_id)){
+            if($this->Auth_Model->Update($post_data,$post_id)) {
               $this->session->set_flashdata('success','Updated successfully');
               redirect('/billing');
-            }else{
+            } else {
               $this->session->set_flashdata('error', 'Please,try again');
               redirect('/billing');
             }
           }
-        }else{
+        } else {
           $data['categories'] = $this->Category_model->get_all_category();
           $user_id = $this->session->userdata('id');
-          //$data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
-          $data['billing'] = $this->Billing_Model->get_billing_details_by_id($id);
-		  $this->load->model('Auth_Model');
-		  $data['user'] =$this->Auth_Model->get_user_details($user_id);
-		  $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
-		  $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
+    		  $this->load->model('Auth_Model');
+    		  $data['user'] =$this->Auth_Model->get_user_details($user_id);
+    		  $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+    		  $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
           $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
           $data['count'] = count($data['cart']);
           $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
           $data['pageTitle'] = 'Billing';
           $this->load->view('home/edit_billing',$data);
         }
-      } else {
-        $this->session->set_flashdata('error','Sorry, there is a problem in updating record');
-        redirect('/billing');
-      }
-    }else{
+    } else {
       redirect('home/login');
     }
   }

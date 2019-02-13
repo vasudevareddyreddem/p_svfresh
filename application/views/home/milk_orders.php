@@ -2,6 +2,7 @@
 <html>
 <head>
   <?php include("header.php"); ?>
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-datepicker.css'); ?>">
 
   <div class="columns-container">
     <div class="container" id="columns">
@@ -16,10 +17,23 @@
 
       <!-- ../page heading-->
       <div class="page-content checkout-page">
-
         <h3 class="checkout-sep">Milk Orders</h3>
-        <div class="box-border 	">
-          <div class="table-responsive	">
+        <form class="" action="<?php echo base_url('order/milk_orders'); ?>" method="post">
+          <div class="row">
+            <div class="col-md-3">
+              <input type="text" class="form-control" id="datepicker" name="date" value="<?php if(isset($filter) && $filter['date'] != ''){ echo $filter['date']; } ?>" placeholder="Pick a date" readonly>
+            </div>
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-primary" name="button">Filter</button>
+              <?php if(isset($filter) && $filter['date'] != ''){ ?>
+                <a href="<?php echo base_url('order/milk_orders'); ?>" class="btn btn-warning">Clear</a>
+              <?php } ?>
+            </div>
+          </div>
+        </form>
+        <div class=""> &nbsp; </div>
+        <div class="box-border">
+          <div class="table-responsive">
             <table class="table table-bordered  cart_summary">
               <thead>
                 <tr>
@@ -53,7 +67,7 @@
               <?php } ?>
             <?php }else{ ?>
               <tr>
-                <td colspan="4" style="text-align:center">No items found</td>
+                <td colspan="5" style="text-align:center">No items found</td>
               </tr>
             <?php  } ?>
               </tbody>
@@ -68,6 +82,7 @@
   </div>
 
   <?php include("footer.php"); ?>
+  <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap-datepicker.min.js') ?>"></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $('.increase').click(function(){
@@ -120,6 +135,10 @@
             }
           }
         });
+      });
+      //datepicker
+      $('#datepicker').datepicker({
+          format: 'd/m/yyyy'
       });
     });
   </script>

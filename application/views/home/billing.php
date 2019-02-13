@@ -21,6 +21,7 @@
                         <p><b>Apartment : </b><?php echo (isset($user->appartment)) ? $user->appartment : ''; ?></p>
                         <p><b>Block : </b><?php echo (isset($user->block)) ? $user->block : ''; ?></p>
                         <p><b>Flat/Door No : </b><?php echo (isset($user->block)) ? $user->flat_door_no : ''; ?></p>
+                        <a href="<?php echo base_url('billing/edit'); ?>" class="btn btn-success">Edit</a>
                       </div>
                     </div>
                     <div class="clearfix">
