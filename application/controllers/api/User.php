@@ -929,18 +929,30 @@ public function change_password_post(){
 
 }
 public function get_months_post(){
- $date = date('Y-m-d');
 
 
-$month=date('m' ,strtotime($date));//current month in number
-$year=date('Y' ,strtotime($date));// current year in number
+ $hours=date('H');
+
+
+
+ if($hours<2){
+   $cdate = date('Y-m-d');
+ }
+ else{
+   $cdate=date('Y-m-d', strtotime(' + 1 days'));
+ }
+
+
+
+$month=date('m' ,strtotime($cdate));//current month in number
+$year=date('Y' ,strtotime($cdate));// current year in number
 
  $days=cal_days_in_month(CAL_GREGORIAN,$month,$year);//days in  a month
- $curmonth['month_in_text']=date('F' ,strtotime($date));//month in text
+ $curmonth['month_in_text']=date('F' ,strtotime($cdate));//month in text
  $curmonth['month']=$month;
   $curmonth['year']=$year;
   $curmonth['days']=$days;
-   $curmonth['present_day']=date('d' ,strtotime($date)); // present day in number
+   $curmonth['present_day']=date('d' ,strtotime($cdate)); // present day in number
 $months[]=$curmonth;
 
 
@@ -950,7 +962,7 @@ $months[]=$curmonth;
 
 
 	//$date=date('Y-m-d', strtotime('+'.$i.' month',strtotime(date('Y-m-d'))));
-	$date= date('Y-m-d', strtotime('first day of +'.$i.' month'));
+	$date= date('Y-m-d', strtotime($cdate.'first day of +'.$i.' month'));
 
 
 	$curmonth['month_in_text']=date('F' ,strtotime($date));
@@ -995,6 +1007,10 @@ $months[]=$curmonth;
 	$price=$this->post('price');
 
 	foreach($quantitys as $key=>$value ){
+    if($value==0){
+
+    }
+      else{
 	$data[]="('$product_id',
 
 	         '$user_id',
@@ -1004,7 +1020,7 @@ $months[]=$curmonth;
 	'$price',
 	'$value'
 	)";
-
+}
 
 	}
 
@@ -1028,6 +1044,8 @@ public function get_milk_order_post(){
 	$user_id=$this->post('user_id');
 	$month=$this->post('month');
 	$year=$this->post('year');
+  $frq=$this->post('frq');
+  $qu=$this->post('quantity');
 	$flag=$this->Mobile_model->user_checking($user_id);
 	if($flag==0){
 		 $message['status'] =0;
@@ -1060,7 +1078,39 @@ public function get_milk_order_post(){
 
 			}
 			else{
-				$result[]=array('date'=>$i,'quantity'=>0);
+				//daily
+        if($frq==1){
+
+            $result[]=array('date'=>$i,'quantity'=>$qu);
+          }
+
+     //alternative days
+     if($frq==2){
+       if($cnt%2==0){
+
+           $result[]=array('date'=>$i,'quantity'=>$qu);
+       }
+       else{
+         $result[]=array('date'=>$i,'quantity'=>0);
+       }
+
+     }
+
+     //weekends
+     if($frq==3){
+       $wdate=$year.'-'.$month.'-'.$start_date;
+       $wday= strtotime($wdate);
+      $weekday= date('l', $wday);
+      if($weekday=='Saturday' or $weekday=='Sunday'){
+         $result[]=array('date'=>$i,'quantity'=>qu);
+
+      }
+      else{
+        $result[]=array('date'=>$i,'quantity'=>0);
+      }
+
+
+   }
 
 
 
@@ -1073,14 +1123,34 @@ public function get_milk_order_post(){
 		 $this->response($message, REST_Controller::HTTP_OK);
 
 	}
+  $cnt=2;
     for($i=$start_date;$i<=$days_inmonth;$i++){
+        if($frq==1){
 
             $empty_result[]=array('date'=>$i,'quantity'=>0);
+          }
+
+     if($frq==2){
+       if($cnt%2==0){
+
+           $empty_result[]=array('date'=>$i,'quantity'=>0);
+       }
+
+     }
+     if($frq==3){
+       $wdate=$year.'-'.$month.'-'.$i;
+       $wday= strtotime($wdate);
+      $weekday= date('l', $wday);
+      //echo $weekday;exit;
+      if($weekday=='Saturday' or $weekday=='Sunday'){
+         $empty_result[]=array('date'=>$i,'quantity'=>0);
+
+      }
 
 
-
-
-    }
+   }
+$cnt++;
+}
 
 
 	$message=array('status'=>0,'orders'=>$empty_result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
@@ -1417,15 +1487,26 @@ public function get_date_wise_milk_orders_post(){
    $month=date('m' ,strtotime($date));
     $year=date('Y' ,strtotime($date));
       $day=date('d' ,strtotime($date));
+
       $res=$this->Mobile_model->get_day_milk_orders($year,$month,$day,$user_id);
+      //echo $this->db->last_query();exit;
       if(count($res)>0){
         $message = array('status'=>1,'message'=>$res);
+         $message['product_image_path']=base_url().'assets/uploads/product_pics/';
           $this->response($message, REST_Controller::HTTP_OK);
 
 
       }
       $message = array('status'=>0,'message'=>$res);
         $this->response($message, REST_Controller::HTTP_OK);
+
+
+}
+public function testapi_post(){
+   $timestamp = strtotime("2019-2-17");
+   $weekDay = date('l', $timestamp);
+   echo $weekDay;
+
 
 
 }

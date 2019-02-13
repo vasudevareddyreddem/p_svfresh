@@ -538,8 +538,8 @@ return $this->db->get()->result_array();
 
 				 }
 				 public function get_day_milk_orders($year,$month,$day,$user_id){
-					 $this->db->select('*')->from('calender_tab')->where('user_id',$userid)
-					 ->where('year',$year)->where('month',$month)->where('date',$day);
+					 $this->db->select('c.*,p.product_name,p.product_img')->from('calender_tab c')->join('product_tab p','p.product_id=c.product_id')->where('c.user_id',$user_id)
+					 ->where('c.year',$year)->where('c.month',$month)->where('c.date',$day);
 
 					 return $this->db->get()->result_array();
 
