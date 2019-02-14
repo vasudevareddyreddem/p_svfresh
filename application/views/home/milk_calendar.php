@@ -41,7 +41,7 @@
 									</select>
 								</div>
 								<div class="col-md-1">
-									<input type="text" class="form-control" name="" value="">
+									<input type="text" class="form-control" id="quantity" name="" value="">
 								</div>
 							</div>
 						</div>
@@ -84,6 +84,10 @@
 $(document).ready(function(){
 	$('#months').change(get_calender).trigger('change');
 	$('#frequency').change(get_calender).trigger('change');
+	//quantity
+	$('#quantity').on('keyup',function(){
+		$('.input-number').val($(this).val());
+	});
 });
 
 function get_calender() {
