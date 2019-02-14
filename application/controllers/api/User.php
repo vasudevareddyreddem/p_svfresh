@@ -1091,7 +1091,7 @@ $day=date('d' ,strtotime($cdate)); // present day in number
         foreach ($result as $key => $val) {
           if ($val['quantity'] != $qu and $val['date']==$i) {
             unset($result[$key]);
-            $result[]=array('date'=>$i,'quantity'=>$qu);
+            $result[]=array('date'=>"$i",'quantity'=>"$qu");
 
 
           }
@@ -1107,7 +1107,7 @@ if($frq==2){
           //$val['quantity']=$qu;
 
            unset($result[$key]);
-            $result[]=array('date'=>$i,'quantity'=>$qu);
+            $result[]=array('date'=>"$i",'quantity'=>"$qu");
 
 
       }
@@ -1131,7 +1131,7 @@ if($frq==3){
    foreach ($result as $key => $val) {
      if ($val['quantity'] != $qu && $val['date']==$i) {
        unset($result[$key]);
-         $result[]=array('date'=>$i,'quantity'=>$qu);
+         $result[]=array('date'=>"$i",'quantity'=>"$qu");
      }
  }
 
@@ -1146,17 +1146,17 @@ if($frq==3){
 				//daily
         if($frq==1){
 
-            $result[]=array('date'=>$i,'quantity'=>$qu);
+            $result[]=array('date'=>"$i",'quantity'=>"$qu");
           }
 
      //alternative days
      if($frq==2){
        if($cnt%2==0){
 
-           $result[]=array('date'=>$i,'quantity'=>$qu);
+           $result[]=array('date'=>"$i",'quantity'=>"$qu");
        }
        else{
-         $result[]=array('date'=>$i,'quantity'=>0);
+         $result[]=array('date'=>"$i",'quantity'=>"0");
        }
 
      }
@@ -1167,11 +1167,11 @@ if($frq==3){
        $wday= strtotime($wdate);
       $weekday= date('l', $wday);
       if($weekday=='Saturday' or $weekday=='Sunday'){
-         $result[]=array('date'=>$i,'quantity'=>qu);
+         $result[]=array('date'=>"$i",'quantity'=>"$qu");
 
       }
       else{
-        $result[]=array('date'=>$i,'quantity'=>0);
+        $result[]=array('date'=>"$i",'quantity'=>"0");
       }
 
 
@@ -1196,16 +1196,16 @@ $cnt++;
     for($i=$start_date;$i<=$days_inmonth;$i++){
         if($frq==1){
 
-            $empty_result[]=array('date'=>$i,'quantity'=>$qu);
+            $empty_result[]=array('date'=>"$i",'quantity'=>"$qu");
           }
 
      if($frq==2){
        if($cnt%2==0){
 
-           $empty_result[]=array('date'=>$i,'quantity'=>$qu);
+           $empty_result[]=array('date'=>"$i",'quantity'=>"$qu");
        }
        else{
-          $empty_result[]=array('date'=>$i,'quantity'=>0);
+          $empty_result[]=array('date'=>"$i",'quantity'=>"0");
        }
 
      }
@@ -1215,11 +1215,11 @@ $cnt++;
       $weekday= date('l', $wday);
       //echo $weekday;exit;
       if($weekday=='Saturday' or $weekday=='Sunday'){
-         $empty_result[]=array('date'=>$i,'quantity'=>$qu);
+         $empty_result[]=array('date'=>"$i",'quantity'=>"$qu");
 
       }
       else{
-      $empty_result[]=array('date'=>$i,'quantity'=>0);
+      $empty_result[]=array('date'=>"$i",'quantity'=>"0");
       }
 
 

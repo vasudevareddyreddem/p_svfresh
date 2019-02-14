@@ -5,7 +5,7 @@
         </div>
         <div class="sidebar-user">
             <div class="sidebar-user-picture">
-                <img alt="image" src="<?php 
+                <img alt="image" src="<?php
 				$admin=$this->session->userdata('svadmin_det');
 				if($admin['profile_pic']=='')
 				{echo base_url().'assets/uploads/profile_pics/profilepic.png';}
@@ -14,7 +14,7 @@
 			}?>">
             </div>
             <div class="sidebar-user-details">
-                <div class="user-name"><?php 
+                <div class="user-name"><?php
 				echo $admin['login_email'];?>
 				</div>
                 <div class="user-role">
@@ -31,7 +31,7 @@
                 <ul class="menu-dropdown">
                     <li><a href="<?php  echo base_url('slider/addslider'); ?>"><i class="ion ion-ios-circle-outline"></i>Add Slider</a></li>
                     <li><a href="<?php  echo base_url('slider/slider_list'); ?>"><i class="ion ion-ios-circle-outline"></i>Slider List</a></li>
-                   
+
                 </ul>
             </li>
             <li>
@@ -51,7 +51,7 @@
                 <ul class="menu-dropdown">
                     <li><a href="<?php echo base_url('product/add_product');?>"><i class="ion ion-ios-circle-outline"></i>Add Product</a></li>
                     <li><a href="<?php echo base_url('product/product_list');?>"><i class="ion ion-ios-circle-outline"></i>Products List</a></li>
-					 
+
                 </ul>
             </li>
             <li>

@@ -46,11 +46,12 @@
                             <div class="clearfix">
                                 &nbsp;
                             </div>
+                            <div><a href='#'>Boys List</a></div>
                             <div class="table-responsive">
                                 <table id="example" class="table table-striped">
                                     <thead>
                                         <tr>
-                                           
+
 											<th>Apartment</th>
 											<th>Block</th>
 											<th>Flat/Door number</th>
@@ -59,10 +60,10 @@
                                             <th>Price</th>
                                             <th>Customer Name</th>
                                             <th>Mobile Number</th>
-                                           
+
                                             <th>Payment Type</th>
                                             <th>Status</th>
-											<th>Delivery Date</th> 
+											<th>Delivery Date</th>
                                             <th>Ordered Date & Time</th>
                                         </tr>
                                     </thead>
@@ -78,7 +79,7 @@
                                             <td><?php echo $order->price; ?></td>
                                             <td><?php echo $order->email_id; ?></td>
                                             <td><?php echo $order->phone_number; ?></td>
-                                           
+
                                             <td><?php if($order->payment_type==1){
 												echo 'online payment';
 											}
@@ -90,15 +91,15 @@
 											}?></td>
                                              <td>
 									<div class="badge badge-info" >
-											 
+
 											 <?php echo'Pending';?>
 											 </div>
                                                 <div class="badge badge-warning" >
-											 <a 
+											 <a
 							href="<?php echo base_url('milkorder/deliver_order/').base64_encode($order->calender_id) ;?>" class="text-white" ><i >
 											 <?php echo'Delivered';?></i></a>
 											 </div>
-											 
+
 											 <div class="badge badge-danger" >
 								<a href="<?php echo base_url('milkorder/cancel_order/').base64_encode($order->calender_id);?>" class="text-white" ><i >
 											 <?php echo'cancelled';?></i></a>
@@ -107,9 +108,9 @@
 											<td>
 											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
 											</td>
-                                        
-                                            <td><?php 
-											
+
+                                            <td><?php
+
 													if($order->created_date!=''){
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');
@@ -118,8 +119,8 @@
 											?></td>
                                         </tr>
 										<?php }}?>
-                                        
-                                       
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -176,5 +177,3 @@ $(document).ready(function() {
         });
     });
 </script>
-
-
