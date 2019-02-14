@@ -45,6 +45,7 @@ class Milkcalender extends CI_Controller
   public function month_calender()
   {
     $month = $this->input->post('month');
+    $frequency = $this->input->post('frequency');
     $c_year = date('Y');
     $product_id = $this->input->post('product_id');
     $days = cal_days_in_month(CAL_GREGORIAN,$month,$c_year);
@@ -56,11 +57,35 @@ class Milkcalender extends CI_Controller
     }
     if($current_month == $month){
       for($d = $current_day;$d <= $days; $d++){
+        if ($frequency == '1') {
+          $days_array[] = $d;
+        } elseif ($frequency == '2') {
+          $date = $c_year.'/'.$month.'/'.$d;
+          $day_name = date('D',strtotime($date));
+          if ($day_name == 'Sun' || $day_name == 'Sat') {
             $days_array[] = $d;
+          }
+        } elseif ($frequency == '3') {
+          if ($d % 2) {
+            $days_array[] = $d;
+          }
+        }
       }
     } else {
       for($d = 1;$d <= $days; $d++){
+        if ($frequency == '1') {
           $days_array[] = $d;
+        } elseif ($frequency == '2') {
+          $date = $c_year.'/'.$month.'/'.$d;
+          $day_name = date('D',strtotime($date));
+          if ($day_name == 'Sun' || $day_name == 'Sat') {
+            $days_array[] = $d;
+          }
+        } elseif ($frequency == '3') {
+          if ($d % 2) {
+            $days_array[] = $d;
+          }
+        }
       }
     }
     $data['days'] = array_chunk($days_array,5);

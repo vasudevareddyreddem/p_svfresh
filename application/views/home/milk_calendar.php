@@ -22,16 +22,26 @@
 					<div class="card bg-white">
 						<div class="card-header  py-4 px-4 text-white" style="background:#57bb14;">
 							<div class="row">
-								<div class="col-md-9">
+								<div class="col-md-7">
 									<strong class="h3"><span><?php if (isset($product_name->product_name)) { echo ucwords($product_name->product_name); } ?></span></strong>
 								</div>
-								<div class="col-md-3">
-									<select class="form-control months">
+								<div class="col-md-2">
+									<select class="form-control" id="months">
 										<?php for ($i = 1; $i <= 12; $i++) { ?>
 											<option value="<?php echo date('n',mktime(0,0,0,$i,1)); ?>" <?php echo (date('n',strtotime('+1day')) == date('n',mktime(0,0,0,$i,date("j",strtotime('+1day'))))) ? 'selected' : ''; ?>><?php echo date('F',mktime(0,0,0,$i,1)); ?></option>
 										<?php } ?>
 									</select>
 									<input type="hidden" name="product_id" id="product_id" value="<?php echo $product_id; ?>">
+								</div>
+								<div class="col-md-2">
+									<select class="form-control" id="frequency">
+										<option value="1">Daily</option>
+										<option value="2">Weekend</option>
+										<option value="3">Alternate</option>
+									</select>
+								</div>
+								<div class="col-md-1">
+									<input type="text" class="form-control" name="" value="">
 								</div>
 							</div>
 						</div>
@@ -51,11 +61,9 @@
 												<th class="h4">Packets</th>
 												<th class="h4">Date</th>
 												<th class="h4">Packets</th>
-
 											</tr>
 										</thead>
 										<tbody id="calender_template">
-
 										</tbody>
 									</table>
 								</div>
@@ -67,26 +75,25 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-
 	</div>
 </div>
 <?php include("footer.php"); ?>
 <script>
 
 $(document).ready(function(){
-	$('.months').change(get_calender).trigger('change');
+	$('#months').change(get_calender).trigger('change');
+	$('#frequency').change(get_calender).trigger('change');
 });
 
 function get_calender() {
-	var month = $(this).val();
+	var month = $('#months').val();
+	var frequency = $('#frequency').val();
 	var product_id = $('#product_id').val();
 	$.ajax({
 		url:'<?php echo base_url('Milkcalender/month_calender'); ?>',
 		type:'POST',
-		data:{'month':month,'product_id':product_id},
+		data:{'month':month,'product_id':product_id,'frequency':frequency},
 		dataType:'JSON',
 		success:function(data){
 			$('#calender_template').empty();
