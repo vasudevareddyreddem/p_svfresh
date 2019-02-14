@@ -58,7 +58,7 @@ class Home extends CI_controller
         $this->load->view('home/login',$data);
       }else{
         //checking user data
-        $post_array = array('phone_number' => $this->input->post('phone_number'));
+        $post_array = array('phone_number' => $this->input->post('phone_number'),'status' => 'Active');
         $result = $this->Auth_Model->login($post_array);
         if(count($result) > 0){
           if(password_verify($this->input->post('password'),$result->password)){
@@ -221,6 +221,137 @@ class Home extends CI_controller
       $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
       $this->load->view('home/changepassword');
     }
+  }
+  //forgot password
+  public function fpassword()
+  {
+    if ($this->input->post()) {
+      $this->form_validation->set_rules('phone_number', 'Phone Number', 'required');
+      if ($this->form_validation->run() == FALSE) {
+        $data['pageTitle'] = 'Forgot password';
+        $this->load->view('home/forgotpassword',$data);
+      } else {
+        $phone_number = $this->input->post('phone_number');
+        $user_data = $this->Auth_Model->get_user_details_by_phone_number($phone_number);
+        if ($user_data) {
+          $otp = $this->generate_otp();
+          if ($otp) {
+            $post_data = array('status' => 'Inactive','otp' => $otp,'otp_created_on' => date('Y-m-d H:i:s'));
+            if ($this->Auth_Model->update($post_data,$user_data->id)) {
+              //sms for opt
+              $mobile = $user_data->phone_number;
+              $username = $this->config->item('smsusername');
+              $password = $this->config->item('smspassword');
+              $sender = $this->config->item('sender');
+              $message = "Dear Customer Your otp  is ".$otp;
+              $ch2 = curl_init();
+              curl_setopt($ch2, CURLOPT_URL,"http://trans.smsfresh.co/api/sendmsg.php");
+              curl_setopt($ch2, CURLOPT_POST, 1);
+              curl_setopt($ch2, CURLOPT_POSTFIELDS,'user='.$username.'&pass='.$password.'&sender='.$sender.'&phone='.$mobile.'&text='.$message.'&priority=ndnd&stype=normal');
+              curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+              $server_output = curl_exec ($ch2);
+              curl_close ($ch2);
+              //--->
+              $this->session->set_userdata('phone_number',$phone_number);
+              $this->session->set_flashdata('success','Otp send to your registered phone number');
+              redirect('home/otp');
+            } else {
+              $this->session->set_flashdata('error','Please try again');
+              redirect($this->agent->referrer());
+            }
+          } else {
+            $this->session->set_flashdata('error','Please try again');
+            redirect($this->agent->referrer());
+          }
+        } else {
+          $this->session->set_flashdata('error','Invalid Phone Number');
+          redirect($this->agent->referrer());
+        }
+      }
+    } else {
+      $data['pageTitle'] = 'Forgot password';
+      $this->load->view('home/forgotpassword',$data);
+    }
+  }
+  //enter otp
+  public function otp()
+  {
+    if($this->session->userdata('phone_number')) {
+      if ($this->input->post()) {
+        $this->form_validation->set_rules('otp', 'otp', 'required');
+        if ($this->form_validation->run() == FALSE) {
+          $data['pageTitle'] = 'Forgot password';
+          $this->load->view('home/otp',$data);
+        } else {
+          $phone_number = $this->input->post('phone_number');
+          $otp = $this->input->post('otp');
+          $user_data = $this->Auth_Model->get_user_details_by_otp_phone_number($phone_number,$otp);
+          if ($user_data) {
+            $this->session->unset_userdata('phone_number');
+            $start_date = new DateTime(date('Y-m-d  H:i:s'));
+            $since_start = $start_date->diff(new DateTime($user_data->otp_created_on));
+            $time = $since_start->s;
+            if ($time > 300) {
+              $this->session->set_flashdata('error','Otp entered is invalid');
+              redirect('home/fpassword');
+            } else {
+              $this->session->set_userdata('userid',$user_data->id);
+              $this->session->set_flashdata('success','Reset your new password');
+              redirect('home/rpassword');
+            }
+          } else {
+            $this->session->set_flashdata('error','Otp entered is invalid');
+            redirect($this->agent->referrer());
+          }
+        }
+      } else {
+        $data['pageTitle'] = 'Otp';
+        $this->load->view('home/otp',$data);
+      }
+    } else {
+      $this->session->set_flashdata('error','No direct access allowed');
+      redirect('home/fpassword');
+    }
+  }
+  //reset password
+  public function rpassword()
+  {
+    if ($this->session->userdata('userid')) {
+      if ($this->input->post()) {
+        $this->form_validation->set_rules('password', 'New Password', 'required|required|matches[confirm_password]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required');
+        if ($this->form_validation->run() == FALSE) {
+          $data['pageTitle'] = 'Reset password';
+          $this->load->view('home/resetpassword',$data);
+        } else {
+          $user_id = $this->input->post('id');
+          $password = password_hash($this->input->post('password'),PASSWORD_DEFAULT);
+          if ($this->Auth_Model->change_password($user_id,array('password' => $password,'status' => 'Active'))) {
+            $this->session->unset_userdata('userid');
+            $this->session->set_flashdata('success', 'Password changed successfully.');
+            redirect('home/login');
+          } else {
+            $this->session->set_flashdata('error', 'Please try again.');
+            redirect($this->agent->referrer());
+          }
+        }
+      } else {
+        $data['pageTitle'] = 'Reset password';
+        $this->load->view('home/resetpassword',$data);
+      }
+    } else {
+      $this->session->set_flashdata('error','No direct access allowed');
+      redirect('home/fpassword');
+    }
+  }
+  //generate otp
+  function generate_otp() {
+      $numbers_string = "1357902468";
+      $result = "";
+      for ($i = 1; $i <= 6; $i++) {
+          $result .= substr($numbers_string, (rand()%(strlen($numbers_string))), 1);
+      }
+      return $result;
   }
 	public  function newletterpost(){
 		$post=$this->input->post();

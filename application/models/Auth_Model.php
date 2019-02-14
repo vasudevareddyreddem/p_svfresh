@@ -105,6 +105,17 @@ class Auth_Model extends CI_Model
     $this->db->where('id',$user_id);
     return $this->db->get()->row();
   }
+  //get user details by phone number
+  public function get_user_details_by_phone_number($phone_number='')
+  {
+    return $this->db->get_where($this->table,array('phone_number' => $phone_number))->row();
+  }
+  //get user details by otp and mobile number
+  public function get_user_details_by_otp_phone_number($phone_number = '',$otp = '')
+  {
+    $this->db->select('id,otp,otp_created_on');
+    return $this->db->get_where($this->table,array('phone_number' => $phone_number, 'otp' => $otp))->row();
+  }
 
 }
 
