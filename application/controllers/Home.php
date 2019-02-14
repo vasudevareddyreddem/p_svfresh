@@ -253,7 +253,7 @@ class Home extends CI_controller
               curl_close ($ch2);
               //--->
               $this->session->set_userdata('phone_number',$phone_number);
-              $this->session->set_flashdata('success','Otp send to user registered phone number');
+              $this->session->set_flashdata('success','Otp send to your registered phone number');
               redirect('home/otp');
             } else {
               $this->session->set_flashdata('error','Please try again');
