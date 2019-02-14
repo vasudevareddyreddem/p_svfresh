@@ -22,15 +22,32 @@
                                             <input id="name" type="text" class="form-control" name="apartment_name">
                                         </div>
 
+<div>  <label>Uncheck the box for adding Bank Account Number</label><input   id='net' class="form-control" type='checkbox'   value='checkbank' name='checkbank' checked></div>
+             <div  id='addmain'>
+                   <div id='bacc'>
+                  <!-- <div  id='bankcheck'>  <label>Check the box for adding Bank Account Number</label><input type='checkbox' disabled></div> -->
+                     <div class="form-group">
+                        <label>Add Account Number</label>
+                        <input id="acc" type="text" class="form-control" name="acc" disabled>
+                    </div>
+                    <div class="form-group">
+                       <label>Add Account Name</label>
+                       <input id="accname" type="text" class="form-control" name="accname" disabled>
+                   </div>
+                    <div class="form-group">
+                        <label>Add IFSC Code</label>
+                        <input id="ifsc" type="text" class="form-control" name="ifsc" disabled>
+                    </div>
+                   </div>
+                   <!-- <div id='upi'> -->
+                     <!-- <div  id='upicheck'>  <label>check the box for adding UPI Number</label><input type='checkbox' disabled></div> -->
+                     <div class="form-group">
+                         <label>Add UPI Code</label>
+                         <input id="upi" type="text" class="form-control" name="upi" disabled>
+                     </div>
+                   <!-- </div> -->
+                   </div>
 
-                                        <div class="form-group">
-                                            <label>Add Account Number</label>
-                                            <input id="acc" type="text" class="form-control" name="acc">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Add IFSC Code</label>
-                                            <input id="ifsc" type="text" class="form-control" name="ifsc">
-                                        </div>
                                         <button type="submit" class="btn btn-primary">
                                             Add
                                         </button>
@@ -80,4 +97,29 @@
 
     });
 
+</script>
+<script>
+$('#net').click(function(){
+
+
+  if (this.checked) {
+
+      $('#acc').attr('disabled', 'disabled');
+        $('#accname').attr('disabled', 'disabled');
+        $('#ifsc').attr('disabled', 'disabled');
+          $('#upi').attr('disabled', 'disabled');
+
+
+  } else {
+
+
+      $('#acc').removeAttr('disabled');
+        $('#ifsc').removeAttr('disabled');
+    $('#accname').removeAttr('disabled');
+            $('#upi').removeAttr('disabled');
+
+  }
+
+
+});
 </script>

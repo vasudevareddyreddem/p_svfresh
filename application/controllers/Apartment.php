@@ -46,6 +46,19 @@ class Apartment extends In_frontend
 
         $data=array('apartment_name'=>$name,
             'created_by'=>$svadmin);
+            if($this->input->post('checkbank')==null or $this->input->post('checkbank')==''){
+              if(($this->input->post('upi')==null or $this->input->post('upi')) and ($this->input->post('acc')==null or $this->input->post('acc')=='') )
+              {
+                $this->session->set_flashdata('error','You have to Enter Atleast one payment method');
+                redirect('apartment/add_apartment');
+
+              }
+              if($this->input->post('upi')==null or $this->input->post('upi')){
+
+              }
+              else{
+                $data['upi_code']=$this->input->post('upi');
+              }
             if($this->input->post('acc')==null or $this->input->post('acc')==''){
 
             }
@@ -63,6 +76,7 @@ class Apartment extends In_frontend
               $data['account_number']=$this->input->post('acc');
 
             }
+          }
         $flag=$this->Apartment_model->save_apartment($data);
         if($flag==1){
             $this->session->set_flashdata('success','Apartment Added successfully');
@@ -147,9 +161,11 @@ public function save_edit_apartment(){
 
                   }
                   else{
+                      $data['account_name']=$this->input->post('accname');
                       $data['ifsc']=$ifsc;
                   }
               $data['account_number']=$this->input->post('acc');
+                $data['account_status']=1;
 
             }
        $status=$this->Apartment_model->save_edit_apartment($data,$id);
@@ -459,6 +475,24 @@ public  function block_list(){
 
         }
         else{redirect('login');}
+
+    }
+    public function test_qrcode(){
+      $this->load->library('ciqrcode');
+
+
+$params['data'] = 'siva is very good boy';
+
+$params['level'] = 'H';
+
+$params['size'] = 10;
+
+$params['cachedir'] = FCPATH.'assets/qrcode/';
+
+$params['savename'] =FCPATH.'assets/qrcode/'.'test_1.png';
+
+
+$this->ciqrcode->generate($params);
 
     }
 

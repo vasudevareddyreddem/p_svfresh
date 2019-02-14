@@ -85,7 +85,7 @@ class Mobile_model extends CI_Model
 	public function get_all_products(){
 		$this->db->select('product_tab.*,category_tab.cat_id catid,category_tab.cat_name ,category_tab.cat_scr_content,category_tab.cat_id catid,category_tab.cat_id catidcatid,category_tab.cat_id catid,category_tab.cat_id catid')->from('product_tab')->
 		join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id')->
-		join('category_tab','category_tab.cat_id=product_tab.cat_id')->order_by('updated_at,cat_id','desc')->where('category_tab.status',1)->where('product_tab.status',1)->where('subcat_tab.status',1);
+		join('category_tab','category_tab.cat_id=product_tab.cat_id')->where('category_tab.status',1)->where('product_tab.status',1)->where('subcat_tab.status',1)->order_by('updated_at,cat_id','desc');
 		return $this->db->get()->result_array();
 	}
 	public function subcat_img_slider($subcat){
@@ -125,7 +125,7 @@ class Mobile_model extends CI_Model
 		order_items_tab.product_img,order_items_tab.quantity,order_items_tab.net_price,order_tab.created_date,
 		order_items_tab.delivery_status')->from('order_tab')->
 		join('order_items_tab','order_tab.order_id=order_items_tab.order_id')
-		->where('order_tab.user_id',$id)->order_by('order_items_tab.created_date,order_tab.order_id','desc');
+		->where('order_tab.user_id',$id)->order_by('order_items_tab.created_date','desc')->order_by('order_tab.order_id','desc');
 
 	  return $this->db->get()->result_array();
 	}

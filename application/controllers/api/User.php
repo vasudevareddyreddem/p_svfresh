@@ -1055,8 +1055,15 @@ public function get_milk_order_post(){
     $days_inmonth=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 	$curmonth=date('m');
 	if($curmonth==$month){
-
-		$day=date('d');
+    $hours=date('H');
+     if($hours<2){
+      $cdate = date('Y-m-d');
+    }
+    else{
+      $cdate=date('Y-m-d', strtotime(' + 1 days'));
+    }
+$day=date('d' ,strtotime($cdate)); // present day in number
+		//$day=date('d');
         $start_date=$day;
 	}
 	else{
@@ -1064,19 +1071,77 @@ public function get_milk_order_post(){
 		$start_date=1;
 	}
 	$result=$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
+  //print_r($result);exit;
 
-
+  // if previous records are exit or not
 	if(count($result)>0){
+    $cnt=2;
       $order_days=array_column($result,'date');
 
 	  $quantity=array_column($result,'quantity');
 
 
 	    for($i=$start_date;$i<=$days_inmonth;$i++){
+        //if date is alreay in database, previously ordered
 			if(in_array($i,$order_days)){
+        //fiiter the records that are already in database
+        //start of if, if it is daily
+        if($frq==1)
+        {
+        foreach ($result as $key => $val) {
+          if ($val['quantity'] != $qu and $val['date']==$i) {
+            unset($result[$key]);
+            $result[]=array('date'=>$i,'quantity'=>$qu);
 
+
+          }
+      }
+}
+//end of daily
+//start of  alternative
+if($frq==2){
+  if($cnt%2==0){
+
+    foreach ($result as $key => $val) {
+      if ($val['quantity'] != $qu and $val['date']==$i) {
+          //$val['quantity']=$qu;
+
+           unset($result[$key]);
+            $result[]=array('date'=>$i,'quantity'=>$qu);
+
+
+      }
+
+    //echo $start_date;  echo $val['date'];exit;
+
+  }
+
+
+  }
+
+
+}
+//end of alternative
+//start of  weekends
+if($frq==3){
+  $wdate=$year.'-'.$month.'-'.$i;
+  $wday= strtotime($wdate);
+ $weekday= date('l', $wday);
+ if($weekday=='Saturday' or $weekday=='Sunday'){
+   foreach ($result as $key => $val) {
+     if ($val['quantity'] != $qu && $val['date']==$i) {
+       unset($result[$key]);
+         $result[]=array('date'=>$i,'quantity'=>$qu);
+     }
+ }
+
+ }
+ }
+ //end of weekends
 
 			}
+      //end of previously ordered
+      //start of the date that was not in databse,no order for this date
 			else{
 				//daily
         if($frq==1){
@@ -1115,25 +1180,32 @@ public function get_milk_order_post(){
 
 
 			}
+      //end of the no order date
 
-
+$cnt++;
         }
+        //end of for loop
 
 		$message=array('status'=>1,'orders'=>$result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
 		 $this->response($message, REST_Controller::HTTP_OK);
 
 	}
+  //end of if
+  //NO records are there for that month
   $cnt=2;
     for($i=$start_date;$i<=$days_inmonth;$i++){
         if($frq==1){
 
-            $empty_result[]=array('date'=>$i,'quantity'=>0);
+            $empty_result[]=array('date'=>$i,'quantity'=>$qu);
           }
 
      if($frq==2){
        if($cnt%2==0){
 
-           $empty_result[]=array('date'=>$i,'quantity'=>0);
+           $empty_result[]=array('date'=>$i,'quantity'=>$qu);
+       }
+       else{
+          $empty_result[]=array('date'=>$i,'quantity'=>0);
        }
 
      }
@@ -1143,14 +1215,18 @@ public function get_milk_order_post(){
       $weekday= date('l', $wday);
       //echo $weekday;exit;
       if($weekday=='Saturday' or $weekday=='Sunday'){
-         $empty_result[]=array('date'=>$i,'quantity'=>0);
+         $empty_result[]=array('date'=>$i,'quantity'=>$qu);
 
+      }
+      else{
+      $empty_result[]=array('date'=>$i,'quantity'=>0);
       }
 
 
    }
 $cnt++;
 }
+//end of for loop
 
 
 	$message=array('status'=>0,'orders'=>$empty_result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);

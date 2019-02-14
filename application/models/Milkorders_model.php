@@ -54,7 +54,7 @@ class Milkorders_model extends CI_Model
 		$this->db->order_by('calender_tab.month','desc');
 		$this->db->order_by('calender_tab.date','desc');
 		$this->db->order_by('users_tab.id','desc');
-		
+
 		return $this->db->get()->result();
 	}
 	public function pending_order_list($apartment='',$block='',$date='',$mobile=''){
@@ -63,7 +63,7 @@ class Milkorders_model extends CI_Model
 		calender_tab.payment_type,
 		product_tab.product_name,users_tab.email_id,users_tab.first_name,
 		users_tab.last_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
-		
+
 		users_tab.phone_number');
 		$this->db->from('calender_tab');
 		//join('billing_tab','calender_tab.billing_id=billing_tab.id')
@@ -98,8 +98,11 @@ class Milkorders_model extends CI_Model
 				}
 			}
 		}
-		
-		$this->db->order_by('calender_tab.created_date,users_tab.id','desc');
+
+		$this->db->order_by('calender_tab.year','desc');
+		$this->db->order_by('calender_tab.month','desc');
+		$this->db->order_by('calender_tab.date','desc');
+		$this->db->order_by('users_tab.id','desc');
 
 		return $this->db->get()->result();
 	}
@@ -143,8 +146,11 @@ class Milkorders_model extends CI_Model
 				}
 			}
 		}
-		$this->db->order_by('calender_tab.created_date,users_tab.id','desc');
-		
+		$this->db->order_by('calender_tab.year','desc');
+		$this->db->order_by('calender_tab.month','desc');
+		$this->db->order_by('calender_tab.date','desc');
+		$this->db->order_by('users_tab.id','desc');
+
 		return $this->db->get()->result();
 	}
 	public function cancel_order_list($apartment='',$block='',$date='',$mobile=''){
@@ -188,8 +194,11 @@ class Milkorders_model extends CI_Model
 		}
 
 		$this->db->where('calender_tab.delivery_status',0);
-		
-		$this->db->order_by('calender_tab.created_date,users_tab.id');
+
+		$this->db->order_by('calender_tab.year','desc');
+		$this->db->order_by('calender_tab.month','desc');
+		$this->db->order_by('calender_tab.date','desc');
+		$this->db->order_by('users_tab.id','desc');
 		return $this->db->get()->result();
 	}
 	public function change_to_delivery_status($id,$svadmin){
@@ -222,10 +231,10 @@ class Milkorders_model extends CI_Model
 	public function auto_update_sataus(){
 		$date=date('Y-m-d H:i:s');
 		//echo $date;exit;
-		
+
 $month=date('m' ,strtotime($date));//current month in number
 $year=date('Y' ,strtotime($date));// current year in number
-$days=date('d' ,strtotime($date));//present date in month 
+$days=date('d' ,strtotime($date));//present date in month
 
 
 		$this->db->where('delivery_status',2);
