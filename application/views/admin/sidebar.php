@@ -61,6 +61,7 @@
                     <li><a href="<?php echo base_url('orders/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
                     <li><a href="<?php echo base_url('orders/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
 					<li><a href="<?php echo base_url('orders/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
+
                 </ul>
             </li>
 			  <li>
@@ -70,6 +71,7 @@
                     <li><a href="<?php echo base_url('milkorder/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
                     <li><a href="<?php echo base_url('milkorder/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
 					<li><a href="<?php echo base_url('milkorder/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
+              <li><a href="<?php echo base_url('milkorder/boys_list');?>"><i class="ion ion-ios-circle-outline"></i>Boys Apartment List</a></li>
                 </ul>
             </li>
             <li>

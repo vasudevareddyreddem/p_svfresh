@@ -1070,9 +1070,17 @@ $day=date('d' ,strtotime($cdate)); // present day in number
 		$day=0;
 		$start_date=1;
 	}
-	$result=$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year);
-  //print_r($result);exit;
+	$result=$this->Mobile_model->get_milk_orders_by_user($user_id,$product_id,$month,$year,$day);
+  // $object = new stdClass();
+  //  $object->date = 6;
+  //  $object->quantity = 8;
+  //  $result[]=$object;
+  //  $message['status'] =0;
+  //  $message['message']=$result;
+  //
+  //    $this->response($message, REST_Controller::HTTP_OK);
 
+//echo $start_date;exit;
   // if previous records are exit or not
 	if(count($result)>0){
     $cnt=2;
@@ -1089,9 +1097,17 @@ $day=date('d' ,strtotime($cdate)); // present day in number
         if($frq==1)
         {
         foreach ($result as $key => $val) {
-          if ($val['quantity'] != $qu and $val['date']==$i) {
+          $val=json_decode(json_encode($val));
+
+
+          if ($val->quantity != $qu and $val->date==$i) {
             unset($result[$key]);
-            $result[]=array('date'=>"$i",'quantity'=>"$qu");
+            $object = new stdClass();
+             $object->date = $i;
+             $object->quantity = $qu;
+             //$result[]=$object;
+             array_push($result,$object);
+          //  $result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
 
 
           }
@@ -1103,11 +1119,16 @@ if($frq==2){
   if($cnt%2==0){
 
     foreach ($result as $key => $val) {
-      if ($val['quantity'] != $qu and $val['date']==$i) {
+      if ($val->quantity != $qu and $val->date==$i) {
           //$val['quantity']=$qu;
 
            unset($result[$key]);
-            $result[]=array('date'=>"$i",'quantity'=>"$qu");
+           $object = new stdClass();
+            $object->date = $i;
+            $object->quantity = $qu;
+            //$result[]=$object;
+            array_push($result,$object);
+          //  $result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
 
 
       }
@@ -1129,9 +1150,16 @@ if($frq==3){
  $weekday= date('l', $wday);
  if($weekday=='Saturday' or $weekday=='Sunday'){
    foreach ($result as $key => $val) {
-     if ($val['quantity'] != $qu && $val['date']==$i) {
+     if ($val->quantity != $qu and $val->date==$i) {
        unset($result[$key]);
-         $result[]=array('date'=>"$i",'quantity'=>"$qu");
+       $object = new stdClass();
+        $object->date = $i;
+        $object->quantity = $qu;
+        //$result[]=$object;
+        array_push($result,$object);
+
+
+         //$result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
      }
  }
 
@@ -1145,18 +1173,33 @@ if($frq==3){
 			else{
 				//daily
         if($frq==1){
+          $object = new stdClass();
+           $object->date = $i;
+           $object->quantity = $qu;
+           //$result[]=$object;
+           array_push($result,$object);
 
-            $result[]=array('date'=>"$i",'quantity'=>"$qu");
+          //  $result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
           }
 
      //alternative days
      if($frq==2){
        if($cnt%2==0){
+         $object = new stdClass();
+          $object->date = $i;
+          $object->quantity = $qu;
+          //$result[]=$object;
+          array_push($result,$object);
 
-           $result[]=array('date'=>"$i",'quantity'=>"$qu");
+          // $result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
        }
        else{
-         $result[]=array('date'=>"$i",'quantity'=>"0");
+         $object = new stdClass();
+          $object->date = $i;
+          $object->quantity = 0;
+          //$result[]=$object;
+          array_push($result,$object);
+        // $result[]=(object)array('date'=>"$i",'quantity'=>"0");
        }
 
      }
@@ -1167,11 +1210,21 @@ if($frq==3){
        $wday= strtotime($wdate);
       $weekday= date('l', $wday);
       if($weekday=='Saturday' or $weekday=='Sunday'){
-         $result[]=array('date'=>"$i",'quantity'=>"$qu");
+        $object = new stdClass();
+         $object->date = $i;
+         $object->quantity = $qu;
+         //$result[]=$object;
+         array_push($result,$object);
+         //$result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
 
       }
       else{
-        $result[]=array('date'=>"$i",'quantity'=>"0");
+        $object = new stdClass();
+         $object->date = $i;
+         $object->quantity = 0;
+         //$result[]=$object;
+         array_push($result,$object);
+        //$result[]=(object)array('date'=>"$i",'quantity'=>"0");
       }
 
 
@@ -1185,8 +1238,17 @@ if($frq==3){
 $cnt++;
         }
         //end of for loop
+    //$result=(array)$result;
+    //$res = (array) $result;
+    //$data=array(1);
+foreach($result as $key=>$val){
+//echo $key;exit;
+  $data[]=$val;
+  //var_dump($dat);exit;
 
-		$message=array('status'=>1,'orders'=>$result,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
+}
+
+		$message=array('status'=>1,'orders'=>$data,'curdate'=>$day,'days_inmonth'=>$days_inmonth);
 		 $this->response($message, REST_Controller::HTTP_OK);
 
 	}
@@ -1586,6 +1648,40 @@ public function testapi_post(){
 
 
 }
+// public function objectToArray( $object )
+//     {
+//         if( !is_object( $object ) && !is_array( $object ) )
+//         {
+//             return $object;
+//         }
+//         if( is_object( $object ) )
+//         {
+//             $object = get_object_vars( $object );
+//         }
+//         return array_map( 'objectToArray', $object );
+//     }
+ public function objToArray($obj, &$arr){
+
+    if(!is_object($obj) && !is_array($obj)){
+        $arr = $obj;
+        return $arr;
+    }
+
+    foreach ($obj as $key => $value)
+    {
+        if (!empty($value))
+        {
+            $arr[$key] = array();
+            objToArray($value, $arr[$key]);
+        }
+        else
+        {
+            $arr[$key] = $value;
+        }
+    }
+    return $arr;
+}
+
 
 
 }

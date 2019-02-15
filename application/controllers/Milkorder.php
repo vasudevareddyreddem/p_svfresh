@@ -56,7 +56,7 @@ class Milkorder extends In_frontend{
 				$date = $this->input->post('date');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['tot_list']=$this->Milkorders_model->pending_order_list($apartment,$block,$date,$mobile);
+				$data['pending_list']=$this->Milkorders_model->pending_order_list($apartment,$block,$date,$mobile);
 			}
 			else{
 			$data['pending_list']=$this->Milkorders_model->pending_order_list();
@@ -86,7 +86,7 @@ class Milkorder extends In_frontend{
 				$date = $this->input->post('date');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['tot_list']=$this->Milkorders_model->delivered_order_list($apartment,$block,$date,$mobile);
+				$data['delivered_list']=$this->Milkorders_model->delivered_order_list($apartment,$block,$date,$mobile);
 			}
 			else{
 			$data['delivered_list']=$this->Milkorders_model->delivered_order_list();
@@ -115,7 +115,7 @@ class Milkorder extends In_frontend{
 				$date = $this->input->post('date');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['tot_list']=$this->Milkorders_model->cancel_order_list($apartment,$block,$date,$mobile);
+				$data['cancel_list']=$this->Milkorders_model->cancel_order_list($apartment,$block,$date,$mobile);
 			}
 			else{
 			$data['cancel_list']=$this->Milkorders_model->cancel_order_list();
@@ -222,5 +222,43 @@ public function update_delv_sta_auto(){
 exit;
 
 }
+public function boys_list(){
+	  if ($this->session->userdata('svadmin_det')) {
+			$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+			$post = $this->input->post();
 
+			if ($post) {
+
+				$apartment = $this->input->post('apartment');
+				$block = $this->input->post('block');
+				$date = $this->input->post('date');
+
+        $data['filter'] = $post;
+				$data['pending_list']=$this->Milkorders_model->boys_order_list($apartment,$block,$date);
+				if(count($data['pending_list'])>0){
+					$data['pending_status']=1;
+				}
+				else{
+					$data['pending_status']=0;
+				}
+			//	$data['boys_list']=$this->Milkorders_model->boys_tot_list($apartment,$block,$date,$mobile);
+}
+else{
+		$data['pending_status']=0;
+
+}
+
+
+
+			//echo '<pre>'	;print_r($data);exit;
+			$this->load->view('admin/milk_pending_boys',$data);
+			$this->load->view('admin/milk-footer');
+		}
+			else {
+	      $this->session->set_flashdata('error','Please login to continue');
+	      redirect('login');
+
+}
+
+}
 }

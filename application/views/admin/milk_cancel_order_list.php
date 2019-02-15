@@ -14,7 +14,7 @@
                             <h4>Cancelled Order List</h4>
                         </div>
                         <div class="card-body">
-                             <form class="" action="<?php echo base_url('milkorder/total_order_list'); ?>" method="post">
+                             <form class="" action="<?php echo base_url('milkorder/milk_cancel_order_list'); ?>" method="post">
                             <div class="row">
                                     <div class="col-md-3">
                                         <select class="form-control" name="apartment" id="apartment" data-block="<?php if (isset($filter) && ($filter['block'])) { echo $filter['block']; } else { echo ''; } ?>">
@@ -40,7 +40,7 @@
                                     <div class="col-md-3">
                                         <button type="submit" name="button" class="btn btn-primary">Filter</button>
                                         <?php if (isset($filter) && ($filter['apartment'] != '' || $filter['block'] != '' || $filter['date'] != '' )) { ?>
-                                            <a href="<?php echo base_url('milkorder/total_order_list'); ?>" class="btn btn-warning">clear</a>
+                                            <a href="<?php echo base_url('milkorder/milk_cancel_order_list'); ?>" class="btn btn-warning">clear</a>
                                         <?php } ?>
                                     </div>
                             </div>
@@ -60,10 +60,10 @@
                                             <th>Price</th>
                                             <th>Customer Name</th>
                                             <th>Mobile Number</th>
-                                         
+
                                             <th>Payment Type</th>
                                             <th>Status</th>
-											<th>Delivery Date</th> 
+											<th>Delivery Date</th>
                                             <th>Cancelled Date & Time</th>
                                         </tr>
                                     </thead>
@@ -79,7 +79,7 @@
                                             <td><?php echo $order->price; ?></td>
                                             <td><?php echo $order->email_id; ?></td>
                                             <td><?php echo $order->phone_number; ?></td>
-                                            
+
                                             <td><?php if($order->payment_type==1){
 												echo 'online payment';
 											}
@@ -91,15 +91,15 @@
 											}?></td>
                                              <td>
 									<div class="badge badge-info" >
-											 
+
 											 <?php echo'Cancelled';?>
 											 </div>
                                                 <div class="badge badge-danger" >
-											 <a 
+											 <a
 							href="<?php echo base_url('milkorder/pending_order/').base64_encode($order->calender_id) ;?>" class="text-white" ><i >
 											 <?php echo'Pending';?></i></a>
 											 </div>
-											 
+
 											 <div class="badge badge-warning" >
 								<a href="<?php echo base_url('milkorder/deliver_order/').base64_encode($order->calender_id);?>" class="text-white" ><i >
 											 <?php echo'Delivered';?></i></a>
@@ -108,23 +108,23 @@
 											<td>
 											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
 											</td>
-                                            
-											
-                                            <td><?php 
+
+
+                                            <td><?php
 											if($order->cancelled_time!=''){
-												
+
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->cancelled_time);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');
 											echo $newDateString ;
 											}
-											
-												
-											
+
+
+
 											?></td>
                                         </tr>
 										<?php }}?>
-                                        
-                                       
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -177,4 +177,3 @@
         });
     });
 </script>
-
