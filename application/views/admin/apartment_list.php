@@ -21,6 +21,7 @@
                                         <th>Apartment Name</th>
                                         <th>Account Number</th>
                                           <th>IFSC Code</th>
+                                          <th>UPI Code</th>
                                         <th>Created At</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -48,6 +49,16 @@
                                           }
                                           else{
                                               echo $li->ifsc;
+                                          }
+                                           ?>
+                                            </td>
+                                            <td>
+                                              <?php
+                                              if($li->upi_code=="" or $li->upi_code==null){
+                                            echo "No UPI Code";
+                                          }
+                                          else{
+                                              echo $li->upi_code;
                                           }
                                            ?>
                                             </td>

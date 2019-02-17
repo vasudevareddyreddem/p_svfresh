@@ -1103,8 +1103,8 @@ $day=date('d' ,strtotime($cdate)); // present day in number
           if ($val->quantity != $qu and $val->date==$i) {
             unset($result[$key]);
             $object = new stdClass();
-             $object->date = $i;
-             $object->quantity = $qu;
+             $object->date = "$i";
+             $object->quantity = "$qu";
              //$result[]=$object;
              array_push($result,$object);
           //  $result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
@@ -1119,13 +1119,14 @@ if($frq==2){
   if($cnt%2==0){
 
     foreach ($result as $key => $val) {
+        $val=json_decode(json_encode($val));
       if ($val->quantity != $qu and $val->date==$i) {
           //$val['quantity']=$qu;
 
            unset($result[$key]);
            $object = new stdClass();
-            $object->date = $i;
-            $object->quantity = $qu;
+            $object->date = "$i";
+            $object->quantity = "$qu";
             //$result[]=$object;
             array_push($result,$object);
           //  $result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
@@ -1150,11 +1151,12 @@ if($frq==3){
  $weekday= date('l', $wday);
  if($weekday=='Saturday' or $weekday=='Sunday'){
    foreach ($result as $key => $val) {
+       $val=json_decode(json_encode($val));
      if ($val->quantity != $qu and $val->date==$i) {
        unset($result[$key]);
        $object = new stdClass();
-        $object->date = $i;
-        $object->quantity = $qu;
+        $object->date = "$i";
+        $object->quantity = "$qu";
         //$result[]=$object;
         array_push($result,$object);
 
@@ -1174,8 +1176,8 @@ if($frq==3){
 				//daily
         if($frq==1){
           $object = new stdClass();
-           $object->date = $i;
-           $object->quantity = $qu;
+           $object->date = "$i";
+           $object->quantity = "$qu";
            //$result[]=$object;
            array_push($result,$object);
 
@@ -1186,8 +1188,8 @@ if($frq==3){
      if($frq==2){
        if($cnt%2==0){
          $object = new stdClass();
-          $object->date = $i;
-          $object->quantity = $qu;
+          $object->date = "$i";
+          $object->quantity = "$qu";
           //$result[]=$object;
           array_push($result,$object);
 
@@ -1195,8 +1197,8 @@ if($frq==3){
        }
        else{
          $object = new stdClass();
-          $object->date = $i;
-          $object->quantity = 0;
+          $object->date = "$i";
+          $object->quantity = "0";
           //$result[]=$object;
           array_push($result,$object);
         // $result[]=(object)array('date'=>"$i",'quantity'=>"0");
@@ -1211,8 +1213,8 @@ if($frq==3){
       $weekday= date('l', $wday);
       if($weekday=='Saturday' or $weekday=='Sunday'){
         $object = new stdClass();
-         $object->date = $i;
-         $object->quantity = $qu;
+         $object->date = "$i";
+         $object->quantity = "$qu";
          //$result[]=$object;
          array_push($result,$object);
          //$result[]=(object)array('date'=>"$i",'quantity'=>"$qu");
@@ -1220,8 +1222,8 @@ if($frq==3){
       }
       else{
         $object = new stdClass();
-         $object->date = $i;
-         $object->quantity = 0;
+         $object->date = "$i";
+         $object->quantity = "0";
          //$result[]=$object;
          array_push($result,$object);
         //$result[]=(object)array('date'=>"$i",'quantity'=>"0");

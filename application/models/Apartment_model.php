@@ -23,12 +23,12 @@ class Apartment_model extends CI_Model
         return $this->db->affected_rows()?1:0;
     }
     public function get_all_apartments(){
-        $this->db->select('apartment_id,apartment_name,account_number,ifsc,created_date,status')->from('apartment_tab')->where('status !=',0)
+        $this->db->select('apartment_id,apartment_name,account_number,ifsc,upi_code,created_date,status')->from('apartment_tab')->where('status !=',0)
         ->order_by('updated_date','desc');
         return $this->db->get()->result();
     }
     public function get_apartment_by_id($id){
-        $this->db->select('apartment_id,apartment_name,account_number,ifsc')->from('apartment_tab')->where('apartment_id',$id);
+        $this->db->select('apartment_id,apartment_name,account_number,ifsc,upi_code,account_name')->from('apartment_tab')->where('apartment_id',$id);
         return $this->db->get()->row();
     }
     public function check_edit_ap_name($name,$id){

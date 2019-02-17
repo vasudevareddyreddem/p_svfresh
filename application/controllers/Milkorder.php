@@ -234,7 +234,10 @@ public function boys_list(){
 				$date = $this->input->post('date');
 
         $data['filter'] = $post;
+				$data['block_products']=$this->Milkorders_model->block_products($apartment,$block,$date);
 				$data['pending_list']=$this->Milkorders_model->boys_order_list($apartment,$block,$date);
+				$data['product_count']=count($data['block_products']);
+
 				if(count($data['pending_list'])>0){
 					$data['pending_status']=1;
 				}

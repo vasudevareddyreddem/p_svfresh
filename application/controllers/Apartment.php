@@ -47,13 +47,13 @@ class Apartment extends In_frontend
         $data=array('apartment_name'=>$name,
             'created_by'=>$svadmin);
             if($this->input->post('checkbank')==null or $this->input->post('checkbank')==''){
-              if(($this->input->post('upi')==null or $this->input->post('upi')) and ($this->input->post('acc')==null or $this->input->post('acc')=='') )
+              if(($this->input->post('upi')==null or $this->input->post('upi')=='') and ($this->input->post('acc')==null or $this->input->post('acc')=='') )
               {
                 $this->session->set_flashdata('error','You have to Enter Atleast one payment method');
                 redirect('apartment/add_apartment');
 
               }
-              if($this->input->post('upi')==null or $this->input->post('upi')){
+              if($this->input->post('upi')==null or $this->input->post('upi')==''){
 
               }
               else{
@@ -74,6 +74,7 @@ class Apartment extends In_frontend
                       $data['ifsc']=$ifsc;
                   }
               $data['account_number']=$this->input->post('acc');
+              $data['account_name']=$this->input->post('accname');
 
             }
           }
@@ -139,6 +140,7 @@ public function save_edit_apartment(){
         }
         $name=$this->input->post('apartment_name');
         $flag=$this->Apartment_model->check_edit_ap_name($name,$id);
+        echo $this->db->last_query();exit;
         if($flag==1){
             $this->session->set_flashdata('error','Name Existed');
             redirect($_SERVER['HTTP_REFERER']);
@@ -148,9 +150,22 @@ public function save_edit_apartment(){
         $data=array('apartment_name'=>$name,
             'updated_date'=>$date,
             'updated_by'=>$svadmin);
+            //
+            if($this->input->post('checkbank')==null or $this->input->post('checkbank')==''){
+              if(($this->input->post('upi')==null or $this->input->post('upi')=='') and ($this->input->post('acc')==null or $this->input->post('acc')=='') )
+              {
+                $this->session->set_flashdata('error','You have to Enter Atleast one payment method');
+                redirect($_SERVER['HTTP_REFERER']);
+
+              }
+              if($this->input->post('upi')==null or $this->input->post('upi')==''){
+
+              }
+              else{
+                $data['upi_code']=$this->input->post('upi');
+              }
             if($this->input->post('acc')==null or $this->input->post('acc')==''){
-                     $data['account_number']=$this->input->post('acc');
-                      $data['ifsc']=null;
+
             }
             else{
                   $ifsc=$this->input->post('ifsc');
@@ -161,20 +176,22 @@ public function save_edit_apartment(){
 
                   }
                   else{
-                      $data['account_name']=$this->input->post('accname');
                       $data['ifsc']=$ifsc;
                   }
               $data['account_number']=$this->input->post('acc');
-                $data['account_status']=1;
+              $data['account_name']=$this->input->post('accname');
 
             }
+          }
+            //
+
        $status=$this->Apartment_model->save_edit_apartment($data,$id);
        if($status==1){
         $this->session->set_flashdata('success','Apartment Name Updated Successfully');
            redirect('apartment/apartment_list');
 
        }
-        $this->session->set_flashdata('success','Apartment Name Updated Successfully');
+        $this->session->set_flashdata('error','Apartment Name Not Updated ');
         redirect('apartment/apartment_list');
 
 

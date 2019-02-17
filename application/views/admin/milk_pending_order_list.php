@@ -38,7 +38,7 @@
                                     <div class="col-md-3">
                                         <button type="submit" name="button" class="btn btn-primary">Filter</button>
                                         <?php if (isset($filter) && ($filter['apartment'] != '' || $filter['block'] != '' || $filter['date'] != '' )) { ?>
-                                            <a href="<?php echo base_url('milkorder/total_order_list'); ?>" class="btn btn-warning">clear</a>
+                                            <a href="<?php echo base_url('milkorder/milk_pending_order_list'); ?>" class="btn btn-warning">clear</a>
                                         <?php } ?>
                                     </div>
                             </div>

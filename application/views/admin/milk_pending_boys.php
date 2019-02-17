@@ -12,7 +12,7 @@
                             <h4>Boys Block List</h4>
                         </div>
                         <div class="card-body">
-                                <form class="" action="<?php echo base_url('milkorder/boys_list'); ?>" method="post">
+                                <form  id="add_apartment" class="" action="<?php echo base_url('milkorder/boys_list'); ?>" method="post">
                             <div class="row">
                                     <div class="col-md-3">
                                         <select class="form-control" name="apartment" id="apartment" data-block="<?php if (isset($filter) && ($filter['block'])) { echo $filter['block']; } else { echo ''; } ?>">
@@ -55,18 +55,19 @@
 											<th>Flat/Door number</th>
                                             <th>Product Name</th>
                                             <th>Quantity</th>
-                                            <th>Apartment</th>
-                                            <th>Block</th>
-                                            <th>product</th>
+                                            		<th>Delivery Date</th>
+                                            <th>Apartments</th>
+                                            <th>Blocks</th>
+                                            <th>products</th>
 
                                             <th>packets</th>
-                                            <th>Status</th>
-											<th>Delivery Date</th>
-                                            <th>Ordered Date & Time</th>
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
 									<?php if($pending_status==1){
+                    $cnt=1;
 										foreach($pending_list as $order){?>
                                         <tr>
                                             <td><?php echo $order->apartment_name; ?></td>
@@ -74,56 +75,31 @@
 											  <td><?php echo $order->flat_door_no; ?></td>
                                             <td><?php echo $order->product_name; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
-                                            <td><?php echo $order->price; ?></td>
-                                            <td><?php echo $order->email_id; ?></td>
-                                            <td><?php echo $order->phone_number; ?></td>
+                                            <td>
+                      											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
+                      											</td>
+                                            <?php if($cnt<=$product_count) { $index=$cnt-1; ?>
+                                            <td><?php echo $block_products[$index]['apartment_name']; ?></td>
+                       <td><?php echo $block_products[$index]['block_name']; ?></td>
+                        <td><?php echo $block_products[$index]['product_name']; ?></td>
+                                            <td><?php echo $block_products[$index]['packets']; ?></td>
+                                          <?php }else{?>
 
-                                            <td><?php if($order->payment_type==1){
-												echo 'online payment';
-											}
-											if($order->payment_type==2){
-												echo'Cash On Delivery';
-											}
-											if($order->payment_type==3){
-												echo 'Swiping';
-											}?></td>
-                                             <td>
-									<div class="badge badge-info" >
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                          <?php }?>
 
-											 <?php echo'Pending';?>
-											 </div>
-                                                <div class="badge badge-warning" >
-											 <a
-							href="<?php echo base_url('milkorder/deliver_order/').base64_encode($order->calender_id) ;?>" class="text-white" ><i >
-											 <?php echo'Delivered';?></i></a>
-											 </div>
 
-											 <div class="badge badge-danger" >
-								<a href="<?php echo base_url('milkorder/cancel_order/').base64_encode($order->calender_id);?>" class="text-white" ><i >
-											 <?php echo'cancelled';?></i></a>
-											 </div>
-                                            </td>
-											<td>
-											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
-											</td>
-
-                                            <td><?php
-
-													if($order->created_date!=''){
-	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
-											$newDateString = $myDateTime->format('d-m-Y H:i:s');
-											echo $newDateString ;
-											}
-											?></td>
                                         </tr>
-										<?php }}?>
+										<?php $cnt++;}}?>
 
 
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -174,4 +150,43 @@ $(document).ready(function() {
             format: 'd/m/yyyy'
         });
     });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add_apartment').bootstrapValidator({
+
+            fields: {
+                apartment: {
+                    validators: {
+                        notEmpty: {
+                            message: 'apartment is required'
+                        },
+
+                    }
+                },
+                block: {
+                    validators: {
+                        notEmpty: {
+                            message: 'block is required'
+                        },
+
+                    }
+                },
+                date: {
+                    validators: {
+                        notEmpty: {
+                            message: 'date is required'
+                        },
+
+                    }
+                },
+
+
+
+
+            }
+        })
+
+    });
+
 </script>
