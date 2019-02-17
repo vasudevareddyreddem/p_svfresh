@@ -140,7 +140,7 @@ public function save_edit_apartment(){
         }
         $name=$this->input->post('apartment_name');
         $flag=$this->Apartment_model->check_edit_ap_name($name,$id);
-        echo $this->db->last_query();exit;
+      //  echo $this->db->last_query();exit;
         if($flag==1){
             $this->session->set_flashdata('error','Name Existed');
             redirect($_SERVER['HTTP_REFERER']);
@@ -159,12 +159,16 @@ public function save_edit_apartment(){
 
               }
               if($this->input->post('upi')==null or $this->input->post('upi')==''){
+                $data['upi_code']=null;
 
               }
               else{
                 $data['upi_code']=$this->input->post('upi');
               }
             if($this->input->post('acc')==null or $this->input->post('acc')==''){
+              $data['account_number']=null;
+              $data['account_name']=null;
+              $data['ifsc']=null;
 
             }
             else{
@@ -183,9 +187,17 @@ public function save_edit_apartment(){
 
             }
           }
+          else{
+            $data['account_number']=null;
+            $data['account_name']=null;
+            $data['ifsc']=null;
+            $data['upi_code']=null;
+
+          }
             //
 
        $status=$this->Apartment_model->save_edit_apartment($data,$id);
+       //echo $this->db->last_query();exit;
        if($status==1){
         $this->session->set_flashdata('success','Apartment Name Updated Successfully');
            redirect('apartment/apartment_list');

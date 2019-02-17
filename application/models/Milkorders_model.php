@@ -299,7 +299,7 @@ $days=date('d' ,strtotime($date));//present date in month
 	public function block_products($apartment,$block,$date){
 		$this->db->select('
 
-		product_tab.product_name,apartment_tab.apartment_name,block_tab.block_name,count(calender_tab.quantity) packets
+		product_tab.product_name,apartment_tab.apartment_name,block_tab.block_name,sum(calender_tab.quantity) packets
 
 	');
 		$this->db->from('calender_tab');

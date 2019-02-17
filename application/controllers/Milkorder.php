@@ -232,6 +232,19 @@ public function boys_list(){
 				$apartment = $this->input->post('apartment');
 				$block = $this->input->post('block');
 				$date = $this->input->post('date');
+				if($this->input->post('date')==''){
+					$this->session->set_flashdata('error','Please Enter date');
+					redirect($_SERVER['HTTP_REFERER']);
+
+				}
+				$date1= DateTime::createFromFormat('d/m/Y', $date);
+          $newdate= $date1->format('Y-m-d');
+					$curdate=date('Y-m-d');
+					if($newdate<$curdate){
+						$this->session->set_flashdata('error','you dont enter past days');
+						redirect($_SERVER['HTTP_REFERER']);
+
+					}
 
         $data['filter'] = $post;
 				$data['block_products']=$this->Milkorders_model->block_products($apartment,$block,$date);

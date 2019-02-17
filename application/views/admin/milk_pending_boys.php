@@ -172,14 +172,7 @@ $(document).ready(function() {
 
                     }
                 },
-                date: {
-                    validators: {
-                        notEmpty: {
-                            message: 'date is required'
-                        },
-
-                    }
-                },
+                
 
 
 

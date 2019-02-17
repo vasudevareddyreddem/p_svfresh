@@ -10,19 +10,20 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Add Apartment</h4>
+                            <h4>Edit Apartment</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mx-auto">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
                                     <form method="post" id="add_apartment" action="<?php echo base_url('apartment/save_edit_apartment');?>"  enctype="multipart/form-data">
+                                       <input type="hidden" value="<?php  echo base64_encode($row->apartment_id);?>" name="ap_id" >
                                         <div class="form-group">
                                             <label>Apartment Name</label>
                                             <input id="name" type="text" class="form-control" name="apartment_name" value="<?php echo $row->apartment_name; ?>">
                                         </div>
 
-<div>  <label>Uncheck the box for adding Bank Account Number</label><input   id='net' class="form-control" type='checkbox'   value='checkbank' name='checkbank' <?php if(($row->account_number==''or $row->account_number==null)&& ($row->upi_code==''or $row->upi_code==null)) {echo "checked";}else{}?> ></div>
+<div>  <label>Uncheck the box for adding Bank Account Number</label><input   id='net' class="form-control" type='checkbox'   value='checkbank' name='checkbank' <?php if(($row->account_number==''or $row->account_number==null) && ($row->upi_code==''or $row->upi_code==null)) {echo "checked";}else{}?> ></div>
              <div  id='addmain'>
                    <div id='bacc'>
                   <!-- <div  id='bankcheck'>  <label>Check the box for adding Bank Account Number</label><input type='checkbox' disabled></div> -->
