@@ -169,4 +169,13 @@ class Apartment_model extends CI_Model
 		return $this->db->get()->result_array();
 
 	}
+  //account status
+  public function online_payment_options_for_apartment($user_id='')
+  {
+    $this->db->select('account_name,account_number,ifsc,upi_code,account_status');
+    $this->db->from('apartment_tab a');
+    $this->db->join('users_tab u','a.apartment_id = u.appartment','left');
+    $this->db->where('u.id',$user_id);
+    return $this->db->get()->row();
+  }
 }
