@@ -77,6 +77,10 @@ class Apartment extends In_frontend
               $data['account_name']=$this->input->post('accname');
 
             }
+            $data['account_status']=1;
+          }
+          else{
+              $data['account_status']=0;
           }
         $flag=$this->Apartment_model->save_apartment($data);
         if($flag==1){
@@ -186,13 +190,14 @@ public function save_edit_apartment(){
               $data['account_name']=$this->input->post('accname');
 
             }
+              $data['account_status']=1;
           }
           else{
             $data['account_number']=null;
             $data['account_name']=null;
             $data['ifsc']=null;
             $data['upi_code']=null;
-
+              $data['account_status']=0;
           }
             //
 
