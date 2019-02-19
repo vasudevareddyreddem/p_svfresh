@@ -25,47 +25,47 @@
 											<br>
 											<input type="radio" id="radio2" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
 											<br>
-											<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status != 1) { ?>
-											<br>
-											<input type="radio" id="radio3" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
-											<br>
-										<?php } else { ?>
-											<br>
-											<input type="radio" id="radio4" name="payment" onclick="payment_type(this.value);" value="4"><span> Bank Account / UPI</span>
-											<br>
-											<br>
-											<div id="screenshot4" style="display:none;">
-												Upload payment success screenshot
-												<input type="file" name="screenshot" value="">
+											<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status == 1) { ?>
 												<br>
-												<ul>
-													<li>
-														<span>
-															<b>Account Number : </b>
-															<?php echo  (isset($online_payment_disable->account_number)) ? $online_payment_disable->account_number : '-' ; ?>
-														</span>
-													</li>
-													<li>
-														<span>
-															<b>Account Name : </b>
-															<?php echo  (isset($online_payment_disable->account_name)) ? $online_payment_disable->account_name : '-' ; ?>
-														</span>
-													</li>
-													<li>
-														<span>
-															<b>IFSC : </b>
-															<?php echo  (isset($online_payment_disable->ifsc)) ? $online_payment_disable->ifsc : '-' ; ?>
-														</span>
-													</li>
-													<li>
-														<span>
-															<b>UPI ID : </b>
-															<?php echo  (isset($online_payment_disable->upi_code)) ? $online_payment_disable->upi_code : '-' ; ?>
-														</span>
-													</li>
-												</ul>
-											</div>
-										<?php } ?>
+												<input type="radio" id="radio4" name="payment" onclick="payment_type(this.value);" value="4"><span> Bank Account / UPI</span>
+												<br>
+												<br>
+												<div id="screenshot4" style="display:none;">
+													Upload payment success screenshot
+													<input type="file" name="screenshot" value="">
+													<br>
+													<ul>
+														<li>
+															<span>
+																<b>Account Number : </b>
+																<?php echo  (isset($online_payment_disable->account_number)) ? $online_payment_disable->account_number : '-' ; ?>
+															</span>
+														</li>
+														<li>
+															<span>
+																<b>Account Name : </b>
+																<?php echo  (isset($online_payment_disable->account_name)) ? $online_payment_disable->account_name : '-' ; ?>
+															</span>
+														</li>
+														<li>
+															<span>
+																<b>IFSC : </b>
+																<?php echo  (isset($online_payment_disable->ifsc)) ? $online_payment_disable->ifsc : '-' ; ?>
+															</span>
+														</li>
+														<li>
+															<span>
+																<b>UPI ID : </b>
+																<?php echo  (isset($online_payment_disable->upi_code)) ? $online_payment_disable->upi_code : '-' ; ?>
+															</span>
+														</li>
+													</ul>
+												</div>
+											<?php } else { ?>
+												<br>
+												<input type="radio" id="radio3" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
+												<br>
+											<?php } ?>
 											<br>
 											<?php echo form_error('payment_type','<div class="text-danger">', '</div>'); ?>
 											<button type="submit" class="btn btn-success" name="pay_submit">Pay</button>
@@ -80,11 +80,7 @@
 												<br>
 												<input type="radio" id="radio22" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
 												<br>
-												<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status != 1) { ?>
-													<br>
-													<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
-													<br>
-												<?php } else { ?>
+												<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status == 1) { ?>
 													<br>
 													<input type="radio" id="radio44" name="payment" onclick="payment_type(this.value);" value="4"><span> Bank Account / UPI</span>
 													<br>
@@ -119,6 +115,10 @@
 															</li>
 														</ul>
 													</div>
+												<?php } else { ?>
+													<br>
+													<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
+													<br>
 												<?php } ?>
 												<br>
 											</div>
