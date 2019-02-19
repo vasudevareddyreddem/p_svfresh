@@ -12,7 +12,7 @@
                             <h4>Pending Order List</h4>
                         </div>
                         <div class="card-body">
-                                <form class="" action="<?php echo base_url('milkorder/milk_pending_order_list'); ?>" method="post">
+                                <form class="" action="<?php echo base_url('milkorder/pending_order_list'); ?>" method="post">
                             <div class="row">
                                     <div class="col-md-3">
                                         <select class="form-control" name="apartment" id="apartment" data-block="<?php if (isset($filter) && ($filter['block'])) { echo $filter['block']; } else { echo ''; } ?>">
@@ -38,7 +38,7 @@
                                     <div class="col-md-3">
                                         <button type="submit" name="button" class="btn btn-primary">Filter</button>
                                         <?php if (isset($filter) && ($filter['apartment'] != '' || $filter['block'] != '' || $filter['date'] != '' )) { ?>
-                                            <a href="<?php echo base_url('milkorder/milk_pending_order_list'); ?>" class="btn btn-warning">clear</a>
+                                            <a href="<?php echo base_url('milkorder/pending_order_list'); ?>" class="btn btn-warning">clear</a>
                                         <?php } ?>
                                     </div>
                             </div>

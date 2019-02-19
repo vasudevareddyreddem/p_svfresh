@@ -522,6 +522,7 @@ $params['level'] = 'H';
 $params['size'] = 10;
 
 $params['cachedir'] = FCPATH.'assets/qrcode/';
+echo FCPATH;EXIT;
 
 $params['savename'] =FCPATH.'assets/qrcode/'.'test_1.png';
 
