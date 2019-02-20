@@ -22,7 +22,7 @@
           <div class="row">
             <div class="col-md-3">
               <input type="text" class="form-control" id="datepicker" name="fromdate" value="<?php if(isset($filter) && $filter['fromdate'] != ''){ echo $filter['fromdate']; } ?>" placeholder="Pick a Form date" readonly>
-            </div> 
+            </div>
 			<div class="col-md-3">
               <input type="text" class="form-control" id="todatepicker" name="todate" value="<?php if(isset($filter) && $filter['todate'] != ''){ echo $filter['todate']; } ?>" placeholder="Pick a To date" readonly>
             </div>
@@ -141,10 +141,10 @@
       });
       //datepicker
       $('#datepicker').datepicker({
-          format: 'yyyy-m-d'
+          format: 'd-m-yyyy'
       });
-	  $('#todatepicker').datepicker({
-          format: 'yyyy-m-d'
+	    $('#todatepicker').datepicker({
+          format: 'd-m-yyyy'
       });
     });
   </script>
