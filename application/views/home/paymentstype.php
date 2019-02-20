@@ -80,11 +80,8 @@
 												<br>
 												<input type="radio" id="radio22" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
 												<br>
-												<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status != 1) { ?>
-													<br>
-													<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
-													<br>
-												<?php } else { ?>
+												<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status ==1 && $this->session->userdata('milk_order') == 'MILK') { ?>
+													
 													<br>
 													<input type="radio" id="radio44" name="payment" onclick="payment_type(this.value);" value="4"><span> Bank Account / UPI</span>
 													<br>
@@ -119,6 +116,10 @@
 															</li>
 														</ul>
 													</div>
+												<?php } else { ?>
+													<br>
+													<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
+													<br>
 												<?php } ?>
 												<br>
 											</div>

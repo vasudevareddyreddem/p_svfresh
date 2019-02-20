@@ -21,11 +21,14 @@
         <form class="" action="<?php echo base_url('order/milk_orders'); ?>" method="post">
           <div class="row">
             <div class="col-md-3">
-              <input type="text" class="form-control" id="datepicker" name="date" value="<?php if(isset($filter) && $filter['date'] != ''){ echo $filter['date']; } ?>" placeholder="Pick a date" readonly>
+              <input type="text" class="form-control" id="datepicker" name="fromdate" value="<?php if(isset($filter) && $filter['fromdate'] != ''){ echo $filter['fromdate']; } ?>" placeholder="Pick a Form date" readonly>
+            </div> 
+			<div class="col-md-3">
+              <input type="text" class="form-control" id="todatepicker" name="todate" value="<?php if(isset($filter) && $filter['todate'] != ''){ echo $filter['todate']; } ?>" placeholder="Pick a To date" readonly>
             </div>
             <div class="col-md-6">
               <button type="submit" class="btn btn-primary" name="button">Filter</button>
-              <?php if(isset($filter) && $filter['date'] != ''){ ?>
+              <?php if(isset($filter) && $filter['fromdate'] != ''){ ?>
                 <a href="<?php echo base_url('order/milk_orders'); ?>" class="btn btn-warning">Clear</a>
               <?php } ?>
             </div>
@@ -55,7 +58,7 @@
                     <?php echo $co->date.'-'.$co->month.'-'.$co->year; ?>
                   </td>
                   <td class="text-center">
-                    <?php echo ($co->quantity > 1) ? $co->quantity.' Packets' : $co->quantity.' Packet'; ?>
+                    <input type="text" name="order_qty" id="order_qty" value="<?php echo ($co->quantity > 1) ? $co->quantity.' Packets' : $co->quantity.' Packet'; ?>" >
                   </td>
                   <td class="text-center">
                     <?php  echo ($co->price) ? '₹ '.$co->price : ''; ?>
@@ -138,7 +141,10 @@
       });
       //datepicker
       $('#datepicker').datepicker({
-          format: 'd/m/yyyy'
+          format: 'yyyy-m-d'
+      });
+	  $('#todatepicker').datepicker({
+          format: 'yyyy-m-d'
       });
     });
   </script>

@@ -112,11 +112,13 @@ class Order extends CI_Controller
       $post = $this->input->post();
 			if ($post) {
 				unset($post['button']);
-				$date = $this->input->post('date');
+				$fromdate = $this->input->post('fromdate');
+				$todate = $this->input->post('todate');
 				$data['filter'] = $post;
-				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,$date);
+				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,$fromdate,$todate);
+				//echo $this->db->last_query();exit;
 			} else {
-				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id);
+				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,'','');
 			}
       $data['pageTitle'] = 'Milk Order';
       $this->load->view('home/milk_orders',$data);

@@ -23,35 +23,26 @@ class Billing extends CI_Controller
   {
     if($this->session->userdata('logged_in') == TRUE){
       if($this->input->post()){
-        $this->form_validation->set_rules('first_name', 'First Name', 'required|callback_alpha_dash_space');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'required|callback_alpha_dash_space');
-        $this->form_validation->set_rules('email_address', 'Email Address', 'required|valid_email');
-        $this->form_validation->set_rules('mobile_number', 'Moblie Number', 'required|regex_match[/^[0-9]{10}$/]');
-        $this->form_validation->set_rules('appartment', 'Appartment', 'required');
-        $this->form_validation->set_rules('block', 'Block', 'required');
-        $this->form_validation->set_rules('flat_door_no', 'Flat/Door no', 'required');
-        if ($this->form_validation->run() == FALSE){
-          $data['categories'] = $this->Category_model->get_all_category();
-          $user_id = $this->session->userdata('id');
+        
+          $post_data = $this->input->post();
+		  
+		  $user_id = $this->session->userdata('id');
           $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
           //$this->load->model('Auth_Model');
-          $data['user'] =$this->Auth_Model->get_user_details($user_id);
-          $data['apartment'] = $this->Apartment_model->get_all_active_apartments();
-          $data['blocks_list'] = $this->Apartment_model->get_balocks_by_apts($data['user']->appartment);
-          $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
-          $data['count'] = count($data['cart']);
-          $data['without_total_amt']= $this->Cart_Model->normal_cart_amount($user_id);
-          $data['withmilk_total_amt']= $this->Cart_Model->special_cart_amount($user_id,date('Y-m-d'));
-          $data['cart_total_amt']=((isset($data['without_total_amt']['c_amt'])?$data['without_total_amt']['c_amt']:'0')+(isset($data['withmilk_total_amt']['m_amt'])?$data['withmilk_total_amt']['m_amt']:'0'));
-
-          $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
-          $data['pageTitle'] = 'Billing';
-          $this->load->view('home/billing',$data);
-        }else{
-          $post_data = $this->input->post();
+          $user_add=$this->Auth_Model->get_user_details($user_id);
+		  //echo '<pre>';print_r($arrayFoo);exit;
           $addl_data = array('user_id' => $this->session->userdata('id'),'created_date' => date('Y-m-d H:i:s'),'created_by' => $this->session->userdata('id'),'status' => 'Active');
-          $post_data = array_merge($post_data,$addl_data);
-          if($this->Billing_Model->insert($post_data)){
+			$a_a =array(
+			'email_address'=>$user_add->email_id,
+			'mobile_number'=>$user_add->phone_number,
+			'first_name'=>$user_add->first_name,
+			'last_name'=>$user_add->last_name,
+			'appartment'=>$user_add->appartment,
+			'block'=>$user_add->block,
+			'flat_door_no'=>$user_add->flat_door_no,
+			);
+			$post_data = array_merge($a_a,$addl_data);
+			if($this->Billing_Model->insert($post_data)){
             $billing_id = $this->db->insert_id();
             if($this->session->userdata('milk_order') == 'MILK'){
               $calender_id = $this->session->userdata('calender_id');
@@ -70,7 +61,7 @@ class Billing extends CI_Controller
             $this->session->set_flashdata('error', 'Please,try again');
             redirect('/billing');
           }
-        }
+       
       }else{
         $data['categories'] = $this->Category_model->get_all_category();
         $user_id = $this->session->userdata('id');
