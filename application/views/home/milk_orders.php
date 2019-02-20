@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.cart_summary input{
+	border: 1px solid #ddd;
+	padding:5px;
+}
+</style>
+
   <?php include("header.php"); ?>
   <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-datepicker.css'); ?>">
 
@@ -42,7 +49,7 @@
                 <tr>
                   <th class="text-center">Product</th>
                   <th class="text-center">Date</th>
-                  <th class="text-center">Quantity</th>
+                  <th class="text-center">Quantity in packets</th>
                   <th class="text-center">Price</th>
                   <th class="text-center">Status</th>
                 </tr>
@@ -57,8 +64,9 @@
                   <td class="text-center">
                     <?php echo $co->date.'-'.$co->month.'-'.$co->year; ?>
                   </td>
+				  
                   <td class="text-center">
-                    <input type="text" name="order_qty" id="order_qty" value="<?php echo ($co->quantity > 1) ? $co->quantity.' Packets' : $co->quantity.' Packet'; ?>" >
+                    <input type="text" name="order_qty" id="order_qty" onkeyup="update_qty(this.value,'<?php echo $co->calender_id; ?>');" value="<?php echo ($co->quantity > 1) ? $co->quantity: $co->quantity; ?>" >
                   </td>
                   <td class="text-center">
                     <?php  echo ($co->price) ? '₹ '.$co->price : ''; ?>
@@ -87,6 +95,26 @@
   <?php include("footer.php"); ?>
   <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap-datepicker.min.js') ?>"></script>
   <script type="text/javascript">
+  function update_qty(qty,id){
+	 jQuery.ajax({
+			url: "<?php echo base_url('order/update_qty');?>",
+			data: {
+				c_id: id,
+				c_qty: qty,
+			},
+			dataType: 'json',
+			type: 'POST',
+			success: function (data) {
+					if(data.msg==1){
+						 $('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">Quantity Successfully updated<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+					}else{
+					    $('#message').html('<div class="alert_msg1 animated slideInUp bg-del">Techincal proble occured. Please try again<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+	
+					}
+			}
+   	});
+	  
+  }
     $(document).ready(function(){
       $('.increase').click(function(){
         var value = parseInt($(this).closest('td.qty').find(".number").val(), 10);

@@ -120,6 +120,7 @@ class Order extends CI_Controller
 			} else {
 				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,'','');
 			}
+			//echo '<pre>';print_r($data);exit;
       $data['pageTitle'] = 'Milk Order';
       $this->load->view('home/milk_orders',$data);
     } else {
@@ -127,6 +128,19 @@ class Order extends CI_Controller
       redirect('home/login');
     }
 
+  }
+  public  function update_qty(){
+	  $post=$this->input->post();
+	  $u_data=array('quantity'=>$post['c_qty']);
+	  $update=$this->Calender_Model->update_qty_amount($post['c_id'],$u_data);
+	  if(count($update)>0)
+		{
+			$data['msg']=1;
+			echo json_encode($data);exit;	
+		}else{
+			$data['msg']=2;
+			echo json_encode($data);exit;
+		}
   }
 
 }
