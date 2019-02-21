@@ -12,31 +12,31 @@
               <li class="row">
                 <div class="col-sm-6">
                   <label for="first_name" class="required">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="input form-control" name="first_name" id="first_name" value="<?php if (isset($user->first_name)) { echo $user->first_name; } ?>">
+                  <input type="text" class="input form-control" name="first_name" id="first_name" value="<?php if (isset($user->first_name)) { echo $user->first_name; } ?>" required>
                   <?php echo form_error('first_name','<div class="text-danger">', '</div>'); ?>
                 </div>
                 <div class="col-sm-6">
                   <label for="last_name" class="required">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="input form-control" name="last_name" id="last_name" value="<?php if (isset($user->last_name)) { echo $user->last_name; } ?>">
+                  <input type="text" class="input form-control" name="last_name" id="last_name" value="<?php if (isset($user->last_name)) { echo $user->last_name; } ?>" required>
                   <?php echo form_error('last_name','<div class="text-danger">', '</div>'); ?>
                 </div>
               </li>
               <li class="row">
                 <div class="col-sm-6">
                   <label for="email_id" class="required">Email Address <span class="text-danger">*</span></label>
-                  <input type="text" class="input form-control" name="email_id" id="email_id" value="<?php if (isset($user->email_id)) { echo $user->email_id; } ?>" readonly>
+                  <input type="text" class="input form-control" name="email_id" id="email_id" value="<?php if (isset($user->email_id)) { echo $user->email_id; } ?>" readonly required>
                   <?php echo form_error('email_id','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
                 <div class="col-sm-6">
                   <label for="phone_number" class="required">Mobile Number <span class="text-danger">*</span></label>
-                  <input class="input form-control" type="text" name="phone_number" id="phone_number" value="<?php if (isset($user->phone_number)) { echo $user->phone_number; } ?>" readonly>
+                  <input class="input form-control" type="text" name="phone_number" id="phone_number" value="<?php if (isset($user->phone_number)) { echo $user->phone_number; } ?>" readonly required>
                   <?php echo form_error('phone_number','<div class="text-danger">', '</div>'); ?>
                 </div><!--/ [col] -->
               </li><!--/ .row -->
               <li class="row">
                 <div class="col-xs-4">
                   <label for="address" class="required">Appartment <span class="text-danger">*</span></label>
-                  <select class="input form-control" name="appartment" id="apartment" data-block="<?php echo (isset($user->block)) ? $user->block :''; ?>">
+                  <select class="input form-control" name="appartment" id="apartment" data-block="<?php echo (isset($user->block)) ? $user->block :''; ?>" required>
                     <option value="">--Select Appartment--</option>
                     <?php if(count($apartment) > 0) { ?>
                       <?php foreach($apartment as $a) { ?>
@@ -48,14 +48,14 @@
                 </div><!--/ [col] -->
                 <div class="col-xs-4">
                   <label for="address" class="required">Block <span class="text-danger">*</span></label>
-                  <select class="input form-control" name="block" id="block">
+                  <select class="input form-control" name="block" id="block" required>
                     <option value="">--Select Block--</option>
                   </select>
                   <?php echo form_error('block','<div class="text-danger">', '</div>'); ?>
                 </div>
                 <div class="col-xs-4">
                   <label for="address" class="required">Flat/Door no <span class="text-danger">*</span></label>
-                  <input type="text" class="input form-control" name="flat_door_no" id="address" value="<?php echo (isset($user->flat_door_no)) ? $user->flat_door_no : ''; ?>">
+                  <input type="text" class="input form-control" name="flat_door_no" id="address" value="<?php echo (isset($user->flat_door_no)) ? $user->flat_door_no : ''; ?>" required>
                   <?php echo form_error('flat_door_no','<div class="text-danger">', '</div>'); ?>
                 </div>
               </li><!-- / .row -->

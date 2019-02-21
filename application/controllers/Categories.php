@@ -29,6 +29,7 @@
         $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
         $data['pageTitle'] = 'Categories';
         $data['id'] = $id;
+		//echo '<pre>';print_r($data);exit;
         $this->load->view('home/category',$data);
     }
 

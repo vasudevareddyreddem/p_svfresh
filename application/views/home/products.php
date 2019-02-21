@@ -15,13 +15,16 @@
       <div class="row">
         <div class=" col-xs-12 col-sm-12" id="center_column">
           <!-- category-slider -->
+		 
 		  <?php if(isset($slider_images) && count($slider_images)>0){ ?>
           <div class="category-slider">
             <ul class="owl-carousel owl-style2" data-dots="false" data-loop="true" data-nav = "true" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1">
               <?php foreach($slider_images as $imgs){ ?>
+			   <?php if(!empty($s->pic_name) && file_exists('assets/uploads/sub_category_pics/'.$imgs['image_path'])){ ?>
 			  <li>
                 <img src="<?php echo base_url('assets/uploads/sub_category_pics/'.$imgs['image_path']); ?>" alt="<?php echo $imgs['image_path']; ?>">
               </li>
+			  <?php } ?>
 			  <?php } ?>
 
             </ul>
