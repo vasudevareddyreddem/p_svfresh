@@ -69,7 +69,7 @@
                         </div>
                         <div class="add-to-cart">
                           <?php if(strcasecmp($category_name->cat_name,'MILK') == 0){ ?>
-                            <a title="Add to Calender" class="" href="<?php echo base_url('milkcalender/'.$p->product_id); ?>" >Add to Calender</a>
+                            <a title="Add to Calender" style="font-size:10px;" class="" href="<?php echo base_url('milkcalender/'.$p->product_id); ?>" >Add to Calender</a>
                           <?php }elseif (in_array($p->product_id,$cart_product_id)) { ?>
                             <a title="Added to Cart" class="addtocart" href="#" >Added to Cart</a>
                           <?php  }else{ ?>

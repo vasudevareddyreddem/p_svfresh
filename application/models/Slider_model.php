@@ -144,4 +144,8 @@ class Slider_model extends CI_Model
 		return $this->db->affected_rows()?1:0;
 
 	}
+	public  function remove_img($p_id){
+		$this->db->where('pic_id',$p_id);
+		return $this->db->delete('slider_pic_tab');
+	}
 }

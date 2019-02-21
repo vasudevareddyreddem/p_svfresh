@@ -291,4 +291,26 @@ class Category_model extends CI_Model
 	{
 		return $this->db->select('cat_id')->get_where('subcat_tab',array('subcat_id' => $id))->row()->cat_id;
 	}
+	public  function check_cat_product_cart($c_id){
+		$this->db->select('cart_tab.id')->from('cart_tab');
+		$this->db->join('product_tab as p','p.product_id=cart_tab.product_id','left');
+		$this->db->where('p.cat_id',$c_id);
+		return $this->db->get()->result();
+	}
+	public  function check_wish_product_cart($c_id){
+		$this->db->select('wishlist_tab.id')->from('wishlist_tab');
+		$this->db->join('product_tab as p','p.product_id=wishlist_tab.product_id','left');
+		$this->db->where('p.cat_id',$c_id);
+		return $this->db->get()->result();
+	}
+	public  function delete_cart_id($c_id){
+		$this->db->where('id',$c_id);
+		return $this->db->delete('cart_tab');
+	}
+	public  function delete_wish_id($c_id){
+		$this->db->where('id',$c_id);
+		return $this->db->delete('wishlist_tab');
+	}
+	
+	
 	}

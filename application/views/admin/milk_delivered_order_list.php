@@ -12,7 +12,7 @@
                             <h4>Delivered Order List</h4>
                         </div>
                         <div class="card-body">
-                             <form class="" action="<?php echo base_url('milkorder/milk_delivered_order_list'); ?>" method="post">
+                             <form class="" action="<?php echo base_url('milkorder/delivered_order_list'); ?>" method="post">
                             <div class="row">
                                     <div class="col-md-3">
                                         <select class="form-control" name="apartment" id="apartment" data-block="<?php if (isset($filter) && ($filter['block'])) { echo $filter['block']; } else { echo ''; } ?>">
@@ -92,16 +92,7 @@
 
 											 <?php echo'Delivered';?>
 											 </div>
-                                                <div class="badge badge-warning" >
-											 <a
-							href="<?php echo base_url('milkorder/pending_order/').base64_encode($order->calender_id) ;?>" class="text-white" ><i >
-											 <?php echo'Pending';?></i></a>
-											 </div>
-
-											 <div class="badge badge-danger" >
-								<a href="<?php echo base_url('milkorder/cancel_order/').base64_encode($order->calender_id);?>" class="text-white" ><i >
-											 <?php echo'cancelled';?></i></a>
-											 </div>
+                                              
                                             </td>
 											<td>
 											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>

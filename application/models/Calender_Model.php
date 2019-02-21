@@ -107,6 +107,15 @@ class Calender_Model extends CI_Model
 	   $this->db->where('calender_id',$c_id);
 		return $this->db->update('calender_tab',$data); 
   }
+  public  function get_payment_img_details($c_id){
+		$this->db->select('calender_tab.payment_img')->from('calender_tab');
+		$this->db->where('calender_tab.calender_id',$c_id);
+		return $this->db->get()->row_array();
+	}
+	public  function update_payment_details($c_id,$data){
+		$this->db->where('calender_tab.calender_id',$c_id);
+		return $this->db->update('calender_tab',$data);
+	}
 
 }
 

@@ -52,7 +52,7 @@
                   <td class="qty">
                     <form class="form-class">
                       <div class="value-button decrease" id="decrease" value="Decrease Value">-</div>
-                      <input type="number" class="number" id="number" value="<?php echo $c->quantity; ?>" data-id="<?php echo $c->id; ?>"/>
+                      <input type="number" class="number" id="number" value="<?php echo $c->quantity; ?>" data-id="<?php echo $c->id; ?>" readonly>
                       <div class="value-button increase" id="increase" value="Increase Value">+</div>
                     </form>
                   </td>

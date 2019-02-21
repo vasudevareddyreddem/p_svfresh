@@ -97,11 +97,10 @@ class Orders_model extends CI_Model
 	public function change_to_pending_status($id,$svadmin){	
 		$this->db->set('delivery_status',2);
 		$this->db->set('updated_by',$svadmin);
-		
 		$this->db->where('order_items_id',$id);
 		$this->db->update('order_items_tab');
-		
 		return $this->db->affected_rows()?1:0;
 	}
+	
 	
 	}

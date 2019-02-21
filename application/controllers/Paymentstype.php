@@ -84,13 +84,14 @@ class Paymentstype extends CI_Controller
     $post=$this->input->post();
     $user_id = $this->session->userdata('id');
     $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+	//echo '<pre>';print_r($cart);exit;
     $billing_id = '';
     $payment_type=$this->input->post('payment');
     $razorpay_payment_id=$this->input->post('razorpay_payment_id');
     $razorpay_order_id=$this->input->post('razorpay_order_id');
     $razorpay_signature=$this->input->post('razorpay_signature');
     //uploading image
-    if(isset($_FILES['screenshot']['name']) && ! empty($_FILES['screenshot']['name'])) {
+    if(isset($_FILES['screenshot']['name']) && !empty($_FILES['screenshot']['name'])) {
       $config['upload_path']   = 'assets/uploads/screenshot/';
       $config['allowed_types'] = 'png|jpeg|jpg|gif';
       $config['encrypt_name']  = TRUE;
@@ -120,6 +121,10 @@ class Paymentstype extends CI_Controller
       $str = date('Ymd').$order_id;
       $c->order_number =  'SV'.str_pad($str,10,'0',STR_PAD_LEFT);
       $c->order_id = $order_id;
+	  
+		$p_qty=$this->Order_Model->get_p_qty_list($c->product_id);
+		$p_u_data=array('quantity'=>(($p_qty['quantity'])-($c->quantity)));
+	  $this->Order_Model->update_p_data($c->product_id,$p_u_data);
       $this->Order_Model->insert_order_items($c);
       $this->Order_Model->delete_cart_after_order($c->user_id);
     }

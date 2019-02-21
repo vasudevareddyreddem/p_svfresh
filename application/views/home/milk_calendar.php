@@ -41,7 +41,7 @@
 									</select>
 								</div>
 								<div class="col-md-1">
-									<input type="text" class="form-control" id="quantity" name="" value="">
+									<input type="text" class="form-control" id="quantity" name="" value="" placeholder="Qty">
 								</div>
 							</div>
 						</div>

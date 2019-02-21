@@ -236,6 +236,8 @@ $this->load->model('Slider_model');
 	public function save_edit_slider(){
 			if($this->session->userdata('svadmin_det'))
 			{
+				
+			//echo '<pre>';print_r($_FILES);exit;
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
 			$s_name=$this->input->post('s_name');
@@ -455,4 +457,21 @@ $this->load->model('Slider_model');
 
     }
 }
+
+		public  function remove_img(){
+			$post=$this->input->post();
+			$post=$this->input->post();
+			$delete=$this->Slider_model->remove_img($post['p_id']);
+			//echo $this->db->last_query();exit;
+			if(count($delete) > 0){
+					$data['msg']=1;
+					echo json_encode($data);exit;	
+					}else{
+						$data['msg']=2;
+						echo json_encode($data);exit;
+					}
+			
+		}
+		
+		
 		}

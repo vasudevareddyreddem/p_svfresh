@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Cancel Orders List</h4>
+                            <h4>Canceled Order List</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -21,11 +21,11 @@
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Single Product Price</th>
+                                            <th>Total Price</th>
                                             <th>Customer Name</th>
                                             <th>Mobile Number</th>
                                             <th>Address</th>
                                             <th>Payment Type</th>
-                                            <th>Status</th>
 											<th>Ordered Date & Time</th>
                                             <th>Cancelled Date&Time</th>
                                         </tr>
@@ -38,6 +38,7 @@
                                             <td><?php echo $order->product_name; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>
+											 <td><?php echo $order->quantity*$order->net_price; ?></td>
                                             <td><?php echo $order->user_name; ?></td>
                                             <td><?php echo $order->phone_number; ?></td>
                                              <td><span>Apartment Name:<?php echo $order->apartment_name; ?></span>
@@ -54,22 +55,7 @@
 												echo'Swiping';
 											}
 											?></td>
-                                            <td>
-									<div class="badge badge-info" >
-											 
-											 <?php echo'Cancelled';?>
-											 </div>
-                                                <div class="badge badge-warning" >
-											 <a 
-							href="<?php echo base_url('orders/deliver_order/').base64_encode($order->order_id) ;?>" class="text-white" ><i >
-											 <?php echo'Delivered';?></i></a>
-											 </div>
-											 
-											 <div class="badge badge-danger" >
-								<a href="<?php echo base_url('orders/pending_order/').base64_encode($order->order_id);?>" class="text-white" ><i >
-											 <?php echo 'Pending';?></i></a>
-											 </div>
-                                            </td>
+                                            
 											<td><?php 
 											if($order->created_date!=''){
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);

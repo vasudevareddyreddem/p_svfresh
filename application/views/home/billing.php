@@ -29,7 +29,7 @@
 							</div>
 							<br>
 							<div class="col-md-12">
-							  <button type="submit" name="submit" class="btn btn-success">Procdeed For Payment</button>
+							  <button type="submit" name="submit" class="btn btn-success">Proceed To Payment</button>
 							</div>
 					  </form>
                 </div>

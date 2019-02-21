@@ -142,6 +142,27 @@ class Order extends CI_Controller
 			echo json_encode($data);exit;
 		}
   }
+  public  function adding_payment_method(){
+	  //echo '<pre>';print_r($_FILES);exit;
+	  if(isset($_FILES['image']['name']) && $_FILES['image']['name']!=''){
+		$img_details= $this->Calender_Model->get_payment_img_details($post['c_ids']);
+		unlink("assets/uploads/screenshot/".$img_details['payment_img']);
+		$temp = explode(".", $_FILES["image"]["name"]);
+		$img = round(microtime(true)) . '.' . end($temp);
+		move_uploaded_file($_FILES['image']['tmp_name'], "assets/uploads/screenshot/" . $img);
+	 }
+	 $add=array('payment_img'=>isset($img)?$img:'','payment_status'=>1);
+	 $p_update=$this->Calender_Model->update_payment_details($post['c_ids'],$add);
+	 if(count($p_update)>0){
+		 $this->session->set_flashdata('success',"Payment Details successfully updated.");
+		redirect('order/milk_orders'); 
+	 }else{
+		$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+		redirect('order/milk_orders'); 
+	 }
+	 
+	  
+  }
 
 }
 

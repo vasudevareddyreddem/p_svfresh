@@ -21,6 +21,7 @@
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Single Product Price</th>
+                                            <th>Total Price</th>
                                             <th>Customer Name</th>
                                             <th>Mobile Number</th>
                                             <th>Address</th>
@@ -38,6 +39,7 @@
                                             <td><?php echo $order->product_name; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>
+											 <td><?php echo $order->quantity*$order->net_price; ?></td>
                                             <td><?php echo $order->user_name; ?></td>
                                             <td><?php echo $order->phone_number; ?></td>
                                              <td><span>Apartment Name:<?php echo $order->apartment_name; ?></span>
