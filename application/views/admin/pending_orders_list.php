@@ -26,7 +26,7 @@
                                             <th>Address</th>
                                             <th>Payment Type</th>
                                             <th>Status</th>
-											
+
                                             <th>Ordered Date&Time</th>
                                         </tr>
                                     </thead>
@@ -56,29 +56,29 @@
 											?></td>
                                             <td>
 									<div class="badge badge-info" >
-											 
+
 											 <?php echo'Pending';?>
 											 </div>
                                                 <div class="badge badge-warning" >
-											 <a 
+											 <a
 							href="<?php echo base_url('orders/deliver_order/').base64_encode($order->order_id) ;?>" class="text-white" ><i >
 											 <?php echo'Delivered';?></i></a>
 											 </div>
-											 
+
 											 <div class="badge badge-danger" >
 								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class="text-white" ><i >
 											 <?php echo'cancelled';?></i></a>
 											 </div>
                                             </td>
-                                            	<td><?php 
+                                            	<td><?php
 												if($order->created_date!=''){
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
            $newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 												}		   ?></td>
                                         </tr>
 										<?php }}?>
-                                       
-                                      
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -94,5 +94,3 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
-
-

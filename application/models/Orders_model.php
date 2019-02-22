@@ -21,8 +21,8 @@ class Orders_model extends CI_Model
 		->join('block_tab','block_tab.block_id=users_tab.block','left')
 		//join('users_tab','users_tab.id=billing_tab.user_id')
 		->order_by('order_tab.updated_date','desc');
-		
-	
+
+
 		return $this->db->get()->result();
 	}
 	public function pending_order_list(){
@@ -35,13 +35,13 @@ class Orders_model extends CI_Model
 		join('users_tab','order_tab.user_id=users_tab.id')->
 		join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
 		->join('block_tab','block_tab.block_id=users_tab.block','left')->
-		
+
 		where('order_items_tab.delivery_status',2)
-		->order_by('order_tab.updated_date','desc');
-		
-	
+		->order_by('order_tab.created_date','desc');
+
+
 		return $this->db->get()->result();
-		
+
 	}
 	public function delivered_order_list(){
 		$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
@@ -54,10 +54,10 @@ class Orders_model extends CI_Model
 		join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
 		->join('block_tab','block_tab.block_id=users_tab.block','left')->where('order_items_tab.delivery_status',1)
 		->order_by('order_tab.updated_date','desc');
-		
-	
+
+
 		return $this->db->get()->result();
-		
+
 	}
 	public function cancel_order_list(){
 		$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
@@ -71,10 +71,10 @@ class Orders_model extends CI_Model
 		->join('block_tab','block_tab.block_id=users_tab.block','left')
 		->where('order_items_tab.delivery_status',0)
 		->order_by('order_tab.updated_date','desc');
-		
-	
+
+
 		return $this->db->get()->result();
-		
+
 	}
 	public function change_to_delivery_status($id,$svadmin){
 		$this->db->set('delivery_status',1);
@@ -82,26 +82,26 @@ class Orders_model extends CI_Model
 		$this->db->set('delivered_time','now()',FALSE);
 		$this->db->where('order_items_id',$id);
 		$this->db->update('order_items_tab');
-		
+
 		return $this->db->affected_rows()?1:0;
 	}
-	public function change_to_cancel_status($id,$svadmin){	
+	public function change_to_cancel_status($id,$svadmin){
 		$this->db->set('delivery_status',0);
 		$this->db->set('updated_by',$svadmin);
 		$this->db->set('cancelled_time','now()',FALSE);
 		$this->db->where('order_items_id',$id);
 		$this->db->update('order_items_tab');
-		
+
 		return $this->db->affected_rows()?1:0;
 	}
-	public function change_to_pending_status($id,$svadmin){	
+	public function change_to_pending_status($id,$svadmin){
 		$this->db->set('delivery_status',2);
 		$this->db->set('updated_by',$svadmin);
-		
+
 		$this->db->where('order_items_id',$id);
 		$this->db->update('order_items_tab');
-		
+
 		return $this->db->affected_rows()?1:0;
 	}
-	
+
 	}

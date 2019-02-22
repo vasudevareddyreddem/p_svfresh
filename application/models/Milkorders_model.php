@@ -264,9 +264,13 @@ $days=date('d' ,strtotime($date));//present date in month
 		$this->db->join('block_tab','block_tab.block_id=users_tab.block','left');
 		$this->db->where('calender_tab.delivery_status',2);
 
+		if (isset($apartment) && !empty($apartment)) {
 			$this->db->where('users_tab.appartment',$apartment);
+		}
 
+		if (isset($block) && !empty($block)) {
 			$this->db->where('users_tab.block',$block);
+		}
 
 		if (isset($date) && !empty($date)) {
 			$date_fragment = explode('/',$date);
@@ -309,9 +313,14 @@ $days=date('d' ,strtotime($date));//present date in month
 		$this->db->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left');
 		$this->db->join('block_tab','block_tab.block_id=users_tab.block','left');
 		$this->db->where('calender_tab.delivery_status',2);
+		if (isset($apartment) && !empty($apartment)) {
 			$this->db->where('users_tab.appartment',$apartment);
+		}
 
-						$this->db->where('users_tab.block',$block);
+		if (isset($block) && !empty($block)) {
+			$this->db->where('users_tab.block',$block);
+		}
+
 						if (isset($date) && !empty($date)) {
 							$date_fragment = explode('/',$date);
 							if(is_array($date_fragment)){
