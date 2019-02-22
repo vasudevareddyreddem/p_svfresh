@@ -53,7 +53,7 @@ class Orders_model extends CI_Model
 		join('users_tab','order_tab.user_id=users_tab.id')->
 		join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
 		->join('block_tab','block_tab.block_id=users_tab.block','left')->where('order_items_tab.delivery_status',1)
-		->order_by('order_tab.updated_date','desc');
+		->order_by('order_tab.delivered_time','desc');
 
 
 		return $this->db->get()->result();
@@ -70,7 +70,7 @@ class Orders_model extends CI_Model
 		join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
 		->join('block_tab','block_tab.block_id=users_tab.block','left')
 		->where('order_items_tab.delivery_status',0)
-		->order_by('order_tab.updated_date','desc');
+		->order_by('order_tab.cancelled_time','desc');
 
 
 		return $this->db->get()->result();
@@ -106,8 +106,3 @@ class Orders_model extends CI_Model
 	}
 
 	}
-
-	
-	
-	
-	
