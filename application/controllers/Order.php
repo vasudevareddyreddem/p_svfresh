@@ -157,13 +157,13 @@ class Order extends CI_Controller
 		move_uploaded_file($_FILES['image']['tmp_name'], "assets/uploads/screenshot/" . $img);
 	 }
 	 if(isset($post['c_ids']) && $post['c_ids']!=''){
-		$add=array('payment_img'=>isset($img)?$img:'','payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
+		$add=array('payment_img'=>isset($img)?$img:'','payment_type'=>4,'payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
 		$p_update=$this->Calender_Model->update_payment_details($post['c_ids'],$add); 
 	 }else{
 		 $id=explode(",",$post['all_c_ids']);
 		 if(count($id)>0){
 			 foreach($id as $li){
-				$add=array('payment_img'=>isset($img)?$img:'','payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
+				$add=array('payment_img'=>isset($img)?$img:'','payment_type'=>4,'payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
 				$p_update=$this->Calender_Model->update_payment_details($li,$add); 
 			}
 		 }
