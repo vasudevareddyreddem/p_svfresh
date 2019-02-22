@@ -62,7 +62,7 @@ class Orders_model extends CI_Model
 	public function cancel_order_list(){
 		$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
 		order_items_tab.net_price,order_tab.payment_type,order_items_tab.delivery_status,order_items_tab.created_date,
-		order_items_tab.delivered_time,order_tab.cancelled_time,users_tab.user_name,
+		order_items_tab.delivered_time,order_items_tab.cancelled_time,users_tab.user_name,
 		apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 		users_tab.email_id,users_tab.phone_number')->from('order_tab')->
 		join('order_items_tab','order_items_tab.order_id=order_tab.order_id')->
@@ -70,7 +70,7 @@ class Orders_model extends CI_Model
 		join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
 		->join('block_tab','block_tab.block_id=users_tab.block','left')
 		->where('order_items_tab.delivery_status',0)
-		->order_by('order_tab.cancelled_time','desc');
+		->order_by('order_items_tab.cancelled_time','desc');
 
 
 		return $this->db->get()->result();
