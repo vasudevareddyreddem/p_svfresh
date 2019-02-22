@@ -72,7 +72,7 @@
                         },
                         regexp: {
                             regexp: /^[0-9]+$/,
-                            message: 'The username can only have numbers'
+                            message: 'The username can have only numbers'
                         }
 
                     }

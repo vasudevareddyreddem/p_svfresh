@@ -151,7 +151,7 @@ $(document).ready(function() {
         });
     });
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function() {
         $('#add_apartment').bootstrapValidator({
 
@@ -172,7 +172,7 @@ $(document).ready(function() {
 
                     }
                 },
-                
+
 
 
 
@@ -182,4 +182,4 @@ $(document).ready(function() {
 
     });
 
-</script>
+</script> -->
