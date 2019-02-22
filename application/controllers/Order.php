@@ -144,6 +144,11 @@ class Order extends CI_Controller
   }
   public  function adding_payment_method(){
 	  //echo '<pre>';print_r($_FILES);exit;
+	  $post=$this->input->post();
+	  if($post['c_ids']=='' && $post['all_c_ids']==''){
+		$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+		redirect('order/milk_orders');
+	  }
 	  if(isset($_FILES['image']['name']) && $_FILES['image']['name']!=''){
 		$img_details= $this->Calender_Model->get_payment_img_details($post['c_ids']);
 		unlink("assets/uploads/screenshot/".$img_details['payment_img']);
@@ -151,9 +156,18 @@ class Order extends CI_Controller
 		$img = round(microtime(true)) . '.' . end($temp);
 		move_uploaded_file($_FILES['image']['tmp_name'], "assets/uploads/screenshot/" . $img);
 	 }
-	 $add=array('payment_img'=>isset($img)?$img:'','payment_status'=>1);
-	 $p_update=$this->Calender_Model->update_payment_details($post['c_ids'],$add);
-	 if(count($p_update)>0){
+	 if(isset($post['c_ids']) && $post['c_ids']!=''){
+		$add=array('payment_img'=>isset($img)?$img:'','payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
+		$p_update=$this->Calender_Model->update_payment_details($post['c_ids'],$add); 
+	 }else{
+		 $id=explode(",",$post['all_c_ids']);
+		 if(count($id)>0){
+			 foreach($id as $li){
+				$add=array('payment_img'=>isset($img)?$img:'','payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
+				$p_update=$this->Calender_Model->update_payment_details($li,$add); 
+			}
+		 }
+	 } if(count($p_update)>0){
 		 $this->session->set_flashdata('success',"Payment Details successfully updated.");
 		redirect('order/milk_orders'); 
 	 }else{
@@ -162,6 +176,26 @@ class Order extends CI_Controller
 	 }
 	 
 	  
+  }
+  public  function get_payments_inbetween_dates(){
+	  $post=$this->input->post();
+	   $user_id = $this->session->userdata('id');
+	  $c_data=$this->Calender_Model->get_payments_inbetween_dates($user_id,$post['f_date'],$post['t_date']);
+	  if(isset($c_data) && count($c_data)>0){
+		 $amt=''; foreach($c_data as $c_li){
+			  $amt +=$c_li['price']*$c_li['quantity'];
+			  $c_ids[]=$c_li['calender_id'];
+			}
+			$data['msg']=1;
+			$data['amt']=isset($amt)?$amt:'';
+			$data['c_ids']=$c_ids;
+			echo json_encode($data);exit; 
+		  
+	  }else{
+			$data['msg']=0;
+			echo json_encode($data);exit;  
+	  }
+	  //echo '<pre>';print_r($c_data);exit;
   }
 
 }

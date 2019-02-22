@@ -17,7 +17,7 @@ class Milkorders_model extends CI_Model
 		product_tab.product_name,users_tab.email_id,users_tab.first_name,
 		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 	users_tab.phone_number,
-		calender_tab.delivered_time,calender_tab.cancelled_time');
+		calender_tab.delivered_time,calender_tab.cancelled_time,calender_tab.payment_status,calender_tab.payment_img');
 		$this->db->from('calender_tab');
 		//$this->db->join('billing_tab','calender_tab.billing_id=billing_tab.id');
 		$this->db->join('product_tab','product_tab.product_id=calender_tab.product_id');
