@@ -55,24 +55,24 @@
 												echo'Swiping';
 											}
 											?></td>
-                                            
-											<td><?php 
+
+											<td><?php
 											if($order->created_date!=''){
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 											}
 											?></td>
-                                            <td><?php 
+                                            <td><?php
 											if($order->cancelled_time!=''){
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->cancelled_time);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 											}
-												
+
 											?></td>
                                         </tr>
 										<?php }}?>
-                                       
-                                      
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -85,8 +85,6 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example').DataTable();
+    $('#example').DataTable("ordering": false);
 } );
 </script>
-
-

@@ -64,7 +64,7 @@
 												{echo 'Pending';}
 											?></div>
                                             </td>
-											<td><?php 
+											<td><?php
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
            $newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ; ?></td>
                                            <td><?php if($order->delivery_status==1)
@@ -80,20 +80,20 @@
 													  $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->cancelled_time);
            $newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 													}
-													
+
 													}
 											if($order->delivery_status==2)
 												{
 													if($order->created_date!=''){
 													  $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
            $newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;}
-												
+
 										}
 											?></td>
                                         </tr>
 										<?php }}?>
-                                        
-                                       
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -106,7 +106,6 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example').DataTable();
+    $('#example').DataTable("ordering": false);
 } );
 </script>
-
