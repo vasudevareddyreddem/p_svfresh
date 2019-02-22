@@ -83,6 +83,12 @@ class Cart_Model extends CI_Model
       $this->db->where('year >=',date('Y'));
       return $this->db->get()->row_array(); 
   }
+  public  function check_product_ava_qty($user_id){
+		$this->db->select('cart_tab.product_id,cart_tab.quantity,p.quantity as av_qty,p.product_name')->from('cart_tab');
+		$this->db->join('product_tab AS p','p.product_id = cart_tab.product_id','left');
+		$this->db->where('cart_tab.user_id',$user_id);
+		return $this->db->get()->result_array();
+  }
   /* cart amountpurpose */
 }
 

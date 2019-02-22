@@ -37,6 +37,7 @@ class Products extends CI_Controller
     $data['pageTitle'] = 'Products';
     $cat_id = $this->Category_model->get_cat_id_from_sub_cat_id($id);
     $data['id'] = (isset($cat_id) && !empty($cat_id)) ? $cat_id : '';
+	//echo $id;
 	//echo "<pre>";print_r($data);exit;
     $this->load->view('home/products',$data);
   }

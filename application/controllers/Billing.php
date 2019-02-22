@@ -27,10 +27,18 @@ class Billing extends CI_Controller
           $post_data = $this->input->post();
 		  
 		  $user_id = $this->session->userdata('id');
+		   $cart_tem= $this->Cart_Model->check_product_ava_qty($user_id);
+		   foreach($cart_tem as $li){
+			   if($li['quantity']> $li['av_qty']){
+					$this->session->set_flashdata('error', $li['product_name'].' having product quantity less than avaiable quantity ');
+					redirect('/checkout');
+			   }
+		   }
+		   //echo '<pre>';print_r($cart_tem);exit;
           $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
           //$this->load->model('Auth_Model');
           $user_add=$this->Auth_Model->get_user_details($user_id);
-		  //echo '<pre>';print_r($arrayFoo);exit;
+
           $addl_data = array('user_id' => $this->session->userdata('id'),'created_date' => date('Y-m-d H:i:s'),'created_by' => $this->session->userdata('id'),'status' => 'Active');
 			$a_a =array(
 			'email_address'=>$user_add->email_id,
@@ -63,6 +71,14 @@ class Billing extends CI_Controller
           }
        
       }else{
+		  $user_id = $this->session->userdata('id');
+		  $cart_tem= $this->Cart_Model->check_product_ava_qty($user_id);
+		   foreach($cart_tem as $li){
+			   if($li['quantity']> $li['av_qty']){
+					$this->session->set_flashdata('error', $li['product_name'].' having product quantity less than avaiable quantity ');
+					redirect('/checkout');
+			   }
+		   }
         $data['categories'] = $this->Category_model->get_all_category();
         $user_id = $this->session->userdata('id');
         $data['billing'] = $this->Billing_Model->get_user_billing_details_by_userid($user_id);
