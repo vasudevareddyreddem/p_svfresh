@@ -105,7 +105,8 @@
                         </div>
                         <div class="info-orther">
                           <!-- <p>Item Code: #453217907</p> -->
-                          <p class="availability">Availability: <span>In stock</span></p>
+						   <p>Availability: <?php if (isset($p->quantity) && ($p->quantity > 0)) { ?> <span class="label label-success">In stock</span><?php } else { ?> <span class="label label-danger">Out of stock</span><?php } ?></p>
+
                           <div class="product-desc">
                             <?php echo $p->description; ?>
                           </div>
