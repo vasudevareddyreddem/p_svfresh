@@ -98,6 +98,6 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example').DataTable("ordering": false);
+    $('#example').DataTable();
 } );
 </script>

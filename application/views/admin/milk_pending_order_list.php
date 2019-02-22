@@ -145,7 +145,7 @@ $(document).ready(function() {
     <script type="text/javascript">
     $(document).ready(function(){
         var table = $('#example').DataTable({
-             ordering: false,
+            
             lengthChange: true,
             searching: false,
             buttons: ['excel']

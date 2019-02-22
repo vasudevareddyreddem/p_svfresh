@@ -1776,5 +1776,17 @@ if ( ! $this->upload->do_upload('img',time()))
 
 }
 
+public function payment_method_post(){
+  $user_id=$this->post('user_id');
+  $flag=$this->Mobile_model->user_checking($user_id);
+  if($flag==0){
+     $message['check_staus'] =0;
+     $message['message']='unauthorized user';
+        $this->response($message, REST_Controller::HTTP_OK);
+  }
+  $apt=$this->post('apt_id');
+
+    $res=$this->Mobile_model->get_payment_method($user_id);
+}
 
 }
