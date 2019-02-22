@@ -551,5 +551,25 @@ return $this->db->get()->result_array();
 					 return $this->db->affected_rows();
 
 				 }
+				 public function user_milk_amount($user_id){
+					 $this->db->select('sum(quantity*price) total')->from('calender_tab')->where('user_id',$user_id)->
+					 where('payment_status',0)->where('delivery_status !=',3);
+					 return $this->db->get()->row_array();
+
+				 }
+				 public function  milk_mon_amt($user_id,$mon,$yr){
+					$this->db->select('sum(quantity*price) total')->from('calender_tab')->where('user_id',$user_id)->
+					where('payment_status',0)->where('delivery_status !=',3)->where('year',$yr)->where('month',$mon);
+					return $this->db->get()->row_array();
+
+				}
+		public function	update_milk_payment($user_id,$mon,$yr,$data){
+			$this->db->where('user_id',$user_id);
+			$this->db->where('month',$mon);
+			$this->db->where('year',$yr);
+			$this->db->update('calender_tab',$data);
+			return $this->db->affected_rows()?1:0;
+			
+		}
 
 }
