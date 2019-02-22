@@ -30,7 +30,7 @@ class Billing extends CI_Controller
 		   $cart_tem= $this->Cart_Model->check_product_ava_qty($user_id);
 		   foreach($cart_tem as $li){
 			   if($li['quantity']> $li['av_qty']){
-					$this->session->set_flashdata('error', $li['product_name'].' having product quantity less than avaiable quantity ');
+					$this->session->set_flashdata('error', $li['product_name'].' product is currently out of stock or less quantity');
 					redirect('/checkout');
 			   }
 		   }
@@ -75,7 +75,7 @@ class Billing extends CI_Controller
 		  $cart_tem= $this->Cart_Model->check_product_ava_qty($user_id);
 		   foreach($cart_tem as $li){
 			   if($li['quantity']> $li['av_qty']){
-					$this->session->set_flashdata('error', $li['product_name'].' having product quantity less than avaiable quantity ');
+					$this->session->set_flashdata('error', $li['product_name'].' product is currently out of stock or less quantity ');
 					redirect('/checkout');
 			   }
 		   }
