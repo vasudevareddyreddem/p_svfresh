@@ -446,7 +446,13 @@ public function cancel_order($item_id,$user_id){
 
 }
 public function get_apartments(){
-	$this->db->select('apartment_id,apartment_name')->from('apartment_tab')->where('status',1);
+	// $this->db->distinct();
+	// $this->db->select('apartment_id');
+	//       $this->db->from('block_tab');
+	// 			 $this->db->where('status',1);
+  //     $where_clause = $this->db->get_compiled_select();
+	$this->db->select('apartment_id,apartment_name')->from('apartment_tab')->where('status',1)
+	->where('apartment_id in ("select distinct apartment_id from block_tab where status=1")');
 		return $this->db->get()->result_array();
 
 
@@ -572,10 +578,15 @@ return $this->db->get()->result_array();
 
 		}
 		public function get_payment_method($apt){
-			$this->db->select('account_status')->from('apartment_tab')->where('apartment_id',$apt);
+			$this->db->select('account_status,account_number,account_name,ifsc,upi_code')->from('apartment_tab')->where('apartment_id',$apt);
 
 			return $this->db->get()->row_array();
 
+		}
+		public function pay_milk_online($odata){
+			$this->db->insert('order_tab',$odata);
+
+	return 	$this->db->insert_id();
 		}
 
 }

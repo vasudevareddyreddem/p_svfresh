@@ -1391,6 +1391,7 @@ public  function  milk_orders_post(){
     }
 public function get_apartments_post(){
 	 $res=$this->Mobile_model->get_apartments();
+   echo $this->db->last_query();exit;
 	 if(count($res)>0){
 		  $message = array('status' => 1, 'apartment_list' => $res );
             $this->response($message, REST_Controller::HTTP_OK);
@@ -1786,7 +1787,52 @@ public function payment_method_post(){
   }
   $apt=$this->post('apt_id');
 
-    $res=$this->Mobile_model->get_payment_method($user_id);
+    $res=$this->Mobile_model->get_payment_method($apt);
+    if($res['account_status']==1){
+    $message=array('status'=>1,'acc_status'=>$res);
+           $this->response($message, REST_Controller::HTTP_OK);
+         }
+         $u= new stdClass();
+         $message=array('status'=>0,'acc_status'=>$u);
+                $this->response($message, REST_Controller::HTTP_OK);
+
 }
+public function  milk_online_payment_post(){
+  $user_id=$this->post('user_id');
+  $flag=$this->Mobile_model->user_checking($user_id);
+  if($flag==0){
+     $message['check_staus'] =0;
+     $message['message']='unauthorized user';
+        $this->response($message, REST_Controller::HTTP_OK);
+  }
+  $mon=$this->post('mon');
+  $yr=$this->post('year');
+  $razor=$this->post('razor_id');
+  $odata=array('user_id'=>$user_id,
+  'created_date'=>date('Y-m-d H:i:s'),
+  'created_by'=>$user_id,
+  'razorpay_payment_id'=>$razor
+);
+  $id=$this->Mobile_model->pay_milk_online($odata);
+  if($id){
+
+ $data=array(
+'payment_status'=>1,
+'payment_date'=>date('Y-m-d H:i:s'),
+'payment_type'=>1,
+'order_id'=>$id);
+  $res=$this->Mobile_model->update_milk_payment($user_id,$mon,$yr,$data);
+  if($res==1){
+                $message=array('status'=>1,'message'=>'Your Payment successful');
+                       $this->response($message, REST_Controller::HTTP_OK);
+
+  }
+  $message=array('status'=>0,'message'=>'Your Payment Not Successful');
+         $this->response($message, REST_Controller::HTTP_OK);
+       }
+
+
+}
+
 
 }
