@@ -236,7 +236,7 @@ class Mobile_model extends CI_Model
 	return $this->db->affected_rows()?1:0;
 	}
 	public function check_loging($username){
-		$this->db->select('id,email_id,phone_number,user_name,password')->from('users_tab')->
+		$this->db->select('id,email_id,phone_number,user_name,password,appartment')->from('users_tab')->
 		where('phone_number',$username)->or_where('email_id',$username);
 
 		return $this->db->get()->row_array();
@@ -569,7 +569,13 @@ return $this->db->get()->result_array();
 			$this->db->where('year',$yr);
 			$this->db->update('calender_tab',$data);
 			return $this->db->affected_rows()?1:0;
-			
+
+		}
+		public function get_payment_method($apt){
+			$this->db->select('account_status')->from('apartment_tab')->where('apartment_id',$apt);
+
+			return $this->db->get()->row_array();
+
 		}
 
 }
