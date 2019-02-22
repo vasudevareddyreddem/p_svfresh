@@ -57,6 +57,55 @@ class Milkorders_model extends CI_Model
 
 		return $this->db->get()->result();
 	}
+	public function total_payment_order_list($apartment='',$block='',$date='',$mobile='')
+	{
+		$this->db->select('calender_tab.calender_id,calender_tab.order_id,calender_tab.admin_accept_status,calender_tab.year,calender_tab.date,calender_tab.month,
+		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
+		calender_tab.payment_type,
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+	users_tab.phone_number,
+		calender_tab.delivered_time,calender_tab.cancelled_time,calender_tab.payment_status,calender_tab.payment_img');
+		$this->db->from('calender_tab');
+		//$this->db->join('billing_tab','calender_tab.billing_id=billing_tab.id');
+		$this->db->join('product_tab','product_tab.product_id=calender_tab.product_id');
+		$this->db->join('users_tab','users_tab.id=calender_tab.user_id');
+		$this->db->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left');
+		$this->db->join('block_tab','block_tab.block_id=users_tab.block','left');
+		if (isset($apartment) && !empty($apartment)) {
+			$this->db->where('users_tab.appartment',$apartment);
+		}
+		if (isset($mobile) && !empty($mobile)) {
+			$this->db->where('users_tab.phone_number',$mobile);
+		}
+		if (isset($block) && !empty($block)) {
+			$this->db->where('users_tab.block',$block);
+		}
+		if (isset($date) && !empty($date)) {
+			$date_fragment = explode('/',$date);
+			if(is_array($date_fragment)){
+				$day = $date_fragment[0];
+				if(isset($day) && !empty($day)){
+					$this->db->where('calender_tab.date',$day);
+				}
+				$month = $date_fragment[1];
+				if(isset($month) && !empty($month)){
+					$this->db->where('calender_tab.month',$month);
+				}
+				$year = $date_fragment[2];
+				if(isset($year) && !empty($year)){
+					$this->db->where('calender_tab.year',$year);
+				}
+			}
+		}
+		$this->db->where('calender_tab.payment_status',1);
+		$this->db->order_by('calender_tab.year','desc');
+		$this->db->order_by('calender_tab.month','desc');
+		$this->db->order_by('calender_tab.date','desc');
+		$this->db->order_by('users_tab.id','desc');
+
+		return $this->db->get()->result();
+	}
 	public function pending_order_list($apartment='',$block='',$date='',$mobile=''){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
@@ -340,6 +389,19 @@ $days=date('d' ,strtotime($date));//present date in month
 						}
      $this->db->group_by('product_tab.product_name,apartment_tab.apartment_name,block_tab.block_name');
 	    return $this->db->get()->result_array();
+	}
+	public  function get_milk_orders_list($order_ids){
+		$this->db->select('calender_id,order_id,payment_img')->from('calender_tab');
+		$this->db->where('order_id',$order_ids);
+		return $this->db->get()->result_array();
+	}
+	public  function update_payment_details($c_id,$data){
+		$this->db->where('calender_tab.calender_id',$c_id);
+		return $this->db->update('calender_tab',$data);
+	}
+	public  function delete_irder_id($order_id){
+		$this->db->where('order_tab.order_id',$order_id);
+		return $this->db->delete('order_tab');	
 	}
 
 }

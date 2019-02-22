@@ -162,6 +162,11 @@ class Calender_Model extends CI_Model
 		return $this->db->get()->result_array();
 	
 	}
+	public function insert_order_id($data){
+		$this->db->insert('order_tab',$data);		
+		return $this->db->insert_id();
+		
+	}
 
 }
 

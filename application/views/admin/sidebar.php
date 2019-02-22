@@ -73,7 +73,7 @@
                     <li><a href="<?php echo base_url('milkorder/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
 					<li><a href="<?php echo base_url('milkorder/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Canceled Order List</a></li>
               <li><a href="<?php echo base_url('milkorder/boys_list');?>"><i class="ion ion-ios-circle-outline"></i>Boys Apartment List</a></li>
-              <li><a href="<?php echo base_url('milkorder/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Payments</a></li>
+              <li><a href="<?php echo base_url('milkorder/total_paymet_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Payments</a></li>
                 </ul>
             </li>
             <li>

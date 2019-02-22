@@ -58,9 +58,7 @@
 											?></td>
                                             <td>
 
-									<div class="badge badge-info" >
-
-											 </div>
+									
 
                                                 <div class="badge badge-warning" >
 											 <a

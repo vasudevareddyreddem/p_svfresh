@@ -44,6 +44,36 @@ class Milkorder extends In_frontend{
 		}
 		else{redirect('login');}
 	}
+	public function total_paymet_order_list(){
+		if($this->session->userdata('svadmin_det')){
+			//getting all active apartments
+			$data['apartment'] = $this->Apartment_model->get_all_active_apartments();
+			$post = $this->input->post();
+			if ($post) {
+				unset($post['button']);
+				$apartment = $this->input->post('apartment');
+				$block = $this->input->post('block');
+				$date = $this->input->post('date');
+				$mobile=$this->input->post('phonenum');
+				$data['filter'] = $post;
+				$data['tot_list']=$this->Milkorders_model->total_payment_order_list($apartment,$block,$date,$mobile);
+			} else {
+				$data['tot_list']=$this->Milkorders_model->total_payment_order_list();
+			}
+
+			if(count($data['tot_list'])>0){
+				$data['tot_status']=1;
+			}
+			else{
+				$data['tot_status']=0;
+			}
+			//echo '<pre>';print_r($data);exit;
+			$this->load->view('admin/milk_tot_payment_order_list',$data);
+			$this->load->view('admin/milk-footer');
+
+		}
+		else{redirect('login');}
+	}
 
 	public function pending_order_list(){
 		if($this->session->userdata('svadmin_det')){
@@ -277,4 +307,46 @@ else{
 }
 
 }
+ public  function paymetn_reject_order(){
+	  $order_id=base64_decode($this->uri->segment(3));
+	  if($order_id==''){
+		$this->session->set_flashdata('error','Techinical problem will occured');
+		redirect($_SERVER['HTTP_REFERER']); 
+	  }
+	  $order_id_list=$this->Milkorders_model->get_milk_orders_list($order_id);
+		if(count($order_id_list)>0){
+		    foreach($order_id_list as $li){
+			    $add=array('admin_accept_status'=>2,'payment_status'=>0); 
+				$p_update=$this->Milkorders_model->update_payment_details($li['calender_id'],$add); 
+			}
+		}
+		if(count($p_update)>0){
+			$this->session->set_flashdata('success',"Payment Details successfully rejected.");
+			redirect('milkorder/total_paymet_order_list'); 
+		}else{
+		   $this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+		   redirect('milkorder/total_paymet_order_list'); 
+	    }
+	}
+	public  function paymetn_accept_order(){
+	  $order_id=base64_decode($this->uri->segment(3));
+	  if($order_id==''){
+		$this->session->set_flashdata('error','Techinical problem will occured');
+		redirect($_SERVER['HTTP_REFERER']); 
+	  }
+	  $order_id_list=$this->Milkorders_model->get_milk_orders_list($order_id);
+		if(count($order_id_list)>0){
+		    foreach($order_id_list as $li){
+			    $add=array('admin_accept_status'=>1); 
+				$p_update=$this->Milkorders_model->update_payment_details($li['calender_id'],$add); 
+			}
+		}
+		if(count($p_update)>0){
+			$this->session->set_flashdata('success',"Payment details successfully accepted.");
+			redirect('milkorder/total_paymet_order_list'); 
+		}else{
+		   $this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+		   redirect('milkorder/total_paymet_order_list'); 
+	    }
+	}
 }
