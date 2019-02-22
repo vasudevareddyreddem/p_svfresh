@@ -71,6 +71,8 @@
 											<th>Customer Name</th>
 											<th>Mobile Number</th>
 											<th>Payment Type</th>
+											<th>Payment Status</th>
+											<th>Payment screenshot</th>
 											<th>Status</th>
 											<th>Ordered/Delivered/Cancelled Date & Time</th>
 										</tr>
@@ -98,6 +100,12 @@
 													if($order->payment_type==3){
 														echo 'Swiping';
 													}?></td>
+													<td><?php if($order->payment_status==1){ echo 'Paid'; }else{ echo "Unpaid"; } ?></td>
+													<td>
+													<?php if($order->payment_img!=''){?>
+														<a target="_blank" href="<?php echo base_url('assets/uploads/screenshot/'.$order->payment_img); ?>"><img src="<?php echo base_url('assets/uploads/screenshot/'.$order->payment_img); ?>" width="50px;" height="50px;"></a>
+													<?php } ?>
+													</td>
 													<td>
 														<div class="badge badge-info">
 															<?php if($order->delivery_status==1)
@@ -122,7 +130,7 @@
 															$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
 														}
 
-													}
+														}
 													if($order->delivery_status==2)
 													{
 														if($order->created_date!=''){
