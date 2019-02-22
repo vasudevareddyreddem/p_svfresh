@@ -65,7 +65,7 @@ $this->load->model('Orders_model');
 		public function cancel_order_list(){
 			if($this->session->userdata('svadmin_det')){
 				$data['cancel_list']=$this->Orders_model->cancel_order_list();
-				echo '<pre>';print_r(	$data['cancel_list']);exit;
+			
 				if(count($data['cancel_list'])>0){
 					$data['cancel_status']=1;
 				}

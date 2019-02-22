@@ -70,7 +70,7 @@ class Orders_model extends CI_Model
 		join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left')
 		->join('block_tab','block_tab.block_id=users_tab.block','left')
 		->where('order_items_tab.delivery_status',0)
-		->order_by('order_tab.cancelled_time','desc');
+		->order_by('order_items_tab.cancelled_time','desc');
 
 
 		return $this->db->get()->result();
