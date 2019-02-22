@@ -76,7 +76,7 @@
                       <!-- product thumbnail images -->
                       <?php if (count($product_related_images) > 0) { ?>
                         <div class="product-img-thumb" id="gallery_01">
-                          <ul class="owl-carousel" data-items="2" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
+                          <ul class="owl-carousel" data-items="3" data-nav="true" data-dots="false" data-margin="20" data-loop="true">
                             <?php foreach ($product_related_images as $pri) { ?>
                               <li>
                                 <a href="#" data-image="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>" data-zoom-image="<?php echo base_url('assets/uploads/product_pics/'.$pri->image_name); ?>">
