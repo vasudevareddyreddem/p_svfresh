@@ -218,6 +218,19 @@ $this->load->model('Product_model')	;
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
+			$check=$this->Category_model->check_cat_product_cart($id);
+			if(isset($check) && count($check)>0){
+				foreach($check as $lis){
+					$this->Category_model->delete_cart_id($lis->id);
+				}
+			}
+			$w_check=$this->Category_model->check_wish_product_cart($id);
+			if(isset($w_check) && count($w_check)>0){
+				foreach($w_check as $lis){
+					$this->Category_model->delete_wish_id($lis->id);
+				}
+			}
+			//echo $this->db->last_query();exit;
 			$status=$this->Category_model->delete_category($id,$svadmin);
 			if($status==1){
 				$this->session->set_flashdata('success','Category deleted');
@@ -580,6 +593,7 @@ $this->load->model('Product_model')	;
 		
 		
 	}
+	
 	public function save_discount_image(){
 		if( $this->session->userdata('svadmin_det')){
 			$admin=$this->session->userdata('svadmin_det');

@@ -112,12 +112,15 @@ class Order extends CI_Controller
       $post = $this->input->post();
 			if ($post) {
 				unset($post['button']);
-				$date = $this->input->post('date');
+				$fromdate = $this->input->post('fromdate');
+				$todate = $this->input->post('todate');
 				$data['filter'] = $post;
-				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,$date);
+				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,$fromdate,$todate);
+				//echo $this->db->last_query();exit;
 			} else {
-				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id);
+				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,'','');
 			}
+			//echo '<pre>';print_r($data);exit;
       $data['pageTitle'] = 'Milk Order';
       $this->load->view('home/milk_orders',$data);
     } else {
@@ -125,6 +128,40 @@ class Order extends CI_Controller
       redirect('home/login');
     }
 
+  }
+  public  function update_qty(){
+	  $post=$this->input->post();
+	  $u_data=array('quantity'=>$post['c_qty']);
+	  $update=$this->Calender_Model->update_qty_amount($post['c_id'],$u_data);
+	  if(count($update)>0)
+		{
+			$data['msg']=1;
+			echo json_encode($data);exit;	
+		}else{
+			$data['msg']=2;
+			echo json_encode($data);exit;
+		}
+  }
+  public  function adding_payment_method(){
+	  //echo '<pre>';print_r($_FILES);exit;
+	  if(isset($_FILES['image']['name']) && $_FILES['image']['name']!=''){
+		$img_details= $this->Calender_Model->get_payment_img_details($post['c_ids']);
+		unlink("assets/uploads/screenshot/".$img_details['payment_img']);
+		$temp = explode(".", $_FILES["image"]["name"]);
+		$img = round(microtime(true)) . '.' . end($temp);
+		move_uploaded_file($_FILES['image']['tmp_name'], "assets/uploads/screenshot/" . $img);
+	 }
+	 $add=array('payment_img'=>isset($img)?$img:'','payment_status'=>1);
+	 $p_update=$this->Calender_Model->update_payment_details($post['c_ids'],$add);
+	 if(count($p_update)>0){
+		 $this->session->set_flashdata('success',"Payment Details successfully updated.");
+		redirect('order/milk_orders'); 
+	 }else{
+		$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
+		redirect('order/milk_orders'); 
+	 }
+	 
+	  
   }
 
 }

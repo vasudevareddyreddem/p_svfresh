@@ -90,10 +90,7 @@
 												echo 'Swiping';
 											}?></td>
                                              <td>
-									<div class="badge badge-info" >
-
-											 <?php echo'Pending';?>
-											 </div>
+									
                                                 <div class="badge badge-warning" >
 											 <a
 							href="<?php echo base_url('milkorder/deliver_order/').base64_encode($order->calender_id) ;?>" class="text-white" ><i >

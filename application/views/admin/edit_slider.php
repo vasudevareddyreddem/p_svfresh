@@ -63,18 +63,16 @@
                                                     
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                              
-												<?php if($picstatus==1){ 
+                                            <tbody><?php if($picstatus==1){ 
 												$count=1;
 											foreach($pics as $pic){ ?>
 												<input type="hidden" 
 												value="<?php echo base64_encode($pic->pic_id);?>" name="slider_id[]" >
 												<tr>
-												<td>
-                                                   <img alt="image" 
-											src="<?php echo base_url('assets/uploads/slider_pics/').$pic->pic_name; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
-											</td>
+													<td>
+														   <img alt="image" 
+													src="<?php echo base_url('assets/uploads/slider_pics/').$pic->pic_name; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto"> 
+													</td>
                                                     <td>
                                                         <input type="file" name="slider[]" placeholder="LastName" class="form-control"   />
                                                     </td>
@@ -82,7 +80,7 @@
                                                         <a class="deleteRow"></a>
                                                     </td>
 													 <?php  if($count!=1){?>
-													<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>
+														<td><a onclick="remove_img('<?php echo $pic->pic_id; ?>');" type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></a></td>
 													 <?php }?>
                                                 </tr>
 												<?php $count++;}}?>
@@ -115,6 +113,24 @@
 
 
 <script type="text/javascript">
+function remove_img(id){
+	jQuery.ajax({
+   					url: "<?php echo base_url('slider/remove_img');?>",
+   					data: {
+   						p_id: id,
+   					},
+   					dataType: 'json',
+   					type: 'POST',
+   					success: function (data) {
+						if(data.msg==1){
+							console.log('image deleted');
+						}else{
+							console.log('Technical problem will occured');
+						}
+					}
+   				});
+	
+}
 $(document).ready(function() {
     $('#add_slider').bootstrapValidator({
 		

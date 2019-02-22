@@ -98,6 +98,7 @@ class Orders_model extends CI_Model
 		$this->db->set('delivery_status',2);
 		$this->db->set('updated_by',$svadmin);
 
+
 		$this->db->where('order_items_id',$id);
 		$this->db->update('order_items_tab');
 
@@ -105,3 +106,8 @@ class Orders_model extends CI_Model
 	}
 
 	}
+
+	
+	
+	
+	

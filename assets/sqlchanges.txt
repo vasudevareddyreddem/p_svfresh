@@ -4,3 +4,16 @@ ALTER TABLE `sv_fresh_staging`.`order_items_tab`
   CHANGE `updated_by_user` `updated_by_user` INT(11) NULL;
 ALTER TABLE `svfresh_final`.`calender_tab`   
   CHANGE `updated_at` `updated_date` DATETIME DEFAULT CURRENT_TIMESTAMP   NULL
+  
+  
+  
+  
+  
+  
+  21/02/2019
+  
+  
+  ALTER TABLE `sv_fresh_staging`.`calender_tab`   
+  ADD COLUMN `payment_img` VARCHAR(250) NULL AFTER `created_by`,
+  ADD COLUMN `payment_status` INT(11) DEFAULT 0  NULL AFTER `payment_img`;
+

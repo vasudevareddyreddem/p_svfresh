@@ -11,26 +11,27 @@
         </h3>
         <br>
         <?php if(isset($user) && !empty($user)){ ?>
-            <div class="row">
-              <form action="<?php echo base_url('billing/old_delivery_address'); ?>" method="POST">
-                  <div class="col-md-3">
-                    <div class="box-shadow-site modal-body">
-                        <p><b>Name : </b><?php echo (isset($user->first_name)) ? $user->first_name.' '.$user->last_name : ''; ?></p>
-                        <p><b>Email : </b><?php echo (isset($user->email_id)) ? $user->email_id : ''; ?></p>
-                        <p><b>Phone Number : </b><?php echo (isset($user->phone_number)) ? $user->phone_number : ''; ?></p>
-                        <p><b>Apartment : </b><?php echo (isset($user->appartment)) ? $user->appartment : ''; ?></p>
-                        <p><b>Block : </b><?php echo (isset($user->block)) ? $user->block : ''; ?></p>
-                        <p><b>Flat/Door No : </b><?php echo (isset($user->block)) ? $user->flat_door_no : ''; ?></p>
-                        <a href="<?php echo base_url('billing/edit'); ?>" class="btn btn-success">Edit</a>
-                      </div>
-                    </div>
-                    <div class="clearfix">
-                    </div>
-                    <br>
-                    <div class="col-md-12">
-                      <button type="submit" name="submit" class="btn btn-success">Procdeed For Payment</button>
-                    </div>
-                  </form>
+				<div class="row">
+					<form action="<?php echo base_url('billing/index'); ?>" method="POST">
+						  <div class="col-md-3">
+							<div class="box-shadow-site modal-body">
+								<p><b>Name : </b><?php echo (isset($user->first_name)) ? $user->first_name.' '.$user->last_name : ''; ?></p>
+								<p><b>Email : </b><?php echo (isset($user->email_id)) ? $user->email_id : ''; ?></p>
+								<p><b>Phone Number : </b><?php echo (isset($user->phone_number)) ? $user->phone_number : ''; ?></p>
+								<p><b>Apartment : </b><?php echo (isset($user->appartment)) ? $user->appartment : ''; ?></p>
+								<p><b>Block : </b><?php echo (isset($user->block)) ? $user->block : ''; ?></p>
+								<p><b>Flat/Door No : </b><?php echo (isset($user->block)) ? $user->flat_door_no : ''; ?></p>
+								<a href="<?php echo base_url('billing/edit'); ?>" class="btn btn-success">Edit</a>
+							  </div>
+							  <input type="hidden"
+							</div>
+							<div class="clearfix">
+							</div>
+							<br>
+							<div class="col-md-12">
+							  <button type="submit" name="submit" class="btn btn-success">Proceed To Payment</button>
+							</div>
+					  </form>
                 </div>
             <?php } ?>
         </div>

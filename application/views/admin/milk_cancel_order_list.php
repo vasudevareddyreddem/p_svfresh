@@ -11,10 +11,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Cancelled Order List</h4>
+                            <h4>Canceled Order List</h4>
                         </div>
                         <div class="card-body">
-                             <form class="" action="<?php echo base_url('milkorder/milk_cancel_order_list'); ?>" method="post">
+                             <form class="" action="<?php echo base_url('milkorder/cancel_order_list'); ?>" method="post">
                             <div class="row">
                                     <div class="col-md-3">
                                         <select class="form-control" name="apartment" id="apartment" data-block="<?php if (isset($filter) && ($filter['block'])) { echo $filter['block']; } else { echo ''; } ?>">
@@ -62,7 +62,6 @@
                                             <th>Mobile Number</th>
 
                                             <th>Payment Type</th>
-                                            <th>Status</th>
 											<th>Delivery Date</th>
                                             <th>Cancelled Date & Time</th>
                                         </tr>
@@ -89,22 +88,7 @@
 											if($order->payment_type==3){
 												echo 'Swiping';
 											}?></td>
-                                             <td>
-									<div class="badge badge-info" >
-
-											 <?php echo'Cancelled';?>
-											 </div>
-                                                <div class="badge badge-danger" >
-											 <a
-							href="<?php echo base_url('milkorder/pending_order/').base64_encode($order->calender_id) ;?>" class="text-white" ><i >
-											 <?php echo'Pending';?></i></a>
-											 </div>
-
-											 <div class="badge badge-warning" >
-								<a href="<?php echo base_url('milkorder/deliver_order/').base64_encode($order->calender_id);?>" class="text-white" ><i >
-											 <?php echo'Delivered';?></i></a>
-											 </div>
-                                            </td>
+                                             
 											<td>
 											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
 											</td>

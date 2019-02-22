@@ -21,6 +21,7 @@
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Single Product Price</th>
+                                            <th>Total Price</th>
                                             <th>Customer Name</th>
                                             <th>Mobile Number</th>
                                             <th>Address</th>
@@ -38,6 +39,7 @@
                                             <td><?php echo $order->product_name; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>
+											  <td><?php echo $order->quantity*$order->net_price; ?></td>
                                             <td><?php echo $order->user_name; ?></td>
                                             <td><?php echo $order->phone_number; ?></td>
                                              <td><span>Apartment Name:<?php echo $order->apartment_name; ?></span>
@@ -55,19 +57,21 @@
 											}
 											?></td>
                                             <td>
+
 									<div class="badge badge-info" >
 
 											 <?php echo'Pending';?>
 											 </div>
+
                                                 <div class="badge badge-warning" >
 											 <a
 							href="<?php echo base_url('orders/deliver_order/').base64_encode($order->order_id) ;?>" class="text-white" ><i >
-											 <?php echo'Delivered';?></i></a>
+											 <?php echo'Deliver';?></i></a>
 											 </div>
 
 											 <div class="badge badge-danger" >
 								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class="text-white" ><i >
-											 <?php echo'cancelled';?></i></a>
+											 <?php echo'Cancel';?></i></a>
 											 </div>
                                             </td>
                                             	<td><?php

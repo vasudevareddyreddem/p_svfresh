@@ -178,6 +178,8 @@ if ($result->num_rows > 0) {
         success:function(data){
           $('.cart_count').html(data.count);
           $('#cart_template').html(data.cart_template);
+		    $('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">Added to cart<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+
           obj.attr("disabled",true);
           obj.html("Added to cart");
           obj.off('click');

@@ -153,7 +153,7 @@
                                 <div class="attribute-label">Qty:</div>
                                 <form class="" id="cart_form">
                                   <div style="padding:5px;" class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                  <input type="number" name="quantity" id="number" value="<?php if(isset($cart_quantity->quantity)){ echo $cart_quantity->quantity; } else { echo '1'; } ?>" />
+                                  <input type="number" name="quantity" id="number" value="<?php if(isset($cart_quantity->quantity)){ echo $cart_quantity->quantity; } else { echo '1'; } ?>" readonly>
                                   <div style="padding:5px;" class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
                                   <input type="hidden" name="product_id" value="<?php if (isset($product->product_id)) { echo $product->product_id; } ?>"/>
                                   <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('id'); ?>"/>
@@ -168,7 +168,7 @@
                         <div class="form-action">
                           <div class="button-group">
                             <?php if(isset($category_name->cat_name) && (strcasecmp($category_name->cat_name,'MILK') == 0)){ ?>
-                              <a title="Add to Calender" class="btn-add-cart" href="<?php echo base_url('milkcalender/'.$product->product_id); ?>" >Add to Calender</a>
+                              <a title="Add to Calender"  class="btn-add-cart" href="<?php echo base_url('milkcalender/'.$product->product_id); ?>" >Add to Calender</a>
                             <?php } else if (isset($product->product_id) && (in_array($product->product_id,$cart_product_id))){ ?>
                               <button class="btn-add-cart" type="button" id="addtocart" disabled>Added to cart</button>
                             <?php }else{ ?>
@@ -264,7 +264,7 @@
                                       </span>
                                     </div>
                                     <div class="info-author">
-                                      <span><strong><?php echo isset($list['user_name'])?$list['user_name']:''; ?></strong></span>
+                                      <span><strong><?php echo isset($list['name'])?$list['name']:''; ?></strong></span>
                                       <em><?php echo isset($list['created_at'])?$list['created_at']:''; ?></em>
                                     </div>
                                   </div>
@@ -399,6 +399,8 @@
                       success:function(data){
                         $('.cart_count').html(data.count);
                         $('#cart_template').html(data.cart_template);
+								    $('#message').html('<div class="alert_msg1 animated slideInUp bg-succ">Added to cart<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+
                         obj.attr("disabled",true);
                         obj.html("Added to cart");
                       }

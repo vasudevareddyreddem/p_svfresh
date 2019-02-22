@@ -8,11 +8,14 @@ class Paymentstype extends CI_Controller
   {
     parent::__construct();
     $this->load->library('form_validation');
+    $this->load->library('user_agent');
+    $this->load->library('upload');
     $this->load->model('Category_model');
     $this->load->model('Cart_Model');
     $this->load->model('Billing_Model');
     $this->load->model('Order_Model');
     $this->load->model('Auth_Model');
+    $this->load->model('Apartment_model');
   }
 
   public function index()
@@ -29,6 +32,7 @@ class Paymentstype extends CI_Controller
       //$billing_details = $this->Cart_Model->get_billing_details($this->session->userdata('billing_id'));
       $user_details = $this->Auth_Model->get_user_details_for_billing($user_id);
       //echo '<pre>';print_r($cart_total);exit;
+      $data['online_payment_disable'] = $this->Apartment_model->online_payment_options_for_apartment($user_id);
       /*  payment */
       $api_id= $this->config->item('keyId');
       $api_Secret= $this->config->item('API_keySecret');
@@ -78,34 +82,55 @@ class Paymentstype extends CI_Controller
 
   public  function success(){
     $post=$this->input->post();
-     //echo '<pre>';print_r($post);exit;
     $user_id = $this->session->userdata('id');
     $cart = $this->Cart_Model->get_all_items_from_cart($user_id);
+	//echo '<pre>';print_r($cart);exit;
     $billing_id = '';
     $payment_type=$this->input->post('payment');
     $razorpay_payment_id=$this->input->post('razorpay_payment_id');
     $razorpay_order_id=$this->input->post('razorpay_order_id');
     $razorpay_signature=$this->input->post('razorpay_signature');
-    // $c->billing_id = $billing_id;
-    // $c->payment_type = $payment;
-    // $c->razorpay_payment_id = $razorpay_payment_id;
-    // $c->razorpay_order_id = $razorpay_order_id;
-    // $c->razorpay_signature = $razorpay_signature;
-    $post_data = array('user_id' => $user_id,'billing_id' => $billing_id,'payment_type' => $payment_type,'razorpay_payment_id' => $razorpay_payment_id,'razorpay_order_id' => $razorpay_order_id,'razorpay_signature'=>$razorpay_signature);
-      $this->Order_Model->insert_order($post_data);
-      $order_id = $this->db->insert_id();
-      foreach ($cart as $c) {
-        unset($c->id);
-        unset($c->created_date);
-        $str = date('Ymd').$order_id;
-        $c->order_number =  'SV'.str_pad($str,10,'0',STR_PAD_LEFT);
-        $c->order_id = $order_id;
-        $this->Order_Model->insert_order_items($c);
-        $this->Order_Model->delete_cart_after_order($c->user_id);
+    //uploading image
+    if(isset($_FILES['screenshot']['name']) && !empty($_FILES['screenshot']['name'])) {
+      $config['upload_path']   = 'assets/uploads/screenshot/';
+      $config['allowed_types'] = 'png|jpeg|jpg|gif';
+      $config['encrypt_name']  = TRUE;
+      $this->upload->initialize($config);
+      if ( ! $this->upload->do_upload('screenshot')) {
+        $error = $this->upload->display_errors();
+        $this->session->set_flashdata('error',$error);
+        redirect($this->agent->referrer());
+      } else {
+        $file_name = $this->upload->data('file_name');
       }
-      $this->session->unset_userdata('billing_id');
-      $this->session->set_flashdata('success', 'Order has been placed');
-      redirect('/order');
+    }
+    $post_data = array(
+      'user_id' => $user_id,
+      'billing_id' => $billing_id,
+      'payment_type' => $payment_type,
+      'razorpay_payment_id' => $razorpay_payment_id,
+      'razorpay_order_id' => $razorpay_order_id,
+      'razorpay_signature' => $razorpay_signature,
+      'screenshot' => $file_name
+    );
+    $this->Order_Model->insert_order($post_data);
+    $order_id = $this->db->insert_id();
+    foreach ($cart as $c) {
+      unset($c->id);
+      unset($c->created_date);
+      $str = date('Ymd').$order_id;
+      $c->order_number =  'SV'.str_pad($str,10,'0',STR_PAD_LEFT);
+      $c->order_id = $order_id;
+	  
+		$p_qty=$this->Order_Model->get_p_qty_list($c->product_id);
+		$p_u_data=array('quantity'=>(($p_qty['quantity'])-($c->quantity)));
+	  $this->Order_Model->update_p_data($c->product_id,$p_u_data);
+      $this->Order_Model->insert_order_items($c);
+      $this->Order_Model->delete_cart_after_order($c->user_id);
+    }
+    $this->session->unset_userdata('billing_id');
+    $this->session->set_flashdata('success', 'Order has been placed');
+    redirect('/order');
   }
 
 }

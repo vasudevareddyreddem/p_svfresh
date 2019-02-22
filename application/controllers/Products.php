@@ -37,7 +37,7 @@ class Products extends CI_Controller
     $data['pageTitle'] = 'Products';
     $cat_id = $this->Category_model->get_cat_id_from_sub_cat_id($id);
     $data['id'] = (isset($cat_id) && !empty($cat_id)) ? $cat_id : '';
-	//echo "<pre>";print_r( $data['slider_images']);exit;
+	//echo "<pre>";print_r($data);exit;
     $this->load->view('home/products',$data);
   }
 
@@ -49,7 +49,8 @@ class Products extends CI_Controller
     $data['rating'] = $this->Product_model->get_product_rating();
     $data['related_products'] = $this->Product_model->get_related_products_by_prdouct($id);
     $data['features'] = $this->Product_model->get_product_feature_by_product($id);
-    $data['product_related_images'] = $this->Product_model->get_product_related_images($id);
+	$data['product_related_images']= $this->Product_model->get_product_related_images($id);
+	$data['product_related_images'][]=(object)array('image_name'=>$data['product']->product_img);
     $user_id = $this->session->userdata('id');
     $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
     $data['cart_quantity'] = $this->Cart_Model->get_cart_quantity_for_product($user_id,$id);
@@ -60,7 +61,7 @@ class Products extends CI_Controller
 	  $data['slider_images'] = $this->Product_model->get_all_slider_images_by_ategory();
 	  $data['reviewandrating_lists'] = $this->Product_model->get_product_reviewandrating_list($id);
     $data['pageTitle'] = 'Product';
-	  //echo "<pre>";print_r($data['reviewandrating_lists']);exit;
+	//echo "<pre>";print_r($data);exit;
     $cat_id = $this->Product_model->get_cat_id_from_product_id($id);
     $data['id'] = (isset($cat_id) && !empty($cat_id)) ? $cat_id : '';
     $this->load->view('home/product',$data);

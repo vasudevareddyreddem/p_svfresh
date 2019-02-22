@@ -59,6 +59,15 @@ class Order_Model extends CI_Model
 		$this->db->where('user_id',$user_id);
 		return $this->db->get()->row_array();
 	}
+	public  function get_p_qty_list($p_id){
+		$this->db->select('product_tab.quantity')->from('product_tab');
+		$this->db->where('product_id',$p_id);
+		return $this->db->get()->row_array();
+	}
+	public  function update_p_data($p_id,$data){
+		$this->db->where('product_id',$p_id);
+		return $this->db->update('product_tab',$data);
+	}
 
 }
 

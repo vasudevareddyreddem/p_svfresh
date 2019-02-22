@@ -41,9 +41,10 @@
                     <li><a href="<?php echo base_url('category/category_list');?>"><i class="ion ion-ios-circle-outline"></i>Categories List</a></li>
 					 <li><a href="<?php echo base_url('category/add_discount_image');?>"><i class="ion ion-ios-circle-outline"></i> Add Discount Image</a></li>
                     <li><a href="<?php echo base_url('category/add_sub_category');?>"><i class="ion ion-ios-circle-outline"></i>Add Sub Category</a></li>
+					<li><a href="<?php echo base_url('category/sub_category_list');?>"><i class="ion ion-ios-circle-outline"></i>Sub Categories List</a></li>
 					 <li><a href="<?php echo base_url('category/add_subcategory_slider');?>"><i class="ion ion-ios-circle-outline"></i>Add Sub Category Slider</a></li>
 					  <li><a href="<?php echo base_url('category/subcat_slider_list');?>"><i class="ion ion-ios-circle-outline"></i> Sub Category Slider List</a></li>
-                    <li><a href="<?php echo base_url('category/sub_category_list');?>"><i class="ion ion-ios-circle-outline"></i>Sub Categories List</a></li>
+                    
                 </ul>
             </li>
             <li>
@@ -60,7 +61,7 @@
                     <li><a href="<?php echo base_url('orders/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Total Orders List</a></li>
                     <li><a href="<?php echo base_url('orders/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
                     <li><a href="<?php echo base_url('orders/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
-					<li><a href="<?php echo base_url('orders/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
+					<li><a href="<?php echo base_url('orders/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Canceled Order List</a></li>
 
                 </ul>
             </li>
@@ -70,7 +71,7 @@
                     <li><a href="<?php echo base_url('milkorder/total_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Total Orders List</a></li>
                     <li><a href="<?php echo base_url('milkorder/pending_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Pending Order List</a></li>
                     <li><a href="<?php echo base_url('milkorder/delivered_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Delivered Order List</a></li>
-					<li><a href="<?php echo base_url('milkorder/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Cancel Order List</a></li>
+					<li><a href="<?php echo base_url('milkorder/cancel_order_list');?>"><i class="ion ion-ios-circle-outline"></i>Canceled Order List</a></li>
               <li><a href="<?php echo base_url('milkorder/boys_list');?>"><i class="ion ion-ios-circle-outline"></i>Boys Apartment List</a></li>
                 </ul>
             </li>

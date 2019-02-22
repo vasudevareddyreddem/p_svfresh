@@ -19,22 +19,60 @@
 							<div class="row">
 								<div class="container">
 									<div id="online_amt_1" style="padding-left:50px;">
-										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation_payment(this.form);">
+										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation_payment(this.form);" enctype="multipart/form-data">
 											<input type="radio" id="radio1"  name="payment" onclick="payment_type(this.value);" value="2"><span > Cash On Delivery</span>
 											<br>
 											<br>
 											<input type="radio" id="radio2" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
 											<br>
-											<br>
-											<input type="radio" id="radio3" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
-											<br>
+											<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status == 1) { ?>
+												<br>
+												<input type="radio" id="radio4" name="payment" onclick="payment_type(this.value);" value="4"><span> Bank Account / UPI</span>
+												<br>
+												<br>
+												<div id="screenshot4" style="display:none;">
+													Upload payment success screenshot
+													<input type="file" name="screenshot" value="">
+													<br>
+													<ul>
+														<li>
+															<span>
+																<b>Account Number : </b>
+																<?php echo  (isset($online_payment_disable->account_number)) ? $online_payment_disable->account_number : '-' ; ?>
+															</span>
+														</li>
+														<li>
+															<span>
+																<b>Account Name : </b>
+																<?php echo  (isset($online_payment_disable->account_name)) ? $online_payment_disable->account_name : '-' ; ?>
+															</span>
+														</li>
+														<li>
+															<span>
+																<b>IFSC : </b>
+																<?php echo  (isset($online_payment_disable->ifsc)) ? $online_payment_disable->ifsc : '-' ; ?>
+															</span>
+														</li>
+														<li>
+															<span>
+																<b>UPI ID : </b>
+																<?php echo  (isset($online_payment_disable->upi_code)) ? $online_payment_disable->upi_code : '-' ; ?>
+															</span>
+														</li>
+													</ul>
+												</div>
+											<?php } else { ?>
+												<br>
+												<input type="radio" id="radio3" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
+												<br>
+											<?php } ?>
 											<br>
 											<?php echo form_error('payment_type','<div class="text-danger">', '</div>'); ?>
 											<button type="submit" class="btn btn-success" name="pay_submit">Pay</button>
 										</form>
 									</div>
 									<div id="online_amt" style="display:none;padding-left:50px;">
-										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation(this.form);">
+										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation(this.form);" enctype="multipart/form-data">
 											<div class="" >
 												<span id="paymenterrormsg" style="color:red"></span>
 												<input type="radio" id="radio11"  name="payment" onclick="payment_type(this.value);" value="2"><span > Cash On Delivery</span>
@@ -42,9 +80,47 @@
 												<br>
 												<input type="radio" id="radio22" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
 												<br>
-												<br>
-												<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
-												<br>
+												<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status ==1 && $this->session->userdata('milk_order') == 'MILK') { ?>
+
+													<br>
+													<input type="radio" id="radio44" name="payment" onclick="payment_type(this.value);" value="4"><span> Bank Account / UPI</span>
+													<br>
+													<div id="screenshot44" style="display:none;">
+														Upload payment success screenshot
+														<input type="file" name="screenshot" value="">
+														<br>
+														<ul>
+															<li>
+																<span>
+																	<b>Account Number : </b>
+																	<?php echo  (isset($online_payment_disable->account_number)) ? $online_payment_disable->account_number : '-' ; ?>
+																</span>
+															</li>
+															<li>
+																<span>
+																	<b>Account Name : </b>
+																	<?php echo  (isset($online_payment_disable->account_name)) ? $online_payment_disable->account_name : '-' ; ?>
+																</span>
+															</li>
+															<li>
+																<span>
+																	<b>IFSC : </b>
+																	<?php echo  (isset($online_payment_disable->ifsc)) ? $online_payment_disable->ifsc : '-' ; ?>
+																</span>
+															</li>
+															<li>
+																<span>
+																	<b>UPI ID : </b>
+																	<?php echo  (isset($online_payment_disable->upi_code)) ? $online_payment_disable->upi_code : '-' ; ?>
+																</span>
+															</li>
+														</ul>
+													</div>
+												<?php } else { ?>
+													<br>
+													<input type="radio" id="radio33" name="payment" onclick="payment_type(this.value);" value="1"><span> Online Payment</span>
+													<br>
+												<?php } ?>
 												<br>
 											</div>
 											<script
@@ -78,6 +154,18 @@
 	</div>
 	<?php include("footer.php"); ?>
 	<script>
+	$(document).ready(function(){
+		$('#radio4,#radio44').click(function(){
+			if($(this).prop("checked")){
+				$('#screenshot4,#screenshot44').css('display','block');
+			}
+		});
+		$('#radio2,#radio22,#radio3,#radio33').click(function(){
+			if($(this).prop("checked")){
+				$('#screenshot4,#screenshot44').css('display','none');
+			}
+		});
+	});
 	function payment_type(ids){
 		$('#paymenterrormsg').html('');
 		if(ids==1){
@@ -92,6 +180,9 @@
 				document.getElementById("radio3").checked = false;
 			}else if(ids==3){
 				document.getElementById("radio2").checked = true;
+				document.getElementById("radio3").checked = false;
+			} else if(ids==4) {
+				document.getElementById("radio4").checked = true;
 				document.getElementById("radio3").checked = false;
 			}else{
 				document.getElementById("radio3").checked = false;
@@ -108,6 +199,9 @@
 		}if ($("#radio33").prop("checked")) {
 			$('#paymenterrormsg').html('');
 			return true;
+		}if($("#radio44").prop("checked")){
+			$('#paymenterrormsg').html('');
+			return true;
 		}if ($("#radio1").prop("checked")) {
 			$('#paymenterrormsg').html('');
 			return true;
@@ -115,6 +209,9 @@
 			$('#paymenterrormsg').html('');
 			return true;
 		}else if ($("#radio3").prop("checked")) {
+			$('#paymenterrormsg').html('');
+			return true;
+		}else if ($("#radio4").prop("checked")) {
 			$('#paymenterrormsg').html('');
 			return true;
 		}else{
@@ -140,6 +237,12 @@
 			$('#paymenterrormsg').html('');
 			return true;
 		}else if ($("#radio33").prop("checked")) {
+			$('#paymenterrormsg').html('');
+			return true;
+		}else if($("#radio4").prop("checked")){
+			$('#paymenterrormsg').html('');
+			return true;
+		}else if($("#radio44").prop("checked")){
 			$('#paymenterrormsg').html('');
 			return true;
 		}else{
