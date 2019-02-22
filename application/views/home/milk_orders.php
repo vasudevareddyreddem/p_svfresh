@@ -76,8 +76,10 @@
                   </td>
                   <td class="text-center">
                     <?php  if ($co->delivery_status && $co->delivery_status == 1) { echo 'Delivered'; } else if ($co->delivery_status && $co->delivery_status == 2) { echo 'Pending'.' | '.'<a href="#" class="text-danger cancel_order" data-id='.$co->calender_id.'>Cancel</a>'; } else { echo 'Cancelled'; } ?>
-					<a href="javascript:void(0)" onclick="get_payment('<?php echo $co->calender_id; ?>','<?php echo $co->price; ?>');" class="btn btn-info" data-toggle="modal" data-target="#myModal">Pay</a>
-                  </td>
+					<?php if($co->payment_status==0){ ?>
+						<a href="javascript:void(0)" onclick="get_payment('<?php echo $co->calender_id; ?>','<?php echo $co->price; ?>');" class="btn btn-info" data-toggle="modal" data-target="#myModal">Pay</a>
+					<?php } ?>
+					</td>
                 </tr>
               <?php } ?>
             <?php }else{ ?>
@@ -92,13 +94,13 @@
               <form class="" action="" method="post">
                 <div class="row">
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="datepicker1" name="" placeholder="from date">
+                        <input type="text" class="form-control" id="datepicker1" name="p_f_t" placeholder="from date">
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="todatepicker1" name="" placeholder="to date">
+                        <input type="text" class="form-control" id="todatepicker1" name="p_t_t" placeholder="to date">
                     </div>
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Pay</button>
+                        <a href="javascript:void(0);" onclick="get_payemt_val()" type="button" class="btn btn-info">Pay</a>
                     </div>
                 </div>
               </form>
@@ -123,6 +125,7 @@
             <div class="form-group">
                 <input type="text" class="form-control" name="pay_amt" id="pay_amt" value="" placeholder="Amount" required>
                 <input type="hidden" name="c_ids" id="c_ids" value="">
+                <input type="hidden" name="all_c_ids" id="all_c_ids" value="">
               </div>
               <div class="form-group">
                 <input type="file" class="form-control" name="image" required>
@@ -146,6 +149,31 @@
 	 $('#pay_amt').val(amount);
 	 $('#c_ids').val(c_id);
 	  
+  }
+  function get_payemt_val(){
+	  if($('#datepicker1').val()=='' || $('#todatepicker1').val()==''){
+		alert('Please select dates'); return false; 
+	  }
+	 jQuery.ajax({
+			url: "<?php echo base_url('order/get_payments_inbetween_dates');?>",
+			data: {
+				f_date:$('#datepicker1').val(),
+				t_date:$('#todatepicker1').val(),
+			},
+			dataType: 'json',
+			type: 'POST',
+			success: function (data) {
+					if(data.msg==1){
+						 $('#myModal').modal('show')
+						 $('#pay_amt').val(data.amt);
+						 $('#all_c_ids').val(data.c_ids);
+					}else{
+						$('#pay_amt').val('');
+						 $('#all_c_ids').val('');
+					    $('#message').html('<div class="alert_msg1 animated slideInUp bg-del">Techincal proble occured. Please try again<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
+					}
+			}
+   	}); 
   }
  $(document).ready(function() {
     $('#example').DataTable( {
