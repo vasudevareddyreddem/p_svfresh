@@ -61,16 +61,7 @@
 											 <?php echo'Delivered';?>
 											 </div>
 											 <br>
-                                                <div class="badge badge-warning" style="margin:4px 0">
-											 <a
-							href="<?php echo base_url('orders/pending_order/').base64_encode($order->order_id) ;?>" class=" text-white " ><i >
-											 <?php echo'Pending';?></i></a>
-											 </div>
-
-											 <div class="badge badge-danger"  >
-								<a href="<?php echo base_url('orders/cancel_order/').base64_encode($order->order_id);?>" class=" text-white" ><i >
-											 <?php echo'cancelled';?></i></a>
-											 </div>
+                                             
                                             </td>
 											<td><?php
 											if($order->created_date!=''){

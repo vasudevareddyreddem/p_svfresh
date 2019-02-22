@@ -60,7 +60,6 @@
 
 									<div class="badge badge-info" >
 
-											 <?php echo'Pending';?>
 											 </div>
 
                                                 <div class="badge badge-warning" >

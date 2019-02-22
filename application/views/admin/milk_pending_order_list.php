@@ -94,12 +94,12 @@
                                                 <div class="badge badge-warning" >
 											 <a
 							href="<?php echo base_url('milkorder/deliver_order/').base64_encode($order->calender_id) ;?>" class="text-white" ><i >
-											 <?php echo'Delivered';?></i></a>
+											 <?php echo'Deliver';?></i></a>
 											 </div>
 
 											 <div class="badge badge-danger" >
 								<a href="<?php echo base_url('milkorder/cancel_order/').base64_encode($order->calender_id);?>" class="text-white" ><i >
-											 <?php echo'cancelled';?></i></a>
+											 <?php echo'Cancel';?></i></a>
 											 </div>
                                             </td>
 											<td>
