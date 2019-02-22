@@ -1683,7 +1683,98 @@ public function testapi_post(){
     }
     return $arr;
 }
+public function user_milk_amount_post(){
+  $user_id=$this->post('user_id');
+  $flag=$this->Mobile_model->user_checking($user_id);
+  if($flag==0){
+     $message['check_staus'] =0;
+     $message['message']='unauthorized user';
+        $this->response($message, REST_Controller::HTTP_OK);
+  }
+  $row=$this->Mobile_model->user_milk_amount($user_id);
+  //echo $this->db->last_query();exit;
 
+if($row['total']==''or $row['total']==null){
+
+  $message=array('status'=>0,'amount'=>0);
+
+     $this->response($message, REST_Controller::HTTP_OK);
+}
+$message=array('status'=>1,'amount'=>$row['total']);
+
+   $this->response($message, REST_Controller::HTTP_OK);
+
+
+}
+
+public function milk_month_amt_post(){
+  $user_id=$this->post('user_id');
+  $flag=$this->Mobile_model->user_checking($user_id);
+  if($flag==0){
+     $message['check_staus'] =0;
+     $message['message']='unauthorized user';
+        $this->response($message, REST_Controller::HTTP_OK);
+  }
+  $mon=$this->post('mon');
+  $yr=$this->post('year');
+  $row=$this->Mobile_model->milk_mon_amt($user_id,$mon,$yr);
+  //echo $this->db->last_query();exit;
+
+if($row['total']==''or $row['total']==null){
+
+  $message=array('status'=>0,'amount'=>0);
+
+     $this->response($message, REST_Controller::HTTP_OK);
+}
+$message=array('status'=>1,'amount'=>$row['total']);
+
+   $this->response($message, REST_Controller::HTTP_OK);
+
+}
+
+public function  update_milk_payments_post(){
+  $user_id=$this->post('user_id');
+  $flag=$this->Mobile_model->user_checking($user_id);
+  if($flag==0){
+     $message['check_staus'] =0;
+     $message['message']='unauthorized user';
+        $this->response($message, REST_Controller::HTTP_OK);
+  }
+  $mon=$this->post('mon');
+  $yr=$this->post('year');
+  $config['upload_path']          = './assets/uploads/screenshot';
+         $config['allowed_types']        = 'gif|jpg|png';
+       $this->load->library('upload', $config);
+if ( ! $this->upload->do_upload('img',time()))
+         {
+                 $error = array('error' => $this->upload->display_errors());
+
+                 $message=array('status'=>0,'message'=>'Image not uploaded try again');
+
+                    $this->response($message, REST_Controller::HTTP_OK);
+
+         }
+ else{
+   $upload_data = $this->upload->data();
+             $img =   $upload_data['file_name'];
+
+
+ }
+ $data=array('payment_img'=>$img,
+'payment_status'=>1,
+'payment_date'=>date('Y-m-d H:i:s'),
+'payment_type'=>4);
+  $res=$this->Mobile_model->update_milk_payment($user_id,$mon,$yr,$data);
+  if($res==1){
+                $message=array('status'=>1,'message'=>'Your Payment successful');
+                       $this->response($message, REST_Controller::HTTP_OK);
+
+  }
+  $message=array('status'=>0,'message'=>'Your Payment Not Successful');
+         $this->response($message, REST_Controller::HTTP_OK);
+
+
+}
 
 
 }

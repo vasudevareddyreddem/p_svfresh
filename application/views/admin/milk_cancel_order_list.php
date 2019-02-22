@@ -88,7 +88,7 @@
 											if($order->payment_type==3){
 												echo 'Swiping';
 											}?></td>
-                                             
+
 											<td>
 											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>
 											</td>
@@ -132,7 +132,7 @@
     <script type="text/javascript">
     $(document).ready(function(){
         var table = $('#example').DataTable({
-
+          ordering: false,
             lengthChange: true,
             searching: false,
             buttons: ['excel']
