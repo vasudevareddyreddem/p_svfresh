@@ -1,3 +1,4 @@
+
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Orders_model extends CI_Model
@@ -10,7 +11,7 @@ class Orders_model extends CI_Model
         $this->db->query("SET time_zone='+5:30'");
 	}
 	public function total_order_list(){
-		$this->db->select('order_items_tab.order_items_id   order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
+		$this->db->select('order_items_tab.order_items_id   order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,order_items_tab.o_quantity,
 		order_items_tab.net_price,order_tab.payment_type,order_items_tab.delivery_status,order_items_tab.created_date,
 		order_items_tab.delivered_time,order_items_tab.cancelled_time,users_tab.phone_number,users_tab.user_name,
 		apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
@@ -26,7 +27,7 @@ class Orders_model extends CI_Model
 		return $this->db->get()->result();
 	}
 	public function pending_order_list(){
-	$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
+	$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,order_items_tab.o_quantity,
 		order_items_tab.net_price,order_tab.payment_type,order_items_tab.delivery_status,order_items_tab.created_date,
 		order_items_tab.delivered_time,order_items_tab.cancelled_time,users_tab.user_name,
 		apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
@@ -44,7 +45,7 @@ class Orders_model extends CI_Model
 
 	}
 	public function delivered_order_list(){
-		$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
+		$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,order_items_tab.o_quantity,
 		order_items_tab.net_price,order_tab.payment_type,order_items_tab.delivery_status,order_items_tab.created_date,
 		order_items_tab.delivered_time,order_items_tab.cancelled_time,users_tab.user_name,
 		apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
@@ -60,7 +61,7 @@ class Orders_model extends CI_Model
 
 	}
 	public function cancel_order_list(){
-		$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,
+		$this->db->select('order_items_tab.order_items_id  order_id,order_items_tab.product_name,order_items_tab.order_number,order_items_tab.quantity,order_items_tab.o_quantity,
 		order_items_tab.net_price,order_tab.payment_type,order_items_tab.delivery_status,order_items_tab.created_date,
 		order_items_tab.delivered_time,order_items_tab.cancelled_time,users_tab.user_name,
 		apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,

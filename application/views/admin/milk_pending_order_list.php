@@ -74,7 +74,8 @@
                                             <td><?php echo $order->apartment_name; ?></td>
 											 <td><?php echo $order->block_name; ?></td>
 											  <td><?php echo $order->flat_door_no; ?></td>
-                                            <td><?php echo $order->product_name; ?></td>
+                                            <td><?php echo $order->product_name; ?>
+                                            <br>Quantity:<?php echo $order->o_quantity; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->price; ?></td>
                                             <td><?php echo $order->email_id; ?></td>
@@ -145,7 +146,7 @@ $(document).ready(function() {
     <script type="text/javascript">
     $(document).ready(function(){
         var table = $('#example').DataTable({
-            
+
             lengthChange: true,
             searching: false,
             buttons: ['excel']

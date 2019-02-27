@@ -291,10 +291,8 @@ $(document).ready(function() {
                 validators: {
           notEmpty: {
             message: 'Quantity is required'
-          },
-          numeric:{
-            message:'Enter integer or decimal value'
           }
+
         }
             },
             a_price: {

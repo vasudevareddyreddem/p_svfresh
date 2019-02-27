@@ -73,7 +73,8 @@
                                             <td><?php echo $order->apartment_name; ?></td>
 											 <td><?php echo $order->block_name; ?></td>
 											  <td><?php echo $order->flat_door_no; ?></td>
-                                            <td><?php echo $order->product_name; ?></td>
+                                            <td><?php echo $order->product_name; ?>
+                                            <br>Quantity:<?php echo $order->o_quantity; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td>
                       											<?php echo $order->date.'-'.$order->month.'-'.$order->year; ?>

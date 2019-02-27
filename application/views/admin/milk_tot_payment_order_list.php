@@ -83,12 +83,13 @@
 													<td><?php echo $order->apartment_name; ?></td>
 													<td><?php echo $order->block_name; ?></td>
 													<td><?php echo $order->flat_door_no; ?></td>
-													<td><?php echo $order->product_name; ?></td>
+													<td><?php echo $order->product_name; ?>
+													<br>Quantity:<?php echo $order->o_quantity; ?></td>
 													<td><?php echo $order->quantity; ?> </td>
 													<td><?php echo $order->price; ?></td>
 													<td><?php echo $order->email_id; ?></td>
 													<td><?php echo $order->phone_number; ?></td>
-												
+
 													<td><?php if($order->payment_status==1){ echo 'Paid'; }else{ echo "Unpaid"; } ?></td>
 													<td>
 													<?php if($order->payment_img!=''){?>
@@ -100,7 +101,7 @@
 													<a href="<?php echo base_url('milkorder/paymetn_accept_order/'.base64_encode($order->order_id)); ?>">Accept</a>
 													<a href="<?php echo base_url('milkorder/paymetn_reject_order/'.base64_encode($order->order_id)); ?>">Reject</a>
 													</td>
-														
+
 												</tr>
 											<?php }}?>
 
