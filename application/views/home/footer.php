@@ -24,10 +24,11 @@ function decreaseValue() {
                     <div id="address-box">
                         <a href="#"><img src="<?php echo base_url(); ?>assets/images/logo.png" alt="" /></a>
                         <div id="address-list">
+
                             <div class="tit-name">Address:</div>
-                            <div class="tit-contain">Flat No:123, ABC Apts, Your Street, Hyderabad-84</div>
+                            <div class="tit-contain">  H. No: 1-100/301/28, Nallagandla, opp. AADAR WHOLESALE MARKET, NALLAGANDLA, SERILINGAMPALLY, HYDERABAD - 500019</div>
                             <div class="tit-name">Phone:</div>
-                            <div class="tit-contain">+00 123 456 789</div>
+                            <div class="tit-contain">9603777754</div>
                             <div class="tit-name">Email:</div>
                             <div class="tit-contain">support@business.com</div>
                         </div>
@@ -35,7 +36,7 @@ function decreaseValue() {
                 </div>
                 <div class="col-md-6">
                     <div class="row">
-                       
+
                         <div class="col-sm-6">
                             <div class="introduce-title">My Account</div>
                             <ul id = "introduce-Account" class="introduce-list">
