@@ -15,7 +15,7 @@
       <div class="row">
         <div class=" col-xs-12 col-sm-12" id="center_column">
           <!-- category-slider -->
-		 
+
 		  <?php if(isset($slider_images) && count($slider_images)>0){ ?>
           <div class="category-slider">
             <ul class="owl-carousel owl-style2"  data-nav = "true" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1">
@@ -62,7 +62,7 @@
                             <?php if (in_array($p->product_id,$wishlist_product_id)) { ?>
                                 <a title="Added to your wishlist" class="heart whishlist" href="#" style="background:#57bb14"></a>
                             <?php  } else { ?>
-                              <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $p->discount_price; ?>></a>
+                              <a title="Add to my wishlist" class="heart whishlist" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $p->discount_price; ?> data-o_quantity="<?php echo $p->o_quantity; ?>"></a>
                             <?php } ?>
                           <?php } ?>
                           <!---a title="Add to compare" class="compare" href="#"></a-->
@@ -73,7 +73,7 @@
                           <?php }elseif (in_array($p->product_id,$cart_product_id)) { ?>
                             <a title="Added to Cart" class="addtocart" href="#" >Added to Cart</a>
                           <?php  }else{ ?>
-                            <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1">Add to Cart</a>
+                            <a title="Add to Cart" class="addtocart" href="#" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $p->product_id; ?>" data-product_img="<?php echo $p->product_img; ?>" data-product_name="<?php echo $p->product_name; ?>" data-net_price="<?php echo $p->net_price; ?>" data-quantity="1" data-o_quantity="<?php echo $p->o_quantity; ?>">Add to Cart</a>
                           <?php  } ?>
 
                         </div>
@@ -102,6 +102,7 @@
                           <?php if($p->net_price != $p->actual_price){ ?>
                             <span class="price old-price">₹ <?php echo $p->actual_price; ?></span>
                           <?php } ?>
+                          <span class="price" style="margin-left:11px"><?php echo $p->o_quantity; ?></span>
                         </div>
                         <div class="info-orther">
                           <!-- <p>Item Code: #453217907</p> -->

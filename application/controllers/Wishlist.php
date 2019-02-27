@@ -42,6 +42,7 @@ class Wishlist extends CI_Controller
           'product_img' => $this->input->post('product_img'),
           'net_price' => $this->input->post('net_price'),
           'quantity' => $this->input->post('quantity'),
+          'o_quantity' => $this->input->post('o_quantity'),
           'created_date'=>date('Y-m-d H:i:s')
         );
         if($this->Cart_Model->insert($post_data)){

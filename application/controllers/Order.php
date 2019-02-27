@@ -136,7 +136,7 @@ class Order extends CI_Controller
 	  if(count($update)>0)
 		{
 			$data['msg']=1;
-			echo json_encode($data);exit;	
+			echo json_encode($data);exit;
 		}else{
 			$data['msg']=2;
 			echo json_encode($data);exit;
@@ -159,25 +159,25 @@ class Order extends CI_Controller
 	 if(isset($post['c_ids']) && $post['c_ids']!=''){
 		 $time=time();
 			$add=array('payment_img'=>isset($img)?$img:'','order_id'=>$time,'payment_type'=>4,'payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
-		  $p_update=$this->Calender_Model->update_payment_details($post['c_ids'],$add); 
+		  $p_update=$this->Calender_Model->update_payment_details($post['c_ids'],$add);
 	 }else{
 		 $id=explode(",",$post['all_c_ids']);
 			if(count($id)>0){
 			$time=time();
 			 foreach($id as $li){
 				$add=array('payment_img'=>isset($img)?$img:'','order_id'=>$time,'payment_type'=>4,'payment_status'=>1,'payment_date'=>date('Y-m-d H:i:s'));
-				$p_update=$this->Calender_Model->update_payment_details($li,$add); 
+				$p_update=$this->Calender_Model->update_payment_details($li,$add);
 			}
 		 }
 	 } if(count($p_update)>0){
 		 $this->session->set_flashdata('success',"Payment Details successfully updated.");
-		redirect('order/milk_orders'); 
+		redirect('order/milk_orders');
 	 }else{
 		$this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
-		redirect('order/milk_orders'); 
+		redirect('order/milk_orders');
 	 }
-	 
-	  
+
+
   }
   public  function get_payments_inbetween_dates(){
 	  $post=$this->input->post();
@@ -191,15 +191,15 @@ class Order extends CI_Controller
 			$data['msg']=1;
 			$data['amt']=isset($amt)?$amt:'';
 			$data['c_ids']=$c_ids;
-			echo json_encode($data);exit; 
-		  
+			echo json_encode($data);exit;
+
 	  }else{
 			$data['msg']=0;
-			echo json_encode($data);exit;  
+			echo json_encode($data);exit;
 	  }
 	  //echo '<pre>';print_r($c_data);exit;
   }
- 
+
 
 }
 

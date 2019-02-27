@@ -51,6 +51,7 @@
               <thead>
                 <tr>
                   <th class="text-center">Product</th>
+									<th class="text-center">Weight</th>
                   <th class="text-center">Date</th>
                   <th class="text-center">Quantity in packets</th>
                   <th class="text-center">Price</th>
@@ -64,10 +65,13 @@
                   <td class="text-center">
                     <?php echo $co->product_name; ?>
                   </td>
+									<td class="text-center">
+                    <?php echo $co->o_quantity; ?>
+                  </td>
                   <td class="text-center">
                     <?php echo $co->date.'-'.$co->month.'-'.$co->year; ?>
                   </td>
-				  
+
                   <td class="text-center">
                     <input type="text" name="order_qty" id="order_qty" onkeyup="update_qty(this.value,'<?php echo $co->calender_id; ?>');" value="<?php echo ($co->quantity > 1) ? $co->quantity: $co->quantity; ?>" >
                   </td>
@@ -121,7 +125,7 @@
           <h4 class="modal-title">Payable Amount</h4>
         </div>
         <div class="modal-body">
-          
+
             <div class="form-group">
                 <input type="text" class="form-control" name="pay_amt" id="pay_amt" value="" placeholder="Amount" required>
                 <input type="hidden" name="c_ids" id="c_ids" value="">
@@ -130,7 +134,7 @@
               <div class="form-group">
                 <input type="file" class="form-control" name="image" required>
               </div>
-            
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -148,11 +152,11 @@
   function get_payment(c_id,amount){
 	 $('#pay_amt').val(amount);
 	 $('#c_ids').val(c_id);
-	  
+
   }
   function get_payemt_val(){
 	  if($('#datepicker1').val()=='' || $('#todatepicker1').val()==''){
-		alert('Please select dates'); return false; 
+		alert('Please select dates'); return false;
 	  }
 	 jQuery.ajax({
 			url: "<?php echo base_url('order/get_payments_inbetween_dates');?>",
@@ -173,7 +177,7 @@
 					    $('#message').html('<div class="alert_msg1 animated slideInUp bg-del">Techincal proble occured. Please try again<i class="fa fa-check text-success ico_bac" aria-hidden="true"></i></div>');
 					}
 			}
-   	}); 
+   	});
   }
  $(document).ready(function() {
     $('#example').DataTable( {

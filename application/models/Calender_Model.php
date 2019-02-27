@@ -17,7 +17,7 @@ class Calender_Model extends CI_Model
   {
   //   $to_date1=strtotime("1 day", strtotime($todate));
 	// $plusone= date("d-m-Y", $to_date1);
-	$this->db->select('p.product_name AS product_name,c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price,c.delivery_status,c.calender_id,c.payment_status');
+	$this->db->select('p.product_name AS product_name,p.o_quantity,c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price,c.delivery_status,c.calender_id,c.payment_status');
     $this->db->from('calender_tab AS c');
     $this->db->join('product_tab AS p','c.product_id = p.product_id','left');
     if (isset($date) && !empty($date)) {
@@ -105,7 +105,7 @@ class Calender_Model extends CI_Model
   }
   public  function update_qty_amount($c_id,$data){
 	   $this->db->where('calender_id',$c_id);
-		return $this->db->update('calender_tab',$data); 
+		return $this->db->update('calender_tab',$data);
   }
   public  function get_payment_img_details($c_id){
 		$this->db->select('calender_tab.payment_img')->from('calender_tab');
@@ -160,12 +160,12 @@ class Calender_Model extends CI_Model
 		$this->db->order_by('c.created_date','desc');
 		$this->db->where('c.user_id',$user_id);
 		return $this->db->get()->result_array();
-	
+
 	}
 	public function insert_order_id($data){
-		$this->db->insert('order_tab',$data);		
+		$this->db->insert('order_tab',$data);
 		return $this->db->insert_id();
-		
+
 	}
 
 }

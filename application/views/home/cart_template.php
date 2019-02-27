@@ -15,6 +15,7 @@
             <p class="p-name"><?php echo $c->product_name; ?></p>
             <p>Quantity : <?php echo $c->quantity; ?></p>
             <p class="p-rice">₹ <?php echo ($c->quantity * $c->net_price); ?> </p>
+            <p class="p-rice"><?php echo $c->o_quantity; ?> </p>
         </div>
     </li>
   <?php $cnt++;} ?>

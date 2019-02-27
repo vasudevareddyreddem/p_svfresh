@@ -171,10 +171,11 @@ if ($result->num_rows > 0) {
       var product_name = $(this).data('product_name');
       var net_price = $(this).data('net_price');
       var quantity = $(this).data('quantity');
+      var o_quantity = $(this).data('o_quantity');
       $.ajax({
         url:'<?php echo base_url('products/cart'); ?>',
         type:'POST',
-        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity},
+        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity,'o_quantity':o_quantity},
         dataType:'JSON',
         success:function(data){
           $('.cart_count').html(data.count);
@@ -204,10 +205,11 @@ if ($result->num_rows > 0) {
       var net_price = $(this).data('net_price');
       var quantity = $(this).data('quantity');
       var discount_price = $(this).data('discount_price');
+      var o_quantity = $(this).data('o_quantity');
       $.ajax({
         url:'<?php echo base_url('products/Wishlist'); ?>',
         type:'POST',
-        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity,'discount_price':discount_price},
+        data:{'user_id':user_id,'product_id':product_id,'product_name':product_name,'product_img':product_img,'net_price':net_price,'quantity':quantity,'discount_price':discount_price,'o_quantity':o_quantity},
         dataType:'JSON',
         success:function(data){
           if(data.success){

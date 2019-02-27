@@ -27,6 +27,7 @@
                   <th>Description</th>
                   <!-- <th>Avail.</th> -->
                   <th>Unit price</th>
+                  <th>Weight</th>
                   <th style="width:200px;">Qty</th>
                   <th>Total</th>
                   <th  class="action">Action</th>
@@ -49,6 +50,7 @@
                     <p class="product-name"><a href="#"><?php echo $c->product_name; ?></a></p>
                   </td>
                   <td class="text-center"><span>₹ <?php echo $c->net_price; ?></span></td>
+                  <td class="text-center"><span><?php echo $c->o_quantity; ?></span></td>
                   <td class="qty">
                     <form class="form-class">
                       <div class="value-button decrease" id="decrease" value="Decrease Value">-</div>
