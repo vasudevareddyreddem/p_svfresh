@@ -148,7 +148,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				'discount_percentage'=>$dis_percentage,
 				'net_price'=>$net_price,
 				'quantity'=>$qun,
-				'oquantity'=>$oqun,
+				'o_quantity'=>$oqun,
 				 'created_by'=>$adminid,
 				 'description'=>$descr,
 				 'guarantee_policy'=>$guaran
@@ -316,6 +316,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				$product_name=$this->input->post('p_name');
 				$act_price=$this->input->post('a_price');
 				$qun=$this->input->post('quantity');
+				$oqun=$this->input->post('oquantity');
 				$dis_price=round($this->input->post('d_price'),2);
 				$dis_percentage=round($this->input->post('dp_price'),2);
 				$fids=$this->input->post('fid');
@@ -374,6 +375,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				'discount_percentage'=>$dis_percentage,
 				'net_price'=>$net_price,
 				'quantity'=>$qun,
+				'o_quantity'=>$oqun,
 				 'updated_by'=>$adminid,
 				 'description'=>$this->input->post('descr'),
 				 'guarantee_policy'=>$guaran

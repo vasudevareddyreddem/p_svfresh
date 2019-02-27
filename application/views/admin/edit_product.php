@@ -64,6 +64,10 @@
                                                 <input id="quantity" type="text" class="form-control" name="quantity" value="<?php echo $product->quantity;?>">
                                             </div>
                                             <div class="form-group col-md-6">
+                                                <label>Quantity of Single Product</label>
+                                                <input id="oquantity" type="text" class="form-control" name="oquantity" value="<?php echo $product->o_quantity;?>">
+                                            </div>
+                                            <div class="form-group col-md-6">
                                                 <label>Actual Price</label>
                                                 <input id="a_price" type="text" class="form-control" name="a_price" value="<?php echo $product->actual_price;?>">
                                             </div>
@@ -283,6 +287,16 @@ $(document).ready(function() {
 					}
 				}
             },
+            oquantity: {
+                validators: {
+          notEmpty: {
+            message: 'Quantity is required'
+          },
+          numeric:{
+            message:'Enter integer or decimal value'
+          }
+        }
+            },
             a_price: {
                 validators: {
 					notEmpty: {
@@ -470,7 +484,7 @@ $('#dp_price').on('keyup',function(){
 
 
 						});
-						
+
 
 
 						}
