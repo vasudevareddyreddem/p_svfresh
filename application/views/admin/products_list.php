@@ -36,12 +36,13 @@
 										foreach($product_list as $product):?>
                                         <tr>
                                             <td><?php echo $count; ?></td>
-                                            
+
                                             <td><?php echo $product->cat_name;?></td>
                                             <td><?php echo $product->subcat_name;?></td>
-											<td><?php echo $product->product_name;?></td>
+											<td><?php echo $product->product_name;?>
+                      <br>Quantity:<?php echo $product->o_quantity;?></td>
 											<td>
-											 <?php if($product->product_img==''){echo 'NO Image';}else{ ?><img alt="image" 
+											 <?php if($product->product_img==''){echo 'NO Image';}else{ ?><img alt="image"
 											src="<?php echo base_url('assets/uploads/product_pics/').$product->product_img; ?>" class="rounded-circle dropdown-item-img" style="height:30px;width:auto">
 												<?php }?>
 											</td>
@@ -50,30 +51,30 @@
                                             <td><?php echo $product->discount_price;?></td>
                                             <td><?php echo $product->net_price;?></td>
                                             <td><?php if($product->created_at!=''){
-												
+
 	       $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $product->created_at);
 											$newDateString = $myDateTime->format('d-m-Y H:i:s');
 											echo $newDateString ;
 											}
 											?></td>
 											<td><?php if($product->status==1){?>
-										        <div class="badge badge-success"><a href="<?php 
+										        <div class="badge badge-success"><a href="<?php
 												echo base_url('product/inactive_product/').base64_encode($product->product_id);?>">Active</a></div>
 											<?php }else{?>
-											<div class="badge badge-danger"><a href="<?php 
+											<div class="badge badge-danger"><a href="<?php
 										echo base_url('product/active_product/').base64_encode($product->product_id);?>">InActive</a></div>
 											<?php }?></td>
                                             <td>
-                                                <a href="<?php 
+                                                <a href="<?php
 												echo base_url('product/edit_product/').base64_encode($product->product_id);
 												?>" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" data-original-title="Edit"><i class="ion ion-edit"></i></a>
-                                                <a href="<?php 
+                                                <a href="<?php
 												echo base_url('product/delete_product/').base64_encode($product->product_id);
 												?>"class="btn btn-danger btn-action confirmation" data-toggle="tooltip" data-original-title="Delete"><i class="ion ion-trash-b"></i></a>
                                             </td>
                                         </tr>
 									<?php $count++;endforeach;}?>
-                                  
+
                                     </tbody>
                                 </table>
                             </div>
@@ -96,5 +97,3 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
-
-

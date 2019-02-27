@@ -14,7 +14,7 @@ class Milkorders_model extends CI_Model
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
 		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 	users_tab.phone_number,
 		calender_tab.delivered_time,calender_tab.cancelled_time,calender_tab.payment_status,calender_tab.payment_img');
@@ -61,7 +61,7 @@ class Milkorders_model extends CI_Model
 	{
 		$this->db->select('calender_tab.calender_id,calender_tab.order_id,calender_tab.admin_accept_status,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
-		calender_tab.payment_type,
+		calender_tab.payment_type,product_tab.o_quantity,
 		product_tab.product_name,users_tab.email_id,users_tab.first_name,
 		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 	users_tab.phone_number,
@@ -110,7 +110,7 @@ class Milkorders_model extends CI_Model
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
 		users_tab.last_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 
 		users_tab.phone_number');
@@ -157,7 +157,7 @@ class Milkorders_model extends CI_Model
 	}
 	public function delivered_order_list($apartment='',$block='',$date='',$mobile=''){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
-		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
+		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,product_tab.o_quantity,
 		calender_tab.payment_type,
 		product_tab.product_name,users_tab.email_id,users_tab.first_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 		users_tab.last_name,
@@ -206,7 +206,7 @@ class Milkorders_model extends CI_Model
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
 		users_tab.last_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 		users_tab.phone_number,calender_tab.cancelled_time');
 		$this->db->from('calender_tab');
@@ -299,7 +299,7 @@ $days=date('d' ,strtotime($date));//present date in month
 	public function boys_order_list($apartment,$block,$date){
 
 		$this->db->select('calender_tab.year,calender_tab.date,calender_tab.month,
-		calender_tab.quantity,
+		calender_tab.quantity,product_tab.o_quantity,
 
 		product_tab.product_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no
 
@@ -401,7 +401,7 @@ $days=date('d' ,strtotime($date));//present date in month
 	}
 	public  function delete_irder_id($order_id){
 		$this->db->where('order_tab.order_id',$order_id);
-		return $this->db->delete('order_tab');	
+		return $this->db->delete('order_tab');
 	}
 
 }
