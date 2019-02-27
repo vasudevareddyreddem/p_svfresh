@@ -39,6 +39,9 @@
                         <h4 ><a href="#">₹ <?php echo $o->net_price; ?></a></h4>
                       </td>
                       <td style="border-top:0px solid #fff;">
+                        <h4 ><a href="#"><?php echo $o->o_quantity; ?></a></h4>
+                      </td>
+                      <td style="border-top:0px solid #fff;">
                         <h4 ><a href="#">
                           <?php
                           if($o->delivery_status == 0){

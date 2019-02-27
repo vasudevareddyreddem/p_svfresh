@@ -136,6 +136,7 @@
                           <?php if ((isset($product->net_price) && isset($product->actual_price)) && ($product->net_price != $product->actual_price)) { ?>
                             <span class="old-price">₹ <?php if (isset($product->actual_price)) { echo $product->actual_price; } ?></span>
                           <?php } ?>
+                          <span class="price" style="margin-left:11px;"><?php if (isset($product->o_quantity)) {echo $product->o_quantity;} ?></span>
                           <span class="discount"><?php if (isset($product->discount_percentage)) { echo $product->discount_percentage.' %'; } ?></span>
                         </div>
                         <div class="info-orther">
@@ -160,6 +161,7 @@
                                   <input type="hidden" name="product_name" value="<?php if (isset($product->product_name)) { echo $product->product_name; } ?>"/>
                                   <input type="hidden" name="net_price" value="<?php if (isset($product->net_price)) { echo $product->net_price; } ?>"/>
                                   <input type="hidden" name="product_img" value="<?php if (isset($product->product_img)) { echo $product->product_img; } ?>"/>
+                                  <input type="hidden" name="o_quantity" value="<?php if (isset($product->o_quantity)) { echo $product->o_quantity; } ?>"/>
                                 </form>
                               </div>
                           </div>
@@ -181,7 +183,7 @@
                                   <a class="wishlist whishlist" href="#" title="Added to your wishlist"><i class="fa fa-heart-o" style="background:#57bb14"></i> Wishlist</a>
                                 <?php }else{ ?>
                                 <?php if(isset($product)){ ?>
-                                  <a class="wishlist whishlist" href="#" title="Add to my wishlist" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $product->product_id; ?>" data-product_img="<?php echo $product->product_img; ?>" data-product_name="<?php echo $product->product_name; ?>" data-net_price="<?php echo $product->net_price; ?>" data-quantity="1" data-discount_price=<?php echo $product->discount_price; ?>><i class="fa fa-heart-o"></i> Wishlist</a>
+                                  <a class="wishlist whishlist" href="#" title="Add to my wishlist" data-user_id="<?php echo $this->session->userdata('id'); ?>" data-product_id="<?php echo $product->product_id; ?>" data-product_img="<?php echo $product->product_img; ?>" data-product_name="<?php echo $product->product_name; ?>" data-net_price="<?php echo $product->net_price; ?>" data-quantity="1" data-discount_price="<?php echo $product->discount_price; ?>" data-o_quantity="<?php echo $product->o_quantity; ?>"><i class="fa fa-heart-o"></i> Wishlist</a>
                                 <?php } ?>
                               <?php } ?>
                             <?php } ?>
