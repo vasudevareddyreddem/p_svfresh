@@ -27,7 +27,7 @@
 													<?php echo $cat->cat_name ; ?>
 													</option>
 														<?php }}?>
-                                                   
+
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -43,16 +43,20 @@
 											 <div class="form-group col-md-6" name="" id="">
                                         <label class="form-control-label">Select Related Products</label>
                                         	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">
-											
-											
-											
-											
-                                   
+
+
+
+
+
                                 </select>
                                     </div>
                                             <div class="form-group col-md-6">
                                                 <label>Quantity</label>
                                                 <input id="quantity" type="text" class="form-control" name="quantity">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Quantity Of single Product</label>
+                                                <input id="oquantity" type="text" class="form-control" name="oquantity">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Actual Price</label>
@@ -64,7 +68,7 @@
                                             </div>
 											<div class="form-group col-md-4">
                                                 <label>Discount percentage</label>
-												
+
                                                 <input id="dp_price" type="text" class="form-control" name="dp_price" >
                                             </div>
                                             <div class="form-group col-md-4">
@@ -79,7 +83,7 @@
                                                 <label>Guarantee Policy</label>
                                                 <textarea id=""  class="form-control" name="guaran" ></textarea>
                                             </div>
-								
+
 							 <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -116,13 +120,13 @@
                                             <thead>
                                                 <tr>
                                                     <th> Product Images</th>
-                                                   
+
                                                     <th>&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                   
+
                                                     <td>
                                                         <input type="file" name="main_image" placeholder="LastName" class="form-control"  required />
                                                     </td>
@@ -136,10 +140,10 @@
                                     </div>
                                 </div>
                             </div>
-                                   
-											
+
+
                                         </div>
-										
+
                                         <button type="submit" class="btn btn-primary">
                                             Add
                                         </button>
@@ -159,8 +163,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#add_product').bootstrapValidator({
-		
-        
+
+
         fields: {
              c_name: {
                 validators: {
@@ -193,6 +197,16 @@ $(document).ready(function() {
 					}
 				}
             },
+            oquantity: {
+                validators: {
+					notEmpty: {
+						message: 'quantity is required'
+					},
+					numeric:{
+						message:'enter integer or decimal value'
+					}
+				}
+            },
             a_price: {
                 validators: {
 					notEmpty: {
@@ -211,7 +225,7 @@ $(document).ready(function() {
 					numeric:{
 						message:'enter integer or decimal value'
 					}
-				
+
 				}
             },
 			'main_image': {
@@ -223,14 +237,14 @@ $(document).ready(function() {
 					regexp: "(.*?)\.(png|jpeg|jpg|gif)$",
 					message: 'Uploaded file is not a valid. Only png,jpg,jpeg,gif files are allowed'
 					}
-				
+
 				}
             },
-			
-           
+
+
             }
         })
-     
+
 });
 
 </script>
@@ -239,50 +253,50 @@ $(document).ready(function() {
 	 $('#sc_name').empty();
 	 sel='<option value="">select</option>';
 	 $('#sc_name').append(sel);
-	
+
 	 $.ajax({
-                    type: "GET",    
-                    url: '<?php echo base_url('product/get_sub_category/'); ?>'+value,    
-                    data: '',    
-                    dataType: "json",   
-                    
+                    type: "GET",
+                    url: '<?php echo base_url('product/get_sub_category/'); ?>'+value,
+                    data: '',
+                    dataType: "json",
+
                     success: function (result) {
 						console.log(result.status);
-						
+
 						if(result.status==1){
 						$.each(result.subcat_list, function(i, subcat) {
 							temp='<option value="'+subcat.subcat_id+'">'+subcat.subcat_name+'</option>';
-							
+
 							$('#sc_name').append(temp);
-							
-							
+
+
 						});
 						}
-						
-       
+
+
                                            }
                     ,
-                    error: function() { 
+                    error: function() {
                     	//alert('error from server side');
 
-                    } 
+                    }
                 });
  }
 
-// chech box 
+// chech box
  // $('#cid').click(function(){
-		
+
 		// if (this.checked) {
         // $('#d_price').attr('disabled', 'disabled');
 		// $('#dp_price').removeAttr('disabled');
-		
+
     // } else {
         // $('#dp_price').attr('disabled', 'disabled');
 		// $('#d_price').removeAttr('disabled');
     // }
-		
-		
-	// }); 
+
+
+	// });
 </script>
 <script>
     $(document).ready(function () {
@@ -304,7 +318,7 @@ $(document).ready(function() {
 
 
     $("table.order-list").on("click", ".ibtnDel", function (event) {
-        $(this).closest("tr").remove();       
+        $(this).closest("tr").remove();
         counter -= 1
     });
 
@@ -318,7 +332,7 @@ $(document).ready(function() {
         var cols = "";
 
         cols += '<td><input type="file" name="p_image[]" class="form-control" placeholder="FirstName" name="fname[]' +'"/></td>';
-        
+
 
         cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><i class="ion ion-trash-b"></i></button></td>';
         newRow.append(cols);
@@ -329,7 +343,7 @@ $(document).ready(function() {
 
 
     $("#myTable1").on("click", ".ibtnDel", function (event) {
-        $(this).closest("tr").remove();       
+        $(this).closest("tr").remove();
         counter -= 1
     });
 
@@ -341,41 +355,41 @@ $(document).ready(function() {
 <script>
 $('#d_price').on('keyup',function(){
 	act_val=$('#a_price').val();
-	
+
 	if(act_val.length > 0){
 	dis_price=$('#d_price').val();
-	
+
 	dis_perc=(dis_price/act_val)*100;
 	$('#dp_price').val(dis_perc);
 	net_price=act_val-dis_price;
 	$('#n_price').val(net_price);
-	
+
 
 	}
-	
-}); 
+
+});
 $('#dp_price').on('keyup',function(){
 	act_val=$('#a_price').val();
-	
+
 	if(act_val.length > 0){
 	percentage=$('#dp_price').val();
-	
+
 	price=(percentage/100)*act_val;
 	$('#d_price').val(price);
 	net_price=act_val-price;
 	$('#n_price').val(net_price);
 
 	}
-	
-}); 
+
+});
 $('#a_price').on('keyup',function(){
 	price=$('#d_price').val();
 	percen=$('#dp_price').val();
 	if(price.length > 0||percen.length>0){
-	
+
 	if(price.length>0){
 		act_price=$('#a_price').val();
-		
+
 		percentage=(price/act_price)*100;
 		$('#dp_price').val(percentage);
 		net_price=act_price-price;
@@ -383,62 +397,62 @@ $('#a_price').on('keyup',function(){
 	}
 	else{
 		act_price=$('#a_price').val();
-		
+
 		price=(act_price*percen)/100;
 		$('#d_price').val(price);
 		net_price=act_price-price;
 	$('#n_price').val(net_price);
-		
+
 	}
 	}
-	
-}); 
+
+});
 </script>
 <script>
  function get_products(value){
-	 
-	
+
+
 	 cat_id=$('#c_name').val();
 	 if(value==''){
 		 return false;
 	 }
-	
+
 	 $.ajax({
-                    type: "GET",    
-                    url: '<?php echo base_url('product/get_rel_products/'); ?>'+cat_id+'/'+value,    
-                    data: '',    
-                    dataType: "json",   
-                    
+                    type: "GET",
+                    url: '<?php echo base_url('product/get_rel_products/'); ?>'+cat_id+'/'+value,
+                    data: '',
+                    dataType: "json",
+
                     success: function (result) {
-						
-						
+
+
 						if(result.status==1){
 						console.log(result);
 							 $('#rel_products').empty();
 							 temp1='<option value="" disabled>select</option>';
-							 $('#rel_products').append(temp1); 
+							 $('#rel_products').append(temp1);
 						$.each(result.r_plist, function(i, product) {
-							
-							
-							
+
+
+
 							$('#rel_products').append('<option value="'+product.product_id+'">'+product.product_name+'</option>').trigger("chosen:updated");
-							
-							
+
+
 						});
-						
-						
-						
+
+
+
 						}
 						else{
 							$('#rel_products').empty();
 						}
-       
+
                                            }
                     ,
-                    error: function() { 
+                    error: function() {
                     alert('error from server side');
 
-                    } 
+                    }
                 });
  }
 

@@ -451,9 +451,10 @@ public function get_apartments(){
 	//       $this->db->from('block_tab');
 	// 			 $this->db->where('status',1);
   //     $where_clause = $this->db->get_compiled_select();
-	$this->db->select('apartment_id,apartment_name')->from('apartment_tab')->where('status',1)
-	->where('apartment_id in ("select distinct apartment_id from block_tab where status=1")');
-		return $this->db->get()->result_array();
+
+	$query=$this->db->query("select a.apartment_id,a.apartment_name from apartment_tab a where apartment_id in (select b.apartment_id from block_tab b where b.status=1) and  a.status=1 ");
+	return $query->result_array();
+
 
 
 }

@@ -1391,7 +1391,7 @@ public  function  milk_orders_post(){
     }
 public function get_apartments_post(){
 	 $res=$this->Mobile_model->get_apartments();
-   echo $this->db->last_query();exit;
+  
 	 if(count($res)>0){
 		  $message = array('status' => 1, 'apartment_list' => $res );
             $this->response($message, REST_Controller::HTTP_OK);
@@ -1761,10 +1761,12 @@ if ( ! $this->upload->do_upload('img',time()))
 
 
  }
+ $time=time();
  $data=array('payment_img'=>$img,
 'payment_status'=>1,
 'payment_date'=>date('Y-m-d H:i:s'),
-'payment_type'=>4);
+'payment_type'=>4,
+'order_id'=>$time);
   $res=$this->Mobile_model->update_milk_payment($user_id,$mon,$yr,$data);
   if($res==1){
                 $message=array('status'=>1,'message'=>'Your Payment successful');
@@ -1792,9 +1794,11 @@ public function payment_method_post(){
     $message=array('status'=>1,'acc_status'=>$res);
            $this->response($message, REST_Controller::HTTP_OK);
          }
-         $u= new stdClass();
+         else{
+        $u=(object)array();
          $message=array('status'=>0,'acc_status'=>$u);
                 $this->response($message, REST_Controller::HTTP_OK);
+              }
 
 }
 public function  milk_online_payment_post(){
@@ -1808,19 +1812,20 @@ public function  milk_online_payment_post(){
   $mon=$this->post('mon');
   $yr=$this->post('year');
   $razor=$this->post('razor_id');
-  $odata=array('user_id'=>$user_id,
-  'created_date'=>date('Y-m-d H:i:s'),
-  'created_by'=>$user_id,
-  'razorpay_payment_id'=>$razor
-);
-  $id=$this->Mobile_model->pay_milk_online($odata);
-  if($id){
+//   $odata=array('user_id'=>$user_id,
+//   'created_date'=>date('Y-m-d H:i:s'),
+//   'created_by'=>$user_id,
+//   'razorpay_payment_id'=>$razor
+// );
+//   //$id=$this->Mobile_model->pay_milk_online($odata);
 
- $data=array(
+  $id=time();
+$data=array(
 'payment_status'=>1,
 'payment_date'=>date('Y-m-d H:i:s'),
 'payment_type'=>1,
-'order_id'=>$id);
+'order_id'=>$id,
+'razor_id'=>$razor);
   $res=$this->Mobile_model->update_milk_payment($user_id,$mon,$yr,$data);
   if($res==1){
                 $message=array('status'=>1,'message'=>'Your Payment successful');
@@ -1829,7 +1834,7 @@ public function  milk_online_payment_post(){
   }
   $message=array('status'=>0,'message'=>'Your Payment Not Successful');
          $this->response($message, REST_Controller::HTTP_OK);
-       }
+
 
 
 }

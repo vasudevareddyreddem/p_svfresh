@@ -1,3 +1,4 @@
+
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class User_model extends CI_Model
@@ -14,6 +15,6 @@ class User_model extends CI_Model
 		where('phone_number',$username)->or_where('email_id',$username);
 
 		return $this->db->get()->row_array();
-		
+
 	}
 	}

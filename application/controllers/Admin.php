@@ -4,14 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends In_frontend{
 
-	
-	public function __construct() 
+
+	public function __construct()
 	{
-		parent::__construct();	
-				
-		$this->load->model('Admin_model');	
-	
-		
+		parent::__construct();
+
+		$this->load->model('Admin_model');
+
+
 	}
 	public function index(){
 		if($this->session->userdata('svadmin_det')){
@@ -19,35 +19,35 @@ class Admin extends In_frontend{
 			$data['users_count']=$this->Admin_model->count_users();
 			$data['products_count']=$this->Admin_model->count_products();
 			$data['orders_count']=$this->Admin_model->count_orders();
-			
+
 			$this->load->view('admin/index',$data);
 		    $this->load->view('admin/footer');
 		}
 		else{
 			redirect('login');
 		}
-		
+
 	}
 	public function dashboard(){
 		if($this->session->userdata('svadmin_det')){
-			
+
 			redirect('admin');
 		}
 		else{
 			redirect('login');
 		}
-		
+
 	}
 	public function change_password(){
 		if($this->session->userdata('svadmin_det')){
-			
+
 			$this->load->view('admin/change_password');
 		$this->load->view('admin/footer');
 		}
 		else{
 			redirect('login');
 		}
-		
+
 	}
 	public function new_password(){
 	if($this->session->userdata('svadmin_det')){
@@ -57,7 +57,7 @@ class Admin extends In_frontend{
  if ($this->form_validation->run() == FALSE)
                 {
           $this->session->set_flashdata('error',validation_errors());
-	
+
                     redirect($_SERVER['HTTP_REFERER']);
 
                }
@@ -82,12 +82,12 @@ class Admin extends In_frontend{
 				   redirect($_SERVER['HTTP_REFERER']);
 
 			  }
-			  
-}
-}
-	
 
-	
-	
-	
+}
+}
+
+
+
+
+
 }
