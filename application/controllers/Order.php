@@ -120,7 +120,8 @@ class Order extends CI_Controller
 			} else {
 				$data['calender_orders'] = $this->Calender_Model->get_all_calender_items_by_user_id($user_id,'','');
 			}
-			//echo '<pre>';print_r($data);exit;
+			$data['bank_detail']=$this->Calender_Model->get_bank_details($user_id);
+		//echo '<pre>';print_r($data);exit;
       $data['pageTitle'] = 'Milk Order';
       $this->load->view('home/milk_orders',$data);
     } else {

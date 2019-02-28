@@ -68,21 +68,31 @@
 									<td class="text-center">
                     <?php echo $co->o_quantity; ?>
                   </td>
+				  
                   <td class="text-center">
                     <?php echo $co->date.'-'.$co->month.'-'.$co->year; ?>
+					
                   </td>
-
+					
                   <td class="text-center">
-                    <input type="text" name="order_qty" id="order_qty" onkeyup="update_qty(this.value,'<?php echo $co->calender_id; ?>');" value="<?php echo ($co->quantity > 1) ? $co->quantity: $co->quantity; ?>" >
+				  <?php 
+					$o_date=$co->year.'-'.$co->month.'-'.$co->date;
+					$date = new DateTime($o_date);
+					$now = new DateTime();
+
+					if($date < $now) { ?>
+						 <?php echo ($co->quantity > 1) ? $co->quantity: $co->quantity; ?>
+					<?php }else{ ?>
+						 <input type="text" name="order_qty" id="order_qty" onkeyup="update_qty(this.value,'<?php echo $co->calender_id; ?>');" value="<?php echo ($co->quantity > 1) ? $co->quantity: $co->quantity; ?>" >
+					 <?php } ?>
+                   
                   </td>
                   <td class="text-center">
                     <?php  echo ($co->price) ? '₹ '.$co->price : ''; ?>
                   </td>
                   <td class="text-center">
                     <?php  if ($co->delivery_status && $co->delivery_status == 1) { echo 'Delivered'; } else if ($co->delivery_status && $co->delivery_status == 2) { echo 'Pending'.' | '.'<a href="#" class="text-danger cancel_order" data-id='.$co->calender_id.'>Cancel</a>'; } else { echo 'Cancelled'; } ?>
-					<?php if($co->payment_status==0){ ?>
-						<a href="javascript:void(0)" onclick="get_payment('<?php echo $co->calender_id; ?>','<?php echo $co->price; ?>');" class="btn btn-info" data-toggle="modal" data-target="#myModal">Pay</a>
-					<?php } ?>
+					
 					</td>
                 </tr>
               <?php } ?>
@@ -103,9 +113,10 @@
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="todatepicker1" name="p_t_t" placeholder="to date">
                     </div>
-                    <div class="col-md-6">
+					 <div class="col-md-6">
                         <a href="javascript:void(0);" onclick="get_payemt_val()" type="button" class="btn btn-info">Pay</a>
                     </div>
+                   
                 </div>
               </form>
               <a href="<?php echo base_url('/home'); ?>" class="button pull-right back-home-btn">Back to Home</a>
@@ -127,10 +138,29 @@
         <div class="modal-body">
 
             <div class="form-group">
-                <input type="text" class="form-control" name="pay_amt" id="pay_amt" value="" placeholder="Amount" required>
+                <input type="text" class="form-control" name="pay_amt" id="pay_amt" value="" placeholder="Amount" required readonly>
                 <input type="hidden" name="c_ids" id="c_ids" value="">
                 <input type="hidden" name="all_c_ids" id="all_c_ids" value="">
               </div>
+			  <table class="table table-bordered">
+			  <tr>
+			  <td>Account Number</td>
+			  <td><?php echo isset($bank_detail['account_number'])?$bank_detail['account_number']:''; ?></td>
+			  </tr>
+			  <tr>
+				 <td>Account Name</td>
+				 <td><?php echo isset($bank_detail['account_name'])?$bank_detail['account_name']:''; ?></td>
+			  </tr>
+			  <tr>
+				<td>IFSC Code</td>
+			  <td><?php echo isset($bank_detail['ifsc'])?$bank_detail['ifsc']:''; ?></td>
+			   </tr>
+			  <tr>
+			  <td>UPI Code</td>
+			  <td><?php echo isset($bank_detail['upi_code'])?$bank_detail['upi_code']:''; ?></td>
+			  </tr>
+			  
+			  </table>
               <div class="form-group">
                 <input type="file" class="form-control" name="image" required>
               </div>

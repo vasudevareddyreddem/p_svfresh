@@ -1838,6 +1838,73 @@ $data=array(
 
 
 }
+public  function update_qty_post(){
+		$calender_id=$this->post('calender_id');
+		$qty=$this->post('quantity');
+		if($calender_id==''){
+			$message = array('status'=>0,'message'=>'Calender id is required');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}if($qty==''){
+			$message = array('status'=>0,'message'=>'Quantity is required');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}
+		$u_data=array('quantity'=>$qty,'updated_date'=>date('Y-m-d H:i:s'));
+		$update=$this->Mobile_model->update_milk_order_qty($calender_id,$u_data);
+		if(count($update)>0){
+				$message = array('status'=>1,'calender_id'=>$calender_id,'message'=>'Quantity details successfully updated');
+				$this->response($message, REST_Controller::HTTP_OK);
+		}else{
+			$message = array('status'=>0, 's_id'=>$s_id,'message'=>'Technical problem will occurred .Please try again');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}
+}
+public  function contact_post(){
+		$name=$this->post('name');
+		$email=$this->post('email');
+		$mobile=$this->post('mobile');
+		$messages=$this->post('message');
+		if($name==''){
+			$message = array('status'=>0,'message'=>'Name id is required');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}if($email==''){
+			$message = array('status'=>0,'message'=>'Email is required');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}if($mobile==''){
+			$message = array('status'=>0,'message'=>'Mobile is required');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}if($messages==''){
+			$message = array('status'=>0,'message'=>'Message is required');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}
+		$addcontact=array(
+		'name'=>isset($name)?$name:'',
+		'email'=>isset($email)?$email:'',
+		'mobile'=>isset($mobile)?$mobile:'',
+		'message'=>isset($messages)?$messages:'',
+		'create_at'=>date('Y-m-d H:i:s'),
+		);
+		$save=$this->Mobile_model->save_contactus($addcontact);
+		if(count($save)>0){
+				$this->load->library('email');
+			    $this->email->set_newline("\r\n");
+			    $this->email->set_mailtype("html");
+				$this->email->from($email);
+				$this->email->to('support@svfresh.com');
+				$this->email->subject('Contact us - Request');
+				//$body = $this->load->view('email/contactus.php',$data,true);
+				//$html = $this->load->view('email/orderconfirmation.php', $data, true);
+
+				$msg='Name:'.$name.' Email :'.$email.'<br> Phone  number :'.$mobile.'<br> Message :'.$messages;
+				$this->email->message($msg);
+				//echo $body;exit;
+				$this->email->send();
+				$message = array('status'=>1,'message'=>'Your message was successfully sent');
+				$this->response($message, REST_Controller::HTTP_OK);
+		}else{
+			$message = array('status'=>0, 'message'=>'Technical problem will occurred .Please try again');
+			$this->response($message, REST_Controller::HTTP_OK);
+		}
+}
 
 
 }

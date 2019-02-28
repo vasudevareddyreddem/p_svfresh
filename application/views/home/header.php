@@ -23,7 +23,7 @@
     <div class="top-header">
         <div class="container">
             <div class="nav-top-links">
-                <a class="first-item" href="#"><img alt="phone" src="<?php echo base_url('assets/images/phone.png'); ?>" />850022xxxx</a>
+                <a class="first-item" href="#"><img alt="phone" src="<?php echo base_url('assets/images/phone.png'); ?>" />9603777754</a>
                 <a href="mailto:info@svfresh.com"><img alt="email" src="<?php echo base_url('assets/images/email.png'); ?>" />info@svfresh.com</a>
             </div>
             <div class="currency ">

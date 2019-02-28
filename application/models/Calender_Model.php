@@ -167,6 +167,12 @@ class Calender_Model extends CI_Model
 		return $this->db->insert_id();
 
 	}
+	public  function get_bank_details($user_id){
+		 $this->db->select('account_number,account_name,ifsc,upi_code')->from('users_tab');
+		 $this->db->join('apartment_tab AS a','a.apartment_id = users_tab.appartment','left');
+		 $this->db->where('users_tab.id',$user_id);
+		 return $this->db->get()->row_array();
+	}
 
 }
 
