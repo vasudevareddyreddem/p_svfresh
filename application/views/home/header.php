@@ -26,8 +26,8 @@
                 <a class="first-item" href="#"><img alt="phone" src="<?php echo base_url('assets/images/phone.png'); ?>" />9603777754</a>
                 <a href="mailto:info@svfresh.com" class="sm-hide"><img alt="email" src="<?php echo base_url('assets/images/email.png'); ?>" />info@svfresh.com</a>
             </div>
-			<div id="user-info-top" class="user-info pull-right">
-                <div class="dropdown">
+			<div id="user-info-top" class="user-info " >
+                <div class="dropdown ">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
                     <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php if($this->session->userdata('logged_in') == TRUE){ ?>
