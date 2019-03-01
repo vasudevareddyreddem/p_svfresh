@@ -1905,6 +1905,28 @@ public  function contact_post(){
 			$this->response($message, REST_Controller::HTTP_OK);
 		}
 }
+	public  function notifications_post(){
+		
+			$minutes_to_add = 1;
+			$d=date('Y-m-d H:i:s');
+			$time = new DateTime($d);
+			$time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
+			$stamp = $time->format('Y-m-d H:i:s');
+			$save=$this->Mobile_model->get_new_product_names_inbetween($stamp,$d);
+			//echo $this->db->last_query();exit;
+			if(count($save)>0){
+					foreach($save as $list){
+						$lis[]=$list['product_name'].' having '.$list['discount_percentage'].' % discount ';
+					}
+					$n_msg=implode(', ',$lis);
+					//echo '<pre>';print_r($n_msg);exit;
+					$message = array('status'=>1,'notification'=>$n_msg.' look at it once','message'=>'New products');
+					$this->response($message, REST_Controller::HTTP_OK);
+			}else{
+				$message = array('status'=>0, 'message'=>'No new products');
+				$this->response($message, REST_Controller::HTTP_OK);
+			}
+	}
 
 
 }

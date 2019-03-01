@@ -596,5 +596,12 @@ return $this->db->get()->result_array();
 			   $this->db->insert('contactus_list',$data);
 			  return $this->db->insert_id();
 		  }
+	  public  function get_new_product_names_inbetween($intime,$outtime){
+		  //$amtwhere='item_cost BETWEEN '.'"'.$outtime.'"'.' AND '.$intime;
+		  $this->db->select('product_id,product_name,discount_percentage')->from('product_tab');
+		  $this->db->where('created_at >=',$outtime);
+		  $this->db->where('created_at <=',$intime);
+		  return $this->db->get()->result_array();
+	  }
 
 }
