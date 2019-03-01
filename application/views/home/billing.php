@@ -6,10 +6,13 @@
     <div class="container" id="columns">
       <div class="row">
         <h3 class="checkout-sep pd-tb20 h2"> Billing Information</h3>
+		<?php  //echo $this->session->userdata('milk_order');exit;
+		if($this->session->userdata('milk_order') != 'MILK'){ ?>
 		    <h3 class="card py-4 px-4 " style="font-size:22px">
-          Total Amount(Milk + Cart) = <?php echo isset($cart_total_amt)?$cart_total_amt:''; ?>(<?php echo isset($withmilk_total_amt['m_amt'])?$withmilk_total_amt['m_amt']:''; ?> + <?php echo isset($without_total_amt['c_amt'])?$without_total_amt['c_amt']:''; ?>)
-        </h3>
-        <br>
+			  Total Amount(Milk + Cart) = <?php echo isset($cart_total_amt)?$cart_total_amt:''; ?>(<?php echo isset($withmilk_total_amt['m_amt'])?$withmilk_total_amt['m_amt']:''; ?> + <?php echo isset($without_total_amt['c_amt'])?$without_total_amt['c_amt']:''; ?>)
+			</h3>
+			<br>
+		<?php } ?>
         <?php if(isset($user) && !empty($user)){ ?>
 				<div class="row">
 					<form action="<?php echo base_url('billing/index'); ?>" method="POST">

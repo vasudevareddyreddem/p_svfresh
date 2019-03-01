@@ -11,6 +11,7 @@
       parent::__construct();
       $this->load->model('Category_model');
       $this->load->model('Cart_Model');
+	  $this->session->unset_userdata('milk_order');	
     }
 
     public function index()
