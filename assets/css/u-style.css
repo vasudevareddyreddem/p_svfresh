@@ -5619,6 +5619,12 @@ margin:0 auto;
     margin-left: 0px;
     overflow: hidden;
 }
+.contact-form {
+    background: #ddd;
+    margin-top: 30px;
+    margin-bottom: 5%;
+    width: 100% !important;
+}
 	.sub-list-view {
 	border:1px solid #ddd;
 	padding:10px 10px;

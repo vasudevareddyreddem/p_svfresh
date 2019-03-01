@@ -38,7 +38,7 @@
     width: 50%;
     border: none;
     border-radius: 1rem;
-    padding: 1.5%;
+    padding: 5px 10px;
     background: #dc3545;
     font-weight: 600;
     color: #fff;
