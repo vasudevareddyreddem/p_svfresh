@@ -1923,7 +1923,7 @@ public  function contact_post(){
 					$message = array('status'=>1,'notification'=>$n_msg.' look at it once','message'=>'New products');
 					$this->response($message, REST_Controller::HTTP_OK);
 			}else{
-				$message = array('status'=>0, 'message'=>'No new products');
+				$message = array('status'=>0,'notification'=>'', 'message'=>'No new products');
 				$this->response($message, REST_Controller::HTTP_OK);
 			}
 	}
