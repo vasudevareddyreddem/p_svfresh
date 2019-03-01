@@ -5,7 +5,7 @@
   <!-- Home slideder-->
   <?php if($slider_side_images){ ?>
 
-    <div id="home-slider">
+    <div id="home-slider" class="sm-hide">
       <div class="container">
         <div class="row">
           <div class="col-sm-3 ">
@@ -106,7 +106,7 @@
 
                 <div class="product-featured clearfix">
                   <?php if(!empty($c->cat_dis_img) && file_exists('assets/uploads/category_pics/'.$c->cat_dis_img)){ ?>
-                    <div class="banner-featured">
+                    <div class="banner-featured sm-hide">
                       <div class="featured-text"><span>featured</span></div>
                       <div class="banner-img">
                         <a href="#"><img alt="<?php echo $c->cat_dis_img; ?>" style="height:240px;" class="img-responsive"  src="<?php echo base_url('assets/uploads/category_pics/'.$c->cat_dis_img); ?>" /></a>
@@ -119,7 +119,7 @@
                       <div class="tab-container autoheight">
                         <!-- tab product -->
                         <div class="tab-panel active" id="tab-6">
-                          <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
+                          <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":2},"600":{"items":3},"1000":{"items":4}}'>
                             <?php if(count($products) > 0){ ?>
                               <?php foreach ($products as $p) { if($p->cat_id == $c->cat_id){ ?>
 
