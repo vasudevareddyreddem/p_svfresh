@@ -50,6 +50,8 @@ class Milkorders_model extends CI_Model
 				}
 			}
 		}
+		$this->db->order_by('apartment_tab.apartment_name');
+		$this->db->order_by('block_tab.block_name');
 		$this->db->order_by('calender_tab.year','desc');
 		$this->db->order_by('calender_tab.month','desc');
 		$this->db->order_by('calender_tab.date','desc');
@@ -99,6 +101,8 @@ class Milkorders_model extends CI_Model
 			}
 		}
 		$this->db->where('calender_tab.payment_status',1);
+		$this->db->order_by('apartment_tab.apartment_name');
+		$this->db->order_by('block_tab.block_name');
 		$this->db->order_by('calender_tab.year','desc');
 		$this->db->order_by('calender_tab.month','desc');
 		$this->db->order_by('calender_tab.date','desc');
@@ -147,7 +151,8 @@ class Milkorders_model extends CI_Model
 				}
 			}
 		}
-
+		$this->db->order_by('apartment_tab.apartment_name');
+	 $this->db->order_by('block_tab.block_name');
 		$this->db->order_by('calender_tab.year','desc');
 		$this->db->order_by('calender_tab.month','desc');
 		$this->db->order_by('calender_tab.date','desc');
@@ -195,6 +200,8 @@ class Milkorders_model extends CI_Model
 				}
 			}
 		}
+		$this->db->order_by('apartment_tab.apartment_name');
+		$this->db->order_by('block_tab.block_name');
 		$this->db->order_by('calender_tab.year','desc');
 		$this->db->order_by('calender_tab.month','desc');
 		$this->db->order_by('calender_tab.date','desc');
@@ -243,6 +250,8 @@ class Milkorders_model extends CI_Model
 		}
 
 		$this->db->where('calender_tab.delivery_status',0);
+		$this->db->order_by('apartment_tab.apartment_name');
+		$this->db->order_by('block_tab.block_name');
 
 		$this->db->order_by('calender_tab.year','desc');
 		$this->db->order_by('calender_tab.month','desc');
