@@ -40,7 +40,7 @@
                                             <td><?php echo $order->product_name; ?>
                                                 <br>Quantity:<?php echo $order->o_quantity; ?>
                                             </td>
-                                              <td><?php echo base_url('assets/uploads/product_pics/').$order->product_name; ?></td>
+                                              <td><img alt="image" src="<?php echo base_url('assets/uploads/product_pics/').$order->product_name; ?>"></td>
                                             <td><?php echo $order->quantity; ?>
                                             <br>Quantity:<?php echo $order->o_quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>
