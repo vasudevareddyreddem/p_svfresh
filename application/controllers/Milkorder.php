@@ -67,7 +67,7 @@ class Milkorder extends In_frontend{
 			else{
 				$data['tot_status']=0;
 			}
-			//echo '<pre>';print_r($data);exit;
+			//echo $this->db->last_query();exit;
 			$this->load->view('admin/milk_tot_payment_order_list',$data);
 			$this->load->view('admin/milk-footer');
 
