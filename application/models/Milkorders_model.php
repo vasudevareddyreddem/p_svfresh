@@ -414,8 +414,41 @@ $days=date('d' ,strtotime($date));//present date in month
 	}
 	public function get_month_milk_list($yr,$mon,$num){
 
-		$this->db->select('c.*,u.*')->from('calender_tab c')->join('user_tab u' ,'c.user_id=u.id')->where('year',$yr)->month('month',$mon);
-		return $this->db->get()->result_array();
+		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
+		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
+		calender_tab.payment_type,
+		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
+		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+	users_tab.phone_number,
+		calender_tab.delivered_time,calender_tab.cancelled_time,calender_tab.payment_status,calender_tab.payment_img,calender_tab.payment_date,calender_tab.order_id');
+		$this->db->from('calender_tab');
+		//$this->db->join('billing_tab','calender_tab.billing_id=billing_tab.id');
+		$this->db->join('product_tab','product_tab.product_id=calender_tab.product_id');
+		$this->db->join('users_tab','users_tab.id=calender_tab.user_id');
+		$this->db->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left');
+		$this->db->join('block_tab','block_tab.block_id=users_tab.block','left');
+
+
+
+					$this->db->where('calender_tab.month',$mon);
+			$this->db->where('users_tab.phone_number',$num);
+			$this->db->where('calender_tab.year',$yr);
+
+
+		$this->db->order_by('apartment_tab.apartment_name');
+		$this->db->order_by('block_tab.block_name');
+		$this->db->order_by('calender_tab.year','desc');
+		$this->db->order_by('calender_tab.month','desc');
+		$this->db->order_by('calender_tab.date','desc');
+		$this->db->order_by('users_tab.id','desc');
+
+		return $this->db->get()->result();
+	}
+	public function get_month_amount($yr,$mon,$num){
+		$this->db->select('sum(c.price*c.quantity) total')->from('calender_tab c')->join('users_tab u' ,'c.user_id=u.id')->where('year',$yr)->where('month',$mon)->where('phone_number',$num)->where('delivery_status !=',3);
+		return $this->db->get()->row_array();
+
+
 	}
 
 }

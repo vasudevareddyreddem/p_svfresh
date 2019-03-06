@@ -354,14 +354,19 @@ else{
 		$yr=$this->input->post('year');
 	$mon=$this->input->post('month');
 		$num=$this->input->post('phonenum');
+		$post=$this->input->post();
+		$data['det']=$post;
 	$data['tot_list']=$this->Milkorders_model->get_month_milk_list($yr,$mon,$num);
+		$data['amount']=$this->Milkorders_model->get_month_amount($yr,$mon,$num);
+
 		//pdf start
 		//$data['details']=$this->Resources_model->get_billing_details($pid,$bid);
 					//echo '<pre>';print_r($data);exit;
 					$path = rtrim(FCPATH,"/");
-					$file_name = $yr.'-'.$mon.'_'.$num.'.pdf';
+					$file_name = 'milk_'.$yr.'-'.$mon.'_'.$num.time().'.pdf';
 					$data['page_title'] = $yr.'-'.$mon.'_'.$num.'_milkorders'; // pass data to the view
-					$pdfFilePath = $path."/assets/milk_pdf/".$file_name;
+					$pdfFilePath = $path."assets\\milk_orders_pdf\\".$file_name;
+
 					ini_set('memory_limit','320M'); // boost the memory limit if it's low <img src="https://s.w.org/images/core/emoji/72x72/1f609.png" alt="??" draggable="false" class="emoji">
 					$html = $this->load->view('admin/milk_pdf', $data, true); // render the view into HTML
 					//echo '<pre>';print_r($html);exit;
@@ -371,8 +376,9 @@ else{
 					$pdf->SetDisplayMode('fullpage');
 					$pdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a list
 					$pdf->WriteHTML($html); // write the HTML into the PDF
+					//$pdf->Output();exit;
 					$pdf->Output($pdfFilePath, 'F');
-					redirect("milkorder/total_order_list");
+					redirect("/assets/milk_orders_pdf/".$file_name);
 		//pdf end
 	}
 	else {
