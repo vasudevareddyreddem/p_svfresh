@@ -358,6 +358,8 @@ else{
 		$data['det']=$post;
 	$data['tot_list']=$this->Milkorders_model->get_month_milk_list($yr,$mon,$num);
 		$data['amount']=$this->Milkorders_model->get_month_amount($yr,$mon,$num);
+		$data['paid']=$this->Milkorders_model->get_month_paid_amount($yr,$mon,$num);
+		$data['unpaid']=$this->Milkorders_model->get_month_unpaid_amount($yr,$mon,$num);
 
 		//pdf start
 		//$data['details']=$this->Resources_model->get_billing_details($pid,$bid);

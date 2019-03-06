@@ -450,5 +450,17 @@ $days=date('d' ,strtotime($date));//present date in month
 
 
 	}
+	public function get_month_paid_amount($yr,$mon,$num){
+		$this->db->select('sum(c.price*c.quantity) total')->from('calender_tab c')->join('users_tab u' ,'c.user_id=u.id')->where('year',$yr)->where('month',$mon)->where('phone_number',$num)->where('delivery_status !=',3)->where('payment_status',1)->where('admin_accept_status',1);
+		return $this->db->get()->row_array();
+
+
+	}
+	public function get_month_unpaid_amount($yr,$mon,$num){
+		$this->db->select('sum(c.price*c.quantity) total')->from('calender_tab c')->join('users_tab u' ,'c.user_id=u.id')->where('year',$yr)->where('month',$mon)->where('phone_number',$num)->where('delivery_status !=',3)->where('payment_status',0);
+		return $this->db->get()->row_array();
+
+
+	}
 
 }

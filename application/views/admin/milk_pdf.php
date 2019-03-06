@@ -94,3 +94,7 @@
 </table>
 <br>
 Total Amount:<?php echo $amount['total'];?>
+<br>
+Paid Amount:<?php echo $paid['total'];?>
+<br>
+Unpaid Amount:<?php echo $unpaid['total'];?>
