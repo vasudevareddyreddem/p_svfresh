@@ -116,7 +116,14 @@ class Auth_Model extends CI_Model
     $this->db->select('id,otp,otp_created_on');
     return $this->db->get_where($this->table,array('phone_number' => $phone_number, 'otp' => $otp))->row();
   }
+  public function old_address($post_id){
+    $this->db->select('*')->from('users_tab')->where('id',$post_id);
+    $data=$this->db->get()->row_array();
+    $this->db->insert('user_old_address_tab',$data);
+    return $this->db->affected_rows()?1:0;
+  }
 
 }
+
 
  ?>
