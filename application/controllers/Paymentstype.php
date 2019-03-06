@@ -26,12 +26,16 @@ class Paymentstype extends CI_Controller
       $user_id = $this->session->userdata('id');
       //$billing_id = $this->session->userdata('billing_id');
       $data['cart'] = $this->Cart_Model->get_all_items_from_cart($user_id);
+	  if(isset($data['cart']) && count($data['cart'])==0){
+		  $this->session->set_flashdata('success', 'NO items in cart');
+		  redirect('');
+	  }
       $data['count'] = count($data['cart']);
       $data['cart_template'] = $this->load->view('home/cart_template',$data,TRUE);
       $cart_total = $this->Cart_Model->get_cart_total_for_user($user_id);
       //$billing_details = $this->Cart_Model->get_billing_details($this->session->userdata('billing_id'));
       $user_details = $this->Auth_Model->get_user_details_for_billing($user_id);
-      //echo '<pre>';print_r($cart_total);exit;
+      //echo '<pre>';print_r(count($data['cart']));exit;
       $data['online_payment_disable'] = $this->Apartment_model->online_payment_options_for_apartment($user_id);
       /*  payment */
       $api_id= $this->config->item('keyId');
