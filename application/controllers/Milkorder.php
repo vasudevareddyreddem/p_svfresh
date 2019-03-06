@@ -311,42 +311,75 @@ else{
 	  $order_id=base64_decode($this->uri->segment(3));
 	  if($order_id==''){
 		$this->session->set_flashdata('error','Techinical problem will occured');
-		redirect($_SERVER['HTTP_REFERER']); 
+		redirect($_SERVER['HTTP_REFERER']);
 	  }
 	  $order_id_list=$this->Milkorders_model->get_milk_orders_list($order_id);
 		if(count($order_id_list)>0){
 		    foreach($order_id_list as $li){
-			    $add=array('admin_accept_status'=>2,'payment_status'=>0); 
-				$p_update=$this->Milkorders_model->update_payment_details($li['calender_id'],$add); 
+			    $add=array('admin_accept_status'=>2,'payment_status'=>0);
+				$p_update=$this->Milkorders_model->update_payment_details($li['calender_id'],$add);
 			}
 		}
 		if(count($p_update)>0){
 			$this->session->set_flashdata('success',"Payment Details successfully rejected.");
-			redirect('milkorder/total_paymet_order_list'); 
+			redirect('milkorder/total_paymet_order_list');
 		}else{
 		   $this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
-		   redirect('milkorder/total_paymet_order_list'); 
+		   redirect('milkorder/total_paymet_order_list');
 	    }
 	}
 	public  function paymetn_accept_order(){
 	  $order_id=base64_decode($this->uri->segment(3));
 	  if($order_id==''){
 		$this->session->set_flashdata('error','Techinical problem will occured');
-		redirect($_SERVER['HTTP_REFERER']); 
+		redirect($_SERVER['HTTP_REFERER']);
 	  }
 	  $order_id_list=$this->Milkorders_model->get_milk_orders_list($order_id);
 		if(count($order_id_list)>0){
 		    foreach($order_id_list as $li){
-			    $add=array('admin_accept_status'=>1); 
-				$p_update=$this->Milkorders_model->update_payment_details($li['calender_id'],$add); 
+			    $add=array('admin_accept_status'=>1);
+				$p_update=$this->Milkorders_model->update_payment_details($li['calender_id'],$add);
 			}
 		}
 		if(count($p_update)>0){
 			$this->session->set_flashdata('success',"Payment details successfully accepted.");
-			redirect('milkorder/total_paymet_order_list'); 
+			redirect('milkorder/total_paymet_order_list');
 		}else{
 		   $this->session->set_flashdata('error',"technical problem will occurred. Please try again.");
-		   redirect('milkorder/total_paymet_order_list'); 
+		   redirect('milkorder/total_paymet_order_list');
 	    }
+	}
+	public function list_pdf(){
+		  if ($this->session->userdata('svadmin_det')) {
+		$yr=$this->input->post('year');
+	$mon=$this->input->post('month');
+		$num=$this->input->post('phonenum');
+	$data['tot_list']=$this->Milkorders_model->get_month_milk_list($yr,$mon,$num);
+		//pdf start
+		//$data['details']=$this->Resources_model->get_billing_details($pid,$bid);
+					//echo '<pre>';print_r($data);exit;
+					$path = rtrim(FCPATH,"/");
+					$file_name = $yr.'-'.$mon.'_'.$num.'.pdf';
+					$data['page_title'] = $yr.'-'.$mon.'_'.$num.'_milkorders'; // pass data to the view
+					$pdfFilePath = $path."/assets/milk_pdf/".$file_name;
+					ini_set('memory_limit','320M'); // boost the memory limit if it's low <img src="https://s.w.org/images/core/emoji/72x72/1f609.png" alt="??" draggable="false" class="emoji">
+					$html = $this->load->view('admin/milk_pdf', $data, true); // render the view into HTML
+					//echo '<pre>';print_r($html);exit;
+					$this->load->library('pdf');
+					$pdf = $this->pdf->load();
+					$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date('M-d-Y')); // Add a footer for good measure <img src="https://s.w.org/images/core/emoji/72x72/1f609.png" alt="??" draggable="false" class="emoji">
+					$pdf->SetDisplayMode('fullpage');
+					$pdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a list
+					$pdf->WriteHTML($html); // write the HTML into the PDF
+					$pdf->Output($pdfFilePath, 'F');
+					redirect("milkorder/total_order_list");
+		//pdf end
+	}
+	else {
+		$this->session->set_flashdata('error','Please login to continue');
+		redirect('login');
+
+}
+
 	}
 }

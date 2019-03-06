@@ -51,7 +51,7 @@
 										<?php } ?>
 									</div>
 									</div>
-							
+
 							</form>
 							<!--<div>
 							<label>Enter Phone Number</label><input type='text' id='phn_num'>
@@ -61,21 +61,41 @@
 								&nbsp;
 							</div>
 							<hr>
-							<form>
+							<form method='post'  action="<?php echo base_url('milkorder/list_pdf'); ?>">
 							<div class="row">
-						
+
 									<div class="col-md-3">
-										<select class="form-control" name="block" id="">
-											<option value="">Month</option>
-											<option value="">Month</option>
-											<option value="">Month</option>
+										<select class="form-control" name="month" id="">
+												<option value="">Month</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
 										</select>
 									</div>
 									<div class="col-md-3">
-										<select class="form-control" name="block" id="">
+										<select class="form-control" name="year" id="">
 											<option value="">Year</option>
-											<option value="">1</option>
-											<option value="">2019</option>
+											<option value="2019">2019</option>
+											<option value="2020">2020</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+											<option value="2024">2024</option>
+											<option value="2025">2025</option>
+											<option value="2026">2026</option>
+											<option value="2027">2027</option>
+											<option value="2028">2028</option>
+											<option value="2029">2029</option>
+											<option value="2030">2030</option>
 										</select>
 									</div>
 									<div class="col-md-3">
@@ -84,7 +104,7 @@
 									<div class="col-md-3">
 										<button class="btn btn-primary ">Export</button>
 									</div>
-						
+
 							</div>
 							</form>
 							<hr>
@@ -151,7 +171,7 @@
 															<a href="<?php echo base_url('Milkorder/paymetn_accept_order/'.base64_encode($order->order_id)); ?>">Accept</a> | <a href="<?php echo base_url('Milkorder/paymetn_reject_order/'.base64_encode($order->order_id)); ?>">Reject</a>
 														<?php } ?>
 														</td>
-														
+
 												</tr>
 											<?php }}?>
 

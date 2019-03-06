@@ -412,5 +412,10 @@ $days=date('d' ,strtotime($date));//present date in month
 		$this->db->where('order_tab.order_id',$order_id);
 		return $this->db->delete('order_tab');
 	}
+	public function get_month_milk_list($yr,$mon,$num){
+
+		$this->db->select('c.*,u.*')->from('calender_tab c')->join('user_tab u' ,'c.user_id=u.id')->where('year',$yr)->month('month',$mon);
+		return $this->db->get()->result_array();
+	}
 
 }
