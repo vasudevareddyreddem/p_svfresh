@@ -93,7 +93,7 @@
 										<input type="text" name="phonenum" class="form-control" id=""   placeholder="Enter Phone Number">
 									</div>
 									<div class="col-md-3">
-										<button class="btn btn-primary ">Export</button>
+										<button type="submit" class="btn btn-primary ">Export</button>
 									</div>
 
 							</div>
