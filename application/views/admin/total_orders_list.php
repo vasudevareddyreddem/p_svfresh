@@ -32,6 +32,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+									<?php //echo '<pre>';print_r($tot_list);exit; ?>
 									<?php if($tot_status==1){
 										foreach($tot_list as $order){?>
                                         <tr>
@@ -40,7 +41,7 @@
 
                                             <br>Quantity:<?php echo $order->o_quantity; ?>
                                           </td>
-                                          <td><img alt="image" src="<?php echo base_url('assets/uploads/product_pics/').$order->product_name; ?>"></td>
+                                          <td><img alt="image" width="50px;" height="50px;" src="<?php echo base_url('assets/uploads/product_pics/'.$order->product_img); ?>"></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>
                                             <td><?php echo $order->quantity*$order->net_price; ?></td>
@@ -114,3 +115,4 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
+   
