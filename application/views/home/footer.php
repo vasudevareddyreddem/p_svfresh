@@ -37,7 +37,7 @@ function decreaseValue() {
                 <div class="col-md-6">
                     <div class="row">
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 col-xs-6">
                             <div class="introduce-title">My Account</div>
                             <ul id = "introduce-Account" class="introduce-list">
                                 <li><a href="<?php echo base_url('/order'); ?>">My Order</a></li>
@@ -47,7 +47,7 @@ function decreaseValue() {
                                 <li><a href="#">My Personal In</a></li>
                             </ul>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 col-xs-6">
                             <div class="introduce-title">Support</div>
                             <ul id = "introduce-support"  class="introduce-list">
                                <!-- <li><a href="#">About Us</a></li>
@@ -59,7 +59,7 @@ function decreaseValue() {
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 sm-hide">
                     <div id="contact-box">
 						<form action="<?php echo base_url('home/newletterpost'); ?>" method="post">
 							<div class="introduce-title">Newsletter</div>

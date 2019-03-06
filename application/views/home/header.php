@@ -19,26 +19,15 @@
 </head>
 <body class="home">
 
-<div id="header" class="header">
+<div id="header" class="header" >
     <div class="top-header">
-        <div class="container">
-            <div class="nav-top-links">
-                <a class="first-item" href="#"><img alt="phone" src="<?php echo base_url('assets/images/phone.png'); ?>" />850022xxxx</a>
-                <a href="mailto:info@svfresh.com"><img alt="email" src="<?php echo base_url('assets/images/email.png'); ?>" />info@svfresh.com</a>
+        <div class="container" style="padding:0px 10px;">
+            <div class="nav-top-links ">
+                <a class="first-item" href="#"><img alt="phone" src="<?php echo base_url('assets/images/phone.png'); ?>" />9603777754</a>
+                <a href="mailto:info@svfresh.com" class="sm-hide"><img alt="email" src="<?php echo base_url('assets/images/email.png'); ?>" />info@svfresh.com</a>
             </div>
-            <div class="currency ">
-                <div class="dropdown">
-                      <a class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Rupee</a>
-                     
-                </div>
-            </div>
-           <!-- <div class="support-link">
-                <a href="#">Services</a>
-                <a href="#">Support</a>
-            </div>-->
-
-            <div id="user-info-top" class="user-info pull-right">
-                <div class="dropdown">
+			<div id="user-info-top" class="user-info " >
+                <div class="dropdown ">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
                     <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php if($this->session->userdata('logged_in') == TRUE){ ?>
@@ -58,12 +47,12 @@
     <!--/.top-header -->
     <!-- MAIN HEADER -->
 	 <div class=" main-header">
-    <div class="container">
+    <div class="container" style="padding:2px 20px;">
         <div class="row">
-            <div class="col-xs-12 col-sm-3 logo">
+            <div class="col-md-3 logo">
                 <a href="<?php echo base_url('home'); ?>"><img  style="height:70px;width:auto;"alt="SV Fresh" src="<?php echo base_url('assets/images/logo.png'); ?>" /></a>
             </div>
-            <div class="col-xs-7 col-sm-7 header-search-box">
+            <div class=" col-md-5 header-search-box">
                 <form class="form-inline" method="post" action="<?php echo base_url('home/search'); ?>">
 
                       <div class="form-group input-serach">
@@ -73,7 +62,7 @@
                       <button type="submit" class="pull-right btn-search"></button>
                 </form>
             </div>
-            <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
+            <div id="cart-block" class="col-md-3  shopping-cart-box">
                 <a class="cart-link" <?php if($count > 0){ ?>href="<?php echo base_url('Checkout'); ?>"<?php }else{ ?> href="#" <?php } ?>>
                     <span class="title">Shopping cart</span>
                     <span class="total"><span class="cart_count" id="cart_count"><?php if($count){echo $count;}else{ echo '0'; } ?></span> items</span>

@@ -66,15 +66,13 @@
 											<th>Flat/Door number</th>
 											<th>Product Name</th>
 											<th>Quantity</th>
-											<th>Price</th>
-											<th>Delivery Date</th>
-											<th>Customer Name</th>
 											<th>Mobile Number</th>
 											<th>Payment Type</th>
 											<th>Payment Status</th>
 											<th>Payment screenshot</th>
+											<th>Payment Date & Time</th>
 											<th>Status</th>
-											<th>Ordered/Delivered/Cancelled Date & Time</th>
+											<th>Payment Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -88,9 +86,6 @@
 													<td><?php echo $order->product_name; ?>
 													<br>Quantity:<?php echo $order->o_quantity; ?></td>
 													<td><?php echo $order->quantity; ?> </td>
-													<td><?php echo $order->price; ?></td>
-													<td><?php echo $order->date.'-'.$order->month.'-'.$order->year; ?></td>
-													<td><?php echo $order->email_id; ?></td>
 													<td><?php echo $order->phone_number; ?></td>
 													<td><?php if($order->payment_type==1){
 														echo 'online payment';
@@ -107,6 +102,7 @@
 														<a target="_blank" href="<?php echo base_url('assets/uploads/screenshot/'.$order->payment_img); ?>"><img src="<?php echo base_url('assets/uploads/screenshot/'.$order->payment_img); ?>" width="50px;" height="50px;"></a>
 													<?php } ?>
 													</td>
+													<td><?php echo $order->payment_date; ?></td>
 													<td>
 														<div class="badge badge-info">
 															<?php if($order->delivery_status==1)
@@ -117,30 +113,12 @@
 															{echo 'Pending';}
 															?></div>
 														</td>
-														<td><?php if($order->delivery_status==1)
-														{
-															if($order->delivered_time!=''){
-																$myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->delivered_time);
-																$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
-															}
-
-														}
-														if($order->delivery_status==0)
-														{	if($order->cancelled_time!=''){
-															$myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->cancelled_time);
-															$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
-														}
-
-														}
-													if($order->delivery_status==2)
-													{
-														if($order->created_date!=''){
-															$myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $order->created_date);
-															$newDateString = $myDateTime->format('d-m-Y H:i:s');echo $newDateString ;
-														}
-
-													}
-													?></td>
+														<td>
+														<?php if($order->order_id!=''){ ?>
+															<a href="<?php echo base_url('Milkorder/paymetn_accept_order/'.base64_encode($order->order_id)); ?>">Accept</a> | <a href="<?php echo base_url('Milkorder/paymetn_reject_order/'.base64_encode($order->order_id)); ?>">Reject</a>
+														<?php } ?>
+														</td>
+														
 												</tr>
 											<?php }}?>
 

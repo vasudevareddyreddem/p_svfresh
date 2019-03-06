@@ -46,23 +46,21 @@ class Mobile_model extends CI_Model
 			$this->db->select("product_tab.product_id,product_tab.product_name,product_tab.product_img,
 			product_tab.actual_price,product_tab.net_price,product_tab.discount_price,
 			product_tab.guarantee_policy,product_tab.description,
-			product_tab.quantity,
+			product_tab.quantity,product_tab.o_quantity as weight,
 			subcat_tab.subcat_name, IF(wishlist_tab.user_id='$user_id',wishlist_tab.id,null) wishlist_id,
 			IF(cart_tab.user_id='$user_id',cart_tab.id,'') cart_id,
 			(select sum(rate)/count(product_id)   from rating_list where rating_list.product_id=product_tab.product_id group by product_id) AS rating ");
-	  $this->db->from('product_tab');
-	  $this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
-	   $this->db->join('wishlist_tab',"(wishlist_tab.product_id=product_tab.product_id)
-	   and (wishlist_tab.user_id='$user_id' )",'left');
-	     $this->db->join('cart_tab',"(cart_tab.product_id=product_tab.product_id)
-		and (cart_tab.user_id='$user_id' )
-	    ",'left');
-	   $this->db->where('product_tab.status',1);
-	    $this->db->where('subcat_tab.status',1);
-
-
-		$this->db->where('subcat_tab.subcat_id',$subcat);
-	   $this->db->order_by('product_tab.updated_at','desc');
+			$this->db->from('product_tab');
+			$this->db->join('subcat_tab','subcat_tab.subcat_id=product_tab.subcat_id');
+			$this->db->join('wishlist_tab',"(wishlist_tab.product_id=product_tab.product_id)
+			and (wishlist_tab.user_id='$user_id' )",'left');
+			$this->db->join('cart_tab',"(cart_tab.product_id=product_tab.product_id)
+			and (cart_tab.user_id='$user_id' )
+			",'left');
+			$this->db->where('product_tab.status',1);
+			$this->db->where('subcat_tab.status',1);
+			$this->db->where('subcat_tab.subcat_id',$subcat);
+			$this->db->order_by('product_tab.updated_at','desc');
 
 
 	   return $this->db->get()->result_array();
@@ -123,8 +121,9 @@ class Mobile_model extends CI_Model
 	public function get_user_orders($id){
 		$this->db->select('order_items_tab.order_items_id,order_tab.order_id,order_items_tab.order_number,order_items_tab.product_name,order_items_tab.product_id,
 		order_items_tab.product_img,order_items_tab.quantity,order_items_tab.net_price,order_tab.created_date,
-		order_items_tab.delivery_status')->from('order_tab')->
-		join('order_items_tab','order_tab.order_id=order_items_tab.order_id')
+		order_items_tab.delivery_status,product_tab.o_quantity as weight')->from('order_tab')
+		->join('order_items_tab','order_tab.order_id=order_items_tab.order_id')
+		->join('product_tab','product_tab.product_id=order_items_tab.product_id')
 		->where('order_tab.user_id',$id)->order_by('order_items_tab.created_date','desc')->order_by('order_tab.order_id','desc');
 
 	  return $this->db->get()->result_array();
@@ -142,7 +141,7 @@ class Mobile_model extends CI_Model
 
         $this->db->select("wishlist_tab.id wishlistid,product_tab.product_name,product_tab.product_id,
 		product_tab.product_img,wishlist_tab.quantity,product_tab.actual_price,
-		product_tab.net_price,product_tab.discount_price,
+		product_tab.net_price,product_tab.discount_price,product_tab.o_quantity as weight,
 		IF( ISNULL(cart_tab.user_id),0,1) cart_status,
 		(wishlist_tab.quantity)*(product_tab.net_price) whole_price
 		")->from('wishlist_tab')->join('product_tab','product_tab.product_id=wishlist_tab.product_id')->
@@ -545,7 +544,7 @@ return $this->db->get()->result_array();
 
 				 }
 				 public function get_day_milk_orders($year,$month,$day,$user_id){
-					 $this->db->select('c.*,p.product_name,p.product_img')->from('calender_tab c')->join('product_tab p','p.product_id=c.product_id')->where('c.user_id',$user_id)
+					 $this->db->select('c.*,p.product_name,p.product_img,p.o_quantity as weight')->from('calender_tab c')->join('product_tab p','p.product_id=c.product_id')->where('c.user_id',$user_id)
 					 ->where('c.year',$year)->where('c.month',$month)->where('c.date',$day);
 
 					 return $this->db->get()->result_array();
@@ -589,5 +588,20 @@ return $this->db->get()->result_array();
 
 	return 	$this->db->insert_id();
 		}
+		public  function update_milk_order_qty($can_id,$data){
+			$this->db->where('calender_id',$can_id);
+			return $this->db->update('calender_tab',$data);
+		}
+		 public  function save_contactus($data){
+			   $this->db->insert('contactus_list',$data);
+			  return $this->db->insert_id();
+		  }
+	  public  function get_new_product_names_inbetween($intime,$outtime){
+		  //$amtwhere='item_cost BETWEEN '.'"'.$outtime.'"'.' AND '.$intime;
+		  $this->db->select('product_id,product_name,discount_percentage')->from('product_tab');
+		  $this->db->where('created_at >=',$outtime);
+		  $this->db->where('created_at <=',$intime);
+		  return $this->db->get()->result_array();
+	  }
 
 }
