@@ -41,13 +41,17 @@
 									<div class="col-md-3">
 										<input type="text" name="phonenum" class="form-control" id="phonenum"  value="<?php if (isset($filter) && ($filter['phonenum'] != '' )) { echo $filter['phonenum']; } else { echo ""; } ?>" placeholder="Enter Phone Number">
 									</div>
+									</div>
+									<br>
+									<div class="row">
 									<div class="col-md-3">
 										<button type="submit" name="button" class="btn btn-primary">Filter</button>
 										<?php if (isset($filter) && ($filter['apartment'] != '' || $filter['block'] != '' || $filter['date'] != '' )) { ?>
 											<a href="<?php echo base_url('milkorder/total_order_list'); ?>" class="btn btn-warning">clear</a>
 										<?php } ?>
 									</div>
-							</div>
+									</div>
+							
 							</form>
 							<!--<div>
 							<label>Enter Phone Number</label><input type='text' id='phn_num'>
@@ -56,6 +60,35 @@
 							<div class="clearfix">
 								&nbsp;
 							</div>
+							<hr>
+							<form>
+							<div class="row">
+						
+									<div class="col-md-3">
+										<select class="form-control" name="block" id="">
+											<option value="">Month</option>
+											<option value="">Month</option>
+											<option value="">Month</option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<select class="form-control" name="block" id="">
+											<option value="">Year</option>
+											<option value="">1</option>
+											<option value="">2019</option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<input type="text" name="phonenum" class="form-control" id=""   placeholder="Enter Phone Number">
+									</div>
+									<div class="col-md-3">
+										<button class="btn btn-primary ">Export</button>
+									</div>
+						
+							</div>
+							</form>
+							<hr>
+							<div class="clearfix">&nbsp;</div>
 							<div class="table-responsive">
 								<table id="example" class="table table-striped">
 									<thead>
