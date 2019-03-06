@@ -19,6 +19,7 @@
                                         <tr>
                                             <th>Order Id</th>
                                             <th>Product Name</th>
+                                              <th>Product Image</th>
                                             <th>Quantity</th>
                                             <th>Single Product Price</th>
                                             <th>Total Price</th>
@@ -36,7 +37,10 @@
 										foreach($pending_list as $order){?>
                                         <tr>
                                             <td><?php echo $order->order_number; ?></td>
-                                            <td><?php echo $order->product_name; ?></td>
+                                            <td><?php echo $order->product_name; ?>
+                                                <br>Quantity:<?php echo $order->o_quantity; ?>
+                                            </td>
+                                              <td><img alt="image" src="<?php echo base_url('assets/uploads/product_pics/').$order->product_name; ?>"></td>
                                             <td><?php echo $order->quantity; ?>
                                             <br>Quantity:<?php echo $order->o_quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>

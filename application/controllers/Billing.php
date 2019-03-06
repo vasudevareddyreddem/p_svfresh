@@ -23,9 +23,9 @@ class Billing extends CI_Controller
   {
     if($this->session->userdata('logged_in') == TRUE){
       if($this->input->post()){
-        
+
           $post_data = $this->input->post();
-		  
+
 		  $user_id = $this->session->userdata('id');
 		   $cart_tem= $this->Cart_Model->check_product_ava_qty($user_id);
 		   foreach($cart_tem as $li){
@@ -69,7 +69,7 @@ class Billing extends CI_Controller
             $this->session->set_flashdata('error', 'Please,try again');
             redirect('/billing');
           }
-       
+
       }else{
 		  $user_id = $this->session->userdata('id');
 		  $cart_tem= $this->Cart_Model->check_product_ava_qty($user_id);
@@ -150,6 +150,7 @@ class Billing extends CI_Controller
             $addl_data = array('updated_date' => date('Y-m-d H:i:s'),'updated_by' => $this->session->userdata('id'),'status' => 'Active');
             $post_data = array_merge($post_data,$addl_data);
             $post_id = $this->input->post('id');
+            $this->Auth_Model->old_address($post_id);
             if($this->Auth_Model->Update($post_data,$post_id)) {
               $this->session->set_flashdata('success','Updated successfully');
               redirect('/billing');
