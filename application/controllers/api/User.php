@@ -537,6 +537,8 @@ public function edit_profile_post(){
 		 $message['message']='unauthorized user';
 		    $this->response($message, REST_Controller::HTTP_OK);
 	}
+	$fname=$this->post('first_name');
+	$lname=$this->post('last_name');
 	$username=$this->post('username');
 	$email=$this->post('email');
 	$mobile=$this->post('mobile');
@@ -554,6 +556,8 @@ public function edit_profile_post(){
 		  $this->response($message, REST_Controller::HTTP_OK);
 	}
 	$data=array(
+	'first_name'=>$fname,
+	'last_name'=>$lname,
 	'email_id'=>$email,
 	'phone_number'=>$mobile,
 	'user_name'=>$username);
@@ -831,6 +835,7 @@ public function insert_order_post(){
 
 				);
 	$insert_id=$this->Mobile_model->insert_order($data);
+	//echo '<pre>';print_r($insert_id);exit;
 	    $str = date('Ymd').$insert_id;
         $order_number =  'SV'.str_pad($str,10,'0',STR_PAD_LEFT);
 		$count=count($items);
@@ -851,6 +856,9 @@ public function insert_order_post(){
 						  'quantity'=>$quantitys[$i],
 						  'net_price'=>$prices[$i],
 						  );
+						  $p_qty=$this->Mobile_model->get_product_qty($items[$i]);
+						  $p_udata=array('quantity'=>($p_qty['quantity']-$quantitys[$i]));
+						$this->Mobile_model->update_product_qty($items[$i],$p_udata);
 	 }
 
 	$status=$this->Mobile_model->insert_order_items($itemdata);
@@ -1693,7 +1701,7 @@ public function user_milk_amount_post(){
         $this->response($message, REST_Controller::HTTP_OK);
   }
   $row=$this->Mobile_model->user_milk_amount($user_id);
-  //echo $this->db->last_query();exit;
+ //echo $this->db->last_query();exit;
 
 if($row['total']==''or $row['total']==null){
 

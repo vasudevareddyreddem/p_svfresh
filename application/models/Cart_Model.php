@@ -69,7 +69,7 @@ class Cart_Model extends CI_Model
   
   /* cart amountpurpose */
   public  function normal_cart_amount($user_id){
-	  $this->db->select('SUM(cart_tab.net_price) as c_amt')->from('cart_tab');
+	  $this->db->select('SUM(cart_tab.net_price*quantity) as c_amt')->from('cart_tab');
       $this->db->where('user_id',$user_id);
       return $this->db->get()->row_array(); 
   }

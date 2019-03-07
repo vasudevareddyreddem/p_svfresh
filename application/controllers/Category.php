@@ -184,6 +184,25 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->inactive_category($id,$svadmin);
 			if($status==1){
+				$p_ids=$this->Category_model->check_cat_product_in_ptab($id);
+				if(isset($p_ids) && count($p_ids)>0){
+					foreach($p_ids as $lis){
+						$p_udata=array('status'=>2);
+						$this->Category_model->update_product($lis->product_id,$p_udata);
+					}
+				}
+				$check=$this->Category_model->check_cat_product_cart($id);
+				if(isset($check) && count($check)>0){
+					foreach($check as $lis){
+						$this->Category_model->delete_cart_id($lis->id);
+					}
+				}
+				$w_check=$this->Category_model->check_wish_product_cart($id);
+				if(isset($w_check) && count($w_check)>0){
+					foreach($w_check as $lis){
+						$this->Category_model->delete_wish_id($lis->id);
+					}
+				}
 				$this->session->set_flashdata('success','Category inactivated');
 			  redirect('category/category_list');
 			}
@@ -202,6 +221,13 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->active_category($id,$svadmin);
 			if($status==1){
+				$p_ids=$this->Category_model->check_cat_product_in_ptab($id);
+				if(isset($p_ids) && count($p_ids)>0){
+					foreach($p_ids as $lis){
+						$p_udata=array('status'=>1);
+						$this->Category_model->update_product($lis->product_id,$p_udata);
+					}
+				}
 				$this->session->set_flashdata('success','Category activated');
 			  redirect('category/category_list');
 			}
@@ -218,7 +244,18 @@ $this->load->model('Product_model')	;
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
 			$id=base64_decode($this->uri->segment(3));
-			$check=$this->Category_model->check_cat_product_cart($id);
+			
+			//echo $this->db->last_query();exit;
+			$status=$this->Category_model->delete_category($id,$svadmin);
+			if($status==1){
+				$p_ids=$this->Category_model->check_cat_product_in_ptab($id);
+				if(isset($p_ids) && count($p_ids)>0){
+					foreach($p_ids as $lis){
+						$p_udata=array('status'=>2);
+						$this->Category_model->update_product($lis->product_id,$p_udata);
+					}
+				}
+				$check=$this->Category_model->check_cat_product_cart($id);
 			if(isset($check) && count($check)>0){
 				foreach($check as $lis){
 					$this->Category_model->delete_cart_id($lis->id);
@@ -230,9 +267,6 @@ $this->load->model('Product_model')	;
 					$this->Category_model->delete_wish_id($lis->id);
 				}
 			}
-			//echo $this->db->last_query();exit;
-			$status=$this->Category_model->delete_category($id,$svadmin);
-			if($status==1){
 				$this->session->set_flashdata('success','Category deleted');
 			  redirect('category/category_list');
 			}
@@ -455,6 +489,25 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->inactive_subcategory($id,$svadmin);
 			if($status==1){
+				$p_ids=$this->Category_model->check_sub_product_in_ptab($id);
+				if(isset($p_ids) && count($p_ids)>0){
+					foreach($p_ids as $lis){
+						$p_udata=array('status'=>2);
+						$this->Category_model->update_product($lis->product_id,$p_udata);
+					}
+				}
+				$check=$this->Category_model->check_sub_product_cart($id);
+				if(isset($check) && count($check)>0){
+					foreach($check as $lis){
+						$this->Category_model->delete_cart_id($lis->id);
+					}
+				}
+				$w_check=$this->Category_model->check_wish_sub_product_cart($id);
+				if(isset($w_check) && count($w_check)>0){
+					foreach($w_check as $lis){
+						$this->Category_model->delete_wish_id($lis->id);
+					}
+				}
 				$this->session->set_flashdata('success','Subcategory inactivated');
 			  redirect('category/sub_category_list');
 			}
@@ -473,6 +526,13 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->active_subcategory($id,$svadmin);
 			if($status==1){
+				$p_ids=$this->Category_model->check_sub_product_in_ptab($id);
+				if(isset($p_ids) && count($p_ids)>0){
+					foreach($p_ids as $lis){
+						$p_udata=array('status'=>1);
+						$this->Category_model->update_product($lis->product_id,$p_udata);
+					}
+				}
 				$this->session->set_flashdata('success','Subcategory activated');
 			  redirect('category/sub_category_list');
 			}
@@ -569,6 +629,25 @@ $this->load->model('Product_model')	;
 			$id=base64_decode($this->uri->segment(3));
 			$status=$this->Category_model->delete_subcategory($id,$svadmin);
 			if($status==1){
+				$p_ids=$this->Category_model->check_sub_product_in_ptab($id);
+				if(isset($p_ids) && count($p_ids)>0){
+					foreach($p_ids as $lis){
+						$p_udata=array('status'=>2);
+						$this->Category_model->update_product($lis->product_id,$p_udata);
+					}
+				}
+				$check=$this->Category_model->check_sub_product_cart($id);
+				if(isset($check) && count($check)>0){
+					foreach($check as $lis){
+						$this->Category_model->delete_cart_id($lis->id);
+					}
+				}
+				$w_check=$this->Category_model->check_wish_sub_product_cart($id);
+				if(isset($w_check) && count($w_check)>0){
+					foreach($w_check as $lis){
+						$this->Category_model->delete_wish_id($lis->id);
+					}
+				}
 				$this->session->set_flashdata('success','Subcategory deleted');
 			  redirect('category/sub_category_list');
 			}

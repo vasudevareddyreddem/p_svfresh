@@ -152,7 +152,7 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 		public function get_user_profile($id){
-		$this->db->select('email_id,phone_number,user_name')->from('users_tab')->
+		$this->db->select('email_id,phone_number,user_name,first_name,last_name')->from('users_tab')->
 		where('users_tab.id',$id)->where('status','Active');
 
 	  return $this->db->get()->row_array();
@@ -235,7 +235,7 @@ class Mobile_model extends CI_Model
 	return $this->db->affected_rows()?1:0;
 	}
 	public function check_loging($username){
-		$this->db->select('id,email_id,phone_number,user_name,password,appartment')->from('users_tab')->
+		$this->db->select('id,email_id,first_name,last_name,phone_number,user_name,password,appartment')->from('users_tab')->
 		where('phone_number',$username)->or_where('email_id',$username);
 
 		return $this->db->get()->row_array();
@@ -559,13 +559,13 @@ return $this->db->get()->result_array();
 				 }
 				 public function user_milk_amount($user_id){
 					 $this->db->select('sum(quantity*price) total')->from('calender_tab')->where('user_id',$user_id)->
-					 where('payment_status',0)->where('delivery_status !=',3);
+					 where('payment_status',0)->where('delivery_status !=',3)->where('delivery_status !=',0);
 					 return $this->db->get()->row_array();
 
 				 }
 				 public function  milk_mon_amt($user_id,$mon,$yr){
 					$this->db->select('sum(quantity*price) total')->from('calender_tab')->where('user_id',$user_id)->
-					where('payment_status',0)->where('delivery_status !=',3)->where('year',$yr)->where('month',$mon);
+					where('payment_status',0)->where('delivery_status !=',3)->where('delivery_status !=',0)->where('year',$yr)->where('month',$mon);
 					return $this->db->get()->row_array();
 
 				}
@@ -602,6 +602,17 @@ return $this->db->get()->result_array();
 		  $this->db->where('created_at >=',$outtime);
 		  $this->db->where('created_at <=',$intime);
 		  return $this->db->get()->result_array();
+	  }
+	  
+	  //get product qty
+	  public  function get_product_qty($p_id){
+		$this->db->select('quantity')->from('product_tab')->where('product_id',$p_id);
+		return $this->db->get()->row_array();  
+	  }
+	  // update qty 
+	  public function update_product_qty($p_id,$u_data){
+		 	$this->db->where('product_id',$p_id);
+			return $this->db->update('product_tab',$u_data); 
 	  }
 
 }

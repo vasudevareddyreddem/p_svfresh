@@ -297,12 +297,39 @@ class Category_model extends CI_Model
 		$this->db->where('p.cat_id',$c_id);
 		return $this->db->get()->result();
 	}
+	public  function check_sub_product_cart($subcat_id){
+		$this->db->select('cart_tab.id')->from('cart_tab');
+		$this->db->join('product_tab as p','p.product_id=cart_tab.product_id','left');
+		$this->db->where('p.subcat_id',$subcat_id);
+		return $this->db->get()->result();
+	}
+	public  function check_cat_product_in_ptab($c_id){
+		$this->db->select('product_tab.product_id')->from('product_tab');
+		$this->db->where('product_tab.cat_id',$c_id);
+		return $this->db->get()->result();
+	}
+	public  function check_sub_product_in_ptab($subcat_id){
+		$this->db->select('product_tab.product_id')->from('product_tab');
+		$this->db->where('product_tab.subcat_id',$subcat_id);
+		return $this->db->get()->result();
+	}
 	public  function check_wish_product_cart($c_id){
 		$this->db->select('wishlist_tab.id')->from('wishlist_tab');
 		$this->db->join('product_tab as p','p.product_id=wishlist_tab.product_id','left');
 		$this->db->where('p.cat_id',$c_id);
 		return $this->db->get()->result();
 	}
+	public  function check_wish_sub_product_cart($c_id){
+		$this->db->select('wishlist_tab.id')->from('wishlist_tab');
+		$this->db->join('product_tab as p','p.product_id=wishlist_tab.product_id','left');
+		$this->db->where('p.subcat_id',$c_id);
+		return $this->db->get()->result();
+	}
+	 // update qty 
+	  public function update_product($p_id,$u_data){
+			$this->db->where('product_id',$p_id);
+			return $this->db->update('product_tab',$u_data); 
+	  }
 	public  function delete_cart_id($c_id){
 		$this->db->where('id',$c_id);
 		return $this->db->delete('cart_tab');
