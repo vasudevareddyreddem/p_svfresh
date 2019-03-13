@@ -20,10 +20,12 @@
 								<div class="container">
 									<div id="online_amt_1" style="padding-left:50px;">
 										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation_payment(this.form);" enctype="multipart/form-data">
+											<?php if(isset($payment_disable['payment_option']) && $payment_disable['payment_option']==1){ ?>
 											<input type="radio" id="radio1"  name="payment" onclick="payment_type(this.value);" value="2"><span > Cash On Delivery</span>
 											<br>
 											<br>
 											<input type="radio" id="radio2" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
+											<?php } ?>	
 											<br>
 											<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status == 1) { ?>
 												<br>
@@ -75,10 +77,12 @@
 										<form action="<?php echo base_url('paymentstype/success'); ?>" method="post" onSubmit="return checkvalidation(this.form);" enctype="multipart/form-data">
 											<div class="" >
 												<span id="paymenterrormsg" style="color:red"></span>
+												<?php if(isset($payment_disable['payment_option']) && $payment_disable['payment_option']==1){ ?>
 												<input type="radio" id="radio11"  name="payment" onclick="payment_type(this.value);" value="2"><span > Cash On Delivery</span>
 												<br>
 												<br>
 												<input type="radio" id="radio22" name="payment" onclick="payment_type(this.value);"  value="3"><span > Swipe on Delivery</span>
+												<?php } ?>
 												<br>
 												<?php if(isset($online_payment_disable->account_status) && $online_payment_disable->account_status ==1 && $this->session->userdata('milk_order') == 'MILK') { ?>
 

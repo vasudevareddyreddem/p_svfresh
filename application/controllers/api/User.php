@@ -1935,6 +1935,17 @@ public  function contact_post(){
 				$this->response($message, REST_Controller::HTTP_OK);
 			}
 	}
+	public  function content_post(){
+			$data=$this->Mobile_model->get_app_content_data();
+			//echo $this->db->last_query();exit;
+			if(count($data)>0){
+					$message = array('status'=>1,'details'=>$data,'message'=>'Details are found');
+					$this->response($message, REST_Controller::HTTP_OK);
+			}else{
+				$message = array('status'=>0, 'message'=>'Details are not found');
+				$this->response($message, REST_Controller::HTTP_OK);
+			}
+	}
 
 
 }

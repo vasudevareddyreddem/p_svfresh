@@ -94,6 +94,7 @@
                     <li><a href="<?php  echo base_url('user/address_list'); ?>"><i class="ion ion-ios-circle-outline"></i>Address List</a></li>
                 </ul>
             </li>
+			<li><a href="<?php  echo base_url('admin/appcontent'); ?>" class=""><i class="ion ion-pricetags"></i><span>App Scroll Content & Payment</span></a></li>
         </ul>
     </aside>
 </div>

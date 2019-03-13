@@ -414,7 +414,7 @@ $days=date('d' ,strtotime($date));//present date in month
 	}
 	public function get_month_milk_list($yr,$mon,$num){
 
-		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
+		$this->db->select('product_tab.product_id,product_tab.net_price,product_tab.product_nick_name,calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
 		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
@@ -459,8 +459,38 @@ $days=date('d' ,strtotime($date));//present date in month
 	public function get_month_unpaid_amount($yr,$mon,$num){
 		$this->db->select('sum(c.price*c.quantity) total')->from('calender_tab c')->join('users_tab u' ,'c.user_id=u.id')->where('year',$yr)->where('month',$mon)->where('phone_number',$num)->where('delivery_status !=',3)->where('payment_status',0);
 		return $this->db->get()->row_array();
-
-
+	}
+	public function get_month_wise_brand($yr,$mon,$num){
+		$this->db->select('p.product_id,p.product_nick_name')->from('calender_tab c');
+		$this->db->join('users_tab u' ,'c.user_id=u.id');
+		$this->db->join('product_tab p' ,'p.product_id=c.product_id');
+		$this->db->where('year',$yr);
+		$this->db->where('month',$mon);
+		$this->db->where('phone_number',$num);
+		$this->db->where('delivery_status !=',3);
+		$this->db->where('payment_status',0);
+		$this->db->group_by('c.product_id');
+		$return=$this->db->get()->result_array();
+		foreach($return as $lis){
+			$p_q_list=$this->get_brand_wise_qty($yr,$mon,$num,$lis['product_id']);
+			$b_total=$this->get_brand_wise_total($yr,$mon,$num,$lis['product_id']);
+			$data[$lis['product_id']]=$lis;
+			$data[$lis['product_id']]['qty']=$p_q_list['total'];
+			$data[$lis['product_id']]['b_total']=$b_total['total'];
+			
+		}
+		if(!empty($data)){
+			return $data;
+		}
+	}
+	
+	public  function get_brand_wise_qty($yr,$mon,$num,$pid){
+		$this->db->select('sum(c.quantity) total')->from('calender_tab c')->join('users_tab u' ,'c.user_id=u.id')->where('year',$yr)->where('month',$mon)->where('phone_number',$num)->where('product_id',$pid)->where('delivery_status !=',3)->where('payment_status',0);
+		return $this->db->get()->row_array();
+	}
+	public function get_brand_wise_total($yr,$mon,$num,$pid){
+		$this->db->select('sum(c.price*c.quantity) total')->from('calender_tab c')->join('users_tab u' ,'c.user_id=u.id')->where('year',$yr)->where('month',$mon)->where('phone_number',$num)->where('product_id',$pid)->where('delivery_status !=',3)->where('payment_status',0);
+		return $this->db->get()->row_array();
 	}
 
 }

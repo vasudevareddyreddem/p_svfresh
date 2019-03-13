@@ -72,6 +72,7 @@ $this->load->model('Product_model');
 				$cat_id=base64_decode($this->input->post('c_name'));
 				$subcat_id=$this->input->post('sc_name');
 				$product_name=$this->input->post('p_name');
+				$p_nick_name=$this->input->post('p_nick_name');
 				$act_price=$this->input->post('a_price');
 				$qun=$this->input->post('quantity');
 					$oqun=$this->input->post('oquantity');
@@ -140,6 +141,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 
 				$data=array(
 				'product_name'=>$product_name,
+				'product_nick_name'=>$p_nick_name,
 				'product_img'=>$main_img,
 				'cat_id'=>$cat_id,
 				'subcat_id'=>$subcat_id,
@@ -314,6 +316,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 				$cat_id=base64_decode($this->input->post('c_name'));
 				$subcat_id=$this->input->post('sc_name');
 				$product_name=$this->input->post('p_name');
+				$p_nick_name=$this->input->post('p_nick_name');
 				$act_price=$this->input->post('a_price');
 				$qun=$this->input->post('quantity');
 				$oqun=$this->input->post('oquantity');
@@ -367,6 +370,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
               $this->load->library('upload', $config);
 			  $add=array(
 				'product_name'=>$product_name,
+				'product_nick_name'=>$p_nick_name,
 
 				'cat_id'=>$cat_id,
 				'subcat_id'=>$subcat_id,

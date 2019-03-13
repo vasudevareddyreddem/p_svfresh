@@ -55,5 +55,14 @@ class Admin_model extends CI_Model
 			$res=$this->db->get()->result();
 			return count($res);
 		}
+		public function update_app_content_data($id,$data){
+			$this->db->where('c_id',$id);
+			return $this->db->update('app_scroll_content',$data);
+		}
+		
+		public  function get_app_content_data(){
+				$this->db->select('*')->from('app_scroll_content');
+				return $this->db->get()->row_array();
+		}
 	
 	}

@@ -24,6 +24,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/p_svfresh/';
+//live
+//$config['keyId'] ='rzp_live_9MnC8ZJDzeLsEF';
+//$config['API_keySecret'] = '8gAO2OJuHpsqf9lrjl5XDTyi';
+
 $config['keyId'] ='rzp_test_FMROR38S2ObKGw';
 $config['API_keySecret'] = '4ZAmE5b07syPo0P1WbFUNr7X';
 

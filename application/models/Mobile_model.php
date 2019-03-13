@@ -614,5 +614,9 @@ return $this->db->get()->result_array();
 		 	$this->db->where('product_id',$p_id);
 			return $this->db->update('product_tab',$u_data); 
 	  }
+	  public  function get_app_content_data(){
+				$this->db->select('text,payment_option,cus_mobile_num')->from('app_scroll_content');
+				return $this->db->get()->row_array();
+		}
 
 }

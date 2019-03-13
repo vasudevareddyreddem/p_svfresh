@@ -118,9 +118,9 @@ $this->load->model('Orders_model');
 		public function pending_order(){
 			if($this->session->userdata('svadmin_det')){
 					$admin=$this->session->userdata('svadmin_det');
-			$svadmin=$admin['admin_id'];
-			  $id=base64_decode($this->uri->segment(3));
-             $status=$this->Orders_model->change_to_pending_status($id,$svadmin);
+					$svadmin=$admin['admin_id'];
+			        $id=base64_decode($this->uri->segment(3));
+                    $status=$this->Orders_model->change_to_pending_status($id,$svadmin);
            if($status=1){
 				redirect($_SERVER['HTTP_REFERER']);
 			}
@@ -132,6 +132,35 @@ $this->load->model('Orders_model');
 
 		}
 		else{redirect('login');}
+		}
+		public function list_pdf(){
+			if($this->session->userdata('svadmin_det')){
+					$admin=$this->session->userdata('svadmin_det');
+					$post=$this->input->post();
+					$data['post_data']=$post;
+					$data['orders_list']=$this->Orders_model->get_delivery_order_list($post['o_date'],$post['type']);
+					$path = rtrim(FCPATH,"/");
+					$file_name = 'order_'.$post['o_date'].'_'.$post['type'].'_'.time().'.pdf';
+					$data['page_title'] = $post['o_date'].'_'.$post['type'].'_orders'; // pass data to the view
+					$pdfFilePath = $path."/assets/orders_pdf/".$file_name;
+
+					ini_set('memory_limit','320M'); // boost the memory limit if it's low <img src="https://s.w.org/images/core/emoji/72x72/1f609.png" alt="??" draggable="false" class="emoji">
+					$html = $this->load->view('admin/orders_pdf', $data, true); // render the view into HTML
+					//echo '<pre>';print_r($html);exit;
+					$this->load->library('pdf');
+					$pdf = $this->pdf->load();
+					$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date('M-d-Y')); // Add a footer for good measure <img src="https://s.w.org/images/core/emoji/72x72/1f609.png" alt="??" draggable="false" class="emoji">
+					$pdf->SetDisplayMode('fullpage');
+					$pdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a list
+					$pdf->WriteHTML($html); // write the HTML into the PDF
+					//$pdf->Output();exit;
+					$pdf->Output($pdfFilePath, 'F');
+					redirect("/assets/orders_pdf/".$file_name);
+					echo '<pre>';print_r($orders_list);exit;
+			
+			}else{
+				redirect('login');
+			}
 		}
 
 

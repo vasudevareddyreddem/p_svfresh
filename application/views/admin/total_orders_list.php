@@ -12,6 +12,26 @@
                             <h4>Total Orders List</h4>
                         </div>
                         <div class="card-body">
+						<form  id='pdf' method='post' target="_blank" action="<?php echo base_url('orders/list_pdf'); ?>">
+							<div class="row">
+									<div class="col-md-3">
+										<input type="date" name="o_date" class="form-control" id="o_date"   placeholder="Select Date" required>
+									</div>
+									<div class="col-md-3">
+										<select class="form-control" name="type" id="type" required>
+											<?php $year=date('Y');?>
+											<option value="">Select</option>
+											<option value="1">Delivered</option>
+											<option value="0">Delivery</option>
+											</select>
+									</div>
+									<div class="col-md-3">
+										<button type="submit" class="btn btn-primary ">Export</button>
+									</div>
+
+							</div>
+							</form>
+							<hr>
                             <div class="table-responsive">
                                 <table id="example" class="table table-striped">
                                     <thead>

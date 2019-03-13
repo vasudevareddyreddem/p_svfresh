@@ -37,6 +37,8 @@ class Paymentstype extends CI_Controller
       $user_details = $this->Auth_Model->get_user_details_for_billing($user_id);
       //echo '<pre>';print_r(count($data['cart']));exit;
       $data['online_payment_disable'] = $this->Apartment_model->online_payment_options_for_apartment($user_id);
+      $this->load->model('Admin_model');
+      $data['payment_disable'] = $this->Admin_model->get_app_content_data();
       /*  payment */
       $api_id= $this->config->item('keyId');
       $api_Secret= $this->config->item('API_keySecret');

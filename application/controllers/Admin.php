@@ -49,6 +49,40 @@ class Admin extends In_frontend{
 		}
 
 	}
+	public function appcontent(){
+		if($this->session->userdata('svadmin_det')){
+
+			$data['m_details']=$this->Admin_model->get_app_content_data();
+			$this->load->view('admin/appscroll_content',$data);
+			$this->load->view('admin/footer');
+		}else{
+			redirect('login');
+		}
+
+	}
+	public function update_scroll_content(){
+		if($this->session->userdata('svadmin_det')){
+			$admin=$this->session->userdata('svadmin_det');
+			$post=$this->input->post();
+				$u_con=array(
+				  'text'=>isset($post['s_msg'])?$post['s_msg']:'',
+				  'payment_option'=>isset($post['p_option'])?$post['p_option']:'',
+				  'cus_mobile_num'=>isset($post['c_mobile'])?$post['c_mobile']:'',
+				  'created_by'=>$admin['admin_id'],
+				);
+				$update=$this->Admin_model->update_app_content_data(1,$u_con);
+				if(count($update)>0){
+							$this->session->set_flashdata('success','Content successfully updated');
+					       redirect($_SERVER['HTTP_REFERER']);
+				}else{
+					$this->session->set_flashdata('error','Technical problem occurred. Please try again');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+		}else{
+			redirect('login');
+		}
+
+	}
 	public function new_password(){
 	if($this->session->userdata('svadmin_det')){
 	$this->form_validation->set_rules('oldpassword', 'olde Password', 'required');

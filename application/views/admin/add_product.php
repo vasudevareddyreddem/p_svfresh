@@ -40,6 +40,10 @@
                                                 <label>Product Name</label>
                                                 <input id="p_name" type="text" class="form-control" name="p_name">
                                             </div>
+											<div class="form-group col-md-6">
+                                                <label>Product Nick Name (for reports)</label>
+                                                <input id="p_nick_name" type="text" class="form-control" name="p_nick_name">
+                                            </div>
 											 <div class="form-group col-md-6" name="" id="">
                                         <label class="form-control-label">Select Related Products</label>
                                         	<select id='rel_products' name="rel_products[]"  placeholder="Select Multiple Groups" multiple class="standardSelect form-control">

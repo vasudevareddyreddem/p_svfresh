@@ -132,7 +132,7 @@ class Order extends CI_Controller
   }
   public  function update_qty(){
 	  $post=$this->input->post();
-	  $u_data=array('quantity'=>$post['c_qty']);
+	  $u_data=array('quantity'=>$post['c_qty'],'updated_time'=>date('Y-m-d H:i:s'),'edited_by'=> $this->session->userdata('id'));
 	  $update=$this->Calender_Model->update_qty_amount($post['c_id'],$u_data);
 	  if(count($update)>0)
 		{

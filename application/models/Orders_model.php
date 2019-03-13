@@ -106,5 +106,21 @@ class Orders_model extends CI_Model
 
 		return $this->db->affected_rows()?1:0;
 	}
+	
+	public  function get_delivery_order_list($date,$type){
+		$this->db->select('u.first_name,u.last_name,u.phone_number,u.email_id,o.payment_type,u.flat_door_no,b.block_name,apt.apartment_name,ib.order_items_id,p.product_name,p.product_nick_name,p.product_img,ib.product_id,ib.order_items_id,ib.order_id,ib.quantity,ib.o_quantity,ib.net_price,ib.delivery_status,')->from('order_items_tab as ib');
+		$this->db->join('order_tab as o','o.order_id=ib.order_id','left');
+		$this->db->join('product_tab as p','p.product_id=ib.product_id','left');
+		$this->db->	join('users_tab as u','u.id=ib.user_id');
+		$this->db->join('apartment_tab as apt','apt.apartment_id=u.appartment','left');
+		$this->db->join('block_tab as b','b.block_id=u.block','left');
+		$this->db->where("DATE_FORMAT(ib.created_date,'%Y-%m-%d')",$date);
+		if($type==1){
+		$this->db->where('ib.delivery_status',1);
+		}else{
+		 $this->db->where('ib.delivery_status',2);
+		}
+		return $this->db->get()->result_array();
+	}
 
 	}

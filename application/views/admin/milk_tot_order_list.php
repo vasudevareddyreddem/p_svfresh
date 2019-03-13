@@ -5,6 +5,7 @@
 	margin-bottom:-25px;
 }
 </style>
+
 <div class="main-content">
 	<section class="section">
 		<h1 class="section-header">
@@ -66,7 +67,7 @@
 
 									<div class="col-md-3">
 										<select class="form-control" name="month" id="">
-												<option value="">Month</option>
+											<option value="">Month</option>
 											<option value="1">January</option>
 											<option value="2">February</option>
 											<option value="3">March</option>
@@ -110,6 +111,7 @@
 											<th>Flat/Door number</th>
 											<th>Product Name</th>
 											<th>Quantity</th>
+											<th>Date</th>
 											<th>Mobile Number</th>
 											<th>Payment Type</th>
 											<th>Payment Status</th>
@@ -129,7 +131,18 @@
 													<td><?php echo $order->flat_door_no; ?></td>
 													<td><?php echo $order->product_name; ?>
 													<br>Quantity:<?php echo $order->o_quantity; ?></td>
-													<td><?php echo $order->quantity; ?> </td>
+													 <td><?php 
+														$o_date=$order->year.'-'.$order->month.'-'.$order->date;
+														$n_date=date('Y-m-d');
+														$date1 = new DateTime($n_date);
+														$date2 = new DateTime($o_date);
+														if($date1 > $date2) { ?>
+														 <?php echo $order->quantity; ?>
+														<?php }else{ ?>
+														<input name="order_qty" id="order_qty" onkeyup="update_qty(this.value,'<?php echo $order->calender_id; ?>');" value="<?php echo $order->quantity; ?>">
+														<?php } ?>
+													 </td>
+													<td><?php echo $order->year.'-'.$order->month.'-'.$order->date; ?></td>
 													<td><?php echo $order->phone_number; ?></td>
 													<td><?php if($order->payment_type==1){
 														echo 'online payment';
@@ -181,10 +194,28 @@
 	$(document).ready(function() {
 		$('#bootstrap-data-table').DataTable({
 			"order": [
-				[6, "desc"]
+				[5, "desc"]
 			]
 		});
 	});
+	function update_qty(qty,id){
+	 jQuery.ajax({
+			url: "<?php echo base_url('order/update_qty');?>",
+			data: {
+				c_id: id,
+				c_qty: qty,
+			},
+			dataType: 'json',
+			type: 'POST',
+			success: function (data) {
+					if(data.msg==1){
+						 alert('Quantity Successfully updated');
+					}else{
+					    alert('Techincal proble occured. Please try again');
+					}
+			}
+   	});
+}
 	</script>
 	<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.dataTables.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/js/dataTables.bootstrap4.min.js'); ?>"></script>
