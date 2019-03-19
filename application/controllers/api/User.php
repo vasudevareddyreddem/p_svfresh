@@ -542,6 +542,9 @@ public function edit_profile_post(){
 	$username=$this->post('username');
 	$email=$this->post('email');
 	$mobile=$this->post('mobile');
+	$appartment=$this->post('appartment');
+	$block=$this->post('block');
+	$flat_door_no=$this->post('flat_door_no');
 	$status=$this->Mobile_model->check_edit_email($email,$user_id);
 
 
@@ -560,7 +563,10 @@ public function edit_profile_post(){
 	'last_name'=>$lname,
 	'email_id'=>$email,
 	'phone_number'=>$mobile,
-	'user_name'=>$username);
+	'user_name'=>$username,
+	'block'=>$block,
+	'flat_door_no'=>$flat_door_no,
+	'appartment'=>$appartment);
 	$status=$this->Mobile_model->update_profile($data,$user_id);
 	if($status==1){
 		 $message = array('status'=>1,'message'=>'Profile Updated Successfully');
@@ -1727,15 +1733,17 @@ public function milk_month_amt_post(){
   $mon=$this->post('mon');
   $yr=$this->post('year');
   $row=$this->Mobile_model->milk_mon_amt($user_id,$mon,$yr);
+  $qty_list=$this->Mobile_model->milk_mon_amt_list($user_id,$mon,$yr);
   //echo $this->db->last_query();exit;
+  //echo '<pre>';print_r($qty_list);exit;
 
 if($row['total']==''or $row['total']==null){
 
-  $message=array('status'=>0,'amount'=>0);
+  $message=array('status'=>0,'amount'=>0,'details'=>array());
 
      $this->response($message, REST_Controller::HTTP_OK);
 }
-$message=array('status'=>1,'amount'=>$row['total']);
+$message=array('status'=>1,'amount'=>$row['total'],'details'=>$qty_list);
 
    $this->response($message, REST_Controller::HTTP_OK);
 

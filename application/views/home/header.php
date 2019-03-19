@@ -35,9 +35,10 @@
                         <?php }else{ ?>
                         <li><a href="<?php echo base_url('home/login'); ?>">Login</a></li>
                         <?php } ?>
+						
+                        <li><a href="<?php echo base_url('home/profile'); ?>">Profile</a></li>
                         <li><a href="<?php echo base_url('order'); ?>">Orders</a></li>
                         <li><a href="<?php echo base_url('order/milk_orders'); ?>">Milk Orders</a></li>
-                        <!-- <li><a href="">Compare</a></li> -->
                         <li><a href="<?php echo base_url('wishlist'); ?>">Wishlists</a></li>
                     </ul>
                 </div>

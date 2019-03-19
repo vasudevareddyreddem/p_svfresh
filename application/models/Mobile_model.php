@@ -152,8 +152,11 @@ class Mobile_model extends CI_Model
 	  return $this->db->get()->result_array();
 	}
 		public function get_user_profile($id){
-		$this->db->select('email_id,phone_number,user_name,first_name,last_name')->from('users_tab')->
-		where('users_tab.id',$id)->where('status','Active');
+		$this->db->select('users_tab.email_id,users_tab.phone_number,users_tab.user_name,users_tab.first_name,users_tab.last_name,users_tab.appartment,users_tab.block,users_tab.flat_door_no,a.apartment_name,b.block_name')->from('users_tab');
+		$this->db->join('apartment_tab as a','a.apartment_id=users_tab.appartment','left');
+		$this->db->join('block_tab as b','b.block_id=users_tab.block','left');
+
+		$this->db->where('users_tab.id',$id)->where('users_tab.status','Active');
 
 	  return $this->db->get()->row_array();
 	}
@@ -567,6 +570,18 @@ return $this->db->get()->result_array();
 					$this->db->select('sum(quantity*price) total')->from('calender_tab')->where('user_id',$user_id)->
 					where('payment_status',0)->where('delivery_status !=',3)->where('delivery_status !=',0)->where('year',$yr)->where('month',$mon);
 					return $this->db->get()->row_array();
+
+				} 
+				public function  milk_mon_amt_list($user_id,$mon,$yr){
+					$this->db->select('p.product_name,p.o_quantity,concat(c.year,"-",c.month,"-",c.date) as date,c.quantity,c.price,(c.quantity*c.price) as total')->from('calender_tab as c');
+					$this->db->join('product_tab as p','p.product_id=c.product_id','left');
+					$this->db->where('c.user_id',$user_id);
+					$this->db->where('c.payment_status',0);
+					$this->db->where('c.delivery_status !=',3);
+					$this->db->where('c.delivery_status !=',0);
+					$this->db->where('c.year',$yr);
+					$this->db->where('c.month',$mon);
+					return $this->db->get()->result_array();
 
 				}
 		public function	update_milk_payment($user_id,$mon,$yr,$data){

@@ -55,7 +55,7 @@
 					<td><?php echo $order['first_name'].' '.$order['last_name']; ?></td>
 					<td><?php echo $order['phone_number']; ?></td>
 					<td><?php echo $order['flat_door_no'].' ,'.$order['block_name'].', '.$order['apartment_name']; ?></td>
-					<td><?php echo $order['product_name']; ?> : <?php echo $order['product_nick_name']; ?></td>
+					<td><?php echo $order['product_name']; ?> </td>
 					<td><?php echo $order['quantity']; ?></td>
 					<td><?php echo $order['net_price']; ?></td>
 					<td><?php echo ($order['quantity']*$order['net_price']); ?></td>
