@@ -29,7 +29,7 @@
 			<div id="user-info-top" class="user-info " >
                 <div class="dropdown ">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
-                    <ul class="dropdown-menu mega_dropdown" role="menu">
+                    <ul class="dropdown-menu " role="menu">
                         <?php if($this->session->userdata('logged_in') == TRUE){ ?>
                         <li><a href="<?php echo base_url('home/logout'); ?>">Logout</a></li>
                         <?php }else{ ?>
