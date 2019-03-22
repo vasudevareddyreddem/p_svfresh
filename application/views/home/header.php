@@ -31,15 +31,15 @@
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
                     <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php if($this->session->userdata('logged_in') == TRUE){ ?>
-                        <a href="<?php echo base_url('home/logout'); ?>"><li>Logout</li></a>
+                        <li><a href="<?php echo base_url('home/logout'); ?>">Logout</a></li>
                         <?php }else{ ?>
-                       <a href="<?php echo base_url('home/login'); ?>"> <li>Login</li></a>
+                        <li><a href="<?php echo base_url('home/login'); ?>">Login</a></li>
                         <?php } ?>
 						
-                       <a href="<?php echo base_url('home/profile'); ?>"> <li>Profile</li></a>
-                       <a href="<?php echo base_url('order'); ?>"> <li>Orders</li></a>
-                       <a href="<?php echo base_url('order/milk_orders'); ?>"> <li>Milk Orders</li></a>
-                       <a href="<?php echo base_url('wishlist'); ?>"> <li>Wishlists</li></a>
+                        <li><a href="<?php echo base_url('home/profile'); ?>">Profile</a></li>
+                        <li><a href="<?php echo base_url('order'); ?>">Orders</a></li>
+                        <li><a href="<?php echo base_url('order/milk_orders'); ?>">Milk Orders</a></li>
+                        <li><a href="<?php echo base_url('wishlist'); ?>">Wishlists</a></li>
                     </ul>
                 </div>
             </div>
@@ -114,7 +114,7 @@
 	<div id="nav-top-menu" class="nav-top-menu">
         <div class="container">
             <div class="">
-                <div id="main-menu" class="col-md-12  ">
+                <div id="main-menu" class="col-md-9  ">
                     <nav class="navbar navbar-default">
                         <div class="container-fluid">
                             <div class="navbar-header">
