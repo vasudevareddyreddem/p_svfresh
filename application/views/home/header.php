@@ -114,7 +114,7 @@
 	<div id="nav-top-menu" class="nav-top-menu">
         <div class="container">
             <div class="">
-                <div id="main-menu" class="col-md-9  ">
+                <div id="main-menu" class="col-md-12  ">
                     <nav class="navbar navbar-default">
                         <div class="container-fluid">
                             <div class="navbar-header">
