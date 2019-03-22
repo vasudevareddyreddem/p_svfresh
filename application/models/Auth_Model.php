@@ -14,7 +14,8 @@ class Auth_Model extends CI_Model
 
   public function insert($post_data)
   {
-    return $this->db->insert($this->table,$post_data);
+    $this->db->insert($this->table,$post_data);
+	return $this->db->insert_id();
   }
   //checking email unique
   public function check_email_exists($email='',$id='')
@@ -122,6 +123,16 @@ class Auth_Model extends CI_Model
     $this->db->insert('user_old_address_tab',$data);
     return $this->db->affected_rows()?1:0;
   }
+  
+  public  function user_details($id){
+	  $this->db->select('id,phone_number,otp,verified,email_id,phone_number,role')->from('users_tab');
+	  $this->db->where ('id',$id);
+	  return $this->db->get()->row_array();
+ }
+ public  function update_user_data($id,$data){
+	 $this->db->where ('id',$id);
+	 return $this->db->update('users_tab',$data);
+ }
 
 }
 
