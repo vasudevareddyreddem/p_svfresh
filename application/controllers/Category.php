@@ -90,7 +90,7 @@ $this->load->model('Product_model')	;
 			   }
 			  
 			    $config['upload_path']          = './assets/uploads/category_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
                 // $config['max_size']             = 100;
                 // $config['max_width']            = 1024;
                 // $config['max_height']           = 768;
@@ -325,7 +325,7 @@ $this->load->model('Product_model')	;
 				  
 			  }
 			    $config['upload_path']          = './assets/uploads/category_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
                 // $config['max_size']             = 100;
                 // $config['max_width']            = 1024;
                 // $config['max_height']           = 768;
@@ -441,7 +441,7 @@ $this->load->model('Product_model')	;
 				  
 			}
 			$config['upload_path']          = './assets/uploads/sub_category_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
                 
 
                 $this->load->library('upload', $config);
@@ -577,7 +577,7 @@ $this->load->model('Product_model')	;
 				  
 			}
 			    $config['upload_path']          = './assets/uploads/sub_category_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
 
                 $this->load->library('upload', $config);
 			$img_status=0;
@@ -680,7 +680,7 @@ $this->load->model('Product_model')	;
 			//echo '<pre>';print_r($_FILES);exit;
 			
 			$config['upload_path']          = './assets/uploads/category_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
                 
 
                 $this->load->library('upload', $config);
@@ -745,7 +745,7 @@ $this->load->model('Product_model')	;
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
 			$config['upload_path']          = './assets/uploads/sub_category_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']       = 'gif|jpg|png|jpeg|Jpeg|Png';
                 
 
                 $this->load->library('upload', $config);
@@ -861,7 +861,7 @@ $this->load->model('Product_model')	;
 			$admin=$this->session->userdata('svadmin_det');
 			$svadmin=$admin['admin_id'];
 			$config['upload_path']          = './assets/uploads/sub_category_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']       = 'gif|jpg|png|jpeg|Jpeg|Png';
                 
 
                 $this->load->library('upload', $config);

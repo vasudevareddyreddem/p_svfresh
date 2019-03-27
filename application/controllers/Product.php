@@ -366,7 +366,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 
 				}
 								 $config['upload_path']          = './assets/uploads/product_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']       = 'gif|jpg|png|jpeg|Jpeg|Png';
               $this->load->library('upload', $config);
 			  $add=array(
 				'product_name'=>$product_name,
@@ -426,7 +426,7 @@ if ( ! $this->upload->do_upload('main_image',time()))
 			 }
 
 				 $config['upload_path']          = './assets/uploads/product_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
 
 
                 $this->load->library('upload', $config);

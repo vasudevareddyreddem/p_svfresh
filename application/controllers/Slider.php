@@ -34,7 +34,7 @@ $this->load->model('Slider_model');
 				  redirect($_SERVER['HTTP_REFERER']);
 			}
 			$config['upload_path']          = './assets/uploads/slider_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
 
                 $this->load->library('upload', $config);
 				
@@ -248,7 +248,7 @@ $this->load->model('Slider_model');
 				  redirect($_SERVER['HTTP_REFERER']);
 			}
 			$config['upload_path']          = './assets/uploads/slider_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']       = 'gif|jpg|png|jpeg|Jpeg|Png';
 
                 $this->load->library('upload', $config);
 				$data=array('slider_name'=>$s_name,'updated_by'=>$svadmin);

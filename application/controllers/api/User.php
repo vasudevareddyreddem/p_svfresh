@@ -1760,7 +1760,7 @@ public function  update_milk_payments_post(){
   $mon=$this->post('mon');
   $yr=$this->post('year');
   $config['upload_path']          = './assets/uploads/screenshot';
-         $config['allowed_types']        = 'gif|jpg|png';
+         $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
        $this->load->library('upload', $config);
 if ( ! $this->upload->do_upload('img',time()))
          {

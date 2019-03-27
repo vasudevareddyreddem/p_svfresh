@@ -38,7 +38,7 @@
                                             <td><?php echo $order->order_number; ?></td>
                                             <td><?php echo $order->product_name; ?>
                                             <br>Quantity:<?php echo $order->o_quantity; ?></td>
-                                            <td><img alt="image" src="<?php echo base_url('assets/uploads/product_pics/').$order->product_name; ?>"></td>
+											<td><img alt="image" width="50px;" height="50px;" src="<?php echo base_url('assets/uploads/product_pics/'.$order->product_img); ?>"></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->net_price; ?></td>
 											 <td><?php echo $order->quantity*$order->net_price; ?></td>
@@ -48,16 +48,15 @@
 											<span> Block_name:<?php echo $order->block_name; ?></span>
 											<span>Flat Number:<?php echo $order->flat_door_no; ?></span>
 											</td>
-                                            <td><?php if($order->payment_type==1){
-												echo 'Cash On Delivery';
+                                           <td><?php if($order->payment_type==1){
+												echo 'online payment';
 											}
 											if($order->payment_type==2){
-												echo'Card Payment';
+												echo'Cash On Delivery';
 											}
 											if($order->payment_type==3){
-												echo'Swiping';
-											}
-											?></td>
+												echo 'Swiping';
+											}?></td>
 
 											<td><?php
 											if($order->created_date!=''){

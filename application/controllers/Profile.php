@@ -41,7 +41,7 @@ if($this->session->userdata('svadmin_det')){
 	if(!$this->input->post('mobile')==''){
 		$data['phone_number']=$this->input->post('mobile');
 	} $config['upload_path']          = './assets/uploads/profile_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']       = 'gif|jpg|png|jpeg|Jpeg|Png';
 
 
                 $this->load->library('upload', $config);
