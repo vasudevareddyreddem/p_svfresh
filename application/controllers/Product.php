@@ -123,13 +123,13 @@ $this->load->model('Product_model');
 								}
 
 				 $config['upload_path']          = './assets/uploads/product_pics';
-                $config['allowed_types']        = 'gif|jpg|png';
+                $config['allowed_types']        = 'gif|jpg|png|jpeg|Jpeg|Png';
               $this->load->library('upload', $config);
 if ( ! $this->upload->do_upload('main_image',time()))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
-                          $this->session->set_flashdata('error',$error);
+                          $this->session->set_flashdata('error',$error['error']);
 					      redirect($_SERVER['HTTP_REFERER']);
                 }
 				else{

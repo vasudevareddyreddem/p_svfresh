@@ -1021,7 +1021,7 @@ $months[]=$curmonth;
 	$price=$this->post('price');
 
 	foreach($quantitys as $key=>$value ){
-    if($value==0){
+    if($value<0){
 
     }
       else{
@@ -1037,7 +1037,7 @@ $months[]=$curmonth;
 }
 
 	}
-
+	//echo '<pre>';print_r($data);exit;
 	$status=$this->Mobile_model->milk_orders($data);
 
 	if($status==1){
