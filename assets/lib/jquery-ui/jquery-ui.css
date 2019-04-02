@@ -204,7 +204,7 @@
 	top: 0;
 	left: 0;
 	cursor: default;
-	height:300px;
+	max-height:300px;
 	overflow-x:hidden;
 	overflow-y: scroll;
 }

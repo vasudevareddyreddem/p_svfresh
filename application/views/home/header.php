@@ -142,9 +142,15 @@
                                         <li <?php if(!empty($id) && ($id == $c->cat_id)){ echo 'class="active"'; } else { echo 'class=" "'; } ?>><a href="<?php echo base_url('category/'.$c->cat_id); ?>"><?php echo $c->cat_name; ?></a></li>
                                       <?php  } ?>
                                     <?php } ?>
-                  									<!-- <li class=""><a href="#">Grocery </a></li>
-                  									<li class=""><a href="milk-category.php">Milk </a></li>
-                  									<li class=""><a href="#">Water can </a></li> -->
+									<!--<li class="">
+										<div class="dropdown ">
+											<a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
+										<ul class="dropdown-menu " role="menu">
+											<li><a href="#">Wishlists</a></li>
+										</ul>
+										</div>
+									</li>-->
+                  									
                                 </ul>
                               <?php //} ?>
                             </div><!--/.nav-collapse -->
