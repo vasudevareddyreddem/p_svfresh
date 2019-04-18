@@ -30,6 +30,7 @@ $config['base_url'] = 'http://localhost/p_svfresh/';
 
 $config['keyId'] ='rzp_test_FMROR38S2ObKGw';
 $config['API_keySecret'] = '4ZAmE5b07syPo0P1WbFUNr7X';
+$config['server_key_push'] = 'AAAAbitjnEA:APA91bEZfxPIVa_D8oJ3ErHVb3DV6yM_FXD03x-fd8oJ4GCOQieDrF0LSDxq3zKoHcKBljanVXy31aqF87zl9KBuKTyxOyjJzitF9eDMLqADj8RfD8ka2wzfNUXf2PG9PLhnRBgSowjb';
 
 /*
 |--------------------------------------------------------------------------

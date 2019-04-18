@@ -572,7 +572,7 @@ return $this->db->get()->result_array();
 					return $this->db->get()->row_array();
 
 				} 
-				public function  milk_mon_amt_list($user_id,$mon,$yr){
+				public function  milk_mon_amt_list($user_id,$mon,$yr,$date){
 					$this->db->select('p.product_name,p.o_quantity,concat(c.year,"-",c.month,"-",c.date) as date,c.quantity,c.price,(c.quantity*c.price) as total')->from('calender_tab as c');
 					$this->db->join('product_tab as p','p.product_id=c.product_id','left');
 					$this->db->where('c.user_id',$user_id);
@@ -581,6 +581,7 @@ return $this->db->get()->result_array();
 					$this->db->where('c.delivery_status !=',0);
 					$this->db->where('c.year',$yr);
 					$this->db->where('c.month',$mon);
+					$this->db->where('c.date<=',$date);
 					return $this->db->get()->result_array();
 
 				}
@@ -633,5 +634,66 @@ return $this->db->get()->result_array();
 				$this->db->select('text,payment_option,cus_mobile_num')->from('app_scroll_content');
 				return $this->db->get()->row_array();
 		}
-
+		
+		public  function get_cart_count($user_id){
+			$this->db->select('Count(id) as cnt')->from('cart_tab');
+			$this->db->where('user_id',$user_id);
+			return $this->db->get()->row_array();
+		}
+		
+		//check app version_compare
+		public function get_mobile_mac_version($mac){
+			$this->db->select('mac_add,version')->from('mobile_versions');
+			$this->db->where('mac_add',$mac);
+			return $this->db->get()->row_array();
+		}
+		// update mac details 
+		public  function update_mac_addtress($mac_id,$data){
+			$this->db->where('mac_add',$mac_id);
+			return $this->db->update('mobile_versions',$data);
+		}
+		// save mac details 
+		public  function insert_mac_addtress($data){
+			$this->db->insert('mobile_versions',$data);
+			return $this->db->insert_id();
+		}
+		
+		
+		// for otp checking checking
+		public  function check_user_details($id){
+			$this->db->select('id,otp')->from('users_tab');
+			$this->db->where('id',$id);
+			return $this->db->get()->row_array();
+		}
+		
+		// updaste otp
+		public  function update_mobile_verification($id,$data){
+				$this->db->where('id',$id);
+			return $this->db->update('users_tab',$data);
+		}
+		// update user tocken details 
+		public  function update_user_tocken($id,$data){
+			$this->db->where('id',$id);
+			return $this->db->update('users_tab',$data);
+		}
+		
+		// update token purpose
+		public  function get_token_users_list(){
+			$this->db->select('id,token')->from('users_tab');
+			$this->db->where('token !=','');
+			return $this->db->get()->result_array();
+		}
+		
+		public  function get_milk_product_qty_details($product_id,$user_id,$month,$year,$date){
+			$this->db->select('quantity,date')->from('calender_tab');
+			$this->db->where('product_id',$product_id);
+			$this->db->where('user_id',$user_id);
+			$this->db->where('month',$month);
+			$this->db->where('year',$year);
+			$this->db->where('quantity !=',0);
+			$this->db->where('date>=',$date);
+			$this->db->order_by('date','asc');
+			return $this->db->get()->result_array();
+		}
+		
 }

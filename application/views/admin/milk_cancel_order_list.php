@@ -27,13 +27,20 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <select class="form-control" name="block" id="block">
-                                            <option value="">--First select apartment--</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" name="date" class="form-control" id="datepicker" readonly value="<?php if (isset($filter) && ($filter['date'] != '' )) { echo $filter['date']; } else { echo ""; } ?>" placeholder="Pick a delivery date">
-                                    </div>
+										<select class="form-control" name="block" id="block"  data-block="<?php if (isset($filter) && ($filter['floor'])) { echo $filter['floor']; } else { echo ''; } ?>">
+											<option value="">--First select apartment--</option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<select class="form-control" name="floor" id="floor" data-block="<?php if (isset($filter) && ($filter['floor'])) { echo $filter['floor']; } else { echo ''; } ?>">
+											<option value="">--First select Floor--</option>
+											<?php if(count($floor_detail) > 0){ ?>
+												<?php foreach ($floor_detail as $a) { ?>
+													<option value="<?php echo $a->flat_door_no; ?>" <?php if (isset($filter) && ($filter['floor'] == $a->flat_door_no)) { echo 'selected'; } else { echo ''; } ?>><?php echo $a->flat_door_no; ?></option>
+												<?php } ?>
+											<?php } ?>
+										</select>
+									</div>
                                     <div class="col-md-3">
                                         <input type="text" name="phonenum" class="form-control" id="phonenum"  value="<?php if (isset($filter) && ($filter['phonenum'] != '' )) { echo $filter['phonenum']; } else { echo ""; } ?>" placeholder="Enter Phone Number">
                                     </div>
@@ -73,7 +80,7 @@
                                             <td><?php echo $order->apartment_name; ?></td>
 											 <td><?php echo $order->block_name; ?></td>
 											  <td><?php echo $order->flat_door_no; ?></td>
-                                            <td><?php echo $order->product_name; ?>
+                                            <td><?php echo $order->product_nick_name; ?>
                                             <br>Quantity:<?php echo $order->o_quantity; ?></td>
                                             <td><?php echo $order->quantity; ?> </td>
                                             <td><?php echo $order->price; ?></td>
@@ -156,6 +163,21 @@
                 });
             }
         }).trigger('change');
+		$('#block').on('change',function(){
+			var b_id = $(this).val();
+			if (b_id) {
+				$('#floor').html('<option value="">loading....</option>');
+				var floor = $(this).data('block');
+				$.ajax({
+					url:'<?php echo base_url('milkorder/get_floor_by_block_id'); ?>',
+					type:'POST',
+					data:{'block_id':b_id,'block':floor},
+					success:function(data){
+						$('#floor').html(data);
+					}
+				});
+			}
+		}).trigger('change');
 
         $('#datepicker').datepicker({
             format: 'd/m/yyyy'

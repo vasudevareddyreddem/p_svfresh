@@ -190,7 +190,7 @@ class Order extends CI_Controller
 			  $c_ids[]=$c_li['calender_id'];
 			}
 			$data['msg']=1;
-			$data['amt']=isset($amt)?$amt:'';
+			$data['amt']=isset($amt)?$amt+30:'';
 			$data['c_ids']=$c_ids;
 			echo json_encode($data);exit;
 

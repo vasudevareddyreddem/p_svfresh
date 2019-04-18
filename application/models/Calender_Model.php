@@ -17,7 +17,7 @@ class Calender_Model extends CI_Model
   {
   //   $to_date1=strtotime("1 day", strtotime($todate));
 	// $plusone= date("d-m-Y", $to_date1);
-	$this->db->select('p.product_name AS product_name,p.o_quantity,c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price,c.delivery_status,c.calender_id,c.payment_status');
+	$this->db->select('p.product_name AS product_name,p.o_quantity, c.date AS date,c.month AS month,c.year AS year,c.quantity AS quantity,(c.price * c.quantity) AS price,c.delivery_status,c.calender_id,c.payment_status');
     $this->db->from('calender_tab AS c');
     $this->db->join('product_tab AS p','c.product_id = p.product_id','left');
     if (isset($date) && !empty($date)) {
@@ -56,7 +56,7 @@ class Calender_Model extends CI_Model
 		}
 	  $this->db->where('p.status','1');
     $this->db->where('c.user_id',$user_id);
-    $this->db->order_by('c.created_date','desc');
+    $this->db->order_by('c.date','desc');
     return $this->db->get()->result();
   }
 
@@ -157,6 +157,7 @@ class Calender_Model extends CI_Model
 		}
 		$this->db->where('p.status','1');
 		$this->db->where('c.payment_status',0);
+		$this->db->where('c.delivery_status!=',3);
 		$this->db->order_by('c.created_date','desc');
 		$this->db->where('c.user_id',$user_id);
 		return $this->db->get()->result_array();

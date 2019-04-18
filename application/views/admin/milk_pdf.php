@@ -68,7 +68,7 @@
 						<div class="badge badge-info">
 							<?php if($order->delivery_status==1)
 							{echo 'Delivered';}
-							if($order->delivery_status==0)
+							if($order->delivery_status==3)
 							{echo 'Cancelled';}
 							if($order->delivery_status==2)
 							{echo 'Pending';}

@@ -11,11 +11,11 @@ class Adminuser_model extends CI_Model
     }
 
     public function get_user_list(){
-        $this->db->select('*')->from('users_tab')->
-		//where('created_by is NOT NULL', NULL, FALSE)->
-		//where('updated_by_admin is  NULL', NULL, FALSE)->
-		where('status !=','Deleted')->order_by('created_date','desc');
-      return  $this->db->get()->result();
+        $this->db->select('users_tab.*,block_tab.block_name,apartment_tab.apartment_name')->from('users_tab');
+		$this->db->join('block_tab','block_tab.block_id=users_tab.block','left');
+		$this->db->join('apartment_tab','apartment_tab.apartment_id=users_tab.appartment','left');
+		$this->db->where('users_tab.status !=','Deleted')->order_by('users_tab.created_date','desc');
+		return  $this->db->get()->result();
 
     }
     public function get_user_by_id($id){

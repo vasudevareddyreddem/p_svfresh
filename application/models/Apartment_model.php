@@ -159,9 +159,18 @@ class Apartment_model extends CI_Model
     //get all blocks where status active and apartment id -- Rana
     public function get_blocks_by_apartment_id($apartment_id='')
     {
-      return $this->db->get_where('block_tab',array('apartment_id' => $apartment_id,'status' => '1'))->result();
+		
+		 $this->db->select('*')->from('block_tab b');
+		 $this->db->where('apartment_id',$apartment_id);
+		 $this->db->where('status',1);
+		 $this->db->order_by('block_id','asc');
+		return $this->db->get()->result();
     }
-
+	//get all floors where status active and block id -- vasu
+    public function get_floors_by_block_id($block_id='')
+    {
+      return $this->db->get_where('users_tab',array('block' => $block_id))->result();
+    }
 	public function  get_balocks_by_apts($apts){
 		$this->db->select('*')->from('block_tab');
 		$this->db->where('apartment_id',$apts);

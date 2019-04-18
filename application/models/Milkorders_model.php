@@ -9,12 +9,12 @@ class Milkorders_model extends CI_Model
 		$this->load->database("default");
         $this->db->query("SET time_zone='+5:30'");
 	}
-	public function total_order_list($apartment='',$block='',$date='',$mobile='')
+	public function total_order_list($apartment='',$block='',$floor_number='',$mobile='')
 	{
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
+		product_tab.product_name,product_tab.product_nick_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
 		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 	users_tab.phone_number,
 		calender_tab.delivered_time,calender_tab.cancelled_time,calender_tab.payment_status,calender_tab.payment_img,calender_tab.payment_date,calender_tab.order_id');
@@ -32,24 +32,10 @@ class Milkorders_model extends CI_Model
 		}
 		if (isset($block) && !empty($block)) {
 			$this->db->where('users_tab.block',$block);
+		}if (isset($floor_number) && !empty($floor_number)) {
+			$this->db->where('users_tab.flat_door_no',$floor_number);
 		}
-		if (isset($date) && !empty($date)) {
-			$date_fragment = explode('/',$date);
-			if(is_array($date_fragment)){
-				$day = $date_fragment[0];
-				if(isset($day) && !empty($day)){
-					$this->db->where('calender_tab.date',$day);
-				}
-				$month = $date_fragment[1];
-				if(isset($month) && !empty($month)){
-					$this->db->where('calender_tab.month',$month);
-				}
-				$year = $date_fragment[2];
-				if(isset($year) && !empty($year)){
-					$this->db->where('calender_tab.year',$year);
-				}
-			}
-		}
+		
 		$this->db->order_by('apartment_tab.apartment_name');
 		$this->db->order_by('block_tab.block_name');
 		$this->db->order_by('calender_tab.year','desc');
@@ -59,12 +45,12 @@ class Milkorders_model extends CI_Model
 
 		return $this->db->get()->result();
 	}
-	public function total_payment_order_list($apartment='',$block='',$date='',$mobile='')
+	public function total_payment_order_list($apartment='',$block='',$floor_number='',$mobile='')
 	{
 		$this->db->select('calender_tab.calender_id,calender_tab.order_id,calender_tab.admin_accept_status,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price ,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,product_tab.o_quantity,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,
+		product_tab.product_name,product_tab.product_nick_name,users_tab.email_id,users_tab.first_name,
 		users_tab.last_name,users_tab.user_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 	users_tab.phone_number,
 		calender_tab.delivered_time,calender_tab.cancelled_time,calender_tab.payment_status,calender_tab.payment_img');
@@ -83,23 +69,10 @@ class Milkorders_model extends CI_Model
 		if (isset($block) && !empty($block)) {
 			$this->db->where('users_tab.block',$block);
 		}
-		if (isset($date) && !empty($date)) {
-			$date_fragment = explode('/',$date);
-			if(is_array($date_fragment)){
-				$day = $date_fragment[0];
-				if(isset($day) && !empty($day)){
-					$this->db->where('calender_tab.date',$day);
-				}
-				$month = $date_fragment[1];
-				if(isset($month) && !empty($month)){
-					$this->db->where('calender_tab.month',$month);
-				}
-				$year = $date_fragment[2];
-				if(isset($year) && !empty($year)){
-					$this->db->where('calender_tab.year',$year);
-				}
-			}
+		if (isset($floor_number) && !empty($floor_number)) {
+			$this->db->where('users_tab.flat_door_no',$floor_number);
 		}
+		
 		$this->db->where('calender_tab.payment_status',1);
 		$this->db->order_by('apartment_tab.apartment_name');
 		$this->db->order_by('block_tab.block_name');
@@ -110,11 +83,11 @@ class Milkorders_model extends CI_Model
 
 		return $this->db->get()->result();
 	}
-	public function pending_order_list($apartment='',$block='',$date='',$mobile=''){
+	public function pending_order_list($apartment='',$block='',$floor_number='',$mobile=''){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
+		product_tab.product_name,product_tab.product_nick_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
 		users_tab.last_name,users_tab.email_id,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 
 		users_tab.phone_number');
@@ -134,23 +107,10 @@ class Milkorders_model extends CI_Model
 		if (isset($block) && !empty($block)) {
 			$this->db->where('users_tab.block',$block);
 		}
-		if (isset($date) && !empty($date)) {
-			$date_fragment = explode('/',$date);
-			if(is_array($date_fragment)){
-				$day = $date_fragment[0];
-				if(isset($day) && !empty($day)){
-					$this->db->where('calender_tab.date',$day);
-				}
-				$month = $date_fragment[1];
-				if(isset($month) && !empty($month)){
-					$this->db->where('calender_tab.month',$month);
-				}
-				$year = $date_fragment[2];
-				if(isset($year) && !empty($year)){
-					$this->db->where('calender_tab.year',$year);
-				}
-			}
+		if (isset($floor_number) && !empty($floor_number)){
+			$this->db->where('users_tab.flat_door_no',$floor_number);
 		}
+		
 		$this->db->order_by('apartment_tab.apartment_name');
 	 $this->db->order_by('block_tab.block_name');
 		$this->db->order_by('calender_tab.year','desc');
@@ -160,11 +120,11 @@ class Milkorders_model extends CI_Model
 
 		return $this->db->get()->result();
 	}
-	public function delivered_order_list($apartment='',$block='',$date='',$mobile=''){
+	public function delivered_order_list($apartment='',$block='',$floor_number='',$mobile=''){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,product_tab.o_quantity,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
+		product_tab.product_name,product_tab.product_nick_name,users_tab.email_id,users_tab.first_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 		users_tab.last_name,
 		users_tab.phone_number,calender_tab.delivered_time');
 		$this->db->from('calender_tab');
@@ -183,23 +143,10 @@ class Milkorders_model extends CI_Model
 		if (isset($block) && !empty($block)) {
 			$this->db->where('users_tab.block',$block);
 		}
-		if (isset($date) && !empty($date)) {
-			$date_fragment = explode('/',$date);
-			if(is_array($date_fragment)){
-				$day = $date_fragment[0];
-				if(isset($day) && !empty($day)){
-					$this->db->where('calender_tab.date',$day);
-				}
-				$month = $date_fragment[1];
-				if(isset($month) && !empty($month)){
-					$this->db->where('calender_tab.month',$month);
-				}
-				$year = $date_fragment[2];
-				if(isset($year) && !empty($year)){
-					$this->db->where('calender_tab.year',$year);
-				}
-			}
+		if (isset($floor_number) && !empty($floor_number)) {
+			$this->db->where('users_tab.flat_door_no',$floor_number);
 		}
+		
 		$this->db->order_by('apartment_tab.apartment_name');
 		$this->db->order_by('block_tab.block_name');
 		$this->db->order_by('calender_tab.year','desc');
@@ -209,11 +156,11 @@ class Milkorders_model extends CI_Model
 
 		return $this->db->get()->result();
 	}
-	public function cancel_order_list($apartment='',$block='',$date='',$mobile=''){
+	public function cancel_order_list($apartment='',$block='',$floor_number='',$mobile=''){
 		$this->db->select('calender_tab.calender_id,calender_tab.year,calender_tab.date,calender_tab.month,
 		calender_tab.quantity,(calender_tab.price)*(calender_tab.quantity) as price,calender_tab.delivery_status,calender_tab.created_date,
 		calender_tab.payment_type,
-		product_tab.product_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
+		product_tab.product_name,product_tab.product_nick_name,users_tab.email_id,users_tab.first_name,product_tab.o_quantity,
 		users_tab.last_name,apartment_tab.apartment_name,block_tab.block_name,users_tab.flat_door_no,
 		users_tab.phone_number,calender_tab.cancelled_time');
 		$this->db->from('calender_tab');
@@ -230,24 +177,10 @@ class Milkorders_model extends CI_Model
 		}
 		if (isset($block) && !empty($block)) {
 			$this->db->where('users_tab.block',$block);
+		}if (isset($floor_number) && !empty($floor_number)) {
+			$this->db->where('users_tab.flat_door_no',$floor_number);
 		}
-		if (isset($date) && !empty($date)) {
-			$date_fragment = explode('/',$date);
-			if(is_array($date_fragment)){
-				$day = $date_fragment[0];
-				if(isset($day) && !empty($day)){
-					$this->db->where('calender_tab.date',$day);
-				}
-				$month = $date_fragment[1];
-				if(isset($month) && !empty($month)){
-					$this->db->where('calender_tab.month',$month);
-				}
-				$year = $date_fragment[2];
-				if(isset($year) && !empty($year)){
-					$this->db->where('calender_tab.year',$year);
-				}
-			}
-		}
+		
 
 		$this->db->where('calender_tab.delivery_status',0);
 		$this->db->order_by('apartment_tab.apartment_name');

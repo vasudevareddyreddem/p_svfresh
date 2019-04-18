@@ -23,10 +23,12 @@ class Milkorder extends In_frontend{
 				unset($post['button']);
 				$apartment = $this->input->post('apartment');
 				$block = $this->input->post('block');
-				$date = $this->input->post('date');
+				$floor_number = $this->input->post('floor');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['tot_list']=$this->Milkorders_model->total_order_list($apartment,$block,$date,$mobile);
+				$data['floor_detail']= $this->Apartment_model->get_floors_by_block_id($block);
+
+				$data['tot_list']=$this->Milkorders_model->total_order_list($apartment,$block,$floor_number,$mobile);
 			} else {
 				$data['tot_list']=$this->Milkorders_model->total_order_list();
 			}
@@ -53,10 +55,13 @@ class Milkorder extends In_frontend{
 				unset($post['button']);
 				$apartment = $this->input->post('apartment');
 				$block = $this->input->post('block');
-				$date = $this->input->post('date');
+				$floor_number = $this->input->post('floor');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['tot_list']=$this->Milkorders_model->total_payment_order_list($apartment,$block,$date,$mobile);
+				$data['floor_detail']= $this->Apartment_model->get_floors_by_block_id($block);
+				$data['tot_list']=$this->Milkorders_model->total_payment_order_list($apartment,$block,$floor_number,$mobile);
+				//echo '<pre>';print_r($data);exit;
+
 			} else {
 				$data['tot_list']=$this->Milkorders_model->total_payment_order_list();
 			}
@@ -83,10 +88,12 @@ class Milkorder extends In_frontend{
 				unset($post['button']);
 				$apartment = $this->input->post('apartment');
 				$block = $this->input->post('block');
-				$date = $this->input->post('date');
+				$floor_number = $this->input->post('floor');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['pending_list']=$this->Milkorders_model->pending_order_list($apartment,$block,$date,$mobile);
+				$data['floor_detail']= $this->Apartment_model->get_floors_by_block_id($block);
+
+				$data['pending_list']=$this->Milkorders_model->pending_order_list($apartment,$block,$floor_number,$mobile);
 			}
 			else{
 			$data['pending_list']=$this->Milkorders_model->pending_order_list();
@@ -113,10 +120,11 @@ class Milkorder extends In_frontend{
 				unset($post['button']);
 				$apartment = $this->input->post('apartment');
 				$block = $this->input->post('block');
-				$date = $this->input->post('date');
+				$floor_number = $this->input->post('floor');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['delivered_list']=$this->Milkorders_model->delivered_order_list($apartment,$block,$date,$mobile);
+				$data['floor_detail']= $this->Apartment_model->get_floors_by_block_id($block);
+				$data['delivered_list']=$this->Milkorders_model->delivered_order_list($apartment,$block,$floor_number,$mobile);
 			}
 			else{
 			$data['delivered_list']=$this->Milkorders_model->delivered_order_list();
@@ -142,10 +150,11 @@ class Milkorder extends In_frontend{
 				unset($post['button']);
 				$apartment = $this->input->post('apartment');
 				$block = $this->input->post('block');
-				$date = $this->input->post('date');
+				$floor_number = $this->input->post('floor');
 				$mobile=$this->input->post('phonenum');
 				$data['filter'] = $post;
-				$data['cancel_list']=$this->Milkorders_model->cancel_order_list($apartment,$block,$date,$mobile);
+				$data['floor_detail']= $this->Apartment_model->get_floors_by_block_id($block);
+				$data['cancel_list']=$this->Milkorders_model->cancel_order_list($apartment,$block,$floor_number,$mobile);
 			}
 			else{
 			$data['cancel_list']=$this->Milkorders_model->cancel_order_list();
@@ -226,6 +235,7 @@ class Milkorder extends In_frontend{
 			$block = $this->input->post('block');
       if ($apartment_id) {
         $blocks = $this->Apartment_model->get_blocks_by_apartment_id($apartment_id);
+		//echo $this->db->last_query();exit;
         if(count($blocks) > 0){
           $result = '<option value="">--Select Block--</option>';
           foreach ($blocks as $b) {
@@ -239,6 +249,35 @@ class Milkorder extends In_frontend{
         }
       } else {
         $this->session->set_flashdata('error','Sorry, there is a problem in getting blocks');
+        redirect($_SERVER['HTTP_REFERER']);
+      }
+    } else {
+      $this->session->set_flashdata('error','Please login to continue');
+      redirect('login');
+    }
+  }
+  //getting floor ids by block id
+  public function get_floor_by_block_id()
+  {
+    if ($this->session->userdata('svadmin_det')) {
+		$block_id = $this->input->post('block_id');
+		$block = $this->input->post('block');
+      if ($block_id) {
+        $floors = $this->Apartment_model->get_floors_by_block_id($block_id);
+		//echo $this->db->last_query();exit;
+        if(count($floors) > 0){
+          $result = '<option value="">--Select Floor--</option>';
+          foreach ($floors as $b) {
+				$selected = (isset($block) && ($block == $b->flat_door_no)) ? "selected":"";
+            $result .= '<option value='.$b->flat_door_no.' '.$selected.'>'.$b->flat_door_no.'</option>';
+          }
+          echo $result;exit();
+        } else {
+          $result = '<option value="">--No Floors found--</option>';
+          echo $result;exit();
+        }
+      } else {
+        $this->session->set_flashdata('error','Sorry, there is a problem in getting Floors');
         redirect($_SERVER['HTTP_REFERER']);
       }
     } else {

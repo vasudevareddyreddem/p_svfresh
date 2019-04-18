@@ -50,8 +50,9 @@
             <table id="example" class="table table-bordered  cart_summary">
               <thead>
                 <tr>
+                  <th class="text-center" style="display:none;">&nbsp;</th>
                   <th class="text-center">Product</th>
-									<th class="text-center">Weight</th>
+					<th class="text-center">Weight</th>
                   <th class="text-center">Date</th>
                   <th class="text-center">Quantity in packets</th>
                   <th class="text-center">Price</th>
@@ -62,7 +63,12 @@
                 <?php if (count($calender_orders) > 0) { ?>
                   <?php foreach ($calender_orders as $co) { ?>
                 <tr>
-                  <td class="text-center">
+				  <td class="text-center" style="display:none;">
+					<?php echo $co->year.$co->month; ?>
+                    <?php echo str_pad($co->date, 2, '0', STR_PAD_LEFT); ?>
+                    
+                  </td>
+				  <td class="text-center">
                     <?php echo $co->product_name; ?>
                   </td>
 									<td class="text-center">
@@ -211,7 +217,7 @@
   }
  $(document).ready(function() {
     $('#example').DataTable( {
-        "order": [[ 1, "desc" ]]
+		"order": [[0, "desc" ]]
     } );
 } );
   function update_qty(qty,id){
