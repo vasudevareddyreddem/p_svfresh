@@ -566,9 +566,11 @@ return $this->db->get()->result_array();
 					 return $this->db->get()->row_array();
 
 				 }
-				 public function  milk_mon_amt($user_id,$mon,$yr){
+				 public function  milk_mon_amt($user_id,$mon,$yr,$date){
 					$this->db->select('sum(quantity*price) total')->from('calender_tab')->where('user_id',$user_id)->
 					where('payment_status',0)->where('delivery_status !=',3)->where('delivery_status !=',0)->where('year',$yr)->where('month',$mon);
+					$this->db->where('date <=',$date);
+					$this->db->where('month <=',date('m'));
 					return $this->db->get()->row_array();
 
 				} 
@@ -580,8 +582,11 @@ return $this->db->get()->result_array();
 					$this->db->where('c.delivery_status !=',3);
 					$this->db->where('c.delivery_status !=',0);
 					$this->db->where('c.year',$yr);
+					
 					$this->db->where('c.month',$mon);
+					$this->db->where('c.month <=',date('m'));
 					$this->db->where('c.date<=',$date);
+					$this->db->where('c.quantity>',0);
 					return $this->db->get()->result_array();
 
 				}
@@ -685,13 +690,16 @@ return $this->db->get()->result_array();
 		}
 		
 		public  function get_milk_product_qty_details($product_id,$user_id,$month,$year,$date){
-			$this->db->select('quantity,date')->from('calender_tab');
+			$this->db->select('quantity,date,month')->from('calender_tab');
 			$this->db->where('product_id',$product_id);
 			$this->db->where('user_id',$user_id);
 			$this->db->where('month',$month);
 			$this->db->where('year',$year);
 			$this->db->where('quantity !=',0);
-			$this->db->where('date>=',$date);
+			if($month==date('m')){
+				$this->db->where('date>',$date);	
+			}
+			
 			$this->db->order_by('date','asc');
 			return $this->db->get()->result_array();
 		}

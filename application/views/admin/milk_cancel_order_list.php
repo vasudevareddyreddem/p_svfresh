@@ -17,7 +17,7 @@
                              <form class="" action="<?php echo base_url('milkorder/cancel_order_list'); ?>" method="post">
                             <div class="row">
                                     <div class="col-md-3">
-                                        <select class="form-control" name="apartment" id="apartment" data-block="<?php if (isset($filter) && ($filter['block'])) { echo $filter['block']; } else { echo ''; } ?>">
+                                        <select required class="form-control" name="apartment" id="apartment" data-block="<?php if (isset($filter) && ($filter['block'])) { echo $filter['block']; } else { echo ''; } ?>">
                                             <option value="">--Apartment--</option>
                                             <?php if(count($apartment) > 0){ ?>
                                                 <?php foreach ($apartment as $a) { ?>
@@ -27,12 +27,12 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-										<select class="form-control" name="block" id="block"  data-block="<?php if (isset($filter) && ($filter['floor'])) { echo $filter['floor']; } else { echo ''; } ?>">
+										<select required class="form-control" name="block" id="block"  data-block="<?php if (isset($filter) && ($filter['floor'])) { echo $filter['floor']; } else { echo ''; } ?>">
 											<option value="">--First select apartment--</option>
 										</select>
 									</div>
 									<div class="col-md-3">
-										<select class="form-control" name="floor" id="floor" data-block="<?php if (isset($filter) && ($filter['floor'])) { echo $filter['floor']; } else { echo ''; } ?>">
+										<select required  class="form-control" name="floor" id="floor" data-block="<?php if (isset($filter) && ($filter['floor'])) { echo $filter['floor']; } else { echo ''; } ?>">
 											<option value="">--First select Floor--</option>
 											<?php if(count($floor_detail) > 0){ ?>
 												<?php foreach ($floor_detail as $a) { ?>

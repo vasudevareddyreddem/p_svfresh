@@ -40,7 +40,7 @@
                                                 <td><?php echo $li->email_id; ?></td>
                                                 <td><?php echo $li->phone_number; ?></td>
                                                 <td>
-												<?php echo isset($li->flat_door_no)?$li->flat_door_no:''; ?>
+												<?php echo isset($li->flat_door_no)?$li->flat_door_no.', ':''; ?>
 												<?php echo isset($li->block_name)?$li->block_name.', ':''; ?>
 												<?php echo isset($li->apartment_name)?$li->apartment_name.'. ':''; ?></td>
                                                 <td><?php echo $li->org_password; ?></td>

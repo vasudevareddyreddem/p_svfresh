@@ -1986,10 +1986,10 @@ class User extends REST_Controller
         }
         $mon      = $this->post('mon');
         $yr       = $this->post('year');
-        $row      = $this->Mobile_model->milk_mon_amt($user_id, $mon, $yr);
+        $row      = $this->Mobile_model->milk_mon_amt($user_id, $mon, $yr,date('d'));
         $qty_list = $this->Mobile_model->milk_mon_amt_list($user_id, $mon, $yr,date('d'));
-        //echo $this->db->last_query();exit;
-        //echo '<pre>';print_r($qty_list);exit;
+       // echo $this->db->last_query();exit;
+       // echo '<pre>';print_r($qty_list);exit;
         
         if ($row['total'] == '' or $row['total'] == null) {
             
@@ -2001,9 +2001,14 @@ class User extends REST_Controller
             
             $this->response($message, REST_Controller::HTTP_OK);
         }
+		if($row['total']>0){
+			$amt=($row['total']+30);
+			}else{
+			$amt=0; 
+		}
         $message = array(
             'status' => 1,
-            'amount' => $row['total']+30,
+            'amount' =>$amt,
             'details' => $qty_list
         );
         
@@ -2559,7 +2564,7 @@ class User extends REST_Controller
 					if ($li['date']==$i)
 					{
 						$lids[]=$li['date'];
-						$a[]=array('date'=>$li['date'],'quantity'=>$li['quantity']);
+						$a[]=array('date'=>$li['date'],'quantity'=>$li['quantity'],'month'=>$li['month']);
 					}
 					if(($li['date']!=$i)){
 						//$a1[]=array('date'=>$i,'quantity'=>0);
@@ -2568,20 +2573,23 @@ class User extends REST_Controller
 					}
 					if (!in_array($i, $lids))
 					  {
-					  $a1[]=array('date'=>strval($i),'quantity'=>'0');
+					  $a1[]=array('date'=>strval($i),'quantity'=>'0','month'=>$li['month']);
 					  }
 				}
 			$arr_com=array_merge($a,$a1);
 			if(count($arr_com)>0){
 				$s_arr_list=array();foreach($arr_com as $li){
-					if(date('d')<=$li['date']){
+					if(date('d')<$li['date'] && date('m')==$li['month']){
+						$s_arr_list[]=$li;
+					}
+					if(date('m')!=$li['month']){
 						$s_arr_list[]=$li;
 					}
 					
 				}
 				foreach ($s_arr_list as $key => $row)
 				{
-					$vc_array_name[$key] = $row['date'];	
+					$vc_array_name[$key] = $row['date'];
 				}
 				array_multisort($vc_array_name, SORT_ASC, $s_arr_list);
 			}else{
