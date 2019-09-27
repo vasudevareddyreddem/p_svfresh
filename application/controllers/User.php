@@ -63,6 +63,8 @@ class User extends In_frontend
 			'created_date'=>date('Y-m-d H:i:s'),
 			'updated_date_by_admin'=>date('Y-m-d H:i:s')
         );
+		
+		//echo '<pre>';print_r($data);exit;
 
         $status=$this->Mobile_model->insert_user_reg($data);
         if($status==0){

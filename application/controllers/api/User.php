@@ -85,7 +85,8 @@ class User extends REST_Controller
             'status' => 'Active',
             'appartment' => $apt,
             'block' => $block,
-            'flat_door_no' => $flat
+            'flat_door_no' => $flat,
+            'otp_created_on' => date('Y-m-d H"i"s')
             
         );
         
@@ -2255,68 +2256,7 @@ class User extends REST_Controller
             $this->response($message, REST_Controller::HTTP_OK);
         }
     }
-    public function notifications_post()
-    {
-        
-        $minutes_to_add = 1;
-        $d              = date('Y-m-d H:i:s');
-        $time           = new DateTime($d);
-        $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
-        $stamp = $time->format('Y-m-d H:i:s');
-		$users_lists=$this->Mobile_model->get_token_users_list();
-		if(count($users_lists)>0){
-			
-			foreach($users_lists as $li){
-				
-				 $save=$this->Mobile_model->get_new_product_names_inbetween($stamp,$d);
-				if(count($save)>0){
-						foreach($save as $list){
-							$lis[]=$list['product_name'].' having '.$list['discount_percentage'].' % discount ';
-						}
-						$n_msg=implode(', ',$lis);
-						$serverKey = $this->config->item('server_key_push');
-						$url          = "https://fcm.googleapis.com/fcm/send";
-						$token        = $li['token'];
-						$title        = "SVfresh";
-						//$body = "Hello ".$details['name']." you have an appointment booked";
-						$notification = array(
-							'title' => $title,
-							'text' => $n_msg,
-							'sound' => 'default',
-							'badge' => '1'
-						);
-						$arrayToSend  = array(
-							'to' => $token,
-							'notification' => $notification,
-							'priority' => 'high'
-						);
-						$json         = json_encode($arrayToSend);
-						$headers      = array();
-						$headers[]    = 'Content-Type: application/json';
-						$headers[]    = 'Authorization: key=' . $serverKey;
-						$ch           = curl_init();
-						curl_setopt($ch, CURLOPT_URL, $url);
-						
-						curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-						curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-						//Send the request
-						$response = curl_exec($ch);
-						
-						echo '<pre>';print_r($response);
-						//Close request
-						if ($response === FALSE) {
-							die('FCM Send Error: ' . curl_error($ch));
-						}
-						curl_close($ch);
-						
-				}
-				
-			}
-			
-		}
-        
-    }
+   
     public function content_post()
     {
         $data = $this->Mobile_model->get_app_content_data();
@@ -2601,6 +2541,56 @@ class User extends REST_Controller
 			$message = array('status' =>0,'curdate'=>'','days_inmonth'=>'','orders'=>'');
             $this->response($message, REST_Controller::HTTP_OK);
 		}
+	}
+	
+	public  function check_otp_post(){
+        $user_id = $this->post('user_id');
+        $otp=$this->post('otp');
+        if ($user_id == '') {
+            $message = array('status' => 0,'message' => 'User Id is required');
+            $this->response($message, REST_Controller::HTTP_OK);
+        }if ($otp=='') {
+            $message = array('status' => 0,'message' => 'Otp is required');
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+		$flag    = $this->Mobile_model->user_checking($user_id);
+        if ($flag == 0) {
+			$message = array(
+                'status' => 0,
+                'message' => 'unauthorized user'
+            );
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+		$u_data=array('verified'=>1,'otp'=>$otp,'otp_created_on'=>date('Y-m-d H:i:s'));
+		$update = $this->Mobile_model->update_user_tocken($user_id, $u_data);
+        if (count($update) > 0) {
+            $message = array(
+                'status' => 1,
+                'message' => 'Mobile Number verified successfully'
+            );
+            $this->response($message, REST_Controller::HTTP_OK);
+        } else {
+            $message = array(
+                'status' => 0,
+                'message' => 'Technical problem will occurred .Please try again'
+            );
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+	}
+	public  function remove_user_post(){
+        $user_id = $this->post('user_id');
+        if ($user_id == '') {
+            $message = array('status' => 0,'message' => 'User Id is required');
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+		$update = $this->Mobile_model->user_delete($user_id);
+        if (count($update) > 0) {
+            $message = array('status' => 1,'message' => 'user deleted successfully' );
+            $this->response($message, REST_Controller::HTTP_OK);
+        } else {
+            $message = array('status' => 0,'message' => 'Technical problem will occurred .Please try again');
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
 	}
 	
 }

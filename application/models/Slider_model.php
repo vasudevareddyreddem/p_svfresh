@@ -7,7 +7,6 @@ class Slider_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database("default");
-        $this->db->query("SET time_zone='+5:30'");
 
 	}
 	public function save_slider($data){

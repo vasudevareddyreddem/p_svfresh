@@ -120,6 +120,95 @@ class Admin extends In_frontend{
 }
 }
 
+public  function delete_unwanted_data(){
+	$user_list=$this->Admin_model->get_all_users_data();
+	//echo $this->db->last_query();
+	//echo '<pre>';print_r($user_list);exit;
+	if(count($user_list)>0){
+		foreach($user_list as $list){
+				$minutes_to_add = 5;
+				$time = new DateTime($list['otp_created_on']);
+				$time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
+				$stamp = $time->format('Y-m-d H:i:s');
+				$time=date('Y-m-d H:i:s');
+				
+				if($time >=$list['otp_created_on'] && $time<= $stamp){
+				
+				}else{
+					$this->Admin_model->user_delete($list['id']);
+				}
+		}
+		
+	}
+}
+ public function notifications()
+    {
+        
+        
+		$minutes_to_add = 1;
+        $d              = date('Y-m-d H:i:s');
+        $time           = new DateTime($d);
+        $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
+        $stamp = $time->format('Y-m-d H:i:s');
+	    $newTime = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." -2 minutes"));
+	   
+		$this->load->model('Mobile_model');
+		$users_lists=$this->Mobile_model->get_token_users_list();
+		if(count($users_lists)>0){
+			
+			foreach($users_lists as $li){
+				
+				 $save=$this->Mobile_model->get_new_product_names_inbetween($stamp,$newTime);
+				 //echo $this->db->last_query();exit;
+				if(count($save)>0){
+						foreach($save as $list){
+							$lis[]=$list['product_name'].' having '.$list['discount_percentage'].' % discount ';
+						}
+						$n_msg=implode(', ',$lis);
+						$serverKey = $this->config->item('server_key_push');
+						$url          = "https://fcm.googleapis.com/fcm/send";
+						$token        = $li['token'];
+						$title        = "SVfresh";
+						//$body = "Hello ".$details['name']." you have an appointment booked";
+						$notification = array(
+							'title' => $title,
+							'text' => $n_msg,
+							'sound' => 'default',
+							'badge' => '1'
+						);
+						$arrayToSend  = array(
+							'to' => $token,
+							'notification' => $notification,
+							'priority' => 'high'
+						);
+						$json         = json_encode($arrayToSend);
+						$headers      = array();
+						$headers[]    = 'Content-Type: application/json';
+						$headers[]    = 'Authorization: key=' . $serverKey;
+						$ch           = curl_init();
+						curl_setopt($ch, CURLOPT_URL, $url);
+						
+						curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+						//Send the request
+						$response = curl_exec($ch);
+						
+						echo '<pre>';print_r($response);
+						//Close request
+						if ($response === FALSE) {
+							die('FCM Send Error: ' . curl_error($ch));
+						}
+						curl_close($ch);
+						
+				}
+				
+			}
+			
+		}
+        
+    }
+
 
 
 

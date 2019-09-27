@@ -7,7 +7,6 @@ class Admin_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database("default");
-        $this->db->query("SET time_zone='+5:30'");
 
 	}
 	public function check_password($id,$pwd){
@@ -63,6 +62,16 @@ class Admin_model extends CI_Model
 		public  function get_app_content_data(){
 				$this->db->select('*')->from('app_scroll_content');
 				return $this->db->get()->row_array();
+		}
+		public function get_all_users_data(){
+				$this->db->select('id,verified,otp_created_on,updated_by_admin')->from('users_tab');
+				//$this->db->where('updated_by_admin !=',1);
+				$this->db->where('verified',0);
+				return $this->db->get()->result_array();
+		}
+		public function user_delete($id){
+			$this->db->where('id',$id);
+			return $this->db->delete('users_tab');
 		}
 	
 	}

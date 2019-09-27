@@ -7,7 +7,6 @@ class Mobile_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database("default");
-        $this->db->query("SET time_zone='+5:30'");
 	}
 	public function category_list(){
        $this->db->select('category_tab.cat_id,category_tab.cat_name,category_tab.cat_img');
@@ -618,11 +617,9 @@ return $this->db->get()->result_array();
 			  return $this->db->insert_id();
 		  }
 	  public  function get_new_product_names_inbetween($intime,$outtime){
-		  //$amtwhere='item_cost BETWEEN '.'"'.$outtime.'"'.' AND '.$intime;
-		  $this->db->select('product_id,product_name,discount_percentage')->from('product_tab');
-		  $this->db->where('created_at >=',$outtime);
-		  $this->db->where('created_at <=',$intime);
-		  return $this->db->get()->result_array();
+				  
+			$sql = "SELECT product_id,product_name,discount_percentage FROM product_tab WHERE   created_at BETWEEN '".$outtime."' AND '".$intime."'";
+			return $this->db->query($sql)->result_array();
 	  }
 	  
 	  //get product qty
@@ -702,6 +699,11 @@ return $this->db->get()->result_array();
 			
 			$this->db->order_by('date','asc');
 			return $this->db->get()->result_array();
+		}
+		
+		public function user_delete($id){
+			$this->db->where('id',$id);
+			return $this->db->delete('users_tab');
 		}
 		
 }

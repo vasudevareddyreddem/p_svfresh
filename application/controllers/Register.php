@@ -114,6 +114,14 @@ class Register extends CI_controller
   }
   public  function verifyotp(){
 	     $post=$this->input->post();
+		 $result = $this->Auth_Model->user_details($post['id']);
+		 if(count($result)>0){
+			 
+		 }else{
+			$this->session->set_flashdata('error', 'technical problem will occured. Please try again');
+			redirect('register');    
+		 }
+		// echo '<pre>';print_r($post);exit;
 		$this->form_validation->set_rules('password', 'Password', 'required|matches[confirm_password]');
 		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required');
 		$this->form_validation->set_rules('otp', 'otp', 'required');
